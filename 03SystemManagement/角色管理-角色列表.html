@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>角色管理 - 角色列表</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --brand-50:#E8F0FB; --brand-100:#D1DFF4; --brand-300:#6E97D6;
+      --brand-500:#2A66C2; --brand-700:#143F8F; --brand-900:#01256A;
+      --green-50:#ECFDF5; --green-500:#10B981; --green-700:#047857;
+      --success:#10B981; --success-bg:#ECFDF5; --success-border:#A7F3D0;
+      --warning:#D97706; --warning-bg:#FFFBEB; --warning-border:#FDE68A;
+      --danger:#DC2626;  --danger-bg:#FEF2F2;  --danger-border:#FECACA;
+      --info:#2A66C2;    --info-bg:#E8F0FB;    --info-border:#D1DFF4;
+      --ink-900:#0F172A; --ink-800:#1E293B; --ink-600:#475569;
+      --ink-500:#64748B; --ink-400:#94A3B8; --ink-300:#CBD5E1;
+      --line-200:#E2E8F0; --bg-muted:#F1F5F9; --bg-subtle:#F8FAFC;
+      --white:#FFFFFF;
+      --radius-sm:4px; --radius-md:6px; --radius-lg:8px;
+      --radius-xl:12px; --radius-2xl:16px;
+      --shadow-lg:0 10px 24px rgba(15,23,42,.10),0 4px 8px rgba(15,23,42,.04);
+      --shadow-xl:0 20px 40px rgba(15,23,42,.16),0 8px 16px rgba(15,23,42,.06);
+      --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:20px; --s-6:24px; --s-8:32px;
+      --font-sans:'PingFang SC','Microsoft YaHei','Inter',system-ui,sans-serif;
+      --font-num:'Inter','SF Pro Display',system-ui,sans-serif;
+      --font-mono:'JetBrains Mono','SF Mono','Menlo','Consolas',monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--font-sans);color:var(--ink-800);background:var(--bg-subtle);font-size:14px;line-height:1.57;-webkit-font-smoothing:antialiased}
+    .custom-scroll::-webkit-scrollbar{width:6px;height:6px}
+    .custom-scroll::-webkit-scrollbar-track{background:transparent}
+    .custom-scroll::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}
+    .custom-scroll::-webkit-scrollbar-thumb:hover{background:var(--brand-500)}
+
+    .top-menu-item{transition:all .2s ease;cursor:pointer}
+    .top-menu-item:hover{background:rgba(42,102,194,.06);color:var(--brand-900)}
+    .top-menu-item.active{background:rgba(42,102,194,.1);color:var(--brand-900);box-shadow:0 1px 2px rgba(0,0,0,.05)}
+    .side-menu-item{transition:all .2s ease;cursor:pointer}
+    .side-menu-item:hover{background:#F1F5F9;border-radius:6px;color:var(--brand-900)}
+    .side-menu-item.active{background:rgba(42,102,194,.1);color:var(--brand-900);font-weight:500;border-radius:8px}
+
+    @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+    @keyframes breathe{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.7;transform:scale(1.08)}}
+    @keyframes leaf-sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+    @keyframes sparkle-twinkle{0%,100%{opacity:.3;transform:scale(.8) rotate(0)}50%{opacity:1;transform:scale(1.1) rotate(180deg)}}
+    .shimmer-text{background:linear-gradient(90deg,var(--brand-900) 0%,var(--brand-500) 40%,var(--green-500) 60%,var(--brand-900) 100%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 6s linear infinite}
+    .breathe{animation:breathe 4s ease-in-out infinite}
+    .leaf-sway{animation:leaf-sway 3.5s ease-in-out infinite;transform-origin:50% 90%}
+    .sparkle-twinkle{animation:sparkle-twinkle 3s ease-in-out infinite}
+
+    .tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:var(--radius-sm);font-size:12px;font-weight:500;line-height:1.5;border:1px solid transparent}
+    .tag-default{background:var(--bg-muted);color:var(--ink-600);border-color:var(--line-200)}
+    .tag-success{background:var(--success-bg);color:var(--green-700);border-color:var(--success-border)}
+    .tag-warning{background:var(--warning-bg);color:var(--warning);border-color:var(--warning-border)}
+    .tag-danger{background:var(--danger-bg);color:var(--danger);border-color:var(--danger-border)}
+    .tag-info{background:var(--info-bg);color:var(--info);border-color:var(--info-border)}
+    .tag-perm-menu{background:#EDE9FE;color:#7C3AED;border-color:#DDD6FE}
+    .tag-perm-list{background:#DBEAFE;color:#1D4ED8;border-color:#BFDBFE}
+    .tag-perm-button{background:#D1FAE5;color:#065F46;border-color:#A7F3D0}
+
+    .status{display:inline-flex;align-items:center;gap:6px;font-size:14px;line-height:22px;color:var(--ink-800)}
+    .status-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+    .status-dot.s-success{background:var(--success)}
+    .status-dot.s-danger{background:var(--danger)}
+
+    table{width:100%;border-collapse:collapse;font-size:14px;line-height:22px}
+    thead th{background:var(--bg-subtle);color:var(--ink-600);font-weight:500;text-align:left;padding:10px 16px;border-bottom:1px solid var(--line-200);font-size:12px;white-space:nowrap}
+    tbody td{padding:12px 16px;border-bottom:1px solid var(--line-200);color:var(--ink-800);vertical-align:middle}
+    tbody tr:last-child td{border-bottom:none}
+    tbody tr:hover{background:var(--bg-subtle)}
+
+    .btn{display:inline-flex;align-items:center;gap:6px;border-radius:var(--radius-md);font-family:inherit;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid transparent;line-height:1;white-space:nowrap}
+    .btn-sm{padding:6px 12px;font-size:12px;line-height:20px;height:28px}
+    .btn-md{padding:8px 16px;font-size:14px;line-height:22px;height:32px}
+    .btn-primary{background:var(--brand-500);color:#fff}
+    .btn-primary:hover{background:var(--brand-700)}
+    .btn-secondary{background:var(--white);color:var(--ink-800);border-color:var(--ink-300)}
+    .btn-secondary:hover{border-color:var(--brand-500);color:var(--brand-500)}
+    .btn-ghost{background:transparent;color:var(--brand-500);border:none;padding:4px 8px;font-size:13px}
+    .btn-ghost:hover{background:var(--brand-50)}
+    .btn-danger-ghost{background:transparent;color:var(--danger);border:none;padding:4px 8px;font-size:13px}
+    .btn-danger-ghost:hover{background:var(--danger-bg)}
+    .btn svg{width:14px;height:14px;stroke-width:1.75}
+    .btn-add-role { display: none !important; }
+
+    .input,.select-native{width:100%;padding:5px 12px;height:32px;font-family:inherit;font-size:14px;line-height:22px;color:var(--ink-900);background:var(--white);border:1px solid var(--ink-300);border-radius:var(--radius-md);transition:border-color .15s,box-shadow .15s;outline:none}
+    .input::placeholder{color:var(--ink-400)}
+    .input:focus,.select-native:focus{border-color:var(--brand-500);box-shadow:0 0 0 3px rgba(42,102,194,.12)}
+    .select-native{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:32px;cursor:pointer}
+    .input[readonly], .input-readonly {
+      background: var(--bg-muted);
+      color: var(--ink-600);
+      cursor: not-allowed;
+      border-color: var(--line-200);
+    }
+    .input[readonly]:focus, .input-readonly:focus {
+      border-color: var(--line-200);
+      box-shadow: none;
+    }
+
+    .pagination{display:flex;align-items:center;gap:var(--s-3);padding:var(--s-3) var(--s-4);border-top:1px solid var(--line-200);background:var(--white);font-size:14px;line-height:22px;color:var(--ink-600)}
+    .pagination-controls{margin-left:auto;display:flex;gap:4px;align-items:center}
+    .page-btn{min-width:32px;height:32px;padding:0 8px;border:1px solid var(--line-200);background:var(--white);border-radius:var(--radius-md);font-size:14px;color:var(--ink-800);cursor:pointer;font-family:var(--font-num);display:inline-flex;align-items:center;justify-content:center;transition:all .15s}
+    .page-btn:hover:not(:disabled){border-color:var(--brand-500);color:var(--brand-500)}
+    .page-btn.active{background:var(--brand-500);border-color:var(--brand-500);color:#fff}
+    .page-btn:disabled{color:var(--ink-300);cursor:not-allowed;background:var(--bg-muted)}
+
+    .drawer-mask{position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:1500;display:none}
+    .drawer-mask.open{display:block}
+    .drawer{position:fixed;top:0;right:0;bottom:0;width:100%;max-width:640px;background:var(--white);box-shadow:var(--shadow-xl);z-index:1501;display:none;flex-direction:column;animation:drawerIn .22s ease-out}
+    .drawer.open{display:flex}
+    @keyframes drawerIn{from{transform:translateX(100%)}to{transform:none}}
+    .drawer-head{display:flex;align-items:center;padding:16px 24px;border-bottom:1px solid var(--line-200)}
+    .drawer-title{font-size:16px;font-weight:600;color:var(--ink-900)}
+    .drawer-subtitle{font-size:12px;color:var(--ink-500);margin-top:2px}
+    .drawer-close{margin-left:auto;background:none;border:none;cursor:pointer;color:var(--ink-500);padding:4px;display:flex;border-radius:var(--radius-sm)}
+    .drawer-close:hover{background:var(--bg-muted);color:var(--ink-900)}
+    .drawer-body{flex:1;overflow-y:auto;padding:24px}
+
+    .modal-mask{position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:1500;display:none;align-items:center;justify-content:center}
+    .modal-mask.open{display:flex}
+    .modal{background:var(--white);border-radius:var(--radius-2xl);box-shadow:var(--shadow-xl);width:100%;max-width:520px;overflow:hidden;animation:modalIn .18s ease-out}
+    @keyframes modalIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+    .modal-head{display:flex;align-items:center;padding:16px 24px;border-bottom:1px solid var(--line-200)}
+    .modal-title{font-size:16px;font-weight:600;color:var(--ink-900)}
+    .modal-close{margin-left:auto;background:none;border:none;cursor:pointer;color:var(--ink-500);padding:4px;display:flex;border-radius:var(--radius-sm)}
+    .modal-close:hover{background:var(--bg-muted);color:var(--ink-900)}
+    .modal-body{padding:24px;color:var(--ink-800);font-size:14px}
+    .modal-foot{display:flex;justify-content:flex-end;gap:8px;padding:12px 24px;border-top:1px solid var(--line-200);background:var(--bg-subtle)}
+
+    .section-card{background:var(--white);border-radius:var(--radius-xl);border:1px solid var(--line-200);overflow:hidden}
+
+    /* Permission tree */
+    .perm-tree{font-size:14px;color:var(--ink-800)}
+    .perm-node{padding:2px 0}
+    .perm-label{display:flex;align-items:center;gap:6px;padding:4px 8px;border-radius:var(--radius-sm);cursor:pointer}
+    .perm-label:hover{background:var(--bg-subtle)}
+    .perm-children{padding-left:24px}
+    .checkbox{display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:14px;line-height:22px;color:var(--ink-800)}
+    .checkbox input{appearance:none;width:16px;height:16px;border:1.5px solid var(--ink-300);border-radius:var(--radius-sm);position:relative;cursor:pointer;flex-shrink:0;transition:all .15s}
+    .checkbox input:hover{border-color:var(--brand-500)}
+    .checkbox input:checked{background:var(--brand-500);border-color:var(--brand-500)}
+    .checkbox input:checked::after{content:"";position:absolute;left:4px;top:1px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+
+    /* Switch */
+    .switch{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;line-height:22px;color:var(--ink-800)}
+    .switch input{appearance:none;width:36px;height:20px;border-radius:999px;background:var(--ink-300);position:relative;cursor:pointer;transition:all .2s;flex-shrink:0}
+    .switch input::before{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;background:#fff;border-radius:50%;transition:all .2s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+    .switch input:checked{background:var(--brand-500)}
+    .switch input:checked::before{left:18px}
+
+    /* Data permission radio */
+    .radio-group{display:flex;flex-direction:column;gap:12px}
+    .radio{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;line-height:22px;color:var(--ink-800)}
+    .radio input{appearance:none;width:16px;height:16px;border:1.5px solid var(--ink-300);border-radius:50%;position:relative;cursor:pointer;flex-shrink:0;transition:all .15s}
+    .radio input:hover{border-color:var(--brand-500)}
+    .radio input:checked{border-color:var(--brand-500);border-width:5px}
+
+    .section-card-head{display:flex;align-items:center;padding:var(--s-3) var(--s-4);border-bottom:1px solid var(--line-200);background:linear-gradient(135deg,var(--brand-50) 0%,var(--bg-subtle) 100%)}
+    .section-card-icon{display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--brand-500);color:#fff;border-radius:var(--radius-md)}
+    .section-card-icon svg{width:16px;height:16px}
+    .section-card-title{font-size:16px;line-height:24px;font-weight:600;color:var(--ink-900);margin-left:var(--s-3)}
+
+    .info-grid{display:grid;grid-template-columns:120px 1fr;gap:var(--s-3);margin-bottom:var(--s-3)}
+    .info-label{font-size:14px;color:var(--ink-500);text-align:right;font-weight:500;line-height:22px}
+    .info-value{font-size:14px;color:var(--ink-900);line-height:22px}
+
+    .role-chip{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;background:var(--brand-50);color:var(--brand-700);border:1px solid var(--brand-100);border-radius:var(--radius-sm);font-size:12px;font-weight:500;line-height:1.5;margin:2px}
+    .role-chip .remove-role{cursor:pointer;color:var(--brand-500);margin-left:2px;font-size:14px;line-height:1}
+    .role-chip .remove-role:hover{color:var(--danger)}
+
+    .perm-section-title{font-size:13px;font-weight:600;color:var(--ink-700);padding:8px 0 4px;border-bottom:1px solid var(--line-200);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+    .perm-section-title::before{content:"";width:3px;height:14px;background:var(--brand-500);border-radius:var(--radius-sm)}
+
+    .tree-option{padding:6px 10px;font-size:14px;line-height:22px;color:var(--ink-800);cursor:pointer;border-radius:var(--radius-sm);display:flex;align-items:center;gap:6px}
+    .tree-option:hover{background:var(--bg-subtle)}
+    .tree-option.selected{background:var(--brand-50);color:var(--brand-700);font-weight:500}
+    .tree-option.level-1{padding-left:24px}
+    .tree-option.level-2{padding-left:40px}
+
+    .dropdown-panel{position:absolute;top:calc(100% + 4px);left:0;z-index:100;background:var(--white);border:1px solid var(--line-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);display:none;min-width:200px;max-height:240px;overflow-y:auto;padding:4px}
+    .dropdown-panel.open{display:block;animation:popIn .12s ease-out}
+    @keyframes popIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+
+    .export-success{background:var(--success-bg);color:var(--green-700);padding:16px 20px;border-radius:6px;font-size:14px;border:1px solid var(--success-border);text-align:center}
+    .export-success .icon{font-size:32px;display:block;margin-bottom:8px}
+    .export-success .count{font-weight:600;font-size:16px}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Main -->
+    <main class="flex-1 flex flex-col overflow-hidden" style="background:var(--bg-subtle)">
+      <div class="flex-1 overflow-y-auto custom-scroll p-8">
+        <!-- Filter -->
+        <div class="section-card mb-6">
+          <div style="padding:var(--s-4)">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-4);align-items:end">
+              <div><label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block">角色名称</label><input type="text" class="input" placeholder="请输入角色名称" id="filterRoleName"></div>
+              <div><label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block">状态</label><select class="select-native" id="filterStatus"><option value="">全部</option><option value="启用">启用</option><option value="停用">停用</option></select></div>
+            </div>
+            <div style="display:flex;gap:var(--s-3);margin-top:var(--s-4);justify-content:flex-end">
+              <button class="btn btn-primary btn-md" onclick="handleSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>查询</button>
+              <button class="btn btn-secondary btn-md" onclick="handleReset()">重置</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="section-card">
+          <div style="display:flex;align-items:center;gap:var(--s-2);padding:var(--s-3) var(--s-4);border-bottom:1px solid var(--line-200)">
+            <button class="btn btn-md btn-secondary" onclick="exportRoleData()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              批量导出
+            </button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th style="width:50px">序号</th>
+                <th>角色名称</th>
+                <th>角色编码</th>
+                <th>描述</th>
+                <th style="width:80px">状态</th>
+                <th style="width:280px;text-align:right">操作</th>
+              </tr>
+            </thead>
+            <tbody id="roleTableBody"></tbody>
+          </table>
+          <div class="pagination" id="paginationBar">
+            <span class="pagination-info">共 <strong id="pageTotal">8</strong> 条</span>
+            <div class="pagination-controls" id="paginationControls"></div>
+            <div style="display:flex;align-items:center;gap:6px;margin-left:16px">
+              <span style="font-size:13px;color:var(--ink-500)">每页</span>
+              <select class="select-native" style="width:auto;height:32px;padding:0 28px 0 10px" onchange="changePageSize(this.value)"><option value="20" selected>20</option><option value="50">50</option><option value="100">100</option></select>
+              <span style="font-size:13px;color:var(--ink-500)">条</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ============ Add/Edit Role Modal ============ -->
+  <div class="modal-mask" id="addRoleModal">
+    <div class="modal">
+      <div class="modal-head">
+        <span class="modal-title" id="addRoleModalTitle">编辑角色</span>
+        <button class="modal-close" onclick="closeModal('addRoleModal')"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div>
+            <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block"><span style="color:var(--danger);margin-right:4px">*</span>角色名称</label>
+            <input type="text" class="input" placeholder="请输入角色名称" id="newRoleName">
+          </div>
+          <div>
+            <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block"><span style="color:var(--danger);margin-right:4px">*</span>角色编码</label>
+            <input type="text" class="input input-readonly" readonly placeholder="角色编码不可编辑" id="newRoleCode">
+          </div>
+          <div>
+            <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block">描述</label>
+            <textarea class="input" style="height:80px;resize:vertical" placeholder="请输入角色描述" id="newRoleDesc"></textarea>
+          </div>
+          <div>
+            <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block">角色状态</label>
+            <label class="switch" style="font-size:14px"><input type="checkbox" id="newRoleStatus" checked><span>启用</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-secondary btn-md" onclick="closeModal('addRoleModal')">取消</button>
+        <button class="btn btn-primary btn-md" onclick="saveRole()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Permission Assignment Modal ============ -->
+  <div class="modal-mask" id="permModal">
+    <div class="modal" style="max-width:720px">
+      <div class="modal-head">
+        <span class="modal-title">权限分配</span>
+        <span style="margin-left:12px;font-size:13px;color:var(--ink-500)" id="permRoleName"></span>
+        <button class="modal-close" onclick="closeModal('permModal')"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="modal-body" style="max-height:65vh;overflow-y:auto">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s-6)">
+          <!-- Left: Permission tree -->
+          <div>
+            <div style="font-size:14px;font-weight:600;color:var(--ink-900);margin-bottom:12px">菜单/按钮权限</div>
+            <div style="max-height:360px;overflow-y:auto;border:1px solid var(--line-200);border-radius:var(--radius-md);padding:8px" id="permTreeContainer">
+            </div>
+          </div>
+          <!-- Right: Data permission -->
+          <div>
+            <div style="font-size:14px;font-weight:600;color:var(--ink-900);margin-bottom:12px">数据权限范围</div>
+            <div style="border:1px solid var(--line-200);border-radius:var(--radius-md);padding:16px">
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--ink-700);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--line-200)">机构维度</div>
+                <div class="radio-group" id="orgPermRadio">
+                  <label class="radio"><input type="radio" name="orgPerm" value="all" checked>全部</label>
+                  <label class="radio"><input type="radio" name="orgPerm" value="self_and_sub">本机构及下设机构</label>
+                  <label class="radio"><input type="radio" name="orgPerm" value="self">本机构</label>
+                  <label class="radio"><input type="radio" name="orgPerm" value="mine">本人</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-secondary btn-md" onclick="closeModal('permModal')">取消</button>
+        <button class="btn btn-primary btn-md" onclick="savePermission()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ User List Drawer ============ -->
+  <div class="drawer-mask" id="userListDrawerMask" onclick="closeUserListDrawer()"></div>
+  <div class="drawer" id="userListDrawer">
+    <div class="drawer-head">
+      <div>
+        <div class="drawer-title">用户清单</div>
+        <div class="drawer-subtitle" id="userListDrawerRole">角色：系统管理员</div>
+      </div>
+      <button class="drawer-close" onclick="closeUserListDrawer()"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="drawer-body">
+      <div style="display:flex;gap:var(--s-3);margin-bottom:16px">
+        <input type="text" class="input" placeholder="搜索姓名/工号" id="userListSearch" oninput="filterUserList(this.value)" style="flex:1">
+        <button class="btn btn-primary btn-md" onclick="openAddUserToRoleModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          添加用户
+        </button>
+      </div>
+      <div style="border:1px solid var(--line-200);border-radius:var(--radius-md);overflow:hidden">
+        <table>
+          <thead>
+            <tr><th style="width:40px">序号</th><th>姓名</th><th>工号</th><th>所属机构</th><th>岗位</th><th>状态</th><th style="width:80px;text-align:right">操作</th></tr>
+          </thead>
+          <tbody id="userListTableBody"></tbody>
+        </table>
+      </div>
+      <div style="margin-top:12px;font-size:12px;color:var(--ink-500)">共 <strong id="userListCount" style="color:var(--brand-500)">0</strong> 位用户</div>
+    </div>
+  </div>
+
+  <!-- ============ Add User to Role Modal ============ -->
+  <div class="modal-mask" id="addUserToRoleModal">
+    <div class="modal">
+      <div class="modal-head">
+        <span class="modal-title">添加用户</span>
+        <button class="modal-close" onclick="closeModal('addUserToRoleModal')"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom:12px">
+          <input type="text" class="input" placeholder="搜索姓名/工号" id="addUserSearchInput" oninput="filterAvailableUsers(this.value)">
+        </div>
+        <div style="max-height:240px;overflow-y:auto;border:1px solid var(--line-200);border-radius:var(--radius-md);padding:4px" id="availableUserList"></div>
+        <div style="margin-top:12px;font-size:12px;color:var(--ink-500)">已选择 <strong id="selectedUserCount" style="color:var(--brand-500)">0</strong> 位用户</div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-secondary btn-md" onclick="closeModal('addUserToRoleModal')">取消</button>
+        <button class="btn btn-primary btn-md" onclick="confirmAddUsersToRole()">确认添加</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Delete Confirm Modal ============ -->
+  <div class="modal-mask" id="deleteModal">
+    <div class="modal modal-sm">
+      <div class="modal-head">
+        <span class="modal-title">删除确认</span>
+        <button class="modal-close" onclick="closeModal('deleteModal')"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex;gap:16px;align-items:flex-start">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--danger-bg);color:var(--danger);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:600;color:var(--ink-900);margin-bottom:4px">确认删除角色？</div>
+            <div style="font-size:14px;color:var(--ink-600);line-height:1.5" id="deleteModalDesc">删除后不可恢复。</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-secondary btn-md" onclick="closeModal('deleteModal')">取消</button>
+        <button class="btn btn-primary btn-md" style="background:var(--danger)" onclick="confirmDelete()">确认删除</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Export Success Modal ============ -->
+  <div class="modal-mask" id="exportModal">
+    <div class="modal modal-sm modal-form">
+      <div class="modal-head">
+        <div class="modal-title">导出成功</div>
+        <button class="modal-close" onclick="closeModal('exportModal')"><svg style="width:16px;height:16px"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="modal-body" style="text-align:center;padding:32px 24px;">
+        <div class="export-success">
+          <span class="icon">✅</span>
+          <div style="font-weight:600;font-size:16px;margin-bottom:4px;">角色数据已导出</div>
+          <div style="font-size:13px;color:var(--ink-500);margin-top:4px;" id="exportCount">共导出 0 条角色记录</div>
+        </div>
+      </div>
+      <div class="modal-foot" style="justify-content:center;">
+        <button class="btn btn-md btn-primary" onclick="closeModal('exportModal')">我知道了</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SVG Icons -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+    </defs>
+  </svg>
+
+  <script>
+    // Mock data
+    var allRoles = [
+      { name:'系统管理员', code:'ROLE_ADMIN', desc:'拥有系统全部权限，可管理用户、角色、机构等', status:'启用', userCount:3 },
+      { name:'总行管理员', code:'ROLE_HEAD_ADMIN', desc:'总行级别管理员，可管理全行数据', status:'启用', userCount:5 },
+      { name:'机构管理员', code:'ROLE_ORG_ADMIN', desc:'分支机构管理员，仅管理本机构数据', status:'启用', userCount:8 },
+      { name:'绿色认定专员', code:'ROLE_GREEN_SPECIALIST', desc:'负责绿色信贷/债券认定工作', status:'启用', userCount:6 },
+      { name:'审批人', code:'ROLE_APPROVER', desc:'审批流程节点审批人', status:'启用', userCount:12 },
+      { name:'数据分析师', code:'ROLE_ANALYST', desc:'数据报表分析与查看权限', status:'启用', userCount:4 },
+      { name:'合规专员', code:'ROLE_COMPLIANCE', desc:'合规审查与监控', status:'停用', userCount:2 },
+      { name:'只读用户', code:'ROLE_READONLY', desc:'仅具备系统只读查看权限', status:'启用', userCount:15 }
+    ];
+
+    // All users (for add user to role)
+    var allUsers = [
+      { name:'张明辉', empNo:'EMP001', org:'总行', position:'系统管理员', status:'启用' },
+      { name:'李思雨', empNo:'EMP002', org:'总行', position:'绿色金融专员', status:'启用' },
+      { name:'王建国', empNo:'EMP003', org:'北京分行', position:'风险管理主管', status:'启用' },
+      { name:'赵晓燕', empNo:'EMP004', org:'北京分行-朝阳支行', position:'客户经理', status:'启用' },
+      { name:'刘志强', empNo:'EMP005', org:'上海分行', position:'ESG分析师', status:'停用' },
+      { name:'陈美玲', empNo:'EMP006', org:'上海分行-浦东支行', position:'信贷审批员', status:'启用' },
+      { name:'杨文博', empNo:'EMP007', org:'广州分行', position:'系统运维工程师', status:'启用' },
+      { name:'黄丽娟', empNo:'EMP008', org:'总行', position:'合规专员', status:'启用' },
+      { name:'周天宇', empNo:'EMP009', org:'北京分行-海淀支行', position:'绿色信贷专员', status:'启用' },
+      { name:'吴佳颖', empNo:'EMP010', org:'上海分行', position:'数据分析师', status:'启用' },
+      { name:'孙浩然', empNo:'EMP011', org:'广州分行', position:'风险管理主管', status:'停用' },
+      { name:'马晓东', empNo:'EMP012', org:'总行', position:'产品经理', status:'启用' },
+      { name:'林雅琪', empNo:'EMP013', org:'北京分行', position:'ESG分析师', status:'启用' },
+      { name:'郑凯文', empNo:'EMP014', org:'上海分行-浦东支行', position:'客户经理', status:'启用' },
+      { name:'何雨桐', empNo:'EMP015', org:'总行', position:'系统管理员', status:'启用' },
+      { name:'徐明哲', empNo:'EMP016', org:'北京分行-朝阳支行', position:'绿色信贷专员', status:'启用' },
+      { name:'胡文静', empNo:'EMP017', org:'广州分行', position:'合规专员', status:'启用' },
+      { name:'郭振华', empNo:'EMP018', org:'总行', position:'风险管理主管', status:'启用' },
+      { name:'曹雪萍', empNo:'EMP019', org:'上海分行', position:'产品经理', status:'停用' },
+      { name:'邓子轩', empNo:'EMP020', org:'北京分行', position:'系统运维工程师', status:'启用' },
+      { name:'冯晓峰', empNo:'EMP021', org:'广州分行', position:'绿色信贷专员', status:'启用' },
+      { name:'蒋丽芳', empNo:'EMP022', org:'总行', position:'ESG分析师', status:'启用' },
+      { name:'韩天宇', empNo:'EMP023', org:'北京分行-海淀支行', position:'客户经理', status:'启用' },
+      { name:'田美华', empNo:'EMP024', org:'上海分行', position:'数据分析师', status:'启用' },
+      { name:'董建国', empNo:'EMP025', org:'总行', position:'合规主管', status:'启用' }
+    ];
+
+    var currentPage = 1;
+    var pageSize = 20;
+    var editingRoleIndex = -1;
+    var deletingRoleIndex = -1;
+    var currentPermRole = null;
+    var currentUserListRole = null;
+
+    // ===== 更新后的权限树：合同绿色认定、项目绿色认定、绿色潜在客户清单 =====
+    var permModules = [
+      { name:'合同绿色认定', collapsed:false, pages:[
+        { name:'合同绿色认定', perms:['开始认定','查看详情'] }
+      ]},
+      { name:'项目绿色认定', collapsed:false, pages:[
+        { name:'项目绿色认定', perms:['开始认定','查看详情'] }
+      ]},
+      { name:'绿色潜在客户清单', collapsed:false, pages:[
+        { name:'绿色潜在客户清单', perms:['查看企业评价报告','查看企业业务营销报告'] }
+      ]}
+    ];
+
+    // Users for each role (mock)
+    var roleUsers = {
+      '系统管理员': [
+        { name:'张明辉', empNo:'EMP001', org:'总行', position:'系统管理员', status:'启用' },
+        { name:'杨文博', empNo:'EMP007', org:'广州分行', position:'系统运维工程师', status:'启用' },
+        { name:'何雨桐', empNo:'EMP015', org:'总行', position:'系统管理员', status:'启用' }
+      ],
+      '总行管理员': [
+        { name:'王建国', empNo:'EMP003', org:'北京分行', position:'风险管理主管', status:'启用' },
+        { name:'杨文博', empNo:'EMP007', org:'广州分行', position:'系统运维工程师', status:'启用' },
+        { name:'孙浩然', empNo:'EMP011', org:'广州分行', position:'风险管理主管', status:'停用' },
+        { name:'马晓东', empNo:'EMP012', org:'总行', position:'产品经理', status:'启用' },
+        { name:'郭振华', empNo:'EMP018', org:'总行', position:'风险管理主管', status:'启用' }
+      ],
+      '机构管理员': [
+        { name:'李思雨', empNo:'EMP002', org:'总行', position:'绿色金融专员', status:'启用' },
+        { name:'赵晓燕', empNo:'EMP004', org:'北京分行-朝阳支行', position:'客户经理', status:'启用' },
+        { name:'黄丽娟', empNo:'EMP008', org:'总行', position:'合规专员', status:'启用' },
+        { name:'吴佳颖', empNo:'EMP010', org:'上海分行', position:'数据分析师', status:'启用' },
+        { name:'郑凯文', empNo:'EMP014', org:'上海分行-浦东支行', position:'客户经理', status:'启用' },
+        { name:'胡文静', empNo:'EMP017', org:'广州分行', position:'合规专员', status:'启用' },
+        { name:'蒋丽芳', empNo:'EMP022', org:'总行', position:'ESG分析师', status:'启用' },
+        { name:'田美华', empNo:'EMP024', org:'上海分行', position:'数据分析师', status:'启用' }
+      ],
+      '绿色认定专员': [
+        { name:'李思雨', empNo:'EMP002', org:'总行', position:'绿色金融专员', status:'启用' },
+        { name:'陈美玲', empNo:'EMP006', org:'上海分行-浦东支行', position:'信贷审批员', status:'启用' },
+        { name:'周天宇', empNo:'EMP009', org:'北京分行-海淀支行', position:'绿色信贷专员', status:'启用' },
+        { name:'徐明哲', empNo:'EMP016', org:'北京分行-朝阳支行', position:'绿色信贷专员', status:'启用' },
+        { name:'曹雪萍', empNo:'EMP019', org:'上海分行', position:'产品经理', status:'停用' },
+        { name:'冯晓峰', empNo:'EMP021', org:'广州分行', position:'绿色信贷专员', status:'启用' }
+      ],
+      '审批人': [
+        { name:'王建国', empNo:'EMP003', org:'北京分行', position:'风险管理主管', status:'启用' },
+        { name:'陈美玲', empNo:'EMP006', org:'上海分行-浦东支行', position:'信贷审批员', status:'启用' },
+        { name:'周天宇', empNo:'EMP009', org:'北京分行-海淀支行', position:'绿色信贷专员', status:'启用' },
+        { name:'孙浩然', empNo:'EMP011', org:'广州分行', position:'风险管理主管', status:'停用' },
+        { name:'徐明哲', empNo:'EMP016', org:'北京分行-朝阳支行', position:'绿色信贷专员', status:'启用' },
+        { name:'郭振华', empNo:'EMP018', org:'总行', position:'风险管理主管', status:'启用' },
+        { name:'董建国', empNo:'EMP025', org:'总行', position:'合规主管', status:'启用' }
+      ]
+    };
+
+    // Pending tasks
+    var pendingTasks = {
+      'EMP003': ['绿色债券认定审批', '转型项目审批'],
+      'EMP016': ['绿色信贷认定审批'],
+      'EMP018': ['ESG风险评估审批', '碳账户变更审批', '绿色贷款审批']
+    };
+
+    function renderTable() {
+      var tbody = document.getElementById('roleTableBody');
+      var start = (currentPage - 1) * pageSize;
+      var end = Math.min(start + pageSize, allRoles.length);
+      var pageRoles = allRoles.slice(start, end);
+      var html = '';
+      pageRoles.forEach(function(r, i) {
+        var statusTag = r.status === '启用'
+          ? '<span class="status"><span class="status-dot s-success"></span>启用</span>'
+          : '<span class="status"><span class="status-dot s-danger"></span>停用</span>';
+        var globalIdx = start + i;
+        html += '<tr>'
+          + '<td style="color:var(--ink-500);font-family:var(--font-num);text-align:right">' + (start + i + 1) + '</td>'
+          + '<td style="font-weight:500">' + r.name + '</td>'
+          + '<td style="font-family:var(--font-mono);font-size:13px;color:var(--ink-600)">' + r.code + '</td>'
+          + '<td style="max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink-600)">' + r.desc + '</td>'
+          + '<td>' + statusTag + '</td>'
+          + '<td style="text-align:right;white-space:nowrap">'
+          + '<button class="btn-ghost" onclick="openEditRoleModal(' + globalIdx + ')">编辑</button>'
+          + '<button class="btn-ghost" onclick="openPermModal(' + globalIdx + ')">权限分配</button>'
+          + '<button class="btn-ghost" onclick="openUserListDrawer(' + globalIdx + ')">查看用户清单</button>'
+          + '</td></tr>';
+      });
+      tbody.innerHTML = html;
+      document.getElementById('pageTotal').textContent = allRoles.length;
+      renderPagination();
+    }
+
+    function renderPagination() {
+      var totalPages = Math.ceil(allRoles.length / pageSize);
+      if (totalPages < 1) totalPages = 1;
+      var controls = document.getElementById('paginationControls');
+      var html = '';
+      html += '<button class="page-btn" ' + (currentPage <= 1 ? 'disabled' : '') + ' onclick="changePage(-1)"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>';
+      for (var p = 1; p <= totalPages; p++) {
+        html += '<button class="page-btn' + (p === currentPage ? ' active' : '') + '" onclick="goToPage(' + p + ')">' + p + '</button>';
+      }
+      html += '<button class="page-btn" ' + (currentPage >= totalPages ? 'disabled' : '') + ' onclick="changePage(1)"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>';
+      controls.innerHTML = html;
+    }
+
+    function goToPage(p) { currentPage = p; renderTable(); }
+    function changePage(d) { var t = Math.ceil(allRoles.length / pageSize); var n = currentPage + d; if (n >= 1 && n <= t) { currentPage = n; renderTable(); } }
+    function changePageSize(val) { pageSize = parseInt(val); currentPage = 1; renderTable(); }
+
+    function handleSearch() { renderTable(); }
+    function handleReset() { document.getElementById('filterRoleName').value = ''; document.getElementById('filterStatus').value = ''; renderTable(); }
+
+    // Edit role
+    function openEditRoleModal(idx) {
+      editingRoleIndex = idx;
+      document.getElementById('addRoleModalTitle').textContent = '编辑角色';
+      document.getElementById('newRoleName').value = allRoles[idx].name;
+      document.getElementById('newRoleCode').value = allRoles[idx].code;
+      document.getElementById('newRoleDesc').value = allRoles[idx].desc;
+      document.getElementById('newRoleStatus').checked = allRoles[idx].status === '启用';
+      document.getElementById('addRoleModal').classList.add('open');
+    }
+
+    function saveRole() {
+      var name = document.getElementById('newRoleName').value.trim();
+      var desc = document.getElementById('newRoleDesc').value.trim();
+      var status = document.getElementById('newRoleStatus').checked ? '启用' : '停用';
+      if (!name) { alert('请填写角色名称'); return; }
+
+      if (editingRoleIndex >= 0) {
+        var oldRole = allRoles[editingRoleIndex];
+        if (status === '停用' && oldRole.status === '启用') {
+          var users = roleUsers[oldRole.name] || [];
+          if (users.length > 0) {
+            var confirmMsg = '角色「' + name + '」当前已关联 ' + users.length + ' 位用户，禁用后这些用户将失去该角色权限。是否确认禁用？';
+            if (!confirm(confirmMsg)) {
+              document.getElementById('newRoleStatus').checked = true;
+              return;
+            }
+          }
+        }
+        allRoles[editingRoleIndex].name = name;
+        allRoles[editingRoleIndex].desc = desc;
+        allRoles[editingRoleIndex].status = status;
+      }
+      closeModal('addRoleModal');
+      renderTable();
+    }
+
+    // Permission assignment
+    function openPermModal(idx) {
+      currentPermRole = allRoles[idx];
+      document.getElementById('permRoleName').textContent = '— ' + currentPermRole.name;
+      renderPermTree();
+      document.getElementById('permModal').classList.add('open');
+    }
+
+    function renderPermTree() {
+      var container = document.getElementById('permTreeContainer');
+      var html = '';
+      permModules.forEach(function(mod, mi) {
+        // 模块级别：带"全选"标签
+        html += '<div style="margin-bottom:4px">';
+        html += '<div style="display:flex;align-items:center;gap:6px;padding:6px 8px;background:var(--brand-50);border-radius:var(--radius-sm);cursor:pointer;font-weight:600;color:var(--brand-900);font-size:14px" onclick="toggleModule(' + mi + ')">';
+        html += '<svg class="w-4 h-4 flex-shrink-0" style="transform:' + (mod.collapsed ? 'rotate(-90deg)' : 'rotate(0)') + ';transition:transform .15s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+        html += '<label class="checkbox" onclick="event.stopPropagation()"><input type="checkbox" onchange="toggleModuleCheck(' + mi + ', this.checked)" id="modChk_' + mi + '">' + mod.name + '</label>';
+        html += '<span class="tag tag-perm-menu" style="margin-left:4px">全选</span>';
+        html += '</div>';
+        if (!mod.collapsed) {
+          mod.pages.forEach(function(page, pi) {
+            html += '<div style="margin-left:16px;margin-top:4px">';
+            // 页面级别：带"列表"标签
+            html += '<div style="display:flex;align-items:center;gap:6px;padding:4px 8px;border-radius:var(--radius-sm);font-size:14px;font-weight:500;color:var(--ink-700)">';
+            html += '<label class="checkbox" onclick="event.stopPropagation()"><input type="checkbox" onchange="togglePageCheck(' + mi + ',' + pi + ', this.checked)" id="pageChk_' + mi + '_' + pi + '">' + page.name + '</label>';
+            html += '<span class="tag tag-perm-list" style="margin-left:4px">列表</span>';
+            html += '</div>';
+            // 操作级别：带"按钮"标签
+            html += '<div style="margin-left:16px">';
+            page.perms.forEach(function(perm, oi) {
+              html += '<div style="padding:2px 0"><label class="perm-label" style="font-size:13px"><span class="checkbox"><input type="checkbox" onchange="togglePermCheck(' + mi + ',' + pi + ',' + oi + ', this.checked)" id="permChk_' + mi + '_' + pi + '_' + oi + '">' + perm + '</span><span class="tag tag-perm-button" style="margin-left:4px">按钮</span></label></div>';
+            });
+            html += '</div>';
+            html += '</div>';
+          });
+        }
+        html += '</div>';
+      });
+      container.innerHTML = html;
+    }
+
+    function toggleModule(mi) {
+      permModules[mi].collapsed = !permModules[mi].collapsed;
+      renderPermTree();
+    }
+
+    function toggleModuleCheck(mi, checked) {
+      var mod = permModules[mi];
+      mod.pages.forEach(function(page, pi) {
+        page.perms.forEach(function(perm, oi) {
+          var el = document.getElementById('permChk_' + mi + '_' + pi + '_' + oi);
+          if (el) el.checked = checked;
+        });
+        var pageEl = document.getElementById('pageChk_' + mi + '_' + pi);
+        if (pageEl) pageEl.checked = checked;
+      });
+    }
+
+    function togglePageCheck(mi, pi, checked) {
+      var page = permModules[mi].pages[pi];
+      page.perms.forEach(function(perm, oi) {
+        var el = document.getElementById('permChk_' + mi + '_' + pi + '_' + oi);
+        if (el) el.checked = checked;
+      });
+    }
+
+    function togglePermCheck(mi, pi, oi, checked) {
+      var page = permModules[mi].pages[pi];
+      if (!checked) {
+        var pageEl = document.getElementById('pageChk_' + mi + '_' + pi);
+        if (pageEl) pageEl.checked = false;
+      }
+      var allChecked = page.perms.every(function(perm, idx) {
+        var el = document.getElementById('permChk_' + mi + '_' + pi + '_' + idx);
+        return el && el.checked;
+      });
+      if (allChecked) {
+        var pageEl = document.getElementById('pageChk_' + mi + '_' + pi);
+        if (pageEl) pageEl.checked = true;
+      }
+    }
+
+    function savePermission() {
+      closeModal('permModal');
+    }
+
+    // User list drawer
+    function openUserListDrawer(idx) {
+      currentUserListRole = allRoles[idx];
+      document.getElementById('userListDrawerRole').textContent = '角色：' + currentUserListRole.name;
+      var users = roleUsers[currentUserListRole.name] || [];
+      renderUserListTable(users);
+      document.getElementById('userListDrawerMask').classList.add('open');
+      document.getElementById('userListDrawer').classList.add('open');
+    }
+
+    function renderUserListTable(users) {
+      var tbody = document.getElementById('userListTableBody');
+      var html = '';
+      users.forEach(function(u, i) {
+        var statusTag = u.status === '启用'
+          ? '<span class="status"><span class="status-dot s-success"></span>启用</span>'
+          : '<span class="status"><span class="status-dot s-danger"></span>停用</span>';
+
+        var taskBadge = '';
+        if (pendingTasks[u.empNo] && pendingTasks[u.empNo].length > 0) {
+          taskBadge = '<span class="tag tag-warning" style="margin-left:6px" title="' + pendingTasks[u.empNo].join('、') + '">' + pendingTasks[u.empNo].length + ' 个待办任务</span>';
+        }
+
+        var removeBtn = '';
+        if (pendingTasks[u.empNo] && pendingTasks[u.empNo].length > 0) {
+          removeBtn = '<span style="color:var(--ink-400);font-size:13px;cursor:not-allowed" title="有待办任务不可移除">移除</span>';
+        } else {
+          removeBtn = '<button class="btn-danger-ghost" onclick="removeUserFromRole(\'' + u.empNo + '\')">移除</button>';
+        }
+
+        html += '<tr><td style="color:var(--ink-500);font-family:var(--font-num);text-align:right">' + (i + 1) + '</td>'
+          + '<td style="font-weight:500">' + u.name + taskBadge + '</td>'
+          + '<td style="font-family:var(--font-mono);font-size:13px">' + u.empNo + '</td>'
+          + '<td>' + u.org + '</td>'
+          + '<td>' + u.position + '</td>'
+          + '<td>' + statusTag + '</td>'
+          + '<td style="text-align:right">' + removeBtn + '</td></tr>';
+      });
+      tbody.innerHTML = html;
+      document.getElementById('userListCount').textContent = users.length;
+    }
+
+    var selectedAddUsers = [];
+
+    function openAddUserToRoleModal() {
+      if (!currentUserListRole) return;
+      selectedAddUsers = [];
+      renderAvailableUsers();
+      document.getElementById('addUserToRoleModal').classList.add('open');
+    }
+
+    function renderAvailableUsers(filter) {
+      var container = document.getElementById('availableUserList');
+      var currentUsers = roleUsers[currentUserListRole.name] || [];
+      var available = allUsers.filter(function(u) {
+        var alreadyAssigned = currentUsers.some(function(cu){ return cu.empNo === u.empNo; });
+        if (alreadyAssigned) return false;
+        if (filter && u.name.indexOf(filter) === -1 && u.empNo.toLowerCase().indexOf(filter.toLowerCase()) === -1) return false;
+        return true;
+      });
+      if (available.length === 0) {
+        container.innerHTML = '<div style="padding:16px;text-align:center;color:var(--ink-400);font-size:13px">暂无可选用户</div>';
+        return;
+      }
+      var html = '';
+      available.forEach(function(u) {
+        var checked = selectedAddUsers.indexOf(u.empNo) > -1;
+        var statusTag = u.status === '启用'
+          ? '<span class="status"><span class="status-dot s-success"></span>启用</span>'
+          : '<span class="status"><span class="status-dot s-danger"></span>停用</span>';
+        html += '<div class="tree-option' + (checked ? ' selected' : '') + '" onclick="toggleSelectUser(this, \'' + u.empNo + '\')" style="justify-content:space-between">';
+        html += '<label class="checkbox"><input type="checkbox" ' + (checked ? 'checked' : '') + ' style="pointer-events:none">' + u.name + ' <span style="font-family:var(--font-mono);font-size:12px;color:var(--ink-500)">' + u.empNo + '</span></label>';
+        html += statusTag;
+        html += '</div>';
+      });
+      container.innerHTML = html;
+      document.getElementById('selectedUserCount').textContent = selectedAddUsers.length;
+    }
+
+    function toggleSelectUser(el, empNo) {
+      var idx = selectedAddUsers.indexOf(empNo);
+      if (idx > -1) {
+        selectedAddUsers.splice(idx, 1);
+        el.classList.remove('selected');
+        el.querySelector('input').checked = false;
+      } else {
+        selectedAddUsers.push(empNo);
+        el.classList.add('selected');
+        el.querySelector('input').checked = true;
+      }
+      document.getElementById('selectedUserCount').textContent = selectedAddUsers.length;
+    }
+
+    function filterAvailableUsers(val) {
+      renderAvailableUsers(val.trim());
+    }
+
+    function confirmAddUsersToRole() {
+      if (selectedAddUsers.length === 0) {
+        alert('请至少选择一个用户');
+        return;
+      }
+      var currentUsers = roleUsers[currentUserListRole.name] || [];
+      selectedAddUsers.forEach(function(empNo) {
+        var u = allUsers.find(function(a){ return a.empNo === empNo; });
+        if (u && !currentUsers.some(function(cu){ return cu.empNo === u.empNo; })) {
+          currentUsers.push({ name: u.name, empNo: u.empNo, org: u.org, position: u.position, status: u.status });
+        }
+      });
+      var role = allRoles.find(function(r){ return r.name === currentUserListRole.name; });
+      if (role) {
+        role.userCount = currentUsers.length;
+      }
+      closeModal('addUserToRoleModal');
+      var searchVal = document.getElementById('userListSearch').value.trim();
+      var filtered = currentUsers;
+      if (searchVal) {
+        filtered = currentUsers.filter(function(u) { return u.name.toLowerCase().indexOf(searchVal) > -1 || u.empNo.toLowerCase().indexOf(searchVal) > -1; });
+      }
+      renderUserListTable(filtered);
+      renderTable();
+    }
+
+    function removeUserFromRole(empNo) {
+      if (!currentUserListRole) return;
+      var users = roleUsers[currentUserListRole.name];
+      if (!users) return;
+      var user = users.find(function(u){ return u.empNo === empNo; });
+      if (!user) return;
+
+      if (pendingTasks[empNo] && pendingTasks[empNo].length > 0) {
+        alert('该用户当前有待审批任务：' + pendingTasks[empNo].join('、') + '，请先处理完成或转移审批任务后再移除。');
+        return;
+      }
+
+      if (users.length <= 1) {
+        alert('该角色下仅剩此用户，移除后该角色将无关联用户，建议先分配其他用户后再移除。');
+        return;
+      }
+      var idx = users.indexOf(user);
+      if (idx > -1) {
+        users.splice(idx, 1);
+      }
+      var role = allRoles.find(function(r){ return r.name === currentUserListRole.name; });
+      if (role) {
+        role.userCount = Math.max(0, role.userCount - 1);
+      }
+      var searchVal = document.getElementById('userListSearch').value.trim();
+      var filtered = users;
+      if (searchVal) {
+        filtered = users.filter(function(u) { return u.name.toLowerCase().indexOf(searchVal) > -1 || u.empNo.toLowerCase().indexOf(searchVal) > -1; });
+      }
+      renderUserListTable(filtered);
+      renderTable();
+    }
+
+    function filterUserList(val) {
+      var v = val.trim().toLowerCase();
+      var users = roleUsers[currentUserListRole.name] || [];
+      if (v) {
+        users = users.filter(function(u) { return u.name.toLowerCase().indexOf(v) > -1 || u.empNo.toLowerCase().indexOf(v) > -1; });
+      }
+      renderUserListTable(users);
+    }
+
+    function closeUserListDrawer() {
+      document.getElementById('userListDrawerMask').classList.remove('open');
+      document.getElementById('userListDrawer').classList.remove('open');
+      currentUserListRole = null;
+    }
+
+    // Delete (button hidden but function kept)
+    function handleDelete(idx) {
+      deletingRoleIndex = idx;
+      var r = allRoles[idx];
+      if (r.userCount > 0) {
+        document.getElementById('deleteModalDesc').textContent = '该角色已关联 ' + r.userCount + ' 位用户，请先解除关联用户/流程后再删除。';
+      } else {
+        document.getElementById('deleteModalDesc').textContent = '确认删除角色「' + r.name + '」？删除后不可恢复。';
+      }
+      document.getElementById('deleteModal').classList.add('open');
+    }
+
+    function confirmDelete() {
+      if (deletingRoleIndex >= 0) {
+        if (allRoles[deletingRoleIndex].userCount > 0) {
+          alert('请先解除关联用户/流程后再删除');
+        } else {
+          allRoles.splice(deletingRoleIndex, 1);
+          renderTable();
+        }
+      }
+      closeModal('deleteModal');
+    }
+
+    // ===== 批量导出 =====
+    function exportRoleData() {
+      var count = allRoles.length;
+      document.getElementById('exportCount').textContent = '共导出 ' + count + ' 条角色记录';
+      document.getElementById('exportModal').classList.add('open');
+    }
+
+    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+    // Modal click outside to close
+    document.querySelectorAll('.modal-mask').forEach(function(mask) {
+      mask.addEventListener('click', function(e) {
+        if (e.target === this) {
+          this.classList.remove('open');
+        }
+      });
+    });
+
+    // ESC close
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-mask.open').forEach(function(m) { m.classList.remove('open'); });
+        if (document.getElementById('userListDrawer').classList.contains('open')) closeUserListDrawer();
+      }
+    });
+
+    renderTable();
+  </script>
+</body>
+</html>

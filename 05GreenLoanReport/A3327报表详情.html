@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A3327报表详情 · 可持续金融管理系统</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --brand-50:#E8F0FB;--brand-100:#D1DFF4;--brand-500:#2A66C2;--brand-700:#143F8F;--brand-900:#01256A;
+            --green-50:#ECFDF5;--green-500:#10B981;--green-700:#047857;
+            --ink-900:#0F172A;--ink-800:#1E293B;--ink-600:#475569;--ink-500:#64748B;--ink-400:#94A3B8;--ink-300:#CBD5E1;
+            --line-200:#E2E8F0;--bg-muted:#F1F5F9;--bg-subtle:#F8FAFC;--white:#FFFFFF;
+            --radius-sm:4px;--radius-md:6px;--radius-lg:8px;--radius-xl:12px;--radius-2xl:16px;
+            --font-sans:'PingFang SC','Microsoft YaHei','Inter',system-ui,sans-serif;
+            --font-num:'Inter','SF Pro Display',system-ui,sans-serif;
+        }
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:var(--font-sans);color:var(--ink-800);background:var(--bg-subtle);font-size:13px;line-height:1.57;-webkit-font-smoothing:antialiased;height:100vh;overflow:hidden}
+        .custom-scroll::-webkit-scrollbar{width:6px;height:6px}
+        .custom-scroll::-webkit-scrollbar-track{background:transparent}
+        .custom-scroll::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}
+        .custom-scroll::-webkit-scrollbar-thumb:hover{background:var(--brand-500)}
+        .btn{display:inline-flex;align-items:center;gap:6px;border-radius:var(--radius-md);font-family:inherit;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid transparent;line-height:1;white-space:nowrap}
+        .btn-sm{padding:6px 12px;font-size:12px;line-height:20px;height:28px}
+        .btn-primary{background:var(--brand-500);color:#fff}.btn-primary:hover{background:var(--brand-700)}
+        .btn-secondary{background:var(--white);color:var(--ink-800);border-color:var(--ink-300)}.btn-secondary:hover{border-color:var(--brand-500);color:var(--brand-500)}
+        .btn-deep-blue{background:var(--brand-700);color:#fff}.btn-deep-blue:hover{background:var(--brand-900)}
+        .section-card{background:var(--white);border-radius:var(--radius-xl);border:1px solid var(--line-200);overflow:hidden;margin-bottom:14px}
+        .section-card .card-head{padding:12px 20px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);font-weight:600;color:var(--ink-900);font-size:14px;display:flex;align-items:center;justify-content:space-between}
+        .section-card .card-body{padding:0}
+        .info-bar{display:flex;flex-wrap:wrap;gap:8px 28px;padding:12px 20px;border-bottom:1px solid var(--line-200);font-size:13px}
+        .info-bar .item{display:flex;gap:4px}.info-bar .lbl{color:var(--ink-500)}.info-bar .val{color:var(--ink-900);font-weight:500}
+        table.rpt{width:100%;border-collapse:collapse;font-size:12px}
+        table.rpt th,table.rpt td{padding:6px 10px;border:1px solid var(--line-200);text-align:left;vertical-align:top;white-space:nowrap}
+        table.rpt th{background:var(--bg-muted);font-weight:600;color:var(--ink-600);font-size:11px;text-align:center}
+        table.rpt td.num{font-family:var(--font-num);text-align:right}
+        table.rpt .sec-header td{background:var(--brand-50);color:var(--brand-700);font-weight:600;font-size:12px}
+        table.rpt .sub-header td{background:#F8FAFC;color:var(--ink-600);font-weight:500}
+        table.rpt .total-row td{background:#F1F5F9;font-weight:600;color:var(--ink-900);border-top:2px solid var(--brand-300)}
+    </style>
+</head>
+<body>
+<div class="flex flex-col" style="height:100vh;background:var(--bg-subtle);">
+    <div class="flex items-center px-6 py-2 flex-shrink-0" style="background:var(--white);border-bottom:1px solid var(--line-200);">
+        <button onclick="goBackToList()" style="display:inline-flex;align-items:center;gap:6px;color:#2A66C2;font-weight:500;cursor:pointer;border:none;background:none;font-size:13px;font-family:inherit;padding:0 8px;height:30px;border-radius:6px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            返回列表
+        </button>
+        <span style="margin-left:10px;font-size:14px;font-weight:700;color:var(--ink-900);">A3327 绿色贷款专项统计表</span>
+        <span style="margin-left:12px;font-size:12px;color:var(--ink-500);">2025年第二季度</span>
+        <span style="margin-left:auto;font-size:12px;color:var(--ink-400);">报表编号：A3327-2025Q2 ｜ 系统自动生成 ｜ 生成时间：2025-07-01 00:05</span>
+    </div>
+    <div class="flex-1 overflow-y-auto custom-scroll" style="padding:12px 20px 20px;">
+
+        <!-- 附报指标 -->
+        <div class="section-card">
+            <div class="card-head">
+                <span>附报指标（2025年新增）</span>
+            </div>
+            <div style="padding:12px 20px;display:flex;gap:32px;flex-wrap:wrap;">
+                <div style="display:flex;gap:6px;font-size:14px;"><span style="color:var(--ink-500);">贷款户数：</span><span style="font-weight:600;font-family:var(--font-num);">48 户</span></div>
+                <div style="display:flex;gap:6px;font-size:14px;"><span style="color:var(--ink-500);">环境权益贷款余额：</span><span style="font-weight:600;font-family:var(--font-num);">32,560.00 万元</span></div>
+                <div style="display:flex;gap:6px;font-size:14px;"><span style="color:var(--ink-500);">年减二氧化碳当量：</span><span style="font-weight:600;font-family:var(--font-num);">18,456.78 吨</span></div>
+            </div>
+        </div>
+
+        <!-- 第一部分：绿色贷款 -->
+        <div class="section-card">
+            <div class="card-head"><span>第一部分：绿色贷款</span><span style="font-size:12px;font-weight:400;color:var(--ink-500);">单位：万元</span></div>
+            <div class="card-body">
+                <div class="custom-scroll" style="overflow:auto;max-height:300px;">
+                <table class="rpt">
+                    <thead><tr><th style="width:36px;">序号</th><th style="width:90px;">指标代码</th><th>分类</th><th style="width:110px;">贷款余额</th><th style="width:72px;">占比%</th><th style="width:64px;">户数</th></tr></thead>
+                    <tbody>
+                        <tr class="sec-header"><td colspan="6">（一）按贷款用途划分</td></tr>
+                        <tr><td>1</td><td>3G101</td><td>绿色农业开发项目贷款</td><td class="num">8,520.00</td><td class="num">5.43</td><td class="num">5</td></tr>
+                        <tr><td>2</td><td>3G102</td><td>绿色林业开发项目贷款</td><td class="num">3,200.00</td><td class="num">2.04</td><td class="num">2</td></tr>
+                        <tr><td>3</td><td>3G103</td><td>工业节能节水环保项目贷款</td><td class="num">28,450.00</td><td class="num">18.14</td><td class="num">8</td></tr>
+                        <tr><td>4</td><td>3G104</td><td>自然保护、生态修复及灾害防控项目贷款</td><td class="num">12,380.00</td><td class="num">7.89</td><td class="num">4</td></tr>
+                        <tr><td>5</td><td>3G105</td><td>资源循环利用项目贷款</td><td class="num">15,670.00</td><td class="num">9.99</td><td class="num">5</td></tr>
+                        <tr><td>6</td><td>3G106</td><td>垃圾处理及污染防治项目贷款</td><td class="num">9,850.00</td><td class="num">6.28</td><td class="num">3</td></tr>
+                        <tr><td>7</td><td>3G107</td><td>可再生能源及清洁能源项目贷款</td><td class="num">45,680.00</td><td class="num">29.12</td><td class="num">12</td></tr>
+                        <tr><td>8</td><td>3G108</td><td>农村及城市水项目贷款</td><td class="num">6,420.00</td><td class="num">4.09</td><td class="num">2</td></tr>
+                        <tr><td>9</td><td>3G109</td><td>建筑节能及绿色建筑项目贷款</td><td class="num">18,600.00</td><td class="num">11.86</td><td class="num">6</td></tr>
+                        <tr><td>10</td><td>3G110</td><td>绿色交通运输项目贷款</td><td class="num">9,400.00</td><td class="num">5.99</td><td class="num">3</td></tr>
+                        <tr><td>11</td><td>3G111</td><td>节能环保服务贷款</td><td class="num">4,350.00</td><td class="num">2.77</td><td class="num">2</td></tr>
+                        <tr><td>12</td><td>3G112</td><td>采用国际惯例或国际标准的境外项目贷款</td><td class="num">2,500.00</td><td class="num">1.59</td><td class="num">1</td></tr>
+                        <tr class="total-row"><td colspan="2">用途维度小计</td><td class="num">156,832.50</td><td class="num">100.00</td><td class="num">48</td></tr>
+
+                        <tr class="sec-header"><td colspan="6">（二）按贷款承贷主体所属行业划分（GB/T 4754）</td></tr>
+                        <tr><td>1</td><td>3G921</td><td>A.农、林、牧、渔业</td><td class="num">11,720.00</td><td class="num">7.47</td><td class="num">7</td></tr>
+                        <tr><td>2</td><td>3G923</td><td>C.制造业</td><td class="num">38,450.00</td><td class="num">24.52</td><td class="num">12</td></tr>
+                        <tr><td>3</td><td>3G924</td><td>D.电力、热力、燃气及水生产和供应业</td><td class="num">52,680.00</td><td class="num">33.59</td><td class="num">14</td></tr>
+                        <tr><td>4</td><td>3G925</td><td>E.建筑业</td><td class="num">18,600.00</td><td class="num">11.86</td><td class="num">6</td></tr>
+                        <tr><td>5</td><td>3G927</td><td>G.交通运输、仓储和邮政业</td><td class="num">9,400.00</td><td class="num">5.99</td><td class="num">3</td></tr>
+                        <tr><td>6</td><td>3G934</td><td>N.水利、环境和公共设施管理业</td><td class="num">18,800.00</td><td class="num">11.99</td><td class="num">5</td></tr>
+                        <tr><td>7</td><td>3G953</td><td>个人（境内）贷款</td><td class="num">7,182.50</td><td class="num">4.58</td><td class="num">1</td></tr>
+                        <tr class="total-row"><td colspan="2">行业维度小计</td><td class="num">156,832.50</td><td class="num">100.00</td><td class="num">48</td></tr>
+
+                        <tr class="sec-header"><td colspan="6">（三）按贷款质量划分（五级分类）</td></tr>
+                        <tr><td>1</td><td>3G151</td><td>正常类贷款</td><td class="num">148,520.00</td><td class="num">94.70</td><td class="num">44</td></tr>
+                        <tr><td>2</td><td>3G152</td><td>关注类贷款</td><td class="num">5,850.00</td><td class="num">3.73</td><td class="num">3</td></tr>
+                        <tr><td>3</td><td>3G153</td><td>次级类贷款</td><td class="num">1,462.50</td><td class="num">0.93</td><td class="num">1</td></tr>
+                        <tr><td>4</td><td>3G154</td><td>可疑类贷款</td><td class="num">1,000.00</td><td class="num">0.64</td><td class="num">0</td></tr>
+                        <tr><td>5</td><td>3G155</td><td>损失类贷款</td><td class="num">0.00</td><td class="num">0.00</td><td class="num">0</td></tr>
+                        <tr class="total-row"><td colspan="2">质量维度小计</td><td class="num">156,832.50</td><td class="num">100.00</td><td class="num">48</td></tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第二部分：重大风险企业贷款 -->
+        <div class="section-card">
+            <div class="card-head"><span>第二部分：环境、安全等重大风险企业贷款</span><span style="font-size:12px;font-weight:400;color:var(--ink-500);">单位：万元</span></div>
+            <div class="card-body">
+                <div class="custom-scroll" style="overflow:auto;max-height:250px;">
+                <table class="rpt">
+                    <thead><tr><th style="width:36px;">序号</th><th style="width:90px;">指标代码</th><th>分类</th><th style="width:110px;">贷款余额</th><th style="width:72px;">占比%</th><th style="width:64px;">户数</th></tr></thead>
+                    <tbody>
+                        <tr class="sec-header"><td colspan="6">（一）按企业类别划分</td></tr>
+                        <tr><td>1</td><td>3G201</td><td>环境违法违规企业贷款</td><td class="num">3,200.00</td><td class="num">38.10</td><td class="num">2</td></tr>
+                        <tr><td>2</td><td>3G202</td><td>安全生产违法违规企业贷款</td><td class="num">1,800.00</td><td class="num">21.43</td><td class="num">1</td></tr>
+                        <tr><td>3</td><td>3G203</td><td>其他重大风险企业贷款</td><td class="num">3,400.00</td><td class="num">40.48</td><td class="num">2</td></tr>
+                        <tr class="total-row"><td colspan="2">企业类别小计</td><td class="num">8,400.00</td><td class="num">100.00</td><td class="num">5</td></tr>
+
+                        <tr class="sec-header"><td colspan="6">（二）按贷款质量划分</td></tr>
+                        <tr><td>1</td><td>3G251</td><td>正常类贷款</td><td class="num">5,200.00</td><td class="num">61.90</td><td class="num">3</td></tr>
+                        <tr><td>2</td><td>3G252</td><td>关注类贷款</td><td class="num">2,400.00</td><td class="num">28.57</td><td class="num">1</td></tr>
+                        <tr><td>3</td><td>3G253</td><td>次级类贷款</td><td class="num">800.00</td><td class="num">9.52</td><td class="num">1</td></tr>
+                        <tr class="total-row"><td colspan="2">质量维度小计</td><td class="num">8,400.00</td><td class="num">100.00</td><td class="num">5</td></tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;gap:10px;padding:8px 0 20px;">
+            <button class="btn btn-deep-blue btn-sm" onclick="downloadReport()">📥 下载Excel</button>
+            <button class="btn btn-secondary btn-sm" onclick="goBackToList()">← 返回列表</button>
+        </div>
+    </div>
+</div>
+<script>
+    function getCurrentDir(){var p=window.location.pathname;return p.substring(0,p.lastIndexOf('/')+1)}
+    function goBackToList(){
+        var dir=getCurrentDir();var targetUrl=dir+'A3327报表列表.html';
+        if(window.parent!==window){
+            window.parent.postMessage({type:'openPage',pageId:'a3327-list-'+Date.now(),file:targetUrl,label:'A3327报表列表'},'*');
+        }else{window.location.href=targetUrl}
+    }
+    function downloadReport(){
+        if(confirm('确认下载 A3327-2025Q2 报表Excel文件？')){
+            alert('✅ 下载成功！\n\n文件：A3327绿色贷款专项统计表_2025Q2.xlsx');
+        }
+    }
+</script>
+</body>
+</html>

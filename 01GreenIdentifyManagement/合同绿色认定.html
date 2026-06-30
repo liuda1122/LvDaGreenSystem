@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>合同绿色认定 · 可持续金融管理系统</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --brand-50: #E8F0FB; --brand-100: #D1DFF4; --brand-300: #6E97D6;
+      --brand-500: #2A66C2; --brand-700: #143F8F; --brand-900: #01256A;
+      --green-50: #ECFDF5; --green-500: #10B981; --green-700: #047857;
+      --success: #10B981; --success-bg: #ECFDF5; --success-border: #A7F3D0;
+      --warning: #D97706; --warning-bg: #FFFBEB; --warning-border: #FDE68A;
+      --danger: #DC2626;  --danger-bg: #FEF2F2;  --danger-border: #FECACA;
+      --info: #2A66C2;    --info-bg: #E8F0FB;    --info-border: #D1DFF4;
+      --ink-900: #0F172A; --ink-800: #1E293B; --ink-600: #475569;
+      --ink-500: #64748B; --ink-400: #94A3B8; --ink-300: #CBD5E1;
+      --line-200: #E2E8F0; --bg-muted: #F1F5F9; --bg-subtle: #F8FAFC;
+      --white: #FFFFFF;
+      --radius-sm: 4px; --radius-md: 6px; --radius-lg: 8px;
+      --radius-xl: 12px; --radius-2xl: 16px;
+      --shadow-lg: 0 10px 24px rgba(15,23,42,.10),0 4px 8px rgba(15,23,42,.04);
+      --shadow-xl: 0 20px 40px rgba(15,23,42,.16),0 8px 16px rgba(15,23,42,.06);
+      --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px; --s-8: 32px;
+      --font-sans: 'PingFang SC','Microsoft YaHei','Inter',system-ui,sans-serif;
+      --font-num: 'Inter','SF Pro Display',system-ui,sans-serif;
+      --font-mono: 'JetBrains Mono','SF Mono','Menlo','Consolas',monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); color: var(--ink-800); background: var(--bg-subtle); font-size: 14px; line-height: 1.57; -webkit-font-smoothing: antialiased; }
+    .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background: var(--brand-500); }
+    .top-menu-item { transition: all .2s ease; cursor: pointer; }
+    .top-menu-item:hover { background: rgba(42,102,194,.06); color: var(--brand-900); }
+    .top-menu-item.active { background: rgba(42,102,194,.1); color: var(--brand-900); box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+    .side-menu-item { transition: all .2s ease; cursor: pointer; }
+    .side-menu-item:hover { background: #F1F5F9; border-radius: 6px; color: var(--brand-900); }
+    .side-menu-item.active { background: rgba(42,102,194,.1); color: var(--brand-900); font-weight: 500; border-radius: 8px; }
+    .btn { display: inline-flex; align-items: center; gap: 6px; border-radius: var(--radius-md); font-family: inherit; font-weight: 500; cursor: pointer; transition: all .15s; border: 1px solid transparent; line-height: 1; white-space: nowrap; }
+    .btn-sm { padding: 6px 12px; font-size: 12px; line-height: 20px; height: 28px; }
+    .btn-md { padding: 8px 16px; font-size: 14px; line-height: 22px; height: 32px; }
+    .btn-primary { background: var(--brand-500); color: #fff; }
+    .btn-primary:hover { background: var(--brand-700); }
+    .btn-secondary { background: var(--white); color: var(--ink-800); border-color: var(--ink-300); }
+    .btn-secondary:hover { border-color: var(--brand-500); color: var(--brand-500); }
+    .btn-ghost { background: transparent; color: var(--brand-500); border: none; padding: 4px 8px; font-size: 13px; }
+    .btn-ghost:hover { background: var(--brand-50); }
+    .btn svg { width: 14px; height: 14px; stroke-width: 1.75; }
+    .tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; line-height: 1.5; border: 1px solid transparent; white-space: nowrap; }
+    .tag-default { background: var(--bg-muted); color: var(--ink-600); border-color: var(--line-200); }
+    .tag-success { background: var(--success-bg); color: var(--green-700); border-color: var(--success-border); }
+    .tag-danger { background: var(--danger-bg); color: var(--danger); border-color: var(--danger-border); }
+    .tag-warning { background: var(--warning-bg); color: var(--warning); border-color: var(--warning-border); }
+    .tag-info { background: var(--info-bg); color: var(--info); border-color: var(--info-border); }
+    .section-card { background: var(--white); border-radius: var(--radius-xl); border: 1px solid var(--line-200); overflow: hidden; }
+    .breadcrumb { display: flex; align-items: center; gap: 8px; color: var(--ink-500); font-size: 14px; }
+    .breadcrumb a { color: var(--ink-500); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--brand-500); }
+    .leaf-sway { animation: leaf-sway 3.5s ease-in-out infinite; transform-origin: 50% 90%; }
+    @keyframes leaf-sway { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+    @keyframes breathe { 0%,100% { opacity: .4; transform: scale(1); } 50% { opacity: .7; transform: scale(1.08); } }
+    .breathe { animation: breathe 4s ease-in-out infinite; }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    .shimmer-text { background: linear-gradient(90deg,var(--brand-900) 0%,var(--brand-500) 40%,var(--green-500) 60%,var(--brand-900) 100%); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 6s linear infinite; }
+    /* 冻结列 */
+    .table-wrap { position: relative; overflow-x: auto; }
+    .table-wrap table { border-collapse: separate; border-spacing: 0; }
+    .table-wrap th, .table-wrap td { white-space: nowrap; }
+    .sticky-right { position: sticky; right: 0; z-index: 10; background: var(--white); border-left: 1px solid var(--line-200); }
+    .sticky-right-header { position: sticky; right: 0; z-index: 20; background: var(--bg-muted); border-left: 1px solid var(--line-200); }
+
+    /* 筛选栏水平布局 */
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 16px;
+    }
+    .filter-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .filter-item label {
+      font-size: 12px;
+      color: var(--ink-500);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .filter-item input,
+    .filter-item select {
+      padding: 4px 8px;
+      border: 1px solid var(--line-200);
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      background: var(--white);
+      outline: none;
+      transition: border-color .2s;
+      height: 28px;
+    }
+    .filter-item input:focus,
+    .filter-item select:focus {
+      border-color: var(--brand-500);
+    }
+    .filter-item input[type="text"] { min-width: 120px; }
+    .filter-item select { min-width: 100px; }
+    .filter-item input[type="date"] { min-width: 120px; }
+
+    .filter-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+      margin-left: 4px;
+    }
+
+    /* 弹窗 */
+    .modal-mask {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,.55);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(2px);
+    }
+    .modal-mask.open { display: flex; }
+    .modal-box {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 28px 32px 24px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: var(--shadow-xl);
+      animation: modalIn .2s ease-out;
+      text-align: center;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-box .icon { font-size: 40px; margin-bottom: 12px; }
+    .modal-box h3 { font-size: 17px; font-weight: 600; color: var(--ink-900); margin-bottom: 6px; }
+    .modal-box p { font-size: 14px; color: var(--ink-500); margin-bottom: 16px; }
+    .modal-box .btn-group { display: flex; gap: 8px; justify-content: center; }
+
+    /* ===== 
+    备注 - 美观样式 ===== */
+    .dev-note-container {
+      background: linear-gradient(135deg, #F0F4FF 0%, #E8F4F0 100%);
+      border: 2px dashed var(--brand-500);
+      border-radius: var(--radius-xl);
+      padding: 16px 20px;
+      margin-top: 16px;
+      position: relative;
+    }
+    .dev-note-container::before {
+      content: '🔧 
+      备注';
+      position: absolute;
+      top: -12px;
+      left: 20px;
+      background: var(--white);
+      padding: 0 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--brand-700);
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+    .dev-note-container .note-body {
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--ink-700);
+      padding-top: 6px;
+    }
+    .dev-note-container .note-body strong {
+      color: var(--brand-700);
+      font-weight: 600;
+    }
+    .dev-note-container .note-body .step {
+      display: block;
+      margin-top: 6px;
+      padding-left: 8px;
+      border-left: 3px solid var(--brand-300);
+      padding-left: 12px;
+    }
+    .dev-note-container .note-body .step:first-child {
+      margin-top: 0;
+    }
+    .dev-note-container .note-body .label-tag {
+      display: inline-block;
+      background: var(--brand-50);
+      color: var(--brand-700);
+      font-weight: 600;
+      padding: 0 8px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="flex flex-col" style="height:100vh;">
+  <!-- Main -->
+  <main class="flex-1 flex flex-col overflow-hidden" style="background:var(--bg-subtle)">
+    <!-- 列表区域 -->
+    <div class="flex-1 overflow-y-auto custom-scroll" style="padding:var(--s-6)">
+      <div class="section-card">
+        <!-- 筛选栏 - 水平布局 -->
+        <div style="padding:12px 20px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle)">
+          <div class="filter-row">
+            <!-- 合同信息 -->
+            <div class="filter-item">
+              <label>合同信息</label>
+              <input type="text" placeholder="请输入合同名称/编号">
+            </div>
+            <!-- 客户信息 -->
+            <div class="filter-item">
+              <label>客户信息</label>
+              <input type="text" placeholder="企业名称/编号/统一社会信用">
+            </div>
+            <!-- 贷款投向行业 -->
+            <div class="filter-item">
+              <label>贷款投向行业</label>
+              <select><option>请选择</option></select>
+            </div>
+            <!-- 业务品种 -->
+            <div class="filter-item">
+              <label>业务品种</label>
+              <select><option>请选择</option></select>
+            </div>
+            <!-- 业务条线 -->
+            <div class="filter-item">
+              <label>业务条线</label>
+              <select><option>请选择</option></select>
+            </div>
+            <!-- 所属分支机构 -->
+            <div class="filter-item">
+              <label>所属分支机构</label>
+              <select><option>请选择</option></select>
+            </div>
+            <!-- 管户人 -->
+            <div class="filter-item">
+              <label>管户人</label>
+              <input type="text" placeholder="请输入姓名/工号">
+            </div>
+            <!-- 合同类型 -->
+            <div class="filter-item">
+              <label>合同类型</label>
+              <select><option>请选择</option><option>项目类</option><option>非项目类</option></select>
+            </div>
+            <!-- 智能识别是否命中 -->
+            <div class="filter-item">
+              <label>智能识别是否命中</label>
+              <select>
+                <option>全部</option>
+                <option>命中</option>
+                <option>未命中</option>
+                <option>-</option>
+              </select>
+            </div>
+            <!-- 最近更新时间 -->
+            <div class="filter-item">
+              <label>最近更新时间</label>
+              <input type="date" value="2015-10-02">
+              <span style="color:var(--ink-400);font-size:13px;">~</span>
+              <input type="date" value="2015-10-10">
+            </div>
+            <!-- 查询/重置按钮 -->
+            <div class="filter-actions">
+              <button class="btn btn-primary btn-sm">查询</button>
+              <button class="btn btn-secondary btn-sm">重置</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 操作栏 -->
+        <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100">
+          <div class="flex gap-2"><button class="btn btn-primary btn-sm">+ 新增认定</button><button class="btn btn-secondary btn-sm">导出数据</button></div>
+          <span class="text-sm text-slate-400">共 1126 条</span>
+        </div>
+
+        <!-- 表格 -->
+        <div class="table-wrap custom-scroll">
+          <table class="w-full text-sm border-collapse">
+            <thead style="background:var(--bg-muted);border-bottom:1px solid var(--line-200)">
+              <tr>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:80px;">合同编号</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;">业务品种大类</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;">业务品种</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;">合同金额(万元)</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;">合同余额(万元)</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;">贷款投向行业</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;">合同类型</th>
+                <!-- 智能识别是否命中 -->
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;">智能识别是否命中</th>
+                <!-- 信贷系统2025绿色认定分类（必须展示具体分类，不能只显示"绿色"） -->
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:140px;">信贷系统2025绿色认定分类</th>
+                <!-- 项目是否已有绿色贷款（放在信贷系统识别结果之后） -->
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:120px;">项目是否已有绿色贷款</th>
+                <!-- 客户是否已有绿色贷款（放在信贷系统识别结果之后） -->
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:130px;">客户是否已有绿色贷款</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:90px;">业务条线</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:80px;">合同状态</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;">项目代码</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:120px;">项目名称</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;">客户编号</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:130px;">客户名称</th>
+                <!-- 国民经济行业大类（二级分类） -->
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:120px;">国民经济行业大类</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;">客户国民经济行业</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:120px;">所属分支机构</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;">管户人</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;">操作人</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:130px;">最近更新时间</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;">创建时间</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600 sticky-right-header" style="min-width:80px;border-left:1px solid var(--line-200);">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- 行1：项目类 -->
+              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="project">
+                <td class="px-2 py-2 font-mono text-brand-600" style="white-space:nowrap;">2021012900000050</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">固定项目贷</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">固定项目贷</td>
+                <td class="px-2 py-2 font-num" style="white-space:nowrap;">100,030.00</td>
+                <td class="px-2 py-2 font-num" style="white-space:nowrap;">90,000,000.00</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">炼钢</td>
+                <td class="px-2 py-2"><span class="tag tag-info">项目类</span></td>
+                <td class="px-2 py-2"><span class="tag tag-success">命中</span></td>
+                <!-- 信贷系统2025绿色认定分类：必须展示具体分类 -->
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">1.1.1节能锅炉制造</span></td>
+                <td class="px-2 py-2"><span class="tag tag-success">是</span></td>
+                <td class="px-2 py-2"><span class="tag tag-success">是</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;">对公</td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">生效</span></td>
+                <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">PRJNO202004261603</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">炼钢产能等量置换转型升级项目</td>
+                <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
+                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;">迁安轧一钢铁集团有限公司</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">C31 黑色金属冶炼和压延加工业</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">炼钢</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">北京分行</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">张三/000001</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">王五/001</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
+                <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
+                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)">查看详情</button>
+                </td>
+              </tr>
+              <!-- 行2：项目类 -->
+              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="project">
+                <td class="px-2 py-2 font-mono text-brand-600" style="white-space:nowrap;">2021012900055550</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">固定项目贷</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">技改项目贷款</td>
+                <td class="px-2 py-2 font-num" style="white-space:nowrap;">300,000.00</td>
+                <td class="px-2 py-2 font-num" style="white-space:nowrap;">230,000,000.00</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">太阳能发电</td>
+                <td class="px-2 py-2"><span class="tag tag-info">项目类</span></td>
+                <td class="px-2 py-2"><span class="tag tag-danger">未命中</span></td>
+                <!-- 信贷系统2025绿色认定分类：非绿也展示具体状态 -->
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-danger">非绿</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default">否</span></td>
+                <td class="px-2 py-2"><span class="tag tag-success">是</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;">对公</td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">生效</span></td>
+                <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">PRJNO202103091119</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">光伏发电项目</td>
+                <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
+                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;">浙江阿波溪仑光伏科技有限公司</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">D44 电力、热力生产和供应业</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">热电联产</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">北京分行</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">张三/000001</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">李四/002</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
+                <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
+                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)">查看详情</button>
+                </td>
+              </tr>
+              <!-- 行3：非项目类 -->
+              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="non-project">
+                <td class="px-2 py-2 font-mono text-brand-600" style="white-space:nowrap;">2021012900000052</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">流动资金贷款</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">一般流行性资金贷款</td>
+                <td class="px-2 py-2 font-num" style="white-space:nowrap;">200,000.00</td>
+                <td class="px-2 py-2 font-num" style="white-space:nowrap;">9,000,000.00</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">太阳能发电</td>
+                <td class="px-2 py-2"><span class="tag tag-default">非项目类</span></td>
+                <td class="px-2 py-2"><span class="tag tag-success">命中</span></td>
+                <!-- 信贷系统2025绿色认定分类：必须展示具体分类 -->
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">1.1.1节能锅炉制造</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default">—</span></td>
+                <td class="px-2 py-2"><span class="tag tag-success">是</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;">对公</td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">生效</span></td>
+                <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">—</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">—</td>
+                <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
+                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;">安吉临港热电有限公司</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">D44 电力、热力生产和供应业</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">热电联产</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">北京分行</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">张三/000001</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">赵六/003</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
+                <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
+                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)">查看详情</button>
+                </td>
+              </tr>
+              <!-- 行4：非项目类 -->
+              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="non-project">
+                <td class="px-2 py-2 font-mono text-brand-600" style="white-space:nowrap;">2021012900000053</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">流动资金贷款</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">一般流行性资金贷款</td>
+                <td class="px-2 py-2 font-num" style="white-space:nowrap;">90,000.00</td>
+                <td class="px-2 py-2 font-num" style="white-space:nowrap;">6,000,000.00</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">太阳能发电</td>
+                <td class="px-2 py-2"><span class="tag tag-default">非项目类</span></td>
+                <td class="px-2 py-2"><span class="tag tag-success">命中</span></td>
+                <!-- 信贷系统2025绿色认定分类：必须展示具体分类 -->
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">3.2.7 废气回收利用</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default">—</span></td>
+                <td class="px-2 py-2"><span class="tag tag-success">是</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;">对公</td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">生效</span></td>
+                <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">—</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">—</td>
+                <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
+                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;">重庆绿能新能源有限公司</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">D44 电力、热力生产和供应业</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">太阳能发电</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">重庆银行渝北支行</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">张三/000001</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">王五/001</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
+                <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
+                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)">查看详情</button>
+                </td>
+              </tr>
+              <!-- 行5：非项目类 -->
+              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="non-project">
+                <td class="px-2 py-2 font-mono text-brand-600" style="white-space:nowrap;">2021012900000054</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">流动资金贷款</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">一般流行性资金贷款</td>
+                <td class="px-2 py-2 font-num" style="white-space:nowrap;">70,000.00</td>
+                <td class="px-2 py-2 font-num" style="white-space:nowrap;">20,000,000.00</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">大气污染治理</td>
+                <td class="px-2 py-2"><span class="tag tag-default">非项目类</span></td>
+                <td class="px-2 py-2"><span class="tag tag-success">命中</span></td>
+                <!-- 信贷系统2025绿色认定分类：必须展示具体分类 -->
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">2.5.2 危险废物处理处置</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default">—</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default">否</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;">小微</td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">生效</span></td>
+                <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">—</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">—</td>
+                <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
+                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;">重庆市煌发建筑劳务有限公司</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">E48 土木工程建筑业</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">热力生产和供应</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">重庆银行渝北支行</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">张三/000001</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">李四/002</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
+                <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
+                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)">查看详情</button>
+                </td>
+              </tr>
+              <!-- 行6：非项目类 -->
+              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="non-project">
+                <td class="px-2 py-2 font-mono text-brand-600" style="white-space:nowrap;">2021012900000055</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">流动资金贷款</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">XXX贷</td>
+                <td class="px-2 py-2 font-num" style="white-space:nowrap;">107,000.00</td>
+                <td class="px-2 py-2 font-num" style="white-space:nowrap;">980,000,000.00</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">大气污染治理</td>
+                <td class="px-2 py-2"><span class="tag tag-default">非项目类</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default">-</span></td>
+                <!-- 信贷系统2025绿色认定分类：非绿展示具体状态 -->
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-danger">非绿</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default">—</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default">否</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;">小微</td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">生效</span></td>
+                <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">—</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">—</td>
+                <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
+                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;">湖州吴兴南太湖建设投资有限公司</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">E48 土木工程建筑业</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">热力生产和供应</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">重庆银行渝北支行</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">张三/000001</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">赵六/003</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
+                <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
+                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)">查看详情</button>
+                </td>
+              </tr>
+              <!-- 行7：非项目类 -->
+              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="non-project">
+                <td class="px-2 py-2 font-mono text-brand-600" style="white-space:nowrap;">2021012900000058</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">流动资金贷款</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">XXX贷</td>
+                <td class="px-2 py-2 font-num" style="white-space:nowrap;">10,000.00</td>
+                <td class="px-2 py-2 font-num" style="white-space:nowrap;">78,000,000.00</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">炼铁</td>
+                <td class="px-2 py-2"><span class="tag tag-default">非项目类</span></td>
+                <td class="px-2 py-2"><span class="tag tag-danger">未命中</span></td>
+                <!-- 信贷系统2025绿色认定分类：非绿展示具体状态 -->
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-danger">非绿</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default">—</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default">否</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;">零售</td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">生效</span></td>
+                <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">—</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">—</td>
+                <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
+                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;">李XX</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">F52 零售业</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">炼铁</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">北京分行</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">张三/000001</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">王五/001</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
+                <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
+                <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
+                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)">查看详情</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- 分页 -->
+        <div class="flex items-center justify-between px-6 py-3 border-t border-slate-100">
+          <span class="text-sm text-slate-400">共 1126 条</span>
+          <div class="flex items-center gap-2"><button class="btn btn-secondary btn-sm">‹</button><span class="px-2 py-1 text-sm bg-brand-500 text-white rounded">1</span><button class="btn btn-secondary btn-sm">2</button><button class="btn btn-secondary btn-sm">3</button><span class="text-sm text-slate-400">…</span><button class="btn btn-secondary btn-sm">50</button><button class="btn btn-secondary btn-sm">›</button><span class="text-sm text-slate-500 ml-2">跳至 <input type="number" class="w-12 px-1 py-0.5 border border-slate-300 rounded text-center text-sm" value="1"> /50页</span></div>
+        </div>
+
+        <!-- ===== 
+         备注 - 美观样式 ===== -->
+        <div class="dev-note-container">
+          <div class="note-body">
+            <span class="label-tag">业务流程</span>
+            <span class="step">
+              <strong>第一步：发起合同绿色认定</strong><br>
+              自动发起流程：信贷系统放贷环节，符合以下条件的合同自动发起碳排放核算：【合同状态为“有效”。创建时间“待确认”】。<br>
+              手动发起流程：输入合同编号/客户编号查询为创建认定任务的合同数据，点击发起按钮，弹出确认弹窗，客户经理点击确认后，发起合同绿色认定。
+            </span>
+            <span class="step">
+              <strong>第二步：模型自动认定</strong><br>
+              合同绿色认定发起成功后，自动调用模型，基于合同融资用途生成智能识别结果。并与信贷系统识别结果做对比，若模型识别的浅明分类其中一个与信贷系统识别结果一致，则为“命中”，三个都与信贷系统分类不一致，则为“未命中”。信贷系统未保存分类，则显示为“-”。
+            </span>
+            <span class="step">
+              <strong>第三步：业务人员重新识别</strong><br>
+              不强制，支持业务人员修改“融资用途”，点击查看页面的【重新识别】按钮，调用模型重新识别。点击【保存】按钮，保存模型重新识别结果。（预留：识别过程记录口子，后续可能增加每次模型识别记录展示功能。）
+            </span>
+            <span class="step" style="margin-top:8px;">
+              <strong>列表贷款查看权限及操作权限：</strong>业务人员看自己主办的贷款数据、分行看自己机构及下设机构的贷款数据，浙江省分行看整个浙江省的。有本合同查看权限的人均有列表【查看详情】按钮，及详情页：“融资用途”编辑，及【重新识别】按钮操作权限。
+            </span>
+            <span class="step" style="margin-top:8px;">
+              <strong>列表字段含义说明：</strong>1.智能识别是否命中：“命中”、“未命中”、“-”。基于合同融资用途生成智能识别结果与信贷系统识别结果做对比，若模型识别的浅明分类其中一个与信贷系统识别结果一致，则为“命中”，三个都与信贷系统分类不一致，则为“未命中”。信贷系统未保存分类，则显示为“-”。	2.信贷系统2025绿色认定分类：对接行内信贷系统，贷款绿色认定结果	3.项目是否已有绿色贷款：本项目关联的项目贷是否存在“信贷系统认定为绿色记录”	4.客户是否已有绿色贷款：本客户关联的所有贷款是否存在“信贷系统认定为绿色记录”
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- 提示弹窗 -->
+<div class="modal-mask" id="infoModal">
+  <div class="modal-box">
+    <div class="icon">📋</div>
+    <h3>只读模式</h3>
+    <p id="modalMessage">展示本合同绿色认定结果</p>
+    <div class="btn-group">
+      <button class="btn btn-primary btn-sm" onclick="closeModal()">我知道了</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ==================== 获取当前路径 ====================
+  function getCurrentDir() {
+    var path = window.location.pathname;
+    return path.substring(0, path.lastIndexOf('/') + 1);
+  }
+
+  // ==================== 处理"查看详情"按钮 ====================
+    // ==================== 处理"查看详情"按钮 ====================
+  function handleView(btn) {
+    var dir = getCurrentDir();
+    // 所有合同统一跳转到非项目类详情页
+    window.location.href = dir + 'contract-green-identify-detail-nonproject.html';
+  }
+
+  // ==================== 弹窗控制 ====================
+  function showModal(message) {
+    var modal = document.getElementById('infoModal');
+    var msg = document.getElementById('modalMessage');
+    msg.textContent = message || '展示本合同绿色认定结果';
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    var modal = document.getElementById('infoModal');
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('infoModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // ==================== 新增认定 ====================
+  document.querySelector('.btn-primary.btn-sm')?.addEventListener('click', function(e) {
+    if (this.textContent.trim() === '+ 新增认定') {
+      var dir = getCurrentDir();
+      window.location.href = dir + '合同绿色认定详情页-项目类.html';
+    }
+  });
+</script>
+
+</body>
+</html>

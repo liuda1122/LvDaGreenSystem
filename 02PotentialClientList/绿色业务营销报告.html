@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绿色业务营销报告 · 动态版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入报告数据（内容与UI分离） -->
+    <script src="report-data.js"></script>
+    <style>
+        /* ===== 全局变量 ===== */
+        :root {
+            --brand-deep: #01256A;
+            --brand-cerulean: #2A66C2;
+            --brand-green: #10B981;
+            --border-light: #E2E8F0;
+            --ink-900: #0F172A;
+            --ink-800: #1E293B;
+            --ink-700: #334155;
+            --ink-600: #475569;
+            --ink-500: #64748B;
+            --ink-400: #94A3B8;
+            --bg-muted: #F1F5F9;
+            --bg-subtle: #F8FAFC;
+            --white: #FFFFFF;
+            --radius-md: 6px;
+            --radius-lg: 8px;
+            --radius-xl: 12px;
+        }
+
+        body {
+            background: linear-gradient(135deg, #F5F9FF 0%, #F0F9F4 100%);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            color: var(--ink-800);
+            padding-top: 52px;
+        }
+
+        .card-diagnostic {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-light);
+            box-shadow: 0 4px 12px -8px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+        }
+        .card-diagnostic:hover {
+            box-shadow: 0 12px 24px -12px rgba(0,0,0,0.1);
+            border-color: #CBD5E1;
+        }
+
+        .section-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            background: #EFF6FF;
+            color: var(--brand-deep);
+        }
+
+        .pill-topic {
+            background: #EFF6FF;
+            color: #01256A;
+            border-radius: 40px;
+            padding: 0.2rem 0.9rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .table-custom td, .table-custom th {
+            padding: 0.65rem 0.8rem;
+            border-bottom: 1px solid var(--border-light);
+            font-size: 0.8rem;
+            vertical-align: top;
+        }
+        .table-custom th {
+            background: #F1F5F9;
+            font-weight: 600;
+        }
+
+        .accent-border-left {
+            border-left: 4px solid var(--brand-cerulean);
+        }
+        .accent-green-left {
+            border-left: 4px solid var(--brand-green);
+        }
+
+        .tag-上市公司 {
+            background: #dbeafe;
+            color: #1e3a8a;
+        }
+        .tag-高碳 {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        [data-render] {
+            min-height: 1.2em;
+        }
+
+        .dev-note {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            color: #78350f;
+        }
+        .dev-note strong {
+            color: #b45309;
+        }
+
+        /* ===== 绿色分类卡片（三级目录展示） ===== */
+        .green-class-card {
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 12px 16px;
+            transition: all .2s;
+            cursor: pointer;
+            background: var(--white);
+        }
+        .green-class-card:hover {
+            border-color: #94A3B8;
+            background: var(--bg-subtle);
+        }
+        .green-class-card.active {
+            border-color: var(--brand-cerulean);
+            background: #EFF6FF;
+            box-shadow: 0 0 0 3px rgba(42, 102, 194, 0.15);
+        }
+        .green-class-card .level-1 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink-800);
+        }
+        .green-class-card .level-2 {
+            font-size: 13px;
+            color: var(--ink-600);
+            margin-top: 2px;
+        }
+        .green-class-card .level-3 {
+            font-size: 13px;
+            color: var(--brand-cerulean);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+        .green-class-card .check-mark {
+            display: none;
+            color: var(--brand-cerulean);
+            font-weight: 600;
+        }
+        .green-class-card.active .check-mark {
+            display: inline;
+        }
+
+        /* ===== 文本容器（认定依据/填报建议/佐证材料/资金用途） ===== */
+        .info-text-box {
+            background: var(--bg-subtle);
+            border-radius: var(--radius-lg);
+            padding: 12px 16px;
+            border: 1px solid var(--border-light);
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--ink-700);
+        }
+        .info-text-box strong {
+            color: var(--ink-900);
+        }
+
+        /* ===== 营销话术 - 父子层级样式 ===== */
+        .talk-parent-section {
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 12px;
+            background: var(--white);
+        }
+        .talk-parent-header {
+            padding: 14px 18px;
+            background: #E8F0FB;
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--brand-deep, #01256A);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+            transition: background .15s;
+            border-bottom: 1px solid transparent;
+        }
+        .talk-parent-header:hover {
+            background: #D1DFF4;
+        }
+        .talk-parent-header.open {
+            border-bottom-color: var(--border-light);
+        }
+        .talk-parent-header .arrow {
+            transition: transform .25s;
+            font-size: 12px;
+        }
+        .talk-parent-header.open .arrow {
+            transform: rotate(180deg);
+        }
+        .talk-parent-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .4s ease;
+            padding: 0 16px;
+        }
+        .talk-parent-body.open {
+            max-height: 4000px;
+            padding: 12px 16px;
+        }
+
+        .talk-child-section {
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-bottom: 10px;
+            background: var(--white);
+        }
+        .talk-child-section:last-child {
+            margin-bottom: 0;
+        }
+        .talk-child-header {
+            padding: 10px 14px;
+            background: var(--bg-subtle);
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--ink-700);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+            transition: background .15s;
+            border-bottom: 1px solid transparent;
+        }
+        .talk-child-header:hover {
+            background: var(--bg-muted);
+        }
+        .talk-child-header.open {
+            border-bottom-color: var(--border-light);
+        }
+        .talk-child-header .arrow {
+            transition: transform .25s;
+            font-size: 11px;
+            color: var(--ink-400);
+        }
+        .talk-child-header.open .arrow {
+            transform: rotate(180deg);
+        }
+        .talk-child-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .35s ease;
+            padding: 0 14px;
+            background: var(--white);
+        }
+        .talk-child-body.open {
+            max-height: 3000px;
+            padding: 14px;
+        }
+
+        /* 内容块容器 */
+        .talk-content-block {
+            background: var(--bg-subtle);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--brand-cerulean);
+        }
+        .talk-content-block:last-child {
+            margin-bottom: 0;
+        }
+        .talk-content-block p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--ink-700);
+            margin-bottom: 6px;
+        }
+        .talk-content-block p:last-child {
+            margin-bottom: 0;
+        }
+        .talk-content-block p strong {
+            color: var(--ink-900);
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 640px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 2px;
+            }
+            .green-class-card .level-1 { font-size: 13px; }
+            .green-class-card .level-2 { font-size: 12px; }
+            .green-class-card .level-3 { font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== 返回栏 ===== -->
+<div style="position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;gap:12px;padding:8px 24px;background:#fff;border-bottom:1px solid #E2E8F0;height:52px;box-sizing:border-box;">
+    <button onclick="goBack()" style="display:inline-flex;align-items:center;gap:6px;color:#2A66C2;font-weight:500;cursor:pointer;border:none;background:none;font-size:14px;font-family:inherit;padding:0 8px;height:32px;border-radius:6px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        返回
+    </button>
+    <span class="text-sm text-slate-400 hidden sm:inline" data-render="pageSubtitle">浙江嘉化能源化工 · 绿色业务营销报告</span>
+</div>
+
+<!-- ===== 主容器 ===== -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 md:py-8" id="app">
+
+    <!-- ============================================================ -->
+    <!-- 一、企业头部信息 -->
+    <!-- ============================================================ -->
+    <div class="card-diagnostic p-5 mb-8 bg-white">
+        <div class="flex flex-wrap justify-between items-start gap-3 border-b border-slate-100 pb-4 mb-4">
+            <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <h1 class="text-2xl font-bold tracking-tight text-slate-800" data-render="companyName">浙江嘉化能源化工股份有限公司</h1>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-0.5 rounded-full" data-render="statusBadge">存续 · 上市主体</span>
+                    <span class="bg-emerald-100 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded-full" data-render="greenBadge">绿色化工领跑者</span>
+                    <span class="tag-上市公司 text-xs px-2 py-0.5 rounded-full font-medium" data-render="listedTag">上市公司</span>
+                    <span class="tag-高碳 text-xs px-2 py-0.5 rounded-full font-medium" data-render="highCarbonTag">高碳排放行业</span>
+                </div>
+                <p class="text-sm text-slate-500 mt-1" data-render="creditCode">统一社会信用代码：913300007463411432 | 成立日期：1998-04-03</p>
+                <p class="text-sm text-slate-500" data-render="contactInfo">电话：0573-85585096 | 地区：330400 | 行业：C26化学原料和化学制品制造业 / C2614有机化学原料制造</p>
+            </div>
+            <div class="flex gap-2" data-render="industryTags">
+                <span class="px-3 py-1 text-xs rounded-full bg-white shadow-sm border border-slate-200 text-slate-600">危险废物处理处置</span>
+                <span class="px-3 py-1 text-xs rounded-full bg-green-50 text-green-700 border border-green-200">废气回收利用</span>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div class="bg-slate-50 p-3 rounded-lg"><span class="font-semibold">经营范围亮点：</span><div class="text-slate-600 mt-1" data-render="businessScope">许可项目包括危险化学品生产/经营、发电/输电、危险废物经营；一般项目涵盖热力生产和供应、合同能源管理、非常规水源利用、污水处理、新兴能源技术研发、站用加氢及储氢设施、固体废物治理等。</div></div>
+            <div class="bg-slate-50 p-3 rounded-lg"><span class="font-semibold">绿色属性标签：</span><div class="flex flex-wrap gap-2 mt-1" data-render="greenTags">
+                <span class="text-xs bg-white px-2 py-1 rounded border">2.5.2 危险废物处理处置</span>
+                <span class="text-xs bg-white px-2 py-1 rounded border">3.2.7 废气回收利用</span>
+                <span class="text-xs bg-white px-2 py-1 rounded border">氢能/热电联产</span>
+                <span class="text-xs bg-white px-2 py-1 rounded border">合同能源管理</span>
+            </div></div>
+        </div>
+        <div class="mt-4 text-xs text-slate-400 flex flex-wrap gap-3 border-t border-slate-100 pt-3" data-render="footerMeta">
+            <span>注册资本：13.56879522亿人民币</span>
+            <span>绿色制造体系：潜在绿色工厂/绿色供应链示范</span>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 二、行业分析 · 全部从 JS 读取（已删除区域布局部分） -->
+    <!-- ============================================================ -->
+    <div class="card-diagnostic p-5 mb-8">
+        <div class="flex items-center gap-2 mb-3">
+            <div class="w-1 h-6 bg-brand-deep rounded-full"></div>
+            <h2 class="font-bold text-slate-800 text-xl" data-render="section1Title">一、行业分析 · 石化化工</h2>
+            <span class="section-badge ml-2" data-render="section1Badge">政策·行业</span>
+        </div>
+
+        <!-- （一）政策规划 -->
+        <div class="mb-6">
+            <h3 class="font-semibold text-slate-800 text-md mb-2" data-render="s1_policy_title">（一）政策规划</h3>
+            <div class="bg-slate-50 p-4 rounded-xl accent-border-left mb-4" data-render="s1_policy_national"></div>
+            <div class="bg-green-50 p-4 rounded-xl accent-green-left mb-3" data-render="s1_policy_local"></div>
+            <div class="text-sm text-slate-600 bg-white p-3 rounded-lg border border-slate-200" data-render="s1_policy_interpret"></div>
+        </div>
+
+        <!-- （二）行业格局 -->
+        <div class="mb-0">
+            <h3 class="font-semibold text-slate-800 text-md mb-2" data-render="s1_industry_title">（二）行业格局</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-slate-50 p-3 rounded-lg" data-render="s1_industry_chain"></div>
+                <div class="bg-slate-50 p-3 rounded-lg" data-render="s1_industry_compete"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 三、绿色信贷营销指引 -->
+    <!-- ============================================================ -->
+    <div class="card-diagnostic p-5 mb-8">
+        <div class="flex items-center gap-2 mb-4"><div class="w-1 h-6 bg-emerald-600 rounded-full"></div><h2 class="font-bold text-slate-800 text-xl" data-render="section2Title">二、绿色信贷营销指引</h2></div>
+
+        <div>
+            <h3 class="font-semibold text-slate-800 text-md mb-2" data-render="s2_guideline_title">（一）绿色信贷指引提示</h3>
+            <div class="bg-slate-50 p-4 rounded-lg space-y-4 text-sm">
+                <!-- 是否绿色贷款分类 -->
+                <div class="flex justify-between border-b pb-1"><span class="font-medium">是否绿色贷款分类</span><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full text-xs">是</span></div>
+
+                <!-- 绿色金融支持目录：卡片样式展示三级分类 -->
+                <div>
+                    <span class="font-medium block mb-2">绿色金融支持项目目录：</span>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3" data-render="greenClassCards">
+                        <!-- 由 JS 动态渲染 -->
+                    </div>
+                </div>
+
+                <!-- 认定依据 - 文本容器 -->
+                <div>
+                    <span class="font-medium block mb-1">认定依据</span>
+                    <div class="info-text-box" data-render="s2_guideline_basis"></div>
+                </div>
+
+                <!-- 填报建议 - 文本容器 -->
+                <div>
+                    <span class="font-medium block mb-1">填报建议</span>
+                    <div class="info-text-box" data-render="s2_guideline_suggestion"></div>
+                </div>
+
+                <!-- 佐证材料提示 - 文本容器 -->
+                <div>
+                    <span class="font-medium block mb-1">佐证材料提示</span>
+                    <div class="info-text-box" data-render="s2_guideline_proof"></div>
+                </div>
+
+                <!-- 绿色信贷资金用途潜在方向 - 文本容器 -->
+                <div>
+                    <span class="font-medium block mb-1">绿色信贷资金用途潜在方向</span>
+                    <div class="info-text-box" data-render="s2_guideline_usage"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 四、绿色产品建议 · 全部从 JS 读取 -->
+    <!-- ============================================================ -->
+    <div class="card-diagnostic p-5 mb-8">
+        <h3 class="font-bold text-slate-800 text-xl mb-3 flex items-center gap-2" data-render="section3Title">三、绿色产品建议</h3>
+        <div class="dev-note mb-4" data-render="s3_devNote">
+            <strong>🧩 开发备注：</strong> 中行是固定给了几个金融产品，其他行需要根据行内特色金融产品，提供准入标准，为不同银行客户提供专属的绿色潜客【绿色产品建议】。
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm border-collapse table-custom" data-render="s3_productTable">
+                <!-- 由 JS 动态渲染 -->
+            </table>
+        </div>
+        <div class="mt-3 text-xs text-slate-500 bg-slate-50 p-2 rounded" data-render="s3_note"></div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 五、融资案例（已暂时拿掉） -->
+    <!-- ============================================================ -->
+    <!-- 该部分已按您的要求暂时移除 -->
+
+    <!-- ============================================================ -->
+    <!-- 六、非金融增值服务方案（已完全删除） -->
+    <!-- ============================================================ -->
+    <!-- 该部分已按您的要求全部移除 -->
+
+    <!-- ============================================================ -->
+    <!-- 页脚 -->
+    <!-- ============================================================ -->
+    <div class="text-center text-xs text-slate-400 border-t border-slate-200 pt-6 mt-2" data-render="pageFooter">
+        绿色业务营销报告 · 浙江嘉化能源化工股份有限公司 | 依据《绿色金融支持项目目录（2025版）》及石化化工行业政策编制
+    </div>
+</div>
+
+<script>
+// ================================================================
+// 返回功能 - 在 iframe 内跳转到绿色潜在客户清单页面
+// ================================================================
+function goBack() {
+    // 获取当前页面所在目录
+    var currentPath = window.location.pathname;
+    var currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+    if (currentDir === '') {
+        currentDir = './';
+    }
+    var targetUrl = currentDir + '绿色潜在客户清单.html';
+    
+    // 直接在 iframe 内跳转（无论是 iframe 还是独立页面都适用）
+    window.location.href = targetUrl;
+}
+
+// ================================================================
+// 数据渲染：从 report-data.js 读取
+// ================================================================
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof REPORT_DATA === 'undefined') {
+        console.warn('REPORT_DATA 未定义，请确保 report-data.js 已加载。');
+        return;
+    }
+    var data = REPORT_DATA;
+
+    // 1. 基础文本渲染（含 HTML 内容）
+    document.querySelectorAll('[data-render]').forEach(function(el) {
+        var key = el.getAttribute('data-render');
+        var specialKeys = ['greenClassCards', 's1_region_table', 's3_productTable', 's4_caseGrid', 's5_serviceTable', 'talkContainer'];
+        if (specialKeys.indexOf(key) !== -1) return;
+        var value = data[key];
+        if (value !== undefined && value !== null) {
+            if (typeof value === 'string' && (value.indexOf('<') !== -1 || value.indexOf('&') !== -1)) {
+                el.innerHTML = value;
+            } else {
+                el.textContent = value;
+            }
+        }
+    });
+
+    // 2. 绿色分类卡片（三级目录展示）
+    var cardsContainer = document.querySelector('[data-render="greenClassCards"]');
+    if (cardsContainer && data.greenClassCards) {
+        var cardsHtml = '';
+        data.greenClassCards.forEach(function(card) {
+            cardsHtml += `
+                <div class="green-class-card active">
+                    <div class="level-1">${card.level1}</div>
+                    <div class="level-2">${card.level2}</div>
+                    <div class="level-3">${card.level3}</div>
+                    <div class="check-mark">✓ 已选</div>
+                </div>
+            `;
+        });
+        cardsContainer.innerHTML = cardsHtml;
+    }
+
+    // 3. 区域布局表格 - 已删除，不再渲染
+    // var regionTable = document.querySelector('[data-render="s1_region_table"]');
+    // if (regionTable && data.s1_region_table) { ... }
+
+    // 4. 绿色产品建议表格
+    var productTable = document.querySelector('[data-render="s3_productTable"]');
+    if (productTable && data.s3_productTable) {
+        productTable.innerHTML = data.s3_productTable;
+    }
+
+    // 5. 融资案例网格 - 已删除，不再渲染
+    // var caseGrid = document.querySelector('[data-render="s4_caseGrid"]');
+    // if (caseGrid && data.s4_caseGrid) { ... }
+
+    // 6. 非金融增值服务表格 - 已删除，不再渲染
+    // var serviceTable = document.querySelector('[data-render="s5_serviceTable"]');
+    // if (serviceTable && data.s5_serviceTable) { ... }
+
+    // 7. 营销话术 - 已删除，不再渲染
+    // var talkContainer = document.getElementById('talkContainer');
+    // if (talkContainer && data.talkSections) { ... }
+});
+
+// ================================================================
+// 父级折叠面板切换（保留以防其他部分使用）
+// ================================================================
+function toggleParent(header) {
+    var isOpen = header.classList.contains('open');
+    header.classList.toggle('open');
+    var body = header.nextElementSibling;
+    if (body) body.classList.toggle('open');
+}
+
+// ================================================================
+// 子级折叠面板切换（保留以防其他部分使用）
+// ================================================================
+function toggleChild(header) {
+    var isOpen = header.classList.contains('open');
+    header.classList.toggle('open');
+    var body = header.nextElementSibling;
+    if (body) body.classList.toggle('open');
+}
+
+// ================================================================
+// 兼容旧格式折叠面板切换（保留以防其他部分使用）
+// ================================================================
+function toggleTalk(header) {
+    var isOpen = header.classList.contains('open');
+    header.classList.toggle('open');
+    var body = header.nextElementSibling;
+    if (body) body.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>

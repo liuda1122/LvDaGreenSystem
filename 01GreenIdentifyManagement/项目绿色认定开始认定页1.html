@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目绿色认定操作 · 可持续金融管理系统</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --brand-50: #E8F0FB;
+            --brand-100: #D1DFF4;
+            --brand-500: #2A66C2;
+            --brand-700: #143F8F;
+            --brand-900: #01256A;
+            --green-50: #ECFDF5;
+            --green-500: #10B981;
+            --green-700: #047857;
+            --success: #10B981;
+            --success-bg: #ECFDF5;
+            --success-border: #A7F3D0;
+            --warning: #D97706;
+            --warning-bg: #FFFBEB;
+            --warning-border: #FDE68A;
+            --danger: #DC2626;
+            --danger-bg: #FEF2F2;
+            --danger-border: #FECACA;
+            --info: #2A66C2;
+            --info-bg: #E8F0FB;
+            --info-border: #D1DFF4;
+            --ink-900: #0F172A;
+            --ink-800: #1E293B;
+            --ink-600: #475569;
+            --ink-500: #64748B;
+            --ink-400: #94A3B8;
+            --ink-300: #CBD5E1;
+            --line-200: #E2E8F0;
+            --bg-muted: #F1F5F9;
+            --bg-subtle: #F8FAFC;
+            --white: #FFFFFF;
+            --radius-sm: 4px;
+            --radius-md: 6px;
+            --radius-lg: 8px;
+            --radius-xl: 12px;
+            --radius-2xl: 16px;
+            --shadow-lg: 0 10px 24px rgba(15, 23, 42, .10), 0 4px 8px rgba(15, 23, 42, .04);
+            --shadow-xl: 0 20px 40px rgba(15, 23, 42, .16), 0 8px 16px rgba(15, 23, 42, .06);
+            --font-sans: 'PingFang SC', 'Microsoft YaHei', 'Inter', system-ui, sans-serif;
+            --font-num: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Consolas', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--ink-800);
+            background: var(--bg-subtle);
+            font-size: 14px;
+            line-height: 1.57;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: var(--brand-500);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all .15s;
+            border: 1px solid transparent;
+            line-height: 1;
+            white-space: nowrap;
+        }
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+            line-height: 20px;
+            height: 28px;
+        }
+        .btn-md {
+            padding: 8px 16px;
+            font-size: 14px;
+            line-height: 22px;
+            height: 32px;
+        }
+        .btn-primary {
+            background: var(--brand-500);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: var(--brand-700);
+        }
+        .btn-secondary {
+            background: var(--white);
+            color: var(--ink-800);
+            border-color: var(--ink-300);
+        }
+        .btn-secondary:hover {
+            border-color: var(--brand-500);
+            color: var(--brand-500);
+        }
+        .btn-success {
+            background: var(--green-500);
+            color: #fff;
+        }
+        .btn-success:hover {
+            background: var(--green-700);
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1.5;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+        .tag-default {
+            background: var(--bg-muted);
+            color: var(--ink-600);
+            border-color: var(--line-200);
+        }
+        .tag-success {
+            background: var(--success-bg);
+            color: var(--green-700);
+            border-color: var(--success-border);
+        }
+        .tag-danger {
+            background: var(--danger-bg);
+            color: var(--danger);
+            border-color: var(--danger-border);
+        }
+        .tag-warning {
+            background: var(--warning-bg);
+            color: var(--warning);
+            border-color: var(--warning-border);
+        }
+        .tag-info {
+            background: var(--info-bg);
+            color: var(--info);
+            border-color: var(--info-border);
+        }
+
+        .section-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--line-200);
+            overflow: hidden;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 6px 16px;
+            align-items: baseline;
+        }
+        .info-label {
+            font-size: 13px;
+            color: var(--ink-500);
+            font-weight: 500;
+        }
+        .info-value {
+            font-size: 14px;
+            color: var(--ink-900);
+            word-break: break-word;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--ink-500);
+            font-size: 14px;
+        }
+        .breadcrumb a {
+            color: var(--ink-500);
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            color: var(--brand-500);
+        }
+
+        .leaf-sway {
+            animation: leaf-sway 3.5s ease-in-out infinite;
+            transform-origin: 50% 90%;
+        }
+        @keyframes leaf-sway {
+            0%,
+            100% {
+                transform: rotate(-3deg);
+            }
+            50% {
+                transform: rotate(3deg);
+            }
+        }
+        @keyframes breathe {
+            0%,
+            100% {
+                opacity: .4;
+                transform: scale(1);
+            }
+            50% {
+                opacity: .7;
+                transform: scale(1.08);
+            }
+        }
+        .breathe {
+            animation: breathe 4s ease-in-out infinite;
+        }
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+        .shimmer-text {
+            background: linear-gradient(90deg, var(--brand-900) 0%, var(--brand-500) 40%, var(--green-500) 60%, var(--brand-900) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 6s linear infinite;
+        }
+
+        .top-menu-item {
+            transition: all .2s ease;
+            cursor: pointer;
+        }
+        .top-menu-item:hover {
+            background: rgba(42, 102, 194, .06);
+            color: var(--brand-900);
+        }
+        .top-menu-item.active {
+            background: rgba(42, 102, 194, .1);
+            color: var(--brand-900);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+        }
+
+        .side-menu-item {
+            transition: all .2s ease;
+            cursor: pointer;
+        }
+        .side-menu-item:hover {
+            background: #F1F5F9;
+            border-radius: 6px;
+            color: var(--brand-900);
+        }
+        .side-menu-item.active {
+            background: rgba(42, 102, 194, .1);
+            color: var(--brand-900);
+            font-weight: 500;
+            border-radius: 8px;
+        }
+
+        /* 绿色分类卡片 */
+        .green-class-card {
+            border: 2px solid var(--line-200);
+            border-radius: var(--radius-lg);
+            padding: 12px 16px;
+            transition: all .2s;
+            cursor: pointer;
+            background: var(--white);
+        }
+        .green-class-card:hover {
+            border-color: var(--brand-300);
+            background: var(--brand-50);
+        }
+        .green-class-card.active {
+            border-color: var(--brand-500);
+            background: var(--brand-50);
+            box-shadow: 0 0 0 3px rgba(42, 102, 194, 0.15);
+        }
+        .green-class-card .level-1 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink-800);
+        }
+        .green-class-card .level-2 {
+            font-size: 13px;
+            color: var(--ink-600);
+            margin-top: 2px;
+        }
+        .green-class-card .level-3 {
+            font-size: 13px;
+            color: var(--brand-700);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+        .green-class-card .check-mark {
+            display: none;
+            color: var(--brand-500);
+            font-weight: 600;
+        }
+        .green-class-card.active .check-mark {
+            display: inline;
+        }
+
+        .reason-card {
+            background: var(--bg-muted);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            border-left: 3px solid var(--brand-500);
+        }
+        .suggestion-card {
+            background: var(--green-50);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            border-left: 3px solid var(--green-500);
+        }
+
+        .proof-section {
+            border: 1px solid var(--line-200);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all .3s;
+        }
+        .proof-section .proof-header {
+            padding: 12px 16px;
+            background: var(--bg-muted);
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--ink-700);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: default;
+        }
+        .proof-section .proof-body {
+            padding: 16px;
+            background: var(--white);
+        }
+        .proof-section.active {
+            border-color: var(--brand-500);
+            box-shadow: 0 0 0 2px rgba(42, 102, 194, 0.1);
+        }
+
+        .upload-zone {
+            border: 2px dashed var(--line-200);
+            border-radius: var(--radius-lg);
+            padding: 28px 20px;
+            text-align: center;
+            color: var(--ink-400);
+            transition: all .2s;
+            cursor: pointer;
+        }
+        .upload-zone:hover {
+            border-color: var(--brand-500);
+            background: var(--brand-50);
+        }
+
+        .example-thumb {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: var(--bg-muted);
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            border: 1px solid var(--line-200);
+            cursor: pointer;
+            transition: all .15s;
+        }
+        .example-thumb:hover {
+            background: var(--brand-50);
+            border-color: var(--brand-300);
+        }
+
+        /* Modal */
+        .modal-mask {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.65);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(4px);
+        }
+        .modal-mask.open {
+            display: flex;
+        }
+        .modal {
+            background: var(--white);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-xl);
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow: hidden;
+            animation: modalIn .2s ease-out;
+        }
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .modal-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--line-200);
+            background: var(--white);
+        }
+        .modal-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--ink-900);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 400px;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--ink-500);
+            padding: 4px;
+            display: flex;
+            border-radius: var(--radius-sm);
+            transition: background .15s;
+        }
+        .modal-close:hover {
+            background: var(--bg-muted);
+            color: var(--ink-900);
+        }
+        .modal-body {
+            padding: 20px 24px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .modal-body img {
+            max-width: 100%;
+            max-height: 65vh;
+            border-radius: var(--radius-lg);
+            object-fit: contain;
+            background: var(--bg-muted);
+        }
+        .modal-body .no-image {
+            color: var(--ink-400);
+            padding: 40px 0;
+            text-align: center;
+        }
+        .modal-foot {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            padding: 12px 24px;
+            border-top: 1px solid var(--line-200);
+            background: var(--bg-subtle);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col overflow-hidden" style="height:100vh;background:var(--bg-subtle);">
+        <!-- 返回栏 -->
+        <div class="flex items-center px-8 py-3 flex-shrink-0" style="background:var(--white);border-bottom:1px solid var(--line-200)">
+                <button onclick="goBackToList()" style="display:inline-flex;align-items:center;gap:6px;color:#2A66C2;font-weight:500;cursor:pointer;border:none;background:none;font-size:14px;font-family:inherit;padding:0 8px;height:32px;border-radius:6px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                    返回
+                </button>
+            </div>
+
+            <!-- Content -->
+            <div class="flex-1 overflow-y-auto custom-scroll" style="padding:24px;">
+                <div class="max-w-5xl mx-auto space-y-6">
+
+                    <!-- 企业信息 -->
+                    <div class="section-card">
+                        <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);">
+                            <span style="font-weight:600;color:var(--ink-900);font-size:15px;">企业信息</span>
+                        </div>
+                        <div style="padding:20px 24px;">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
+                                <div class="info-grid"><span class="info-label">企业名称</span><span class="info-value">XXXXXXXX有限公司</span></div>
+                                <div class="info-grid"><span class="info-label">统一社会信用代码</span><span class="info-value font-mono text-sm">91130283783456789X</span></div>
+                                <div class="info-grid"><span class="info-label">客户国民经济行业</span><span class="info-value">国民经济行业四级分类</span></div>
+                                <div class="info-grid"><span class="info-label">地区</span><span class="info-value">浙江省 宁波市 鄞州区</span></div>
+                                <div class="info-grid col-span-2"><span class="info-label">主营业务</span><span class="info-value">XXXXXXXXXXXXXXXXXXXXXX</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 项目信息（只读） -->
+                    <div class="section-card">
+                        <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);">
+                            <span style="font-weight:600;color:var(--ink-900);font-size:15px;">项目信息</span>
+                        </div>
+                        <div style="padding:20px 24px;">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
+                                <div class="info-grid"><span class="info-label">项目名称</span><span class="info-value">XXXXXX项目</span></div>
+                                <div class="info-grid"><span class="info-label">项目代码</span><span class="info-value font-mono">XXXXXX代码</span></div>
+                                <div class="info-grid"><span class="info-label">项目所属行业</span><span class="info-value">XXXXXXXX国民经济行业四级分类</span></div>
+                                <div class="info-grid"><span class="info-label">项目建设地点</span><span class="info-value">浙江省 湖州市 XX区 X详细地址</span></div>
+                                <div class="info-grid col-span-2"><span class="info-label">项目建设内容与规模</span><span class="info-value">XXXXXXXXXXXXXXXXXXXXXX</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 绿色智能识别 -->
+                    <div class="section-card">
+                        <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);display:flex;align-items:center;justify-content:space-between;">
+                            <span style="font-weight:600;color:var(--ink-900);font-size:15px;">绿色智能识别</span>
+                            <span class="tag tag-info">大模型</span>
+                        </div>
+                        <div style="padding:20px 24px;">
+                            <!-- 项目建设内容输入栏（直接展示，可编辑） -->
+                            <div style="margin-bottom:16px;padding:12px 16px;background:var(--info-bg);border-radius:var(--radius-lg);border:1px solid var(--info-border);">
+                                <div style="font-size:13px;color:var(--info);font-weight:500;margin-bottom:6px;">
+                                    项目建设内容
+                                </div>
+                                <textarea rows="3" id="projectContent" style="width:100%;padding:8px 12px;border:1px solid var(--line-200);border-radius:var(--radius-md);font-size:14px;font-family:inherit;resize:vertical;outline:none;transition:border .2s;background:var(--white);" onfocus="this.style.borderColor='var(--brand-500)'" onblur="this.style.borderColor='var(--line-200)'">XXXXXXXXXXXXXXXXXXXXXX</textarea>
+                                <div style="margin-top:10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                                    <span style="font-size:13px;color:var(--ink-500);">如需重新识别，可修改上述内容后点击：</span>
+                                    <button class="btn btn-primary btn-sm" onclick="handleRecognize()">模型识别</button>
+                                </div>
+                            </div>
+
+                            <!-- 智能识别结果（点击模型识别后展示） -->
+                            <div id="resultSection" style="display:none;">
+                                <div style="font-size:13px;font-weight:600;color:var(--ink-800);margin-bottom:8px;">智能识别结果</div>
+                                <div style="font-size:13px;color:var(--ink-500);margin-bottom:12px;">绿色金融标准：<span style="color:var(--ink-800);font-weight:500;">《绿色金融支持项目目录（2025年版）》</span></div>
+
+                                <!-- 命中绿色分类 - 卡片式展示（前3名） -->
+                                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
+                                    <div class="green-class-card active" onclick="selectClass(this, 'proof-1')">
+                                        <div class="level-1">3 清洁能源产业</div>
+                                        <div class="level-2">3.4 能源系统改造</div>
+                                        <div class="level-3">3.4.8 电网节能改造项目</div>
+                                        <div class="check-mark" style="display:inline;">✓ 已选</div>
+                                    </div>
+                                    <div class="green-class-card" onclick="selectClass(this, 'proof-2')">
+                                        <div class="level-1">2 节能环保产业</div>
+                                        <div class="level-2">2.1 高效节能装备制造</div>
+                                        <div class="level-3">2.1.3 节能锅炉制造</div>
+                                        <div class="check-mark" style="display:none;">✓ 已选</div>
+                                    </div>
+                                    <div class="green-class-card" onclick="selectClass(this, 'proof-3')">
+                                        <div class="level-1">5 基础设施绿色升级</div>
+                                        <div class="level-2">5.2 绿色交通</div>
+                                        <div class="level-3">5.2.6 充电基础设施</div>
+                                        <div class="check-mark" style="display:none;">✓ 已选</div>
+                                    </div>
+                                </div>
+
+                                <!-- 识别理由 -->
+                                <div class="reason-card" style="margin-bottom:12px;">
+                                    <div style="font-size:13px;font-weight:600;color:var(--ink-800);margin-bottom:4px;">识别理由</div>
+                                    <div style="font-size:14px;color:var(--ink-700);">该贷款信息中项目描述内容为"xxxxx"，未包含任何与绿色智能相关的具体建设活动或资金用途描述，无法识别为《绿色金融支持项目目录》中任何三级目录所涵盖的绿色智能项目内容。</div>
+                                </div>
+
+                                <!-- 业务填报建议 -->
+                                <div class="suggestion-card">
+                                    <div style="font-size:13px;font-weight:600;color:var(--green-700);margin-bottom:4px;">📋 业务填报建议</div>
+                                    <div style="font-size:14px;color:var(--ink-700);">建议明确项目建设内容，如涉及污水处理、水资源循环利用、节水改造等具体绿色工程，应详细说明建设内容、技术路径及绿色效益，以符合绿色金融认定要求。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 绿色佐证材料 -->
+                    <div class="section-card" id="proof-section-wrapper">
+                        <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);display:flex;align-items:center;justify-content:space-between;">
+                            <span style="font-weight:600;color:var(--ink-900);font-size:15px;">绿色佐证材料</span>
+                            <span style="font-size:12px;color:var(--ink-400);">请点击上方绿色分类卡片查看对应佐证材料</span>
+                        </div>
+                        <div style="padding:20px 24px;">
+                            <!-- 分类1 佐证材料 -->
+                            <div class="proof-section active" id="proof-1">
+                                <div class="proof-header">
+                                    <span>📎 3.4.8 电网节能改造项目 — 佐证材料清单</span>
+                                    <span class="tag tag-success">当前分类</span>
+                                </div>
+                                <div class="proof-body">
+                                    <div style="font-size:13px;color:var(--ink-600);margin-bottom:12px;">建议提供下列佐证材料：</div>
+                                    <ul style="list-style:disc;padding-left:20px;margin-bottom:16px;font-size:13px;color:var(--ink-700);">
+                                        <li>提供主体建设或运营内容为电网节能改造相关的可行性研究报告及批复</li>
+                                        <li>环境影响报告书或其他有关证明材料</li>
+                                        <li>节能评估报告或能源审计报告</li>
+                                        <li>项目竣工验收报告及节能效果评估</li>
+                                    </ul>
+                                    <div style="font-size:13px;color:var(--ink-500);margin-bottom:8px;">佐证材料示例：</div>
+                                    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+                                        <span class="example-thumb" onclick="openModal('https://picsum.photos/seed/energy1/800/600', '节能改造可研批复.jpg')">📄 节能改造可研批复.jpg</span>
+                                        <span class="example-thumb" onclick="openModal('https://picsum.photos/seed/energy2/800/600', '环评报告批复.pdf')">📄 环评报告批复.pdf</span>
+                                        <span class="example-thumb" onclick="openModal('https://picsum.photos/seed/energy3/800/600', '能效评估报告.png')">📄 能效评估报告.png</span>
+                                    </div>
+                                    <div class="upload-zone" onclick="alert('触发文件选择器')">
+                                        <svg class="w-10 h-10 mx-auto text-slate-300 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                        <div>将文件拖拽到此处，或 <span style="color:var(--brand-500);font-weight:500;">点击上传</span></div>
+                                        <div style="font-size:12px;color:var(--ink-400);margin-top:4px;">支持 docx、pdf、png、jpg、jpeg 格式，单个文件不超过 50M</div>
+                                    </div>
+                                    <!-- 已上传文件 -->
+                                    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+                                        <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--success-bg);border-radius:var(--radius-sm);font-size:13px;border:1px solid var(--success-border);">
+                                            📄 可行性研究报告.pdf
+                                            <button style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:14px;" onclick="this.closest('span').remove()">×</button>
+                                        </span>
+                                        <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--success-bg);border-radius:var(--radius-sm);font-size:13px;border:1px solid var(--success-border);">
+                                            📄 环评报告批复.pdf
+                                            <button style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:14px;" onclick="this.closest('span').remove()">×</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 分类2 佐证材料 -->
+                            <div class="proof-section" id="proof-2" style="display:none;">
+                                <div class="proof-header">
+                                    <span>📎 2.1.3 节能锅炉制造 — 佐证材料清单</span>
+                                    <span class="tag tag-default">点击选择</span>
+                                </div>
+                                <div class="proof-body">
+                                    <div style="font-size:13px;color:var(--ink-600);margin-bottom:12px;">建议提供下列佐证材料：</div>
+                                    <ul style="list-style:disc;padding-left:20px;margin-bottom:16px;font-size:13px;color:var(--ink-700);">
+                                        <li>锅炉制造资质及特种设备生产许可证</li>
+                                        <li>节能产品认证证书或能效标识</li>
+                                        <li>产品能效测试报告</li>
+                                        <li>相关专利证书或技术评估报告</li>
+                                    </ul>
+                                    <div style="font-size:13px;color:var(--ink-500);margin-bottom:8px;">佐证材料示例：</div>
+                                    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+                                        <span class="example-thumb" onclick="openModal('https://picsum.photos/seed/boiler1/800/600', '锅炉能效报告.jpg')">📄 锅炉能效报告.jpg</span>
+                                        <span class="example-thumb" onclick="openModal('https://picsum.photos/seed/boiler2/800/600', '节能认证证书.pdf')">📄 节能认证证书.pdf</span>
+                                    </div>
+                                    <div class="upload-zone" onclick="alert('触发文件选择器')">
+                                        <svg class="w-10 h-10 mx-auto text-slate-300 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                        <div>将文件拖拽到此处，或 <span style="color:var(--brand-500);font-weight:500;">点击上传</span></div>
+                                        <div style="font-size:12px;color:var(--ink-400);margin-top:4px;">支持 docx、pdf、png、jpg、jpeg 格式，单个文件不超过 50M</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 分类3 佐证材料 -->
+                            <div class="proof-section" id="proof-3" style="display:none;">
+                                <div class="proof-header">
+                                    <span>📎 5.2.6 充电基础设施 — 佐证材料清单</span>
+                                    <span class="tag tag-default">点击选择</span>
+                                </div>
+                                <div class="proof-body">
+                                    <div style="font-size:13px;color:var(--ink-600);margin-bottom:12px;">建议提供下列佐证材料：</div>
+                                    <ul style="list-style:disc;padding-left:20px;margin-bottom:16px;font-size:13px;color:var(--ink-700);">
+                                        <li>项目立项备案文件及建设用地规划许可</li>
+                                        <li>充电设施建设方案及技术标准符合性说明</li>
+                                        <li>电网接入方案及批复</li>
+                                        <li>项目竣工验收报告及运营证明</li>
+                                    </ul>
+                                    <div style="font-size:13px;color:var(--ink-500);margin-bottom:8px;">佐证材料示例：</div>
+                                    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+                                        <span class="example-thumb" onclick="openModal('https://picsum.photos/seed/charge1/800/600', '充电站规划图.jpg')">📄 充电站规划图.jpg</span>
+                                        <span class="example-thumb" onclick="openModal('https://picsum.photos/seed/charge2/800/600', '电网接入批复.pdf')">📄 电网接入批复.pdf</span>
+                                    </div>
+                                    <div class="upload-zone" onclick="alert('触发文件选择器')">
+                                        <svg class="w-10 h-10 mx-auto text-slate-300 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                        <div>将文件拖拽到此处，或 <span style="color:var(--brand-500);font-weight:500;">点击上传</span></div>
+                                        <div style="font-size:12px;color:var(--ink-400);margin-top:4px;">支持 docx、pdf、png、jpg、jpeg 格式，单个文件不超过 50M</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 底部操作栏 -->
+                    <div style="display:flex;justify-content:flex-end;gap:12px;padding:4px 0 8px;">
+                        <button class="btn btn-secondary btn-md" onclick="goBackToList()">返回</button>
+                        <button class="btn btn-primary btn-md" onclick="alert('保存成功！')">💾 保存</button>
+                    </div>
+
+                </div>
+            </div>
+    </main>
+
+    <!-- Modal - 图片预览弹窗 -->
+    <div class="modal-mask" id="imageModal">
+        <div class="modal">
+            <div class="modal-head">
+                <span class="modal-title" id="modalTitle">图片预览</span>
+                <button class="modal-close" onclick="closeModal()">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <img id="modalImage" src="" alt="示例图片预览" style="display:none;">
+                <div class="no-image" id="noImage" style="display:none;">暂无图片预览</div>
+            </div>
+            <div class="modal-foot">
+                <button class="btn btn-secondary btn-sm" onclick="closeModal()">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== 返回项目绿色认定列表 ====================
+        function goBackToList() {
+            var dir = window.location.pathname;
+            dir = dir.substring(0, dir.lastIndexOf('/') + 1);
+            var targetUrl = dir + '项目绿色认定.html';
+
+            // 如果在 iframe 中，通过 postMessage 通知父框架
+            if (window.parent !== window) {
+                var pageId = 'project-list-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
+                window.parent.postMessage({
+                    type: 'openPage',
+                    pageId: pageId,
+                    file: targetUrl,
+                    label: '项目绿色识别'
+                }, '*');
+            } else {
+                window.location.href = targetUrl;
+            }
+        }
+
+        // 模型识别 - 显示识别结果
+        function handleRecognize() {
+            const section = document.getElementById('resultSection');
+            section.style.display = 'block';
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // 绿色分类卡片点击 -> 联动佐证材料
+        function selectClass(el, proofId) {
+            document.querySelectorAll('.green-class-card').forEach(c => {
+                c.classList.remove('active');
+                const mark = c.querySelector('.check-mark');
+                if (mark) {
+                    mark.style.display = 'none';
+                    mark.textContent = '✓ 已选';
+                }
+            });
+            el.classList.add('active');
+            const mark = el.querySelector('.check-mark');
+            if (mark) {
+                mark.style.display = 'inline';
+            }
+
+            document.querySelectorAll('.proof-section').forEach(p => {
+                p.style.display = 'none';
+                p.classList.remove('active');
+                const headerTag = p.querySelector('.proof-header .tag');
+                if (headerTag) {
+                    headerTag.className = 'tag tag-default';
+                    headerTag.textContent = '点击选择';
+                }
+            });
+
+            const target = document.getElementById(proofId);
+            if (target) {
+                target.style.display = 'block';
+                target.classList.add('active');
+                const headerTag = target.querySelector('.proof-header .tag');
+                if (headerTag) {
+                    headerTag.className = 'tag tag-success';
+                    headerTag.textContent = '当前分类';
+                }
+            }
+        }
+
+        // 图片预览弹窗
+        function openModal(imageUrl, imageName) {
+            const modal = document.getElementById('imageModal');
+            const img = document.getElementById('modalImage');
+            const noImage = document.getElementById('noImage');
+            const title = document.getElementById('modalTitle');
+
+            title.textContent = imageName || '图片预览';
+
+            if (imageUrl) {
+                img.src = imageUrl;
+                img.style.display = 'block';
+                noImage.style.display = 'none';
+                img.onerror = function() {
+                    img.style.display = 'none';
+                    noImage.style.display = 'block';
+                    noImage.textContent = '图片加载失败，请检查链接';
+                };
+            } else {
+                img.style.display = 'none';
+                noImage.style.display = 'block';
+                noImage.textContent = '暂无图片预览';
+            }
+
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // 点击modal外部关闭
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // ESC关闭
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+
+</body>
+</html>

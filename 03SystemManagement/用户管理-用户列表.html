@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用户管理 - 用户列表</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --brand-50:#E8F0FB; --brand-100:#D1DFF4; --brand-300:#6E97D6;
+      --brand-500:#2A66C2; --brand-700:#143F8F; --brand-900:#01256A;
+      --green-50:#ECFDF5; --green-500:#10B981; --green-700:#047857;
+      --success:#10B981; --success-bg:#ECFDF5; --success-border:#A7F3D0;
+      --warning:#D97706; --warning-bg:#FFFBEB; --warning-border:#FDE68A;
+      --danger:#DC2626;  --danger-bg:#FEF2F2;  --danger-border:#FECACA;
+      --info:#2A66C2;    --info-bg:#E8F0FB;    --info-border:#D1DFF4;
+      --ink-900:#0F172A; --ink-800:#1E293B; --ink-600:#475569;
+      --ink-500:#64748B; --ink-400:#94A3B8; --ink-300:#CBD5E1;
+      --line-200:#E2E8F0; --bg-muted:#F1F5F9; --bg-subtle:#F8FAFC;
+      --white:#FFFFFF;
+      --radius-sm:4px; --radius-md:6px; --radius-lg:8px;
+      --radius-xl:12px; --radius-2xl:16px;
+      --shadow-lg:0 10px 24px rgba(15,23,42,.10),0 4px 8px rgba(15,23,42,.04);
+      --shadow-xl:0 20px 40px rgba(15,23,42,.16),0 8px 16px rgba(15,23,42,.06);
+      --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:20px; --s-6:24px; --s-8:32px;
+      --font-sans:'PingFang SC','Microsoft YaHei','Inter',system-ui,sans-serif;
+      --font-num:'Inter','SF Pro Display',system-ui,sans-serif;
+      --font-mono:'JetBrains Mono','SF Mono','Menlo','Consolas',monospace;
+    }
+
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--font-sans);color:var(--ink-800);background:var(--bg-subtle);font-size:14px;line-height:1.57;-webkit-font-smoothing:antialiased}
+
+    .custom-scroll::-webkit-scrollbar{width:6px;height:6px}
+    .custom-scroll::-webkit-scrollbar-track{background:transparent}
+    .custom-scroll::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}
+    .custom-scroll::-webkit-scrollbar-thumb:hover{background:var(--brand-500)}
+
+    /* Header */
+    .top-menu-item{transition:all .2s ease;cursor:pointer}
+    .top-menu-item:hover{background:rgba(42,102,194,.06);color:var(--brand-900)}
+    .top-menu-item.active{background:rgba(42,102,194,.1);color:var(--brand-900);box-shadow:0 1px 2px rgba(0,0,0,.05)}
+
+    /* Sidebar */
+    .side-menu-item{transition:all .2s ease;cursor:pointer}
+    .side-menu-item:hover{background:#F1F5F9;border-radius:6px;color:var(--brand-900)}
+    .side-menu-item.active{background:rgba(42,102,194,.1);color:var(--brand-900);font-weight:500;border-radius:8px}
+
+    @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+    @keyframes breathe{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.7;transform:scale(1.08)}}
+    @keyframes leaf-sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+    @keyframes sparkle-twinkle{0%,100%{opacity:.3;transform:scale(.8) rotate(0)}50%{opacity:1;transform:scale(1.1) rotate(180deg)}}
+    .shimmer-text{background:linear-gradient(90deg,var(--brand-900) 0%,var(--brand-500) 40%,var(--green-500) 60%,var(--brand-900) 100%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 6s linear infinite}
+    .breathe{animation:breathe 4s ease-in-out infinite}
+    .leaf-sway{animation:leaf-sway 3.5s ease-in-out infinite;transform-origin:50% 90%}
+    .sparkle-twinkle{animation:sparkle-twinkle 3s ease-in-out infinite}
+
+    /* Tag */
+    .tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:var(--radius-sm);font-size:12px;font-weight:500;line-height:1.5;border:1px solid transparent}
+    .tag-default{background:var(--bg-muted);color:var(--ink-600);border-color:var(--line-200)}
+    .tag-brand{background:var(--brand-50);color:var(--brand-700);border-color:var(--brand-100)}
+    .tag-success{background:var(--success-bg);color:var(--green-700);border-color:var(--success-border)}
+    .tag-warning{background:var(--warning-bg);color:var(--warning);border-color:var(--warning-border)}
+    .tag-danger{background:var(--danger-bg);color:var(--danger);border-color:var(--danger-border)}
+
+    /* Status Dot */
+    .status{display:inline-flex;align-items:center;gap:6px;font-size:14px;line-height:22px;color:var(--ink-800)}
+    .status-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+    .status-dot.s-success{background:var(--success)}
+    .status-dot.s-warning{background:var(--warning)}
+    .status-dot.s-danger{background:var(--danger)}
+    .status-dot.s-info{background:var(--info)}
+    .status-dot.s-default{background:var(--ink-400)}
+
+    /* Table */
+    table{width:100%;border-collapse:collapse;font-size:14px;line-height:22px}
+    thead th{background:var(--bg-subtle);color:var(--ink-600);font-weight:500;text-align:left;padding:10px 16px;border-bottom:1px solid var(--line-200);font-size:12px;white-space:nowrap}
+    tbody td{padding:12px 16px;border-bottom:1px solid var(--line-200);color:var(--ink-800);vertical-align:middle}
+    tbody tr:last-child td{border-bottom:none}
+    tbody tr:hover{background:var(--bg-subtle)}
+    .num{font-family:var(--font-num);font-variant-numeric:tabular-nums;text-align:right}
+
+    /* Button */
+    .btn{display:inline-flex;align-items:center;gap:6px;border-radius:var(--radius-md);font-family:inherit;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid transparent;line-height:1;white-space:nowrap}
+    .btn-sm{padding:6px 12px;font-size:12px;line-height:20px;height:28px}
+    .btn-md{padding:8px 16px;font-size:14px;line-height:22px;height:32px}
+    .btn-primary{background:var(--brand-500);color:#fff}
+    .btn-primary:hover{background:var(--brand-700)}
+    .btn-secondary{background:var(--white);color:var(--ink-800);border-color:var(--ink-300)}
+    .btn-secondary:hover{border-color:var(--brand-500);color:var(--brand-500)}
+    .btn-ghost{background:transparent;color:var(--brand-500);border:none;padding:4px 8px;font-size:13px}
+    .btn-ghost:hover{background:var(--brand-50)}
+    .btn-danger-ghost{background:transparent;color:var(--danger);border:none;padding:4px 8px;font-size:13px}
+    .btn-danger-ghost:hover{background:var(--danger-bg)}
+    .btn svg{width:14px;height:14px;stroke-width:1.75}
+
+    /* Form Controls */
+    .input,.select-native{width:100%;padding:5px 12px;height:32px;font-family:inherit;font-size:14px;line-height:22px;color:var(--ink-900);background:var(--white);border:1px solid var(--ink-300);border-radius:var(--radius-md);transition:border-color .15s,box-shadow .15s;outline:none}
+    .input::placeholder{color:var(--ink-400)}
+    .input:hover,.select-native:hover{border-color:var(--ink-400)}
+    .input:focus,.select-native:focus{border-color:var(--brand-500);box-shadow:0 0 0 3px rgba(42,102,194,.12)}
+    .select-native{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:32px;cursor:pointer}
+
+    /* Pagination */
+    .pagination{display:flex;align-items:center;gap:var(--s-3);padding:var(--s-3) var(--s-4);border-top:1px solid var(--line-200);background:var(--white);font-size:14px;line-height:22px;color:var(--ink-600)}
+    .pagination-info{font-family:var(--font-num)}
+    .pagination-controls{margin-left:auto;display:flex;gap:4px;align-items:center}
+    .page-btn{min-width:32px;height:32px;padding:0 8px;border:1px solid var(--line-200);background:var(--white);border-radius:var(--radius-md);font-size:14px;color:var(--ink-800);cursor:pointer;font-family:var(--font-num);display:inline-flex;align-items:center;justify-content:center;transition:all .15s}
+    .page-btn:hover:not(:disabled){border-color:var(--brand-500);color:var(--brand-500)}
+    .page-btn.active{background:var(--brand-500);border-color:var(--brand-500);color:#fff}
+    .page-btn:disabled{color:var(--ink-300);cursor:not-allowed;background:var(--bg-muted)}
+
+    /* Drawer - z-index调整确保不被其他弹窗遮挡 */
+    .drawer-mask{position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:1500;display:none}
+    .drawer-mask.open{display:block}
+    .drawer{position:fixed;top:0;right:0;bottom:0;width:100%;max-width:560px;background:var(--white);box-shadow:var(--shadow-xl);z-index:1501;display:none;flex-direction:column;animation:drawerIn .22s ease-out}
+    .drawer.open{display:flex}
+    @keyframes drawerIn{from{transform:translateX(100%)}to{transform:none}}
+    .drawer-head{display:flex;align-items:center;padding:16px 24px;border-bottom:1px solid var(--line-200)}
+    .drawer-title{font-size:16px;font-weight:600;color:var(--ink-900)}
+    .drawer-close{margin-left:auto;background:none;border:none;cursor:pointer;color:var(--ink-500);padding:4px;display:flex}
+    .drawer-close:hover{background:var(--bg-muted);color:var(--ink-900);border-radius:var(--radius-sm)}
+    .drawer-body{flex:1;overflow-y:auto;padding:24px}
+    .drawer-foot{display:flex;justify-content:flex-end;gap:8px;padding:12px 24px;border-top:1px solid var(--line-200);background:var(--bg-subtle)}
+
+    /* Modal - z-index高于drawer确保不被遮挡 */
+    .modal-mask{position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:1600;display:none;align-items:center;justify-content:center}
+    .modal-mask.open{display:flex}
+    .modal{background:var(--white);border-radius:var(--radius-2xl);box-shadow:var(--shadow-xl);width:100%;max-width:420px;overflow:hidden;animation:modalIn .18s ease-out}
+    @keyframes modalIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+    .modal-head{display:flex;align-items:center;padding:16px 24px;border-bottom:1px solid var(--line-200)}
+    .modal-title{font-size:16px;font-weight:600;color:var(--ink-900)}
+    .modal-close{margin-left:auto;background:none;border:none;cursor:pointer;color:var(--ink-500);padding:4px;display:flex;border-radius:var(--radius-sm)}
+    .modal-close:hover{background:var(--bg-muted);color:var(--ink-900)}
+    .modal-body{padding:24px;color:var(--ink-800);font-size:14px}
+    .modal-foot{display:flex;justify-content:flex-end;gap:8px;padding:12px 24px;border-top:1px solid var(--line-200);background:var(--bg-subtle)}
+
+    /* Section card */
+    .section-card{background:var(--white);border-radius:var(--radius-xl);border:1px solid var(--line-200);overflow:hidden}
+    .section-card-head{display:flex;align-items:center;padding:var(--s-3) var(--s-4);border-bottom:1px solid var(--line-200);background:linear-gradient(135deg,var(--brand-50) 0%,var(--bg-subtle) 100%)}
+    .section-card-icon{display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--brand-500);color:#fff;border-radius:var(--radius-md)}
+    .section-card-icon svg{width:16px;height:16px}
+    .section-card-title{font-size:16px;line-height:24px;font-weight:600;color:var(--ink-900);margin-left:var(--s-3)}
+
+    /* Role tag in table */
+    .role-tag{display:inline-flex;align-items:center;padding:1px 6px;background:var(--brand-50);color:var(--brand-700);border:1px solid var(--brand-100);border-radius:var(--radius-sm);font-size:12px;line-height:18px;margin-right:4px;margin-bottom:2px}
+
+    /* Drawer info - 可编辑样式 */
+    .info-grid{display:grid;grid-template-columns:120px 1fr;gap:var(--s-3);margin-bottom:var(--s-3)}
+    .info-label{font-size:14px;color:var(--ink-500);text-align:right;font-weight:500;line-height:22px}
+    .info-value{font-size:14px;color:var(--ink-900);line-height:22px}
+    .info-value .input{height:32px;font-size:14px}
+
+    /* Tree in dropdown */
+    .tree-option{padding:6px 10px;font-size:14px;line-height:22px;color:var(--ink-800);cursor:pointer;border-radius:var(--radius-sm);display:flex;align-items:center;gap:6px}
+    .tree-option:hover{background:var(--bg-subtle)}
+    .tree-option.selected{background:var(--brand-50);color:var(--brand-700);font-weight:500}
+    .tree-option.level-1{padding-left:24px}
+    .tree-option.level-2{padding-left:40px}
+
+    /* Dropdown panel */
+    .dropdown-panel{position:absolute;top:calc(100% + 4px);left:0;z-index:100;background:var(--white);border:1px solid var(--line-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);display:none;min-width:200px;max-height:240px;overflow-y:auto;padding:4px}
+    .dropdown-panel.open{display:block;animation:popIn .12s ease-out}
+    @keyframes popIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+
+    .role-chip{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;background:var(--brand-50);color:var(--brand-700);border:1px solid var(--brand-100);border-radius:var(--radius-sm);font-size:12px;font-weight:500;line-height:1.5;margin:2px}
+    .role-chip .remove-role{cursor:pointer;color:var(--brand-500);margin-left:2px;font-size:14px;line-height:1}
+    .role-chip .remove-role:hover{color:var(--danger)}
+
+    /* Export success modal */
+    .export-success{background:var(--success-bg);color:var(--green-700);padding:16px 20px;border-radius:6px;font-size:14px;border:1px solid var(--success-border);text-align:center}
+    .export-success .icon{font-size:32px;display:block;margin-bottom:8px}
+    .export-success .count{font-weight:600;font-size:16px}
+
+    /* 编辑状态标记 */
+    .edit-badge{font-size:11px;color:var(--ink-400);background:var(--bg-muted);padding:2px 8px;border-radius:var(--radius-sm);margin-left:8px}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <div class="flex flex-1 overflow-hidden">
+    <!-- ============ Main Content ============ -->
+    <main class="flex-1 flex flex-col overflow-hidden" style="background:var(--bg-subtle)">
+      <!-- 面包屑导航已删除 -->
+
+      <!-- Content area -->
+      <div class="flex-1 overflow-y-auto custom-scroll p-8">
+        <!-- Filter area -->
+        <div class="section-card mb-6">
+          <div style="padding:var(--s-4)">
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-4);align-items:end">
+              <!-- 姓名 -->
+              <div>
+                <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block">姓名</label>
+                <input type="text" class="input" placeholder="请输入姓名" id="filterName">
+              </div>
+              <!-- 工号 -->
+              <div>
+                <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block">工号</label>
+                <input type="text" class="input" placeholder="请输入工号" id="filterEmpNo">
+              </div>
+              <!-- 所属机构 -->
+              <div style="position:relative">
+                <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block">所属机构</label>
+                <div class="select-native" style="display:flex;align-items:center;justify-content:space-between;padding:5px 12px;height:32px;font-size:14px;color:var(--ink-400);background:var(--white);border:1px solid var(--ink-300);border-radius:var(--radius-md);cursor:pointer" id="orgSelectorBtn" onclick="toggleOrgTree()">
+                  <span id="orgSelectedText">请选择机构</span>
+                  <svg class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <!-- Org tree dropdown -->
+                <div class="dropdown-panel" id="orgTreePanel" style="width:100%">
+                  <div class="tree-option" onclick="selectOrg(this, '总行')">总行</div>
+                  <div class="tree-option level-1" onclick="selectOrg(this, '北京分行')">北京分行</div>
+                  <div class="tree-option level-2" onclick="selectOrg(this, '北京分行-朝阳支行')">北京分行-朝阳支行</div>
+                  <div class="tree-option level-2" onclick="selectOrg(this, '北京分行-海淀支行')">北京分行-海淀支行</div>
+                  <div class="tree-option level-1" onclick="selectOrg(this, '上海分行')">上海分行</div>
+                  <div class="tree-option level-2" onclick="selectOrg(this, '上海分行-浦东支行')">上海分行-浦东支行</div>
+                  <div class="tree-option level-1" onclick="selectOrg(this, '广州分行')">广州分行</div>
+                </div>
+              </div>
+              <!-- 角色 -->
+              <div>
+                <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block">角色</label>
+                <select class="select-native" id="filterRole">
+                  <option value="">全部角色</option>
+                  <option value="系统管理员">系统管理员</option>
+                  <option value="总行管理员">总行管理员</option>
+                  <option value="机构管理员">机构管理员</option>
+                  <option value="绿色认定专员">绿色认定专员</option>
+                  <option value="审批人">审批人</option>
+                </select>
+              </div>
+            </div>
+            <!-- Buttons -->
+            <div style="display:flex;gap:var(--s-3);margin-top:var(--s-4);justify-content:flex-end">
+              <button class="btn btn-primary btn-md" onclick="handleSearch()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                查询
+              </button>
+              <button class="btn btn-secondary btn-md" onclick="handleReset()">重置</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="section-card">
+          <!-- 工具栏：仅保留批量导出按钮 -->
+          <div style="display:flex;align-items:center;gap:var(--s-2);padding:var(--s-3) var(--s-4);border-bottom:1px solid var(--line-200)">
+            <button class="btn btn-md btn-secondary" onclick="exportUserData()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              批量导出
+            </button>
+            <span style="margin-left:auto;font-size:12px;color:var(--ink-500)">共 <strong id="totalCount" style="color:var(--brand-500);font-family:var(--font-num)">86</strong> 条</span>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th style="width:50px">序号</th>
+                <th>姓名</th>
+                <th>工号</th>
+                <th>所属机构</th>
+                <th>岗位</th>
+                <th>角色</th>
+                <th style="width:80px">状态</th>
+                <th style="width:120px;text-align:right">操作</th>
+              </tr>
+            </thead>
+            <tbody id="userTableBody">
+            </tbody>
+          </table>
+          <!-- Pagination -->
+          <div class="pagination" id="paginationBar">
+            <span class="pagination-info">共 <strong id="pageTotal">86</strong> 条</span>
+            <div class="pagination-controls">
+              <button class="page-btn" id="prevBtn" onclick="changePage(-1)" disabled>
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <button class="page-btn active" data-page="1" onclick="goToPage(1)">1</button>
+              <button class="page-btn" data-page="2" onclick="goToPage(2)">2</button>
+              <button class="page-btn" data-page="3" onclick="goToPage(3)">3</button>
+              <button class="page-btn" data-page="4" onclick="goToPage(4)">4</button>
+              <button class="page-btn" data-page="5" onclick="goToPage(5)">5</button>
+              <button class="page-btn" id="nextBtn" onclick="changePage(1)">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;margin-left:16px">
+              <span style="font-size:13px;color:var(--ink-500)">每页</span>
+              <select class="select-native" style="width:auto;height:32px;padding:0 28px 0 10px" id="pageSizeSelect" onchange="changePageSize(this.value)">
+                <option value="20" selected>20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+              <span style="font-size:13px;color:var(--ink-500)">条</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ============ User Detail Drawer ============ -->
+  <div class="drawer-mask" id="drawerMask" onclick="closeDrawer()"></div>
+  <div class="drawer" id="userDrawer">
+    <div class="drawer-head">
+      <div>
+        <div class="drawer-title">用户详情</div>
+        <div class="drawer-subtitle" id="drawerSubtitle">工号：EMP001</div>
+      </div>
+      <button class="drawer-close" onclick="closeDrawer()">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="drawer-body">
+      <!-- Basic info section -->
+      <div class="section-card mb-6">
+        <div class="section-card-head">
+          <div class="section-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <span class="section-card-title">基础信息</span>
+          <span class="edit-badge">可编辑</span>
+        </div>
+        <div style="padding:var(--s-6)">
+          <div class="info-grid">
+            <span class="info-label">姓名</span>
+            <span class="info-value"><input type="text" class="input" id="editName" value=""></span>
+          </div>
+          <div class="info-grid">
+            <span class="info-label">工号</span>
+            <span class="info-value" id="detailEmpNo" style="font-family:var(--font-mono);color:var(--ink-600)">--</span>
+          </div>
+          <div class="info-grid">
+            <span class="info-label">所属机构</span>
+            <span class="info-value"><input type="text" class="input" id="editOrg" value=""></span>
+          </div>
+          <div class="info-grid">
+            <span class="info-label">岗位</span>
+            <span class="info-value"><input type="text" class="input" id="editPosition" value=""></span>
+          </div>
+          <div class="info-grid">
+            <span class="info-label">业务条线</span>
+            <span class="info-value"><input type="text" class="input" id="editBusinessLine" value=""></span>
+          </div>
+          <div class="info-grid">
+            <span class="info-label">状态</span>
+            <span class="info-value" id="detailStatus">--</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Role association section -->
+      <div class="section-card">
+        <div class="section-card-head">
+          <div class="section-card-icon" style="background:var(--green-500)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <span class="section-card-title">角色关联</span>
+          <button class="btn btn-sm btn-primary" style="margin-left:auto" onclick="openAddRoleModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            添加角色
+          </button>
+        </div>
+        <div style="padding:var(--s-6)">
+          <div id="roleListContainer">
+            <!-- Roles will be rendered here -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="drawer-foot">
+      <button class="btn btn-secondary btn-md" onclick="closeDrawer()">取消</button>
+      <button class="btn btn-primary btn-md" onclick="saveUserDetail()">保存</button>
+    </div>
+  </div>
+
+  <!-- ============ Disable Confirm Modal ============ -->
+  <div class="modal-mask" id="disableModal">
+    <div class="modal modal-sm">
+      <div class="modal-head">
+        <span class="modal-title" id="modalTitle">确认停用</span>
+        <button class="modal-close" onclick="closeModal('disableModal')">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex;gap:16px;align-items:flex-start">
+          <div style="width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0" id="modalIcon">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="modalIconSvg"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:600;color:var(--ink-900);margin-bottom:4px" id="modalConfirmText">确认停用该用户？</div>
+            <div style="font-size:14px;color:var(--ink-600);line-height:1.5" id="modalDesc">停用后该用户将无法登录系统。</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-secondary btn-md" onclick="closeModal('disableModal')">取消</button>
+        <button class="btn btn-primary btn-md" id="modalConfirmBtn" onclick="confirmStatusChange()">确认停用</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Add Role Modal (z-index高于drawer) ============ -->
+  <div class="modal-mask" id="addRoleModal">
+    <div class="modal">
+      <div class="modal-head">
+        <span class="modal-title">添加角色</span>
+        <button class="modal-close" onclick="closeModal('addRoleModal')">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom:12px">
+          <input type="text" class="input" placeholder="搜索角色名称..." id="roleSearchInput" oninput="filterRoleList(this.value)">
+        </div>
+        <div style="max-height:240px;overflow-y:auto;border:1px solid var(--line-200);border-radius:var(--radius-md);padding:4px" id="availableRoleList">
+          <!-- Available roles rendered here -->
+        </div>
+        <div style="margin-top:12px;font-size:12px;color:var(--ink-500)">已选择 <strong id="selectedRoleCount" style="color:var(--brand-500)">0</strong> 个角色</div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-secondary btn-md" onclick="closeModal('addRoleModal')">取消</button>
+        <button class="btn btn-primary btn-md" onclick="confirmAddRoles()">确认添加</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Save Confirm Modal ============ -->
+  <div class="modal-mask" id="saveConfirmModal">
+    <div class="modal modal-sm">
+      <div class="modal-head">
+        <span class="modal-title">确认保存</span>
+        <button class="modal-close" onclick="closeModal('saveConfirmModal')">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex;gap:16px;align-items:flex-start">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--info-bg);color:var(--info);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:600;color:var(--ink-900);margin-bottom:4px">确认保存用户信息？</div>
+            <div style="font-size:14px;color:var(--ink-600);line-height:1.5" id="saveConfirmDesc">确定要保存当前用户信息的修改吗？</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-secondary btn-md" onclick="closeModal('saveConfirmModal')">取消</button>
+        <button class="btn btn-primary btn-md" onclick="doSaveUser()">确认保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Export Success Modal ============ -->
+  <div class="modal-mask" id="exportModal">
+    <div class="modal modal-sm modal-form">
+      <div class="modal-head">
+        <div class="modal-title">导出成功</div>
+        <button class="modal-close" onclick="closeModal('exportModal')"><svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="modal-body" style="text-align:center;padding:32px 24px;">
+        <div class="export-success">
+          <span class="icon">✅</span>
+          <div style="font-weight:600;font-size:16px;margin-bottom:4px;">用户数据已导出</div>
+          <div style="font-size:13px;color:var(--ink-500);margin-top:4px;" id="exportCount">共导出 0 条用户记录</div>
+        </div>
+      </div>
+      <div class="modal-foot" style="justify-content:center;">
+        <button class="btn btn-md btn-primary" onclick="closeModal('exportModal')">我知道了</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ============ Mock Data ============
+    var allUsers = [
+      { name:'张明辉', empNo:'EMP001', org:'总行', position:'系统管理员', roles:['系统管理员'], status:'正常', businessLine:'公司金融' },
+      { name:'李思雨', empNo:'EMP002', org:'总行', position:'绿色金融专员', roles:['绿色认定专员','机构管理员'], status:'正常', businessLine:'绿色金融' },
+      { name:'王建国', empNo:'EMP003', org:'北京分行', position:'风险管理主管', roles:['审批人','总行管理员'], status:'正常', businessLine:'风险管理' },
+      { name:'赵晓燕', empNo:'EMP004', org:'北京分行-朝阳支行', position:'客户经理', roles:['机构管理员'], status:'正常', businessLine:'公司金融' },
+      { name:'刘志强', empNo:'EMP005', org:'上海分行', position:'ESG分析师', roles:['绿色认定专员'], status:'停用', businessLine:'ESG管理' },
+      { name:'陈美玲', empNo:'EMP006', org:'上海分行-浦东支行', position:'信贷审批员', roles:['审批人'], status:'正常', businessLine:'风险管理' },
+      { name:'杨文博', empNo:'EMP007', org:'广州分行', position:'系统运维工程师', roles:['系统管理员','总行管理员'], status:'正常', businessLine:'信息技术' },
+      { name:'黄丽娟', empNo:'EMP008', org:'总行', position:'合规专员', roles:['机构管理员'], status:'正常', businessLine:'合规管理' },
+      { name:'周天宇', empNo:'EMP009', org:'北京分行-海淀支行', position:'绿色信贷专员', roles:['绿色认定专员','审批人'], status:'正常', businessLine:'绿色金融' },
+      { name:'吴佳颖', empNo:'EMP010', org:'上海分行', position:'数据分析师', roles:['机构管理员'], status:'正常', businessLine:'数据管理' },
+      { name:'孙浩然', empNo:'EMP011', org:'广州分行', position:'风险管理主管', roles:['审批人','总行管理员'], status:'停用', businessLine:'风险管理' },
+      { name:'马晓东', empNo:'EMP012', org:'总行', position:'产品经理', roles:['机构管理员','绿色认定专员'], status:'正常', businessLine:'产品管理' },
+      { name:'林雅琪', empNo:'EMP013', org:'北京分行', position:'ESG分析师', roles:['绿色认定专员'], status:'正常', businessLine:'ESG管理' },
+      { name:'郑凯文', empNo:'EMP014', org:'上海分行-浦东支行', position:'客户经理', roles:['机构管理员'], status:'正常', businessLine:'公司金融' },
+      { name:'何雨桐', empNo:'EMP015', org:'总行', position:'系统管理员', roles:['系统管理员'], status:'正常', businessLine:'信息技术' },
+      { name:'徐明哲', empNo:'EMP016', org:'北京分行-朝阳支行', position:'绿色信贷专员', roles:['绿色认定专员','审批人'], status:'正常', businessLine:'绿色金融' },
+      { name:'胡文静', empNo:'EMP017', org:'广州分行', position:'合规专员', roles:['机构管理员'], status:'正常', businessLine:'合规管理' },
+      { name:'郭振华', empNo:'EMP018', org:'总行', position:'风险管理主管', roles:['审批人','总行管理员'], status:'正常', businessLine:'风险管理' },
+      { name:'曹雪萍', empNo:'EMP019', org:'上海分行', position:'产品经理', roles:['机构管理员','绿色认定专员'], status:'停用', businessLine:'产品管理' },
+      { name:'邓子轩', empNo:'EMP020', org:'北京分行', position:'系统运维工程师', roles:['系统管理员'], status:'正常', businessLine:'信息技术' },
+      { name:'冯晓峰', empNo:'EMP021', org:'广州分行', position:'绿色信贷专员', roles:['绿色认定专员'], status:'正常', businessLine:'绿色金融' },
+      { name:'蒋丽芳', empNo:'EMP022', org:'总行', position:'ESG分析师', roles:['绿色认定专员','机构管理员'], status:'正常', businessLine:'ESG管理' },
+      { name:'韩天宇', empNo:'EMP023', org:'北京分行-海淀支行', position:'客户经理', roles:['机构管理员'], status:'正常', businessLine:'公司金融' },
+      { name:'田美华', empNo:'EMP024', org:'上海分行', position:'数据分析师', roles:['机构管理员'], status:'正常', businessLine:'数据管理' },
+      { name:'董建国', empNo:'EMP025', org:'总行', position:'合规主管', roles:['审批人','总行管理员'], status:'正常', businessLine:'合规管理' }
+    ];
+
+    var availableRoles = ['系统管理员','总行管理员','机构管理员','绿色认定专员','审批人'];
+    var currentPage = 1;
+    var pageSize = 20;
+    var currentActionUser = null;
+    var currentDrawerUser = null;
+    var selectedAddRoles = [];
+    var originalUserData = {}; // 用于保存时比对修改
+
+    // ============ Render Table ============
+    function renderTable() {
+      var tbody = document.getElementById('userTableBody');
+      var start = (currentPage - 1) * pageSize;
+      var end = Math.min(start + pageSize, allUsers.length);
+      var pageUsers = allUsers.slice(start, end);
+      var html = '';
+      pageUsers.forEach(function(u, i) {
+        var statusTag = u.status === '正常'
+          ? '<span class="status"><span class="status-dot s-success"></span>正常</span>'
+          : '<span class="status"><span class="status-dot s-danger"></span>停用</span>';
+        var rolesHtml = '';
+        u.roles.forEach(function(r) {
+          rolesHtml += '<span class="role-tag">' + r + '</span>';
+        });
+        if (u.roles.length > 2) {
+          rolesHtml = u.roles.slice(0, 2).map(function(r){return '<span class="role-tag">'+r+'</span>';}).join('') + '<span class="role-tag" style="background:var(--bg-muted);color:var(--ink-500);border-color:var(--line-200)">+' + (u.roles.length - 2) + '</span>';
+        }
+        var actionBtn = u.status === '正常'
+          ? '<button class="btn-danger-ghost" onclick="handleDisable(\''+u.empNo+'\')">停用</button>'
+          : '<button class="btn-ghost" onclick="handleEnable(\''+u.empNo+'\')">启用</button>';
+        html += '<tr>'
+          + '<td class="num" style="color:var(--ink-500)">' + (start + i + 1) + '</td>'
+          + '<td style="font-weight:500">' + u.name + '</td>'
+          + '<td style="font-family:var(--font-mono);font-size:13px">' + u.empNo + '</td>'
+          + '<td>' + u.org + '</td>'
+          + '<td>' + u.position + '</td>'
+          + '<td>' + rolesHtml + '</td>'
+          + '<td>' + statusTag + '</td>'
+          + '<td style="text-align:right;white-space:nowrap">'
+          + '<button class="btn-ghost" onclick="openDetail(\''+u.empNo+'\')">详情</button>'
+          + actionBtn
+          + '</td>'
+          + '</tr>';
+      });
+      tbody.innerHTML = html;
+      document.getElementById('pageTotal').textContent = allUsers.length;
+      document.getElementById('totalCount').textContent = allUsers.length;
+      renderPagination();
+    }
+
+    function renderPagination() {
+      var totalPages = Math.ceil(allUsers.length / pageSize);
+      if (totalPages < 1) totalPages = 1;
+      var controls = document.querySelector('.pagination-controls');
+      var html = '';
+      html += '<button class="page-btn" ' + (currentPage <= 1 ? 'disabled' : '') + ' onclick="changePage(-1)"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>';
+      for (var p = 1; p <= totalPages; p++) {
+        if (totalPages > 7 && p > 3 && p < totalPages - 1 && Math.abs(p - currentPage) > 1) {
+          if (p === 4 || p === totalPages - 2) html += '<span class="page-btn" style="border:none;cursor:default">...</span>';
+          continue;
+        }
+        html += '<button class="page-btn' + (p === currentPage ? ' active' : '') + '" onclick="goToPage(' + p + ')">' + p + '</button>';
+      }
+      html += '<button class="page-btn" ' + (currentPage >= totalPages ? 'disabled' : '') + ' onclick="changePage(1)"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>';
+      controls.innerHTML = html;
+    }
+
+    function goToPage(p) {
+      currentPage = p;
+      renderTable();
+    }
+
+    function changePage(delta) {
+      var totalPages = Math.ceil(allUsers.length / pageSize);
+      var newPage = currentPage + delta;
+      if (newPage >= 1 && newPage <= totalPages) {
+        currentPage = newPage;
+        renderTable();
+      }
+    }
+
+    function changePageSize(val) {
+      pageSize = parseInt(val);
+      currentPage = 1;
+      renderTable();
+    }
+
+    // ============ Filter ============
+    function handleSearch() {
+      currentPage = 1;
+      renderTable();
+    }
+
+    function handleReset() {
+      document.getElementById('filterName').value = '';
+      document.getElementById('filterEmpNo').value = '';
+      document.getElementById('filterRole').value = '';
+      document.getElementById('orgSelectedText').textContent = '请选择机构';
+      document.getElementById('orgSelectedText').style.color = '';
+      currentPage = 1;
+      renderTable();
+    }
+
+    // ============ Org Tree ============
+    function toggleOrgTree() {
+      var panel = document.getElementById('orgTreePanel');
+      panel.classList.toggle('open');
+    }
+
+    function selectOrg(el, name) {
+      document.getElementById('orgSelectedText').textContent = name;
+      document.getElementById('orgSelectedText').style.color = 'var(--ink-900)';
+      document.getElementById('orgTreePanel').classList.remove('open');
+      document.querySelectorAll('.tree-option').forEach(function(o){o.classList.remove('selected')});
+      el.classList.add('selected');
+    }
+
+    document.addEventListener('click', function(e) {
+      var panel = document.getElementById('orgTreePanel');
+      var btn = document.getElementById('orgSelectorBtn');
+      if (!btn.contains(e.target) && !panel.contains(e.target)) {
+        panel.classList.remove('open');
+      }
+    });
+
+    // ============ User Detail Drawer ============
+    function openDetail(empNo) {
+      var user = allUsers.find(function(u){return u.empNo === empNo});
+      if (!user) return;
+      currentDrawerUser = user;
+
+      // 保存原始数据用于比对
+      originalUserData = {
+        name: user.name,
+        org: user.org,
+        position: user.position,
+        businessLine: user.businessLine
+      };
+
+      document.getElementById('drawerSubtitle').textContent = '工号：' + user.empNo;
+      document.getElementById('detailEmpNo').textContent = user.empNo;
+      document.getElementById('editName').value = user.name;
+      document.getElementById('editOrg').value = user.org;
+      document.getElementById('editPosition').value = user.position;
+      document.getElementById('editBusinessLine').value = user.businessLine;
+      document.getElementById('detailStatus').innerHTML = user.status === '正常'
+        ? '<span class="status"><span class="status-dot s-success"></span>正常</span>'
+        : '<span class="status"><span class="status-dot s-danger"></span>停用</span>';
+
+      renderUserRoles(user);
+
+      document.getElementById('drawerMask').classList.add('open');
+      document.getElementById('userDrawer').classList.add('open');
+    }
+
+    function renderUserRoles(user) {
+      var container = document.getElementById('roleListContainer');
+      if (user.roles.length === 0) {
+        container.innerHTML = '<div style="text-align:center;padding:24px;color:var(--ink-400);font-size:14px">暂未关联角色，请点击"添加角色"</div>';
+        return;
+      }
+      var html = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">';
+      user.roles.forEach(function(r) {
+        html += '<span class="role-chip">' + r + '<span class="remove-role" onclick="removeRole(\''+r+'\')" title="移除此角色">&times;</span></span>';
+      });
+      html += '</div>';
+      html += '<div style="font-size:12px;color:var(--ink-500)">已关联 ' + user.roles.length + ' 个角色。移除角色后对应用户权限立即失效。</div>';
+      container.innerHTML = html;
+    }
+
+    function closeDrawer() {
+      document.getElementById('drawerMask').classList.remove('open');
+      document.getElementById('userDrawer').classList.remove('open');
+      currentDrawerUser = null;
+      originalUserData = {};
+    }
+
+    // ============ Remove Role ============
+    function removeRole(roleName) {
+      if (!currentDrawerUser) return;
+      var idx = currentDrawerUser.roles.indexOf(roleName);
+      if (idx > -1) {
+        currentDrawerUser.roles.splice(idx, 1);
+        renderUserRoles(currentDrawerUser);
+        renderTable();
+      }
+    }
+
+    // ============ Add Role Modal ============
+    function openAddRoleModal() {
+      if (!currentDrawerUser) return;
+      selectedAddRoles = [];
+      renderAvailableRoles();
+      document.getElementById('addRoleModal').classList.add('open');
+    }
+
+    function renderAvailableRoles(filter) {
+      var container = document.getElementById('availableRoleList');
+      var filtered = availableRoles.filter(function(r) {
+        if (currentDrawerUser.roles.indexOf(r) > -1) return false;
+        if (filter && r.indexOf(filter) === -1) return false;
+        return true;
+      });
+      if (filtered.length === 0) {
+        container.innerHTML = '<div style="padding:16px;text-align:center;color:var(--ink-400);font-size:13px">暂无可选角色</div>';
+        return;
+      }
+      var html = '';
+      filtered.forEach(function(r) {
+        var checked = selectedAddRoles.indexOf(r) > -1;
+        html += '<div class="tree-option' + (checked ? ' selected' : '') + '" onclick="toggleSelectRole(this, \'' + r + '\')">';
+        html += '<input type="checkbox" ' + (checked ? 'checked' : '') + ' style="pointer-events:none"> ' + r;
+        html += '</div>';
+      });
+      container.innerHTML = html;
+      document.getElementById('selectedRoleCount').textContent = selectedAddRoles.length;
+    }
+
+    function toggleSelectRole(el, roleName) {
+      var idx = selectedAddRoles.indexOf(roleName);
+      if (idx > -1) {
+        selectedAddRoles.splice(idx, 1);
+        el.classList.remove('selected');
+        el.querySelector('input').checked = false;
+      } else {
+        selectedAddRoles.push(roleName);
+        el.classList.add('selected');
+        el.querySelector('input').checked = true;
+      }
+      document.getElementById('selectedRoleCount').textContent = selectedAddRoles.length;
+    }
+
+    function filterRoleList(val) {
+      renderAvailableRoles(val.trim());
+    }
+
+    function confirmAddRoles() {
+      if (selectedAddRoles.length === 0) {
+        alert('请至少选择一个角色');
+        return;
+      }
+      selectedAddRoles.forEach(function(r) {
+        currentDrawerUser.roles.push(r);
+      });
+      closeModal('addRoleModal');
+      renderUserRoles(currentDrawerUser);
+      renderTable();
+    }
+
+    // ============ Save User Detail ============
+    function saveUserDetail() {
+      if (!currentDrawerUser) return;
+
+      var newName = document.getElementById('editName').value.trim();
+      var newOrg = document.getElementById('editOrg').value.trim();
+      var newPosition = document.getElementById('editPosition').value.trim();
+      var newBusinessLine = document.getElementById('editBusinessLine').value.trim();
+
+      // 检查是否有修改
+      var hasChanges = false;
+      var changes = [];
+
+      if (newName !== originalUserData.name) {
+        hasChanges = true;
+        changes.push('姓名: ' + originalUserData.name + ' → ' + newName);
+      }
+      if (newOrg !== originalUserData.org) {
+        hasChanges = true;
+        changes.push('所属机构: ' + originalUserData.org + ' → ' + newOrg);
+      }
+      if (newPosition !== originalUserData.position) {
+        hasChanges = true;
+        changes.push('岗位: ' + originalUserData.position + ' → ' + newPosition);
+      }
+      if (newBusinessLine !== originalUserData.businessLine) {
+        hasChanges = true;
+        changes.push('业务条线: ' + originalUserData.businessLine + ' → ' + newBusinessLine);
+      }
+
+      if (!hasChanges) {
+        alert('未检测到任何修改');
+        return;
+      }
+
+      // 显示确认弹窗
+      var desc = '确定要保存以下修改吗？<br><br>' + changes.join('<br>');
+      document.getElementById('saveConfirmDesc').innerHTML = desc;
+      document.getElementById('saveConfirmModal').classList.add('open');
+    }
+
+    function doSaveUser() {
+      if (!currentDrawerUser) return;
+
+      var newName = document.getElementById('editName').value.trim();
+      var newOrg = document.getElementById('editOrg').value.trim();
+      var newPosition = document.getElementById('editPosition').value.trim();
+      var newBusinessLine = document.getElementById('editBusinessLine').value.trim();
+
+      // 更新用户数据
+      currentDrawerUser.name = newName || currentDrawerUser.name;
+      currentDrawerUser.org = newOrg || currentDrawerUser.org;
+      currentDrawerUser.position = newPosition || currentDrawerUser.position;
+      currentDrawerUser.businessLine = newBusinessLine || currentDrawerUser.businessLine;
+
+      // 更新原始数据
+      originalUserData = {
+        name: currentDrawerUser.name,
+        org: currentDrawerUser.org,
+        position: currentDrawerUser.position,
+        businessLine: currentDrawerUser.businessLine
+      };
+
+      closeModal('saveConfirmModal');
+      renderTable();
+      alert('用户信息保存成功！');
+    }
+
+    // ============ Disable / Enable ============
+    function handleDisable(empNo) {
+      var user = allUsers.find(function(u){return u.empNo === empNo});
+      if (!user) return;
+      currentActionUser = user;
+      document.getElementById('modalTitle').textContent = '确认停用';
+      document.getElementById('modalConfirmText').textContent = '确认停用用户「' + user.name + '」？';
+      document.getElementById('modalDesc').textContent = '停用后该用户将无法登录系统。';
+      document.getElementById('modalConfirmBtn').textContent = '确认停用';
+      document.getElementById('modalConfirmBtn').className = 'btn btn-primary btn-md';
+      document.getElementById('disableModal').classList.add('open');
+    }
+
+    function handleEnable(empNo) {
+      var user = allUsers.find(function(u){return u.empNo === empNo});
+      if (!user) return;
+      currentActionUser = user;
+      document.getElementById('modalTitle').textContent = '确认启用';
+      document.getElementById('modalConfirmText').textContent = '确认启用用户「' + user.name + '」？';
+      document.getElementById('modalDesc').textContent = '启用后该用户可恢复正常登录。';
+      document.getElementById('modalConfirmBtn').textContent = '确认启用';
+      document.getElementById('modalConfirmBtn').className = 'btn btn-primary btn-md';
+      document.getElementById('disableModal').classList.add('open');
+    }
+
+    function confirmStatusChange() {
+      if (!currentActionUser) return;
+      currentActionUser.status = currentActionUser.status === '正常' ? '停用' : '正常';
+      closeModal('disableModal');
+      renderTable();
+    }
+
+    // ============ 批量导出 ============
+    function exportUserData() {
+      var count = allUsers.length;
+      document.getElementById('exportCount').textContent = '共导出 ' + count + ' 条用户记录';
+      document.getElementById('exportModal').classList.add('open');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+      currentActionUser = null;
+    }
+
+    // Close modals on mask click
+    document.getElementById('disableModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal('disableModal');
+    });
+    document.getElementById('addRoleModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal('addRoleModal');
+    });
+    document.getElementById('exportModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal('exportModal');
+    });
+    document.getElementById('saveConfirmModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal('saveConfirmModal');
+    });
+
+    // ============ Init ============
+    renderTable();
+  </script>
+</body>
+</html>

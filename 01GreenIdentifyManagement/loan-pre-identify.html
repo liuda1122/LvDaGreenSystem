@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合同预识别 · 绿色金融智能识别</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --brand-50: #E8F0FB;
+            --brand-100: #D1DFF4;
+            --brand-500: #2A66C2;
+            --brand-700: #143F8F;
+            --brand-900: #01256A;
+            --green-50: #ECFDF5;
+            --green-500: #10B981;
+            --green-700: #047857;
+            --success: #10B981;
+            --success-bg: #ECFDF5;
+            --success-border: #A7F3D0;
+            --warning: #D97706;
+            --warning-bg: #FFFBEB;
+            --warning-border: #FDE68A;
+            --danger: #DC2626;
+            --danger-bg: #FEF2F2;
+            --danger-border: #FECACA;
+            --info: #2A66C2;
+            --info-bg: #E8F0FB;
+            --info-border: #D1DFF4;
+            --ink-900: #0F172A;
+            --ink-800: #1E293B;
+            --ink-600: #475569;
+            --ink-500: #64748B;
+            --ink-400: #94A3B8;
+            --ink-300: #CBD5E1;
+            --line-200: #E2E8F0;
+            --bg-muted: #F1F5F9;
+            --bg-subtle: #F8FAFC;
+            --white: #FFFFFF;
+            --radius-sm: 4px;
+            --radius-md: 6px;
+            --radius-lg: 8px;
+            --radius-xl: 12px;
+            --radius-2xl: 16px;
+            --shadow-lg: 0 10px 24px rgba(15, 23, 42, .10), 0 4px 8px rgba(15, 23, 42, .04);
+            --shadow-xl: 0 20px 40px rgba(15, 23, 42, .16), 0 8px 16px rgba(15, 23, 42, .06);
+            --font-sans: 'PingFang SC', 'Microsoft YaHei', 'Inter', system-ui, sans-serif;
+            --font-num: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Consolas', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--ink-800);
+            background: var(--bg-subtle);
+            font-size: 14px;
+            line-height: 1.57;
+            -webkit-font-smoothing: antialiased;
+            padding: 16px 24px;  /* 上下16px，左右24px */
+        }
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: var(--brand-500);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all .15s;
+            border: 1px solid transparent;
+            line-height: 1;
+            white-space: nowrap;
+        }
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+            line-height: 20px;
+            height: 28px;
+        }
+        .btn-md {
+            padding: 8px 16px;
+            font-size: 14px;
+            line-height: 22px;
+            height: 32px;
+        }
+        .btn-primary {
+            background: var(--brand-500);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: var(--brand-700);
+        }
+        .btn-secondary {
+            background: var(--white);
+            color: var(--ink-800);
+            border-color: var(--ink-300);
+        }
+        .btn-secondary:hover {
+            border-color: var(--brand-500);
+            color: var(--brand-500);
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1.5;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+        .tag-default {
+            background: var(--bg-muted);
+            color: var(--ink-600);
+            border-color: var(--line-200);
+        }
+        .tag-success {
+            background: var(--success-bg);
+            color: var(--green-700);
+            border-color: var(--success-border);
+        }
+        .tag-danger {
+            background: var(--danger-bg);
+            color: var(--danger);
+            border-color: var(--danger-border);
+        }
+        .tag-warning {
+            background: var(--warning-bg);
+            color: var(--warning);
+            border-color: var(--warning-border);
+        }
+        .tag-info {
+            background: var(--info-bg);
+            color: var(--info);
+            border-color: var(--info-border);
+        }
+
+        .section-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--line-200);
+            overflow: hidden;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 6px 16px;
+            align-items: baseline;
+        }
+        .info-label {
+            font-size: 13px;
+            color: var(--ink-500);
+            font-weight: 500;
+        }
+        .info-value {
+            font-size: 14px;
+            color: var(--ink-900);
+            word-break: break-word;
+        }
+
+        /* 绿色分类卡片 - 带右上角问号 */
+        .green-class-card {
+            border: 2px solid var(--line-200);
+            border-radius: var(--radius-lg);
+            padding: 12px 16px;
+            transition: all .2s;
+            cursor: pointer;
+            background: var(--white);
+            position: relative;
+        }
+        .green-class-card:hover {
+            border-color: var(--brand-300);
+            background: var(--brand-50);
+        }
+        .green-class-card.active {
+            border-color: var(--brand-500);
+            background: var(--brand-50);
+            box-shadow: 0 0 0 3px rgba(42, 102, 194, 0.15);
+        }
+        .green-class-card .level-1 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink-800);
+        }
+        .green-class-card .level-2 {
+            font-size: 13px;
+            color: var(--ink-600);
+            margin-top: 2px;
+        }
+        .green-class-card .level-3 {
+            font-size: 13px;
+            color: var(--brand-700);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+        .green-class-card .check-mark {
+            display: none;
+            color: var(--brand-500);
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        .green-class-card.active .check-mark {
+            display: inline;
+        }
+
+        /* 卡片右上角问号 */
+        .card-help-icon {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--brand-50);
+            color: var(--brand-500);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            border: 1px solid var(--brand-300);
+            transition: all .2s;
+            z-index: 5;
+        }
+        .card-help-icon:hover {
+            background: var(--brand-500);
+            color: #fff;
+            border-color: var(--brand-500);
+        }
+
+        /* 卡片内提示气泡 */
+        .card-tooltip {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--ink-900);
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            font-size: 12px;
+            max-width: 280px;
+            line-height: 1.6;
+            z-index: 100;
+            box-shadow: var(--shadow-lg);
+            white-space: normal;
+            text-align: left;
+        }
+        .card-tooltip::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid var(--ink-900);
+        }
+        .green-class-card .tooltip-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        .green-class-card .tooltip-wrapper:hover .card-tooltip {
+            display: block;
+        }
+
+        .reason-card {
+            background: var(--bg-muted);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            border-left: 3px solid var(--brand-500);
+        }
+        .suggestion-card {
+            background: var(--green-50);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            border-left: 3px solid var(--green-500);
+        }
+
+        .proof-section {
+            border: 1px solid var(--line-200);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all .3s;
+        }
+        .proof-section .proof-header {
+            padding: 12px 16px;
+            background: var(--bg-muted);
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--ink-700);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: default;
+        }
+        .proof-section .proof-body {
+            padding: 16px;
+            background: var(--white);
+        }
+
+        .example-thumb {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: var(--bg-muted);
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            border: 1px solid var(--line-200);
+            cursor: pointer;
+            transition: all .15s;
+        }
+        .example-thumb:hover {
+            background: var(--brand-50);
+            border-color: var(--brand-300);
+        }
+
+        .input-textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--line-200);
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color .2s;
+            background: var(--white);
+            resize: vertical;
+            min-height: 60px;
+        }
+        .input-textarea:focus {
+            border-color: var(--brand-500);
+        }
+        .input-text {
+            width: 100%;
+            padding: 6px 12px;
+            border: 1px solid var(--line-200);
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color .2s;
+            background: var(--bg-subtle);
+            color: var(--ink-800);
+        }
+        .input-text:focus {
+            border-color: var(--brand-500);
+            background: var(--white);
+        }
+
+        .loading-spinner {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px 0;
+            color: var(--ink-500);
+        }
+        .loading-spinner.active {
+            display: flex;
+        }
+        .spinner {
+            width: 28px;
+            height: 28px;
+            border: 3px solid var(--line-200);
+            border-top-color: var(--brand-500);
+            border-radius: 50%;
+            animation: spin .8s linear infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .category-selector {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .category-selector select {
+            padding: 6px 12px;
+            border: 1px solid var(--line-200);
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            background: var(--white);
+            outline: none;
+            min-width: 280px;
+            max-width: 420px;
+            transition: border-color .2s;
+            flex: 1;
+        }
+        .category-selector select:focus {
+            border-color: var(--brand-500);
+        }
+        .category-selector .selected-display {
+            font-size: 13px;
+            color: var(--ink-600);
+            padding: 6px 12px;
+            background: var(--bg-muted);
+            border-radius: var(--radius-md);
+            flex: 0 1 auto;
+            min-width: 160px;
+        }
+
+        .empty-proof {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--ink-400);
+        }
+        .empty-proof svg {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 12px;
+            color: var(--ink-300);
+        }
+
+        /* 开发备注 - 美观样式 */
+        .dev-note-container {
+            background: linear-gradient(135deg, #F0F4FF 0%, #E8F4F0 100%);
+            border: 2px dashed var(--brand-500);
+            border-radius: var(--radius-xl);
+            padding: 16px 20px;
+            margin-top: 16px;
+            position: relative;
+        }
+        .dev-note-container::before {
+            content: '🔧 开发备注';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--white);
+            padding: 0 12px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--brand-700);
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+        .dev-note-container .note-body {
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--ink-700);
+            padding-top: 6px;
+        }
+        .dev-note-container .note-body strong {
+            color: var(--brand-700);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 内容区域 -->
+    <div class="flex flex-col" style="height:100vh;background:var(--bg-subtle);">
+
+
+        <!-- Content - 左对齐 -->
+        <div class="flex-1 overflow-y-auto custom-scroll" style="padding:32px 24px 24px 24px;">
+            <div style="max-width:1100px;">
+
+                <!-- 客户基本信息 -->
+                <div class="section-card" style="margin-bottom:20px;">
+                    <div style="padding:14px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);">
+                        <span style="font-weight:600;color:var(--ink-900);font-size:15px;">客户基本信息</span>
+                    </div>
+                    <div style="padding:18px 24px;">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
+                            <div class="info-grid">
+                                <span class="info-label">客户国民经济行业</span>
+                                <input class="input-text" value="C26 化学原料和化学制品制造业" id="industry">
+                            </div>
+                            <div class="info-grid">
+                                <span class="info-label">地区</span>
+                                <input class="input-text" value="浙江省 宁波市 鄞州区" id="region">
+                            </div>
+                            <div class="info-grid col-span-2">
+                                <span class="info-label">主营业务</span>
+                                <input class="input-text" value="危险废物处置、废气回收利用、热电联产、氢能示范项目" id="business">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 合同融资用途 -->
+                <div class="section-card" style="margin-bottom:20px;">
+                    <div style="padding:14px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);">
+                        <span style="font-weight:600;color:var(--ink-900);font-size:15px;">合同融资用途</span>
+                    </div>
+                    <div style="padding:18px 24px;">
+                        <div style="margin-bottom:4px;font-size:13px;color:var(--ink-500);">请编辑或确认融资用途描述，用于模型识别：</div>
+                        <textarea class="input-textarea" id="purposeInput" rows="4" placeholder="请输入融资用途描述...">项目拟新建危废处置设施，采用回转窑焚烧技术，年处理能力3万吨；同步建设废气回收系统，对生产过程中产生的VOCs进行深度治理，回收率≥98%；配套建设氢能示范项目，利用副产氢实现热电联产，预计年减排CO₂约2.5万吨。</textarea>
+                        <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;">
+                            <button class="btn btn-primary btn-md" onclick="handleRecognize()">开始识别</button>
+                            <button class="btn btn-secondary btn-md" onclick="handleClear()">清除结果</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== 模型识别区域 ===== -->
+                <div class="section-card" style="margin-bottom:20px;">
+                    <div style="padding:14px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);">
+                        <span style="font-weight:600;color:var(--ink-900);font-size:15px;">模型识别</span>
+                    </div>
+                    <div style="padding:20px 24px;">
+
+                        <!-- 绿色金融标准 -->
+                        <div style="font-size:13px;color:var(--ink-500);margin-bottom:12px;">
+                            <span>绿色金融标准：</span>
+                            <span style="color:var(--ink-800);font-weight:500;">《绿色金融支持项目目录（2025年版）》</span>
+                            <span style="font-size:12px;color:var(--ink-400);margin-left:4px;">（点击分类卡片右上角 <span class="tag tag-info" style="font-size:10px;padding:0 6px;border-radius:50%;">?</span> 查看该分类说明）</span>
+                        </div>
+
+                        <!-- 加载动画 -->
+                        <div id="loadingSpinner" class="loading-spinner">
+                            <div class="spinner"></div>
+                            <span>模型识别中，请稍候...</span>
+                        </div>
+
+                        <!-- 绿色分类卡片（三列） -->
+                        <div id="classCardsContainer" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
+                            <!-- 由 JS 动态渲染 -->
+                        </div>
+
+                        <!-- 识别理由 -->
+                        <div id="reasonContainer" class="reason-card" style="margin-bottom:12px;">
+                            <div style="font-size:13px;font-weight:600;color:var(--ink-800);margin-bottom:4px;">识别理由</div>
+                            <div style="font-size:14px;color:var(--ink-700);" id="reasonText">该贷款信息中项目描述内容为"xxxxx"，未包含任何与绿色智能相关的具体建设活动或资金用途描述，无法识别为《绿色金融支持项目目录》中任何三级目录所涵盖的绿色智能项目内容。</div>
+                        </div>
+
+                        <!-- 业务填报建议 -->
+                        <div id="suggestionContainer" class="suggestion-card" style="margin-bottom:16px;">
+                            <div style="font-size:13px;font-weight:600;color:var(--green-700);margin-bottom:4px;">📋 业务填报建议</div>
+                            <div style="font-size:14px;color:var(--ink-700);" id="suggestionText">建议明确项目建设内容，如涉及污水处理、水资源循环利用、节水改造等具体绿色工程，应详细说明建设内容、技术路径及绿色效益，以符合绿色金融认定要求。</div>
+                        </div>
+
+                        <!-- 绿色佐证材料 -->
+                        <div style="border-top:1px solid var(--line-200);padding-top:16px;margin-top:4px;">
+                            <div style="font-weight:600;color:var(--ink-900);font-size:15px;margin-bottom:12px;">绿色佐证材料</div>
+
+                            <div class="category-selector">
+                                <select id="categorySelect" onchange="updateCategory()">
+                                    <option value="">-- 请选择绿色分类 --</option>
+                                    <option value="3.4.8" selected>3.4.8 电网节能改造项目</option>
+                                    <option value="2.1.3">2.1.3 节能锅炉制造</option>
+                                    <option value="5.2.6">5.2.6 充电基础设施</option>
+                                </select>
+                                <span class="selected-display" id="selectedCategoryDisplay">当前选择：3.4.8 电网节能改造项目</span>
+                            </div>
+
+                            <div id="proofDisplayArea">
+                                <div class="proof-section">
+                                    <div class="proof-header">
+                                        <span id="proofTitle">📎 3.4.8 电网节能改造项目 — 佐证材料清单</span>
+                                        <span class="tag tag-success">当前分类</span>
+                                    </div>
+                                    <div class="proof-body">
+                                        <div style="font-size:13px;color:var(--ink-600);margin-bottom:12px;">建议提供下列佐证材料：</div>
+                                        <ul id="proofList" style="list-style:disc;padding-left:20px;margin-bottom:16px;font-size:13px;color:var(--ink-700);">
+                                            <li>提供主体建设或运营内容为电网节能改造相关的可行性研究报告及批复</li>
+                                            <li>环境影响报告书或其他有关证明材料</li>
+                                            <li>节能评估报告或能源审计报告</li>
+                                            <li>项目竣工验收报告及节能效果评估</li>
+                                        </ul>
+                                        <div style="font-size:13px;color:var(--ink-500);margin-bottom:8px;">佐证材料示例：</div>
+                                        <div id="proofExamples" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;">
+                                            <span class="example-thumb" onclick="alert('预览：节能改造可研批复.jpg')">📄 节能改造可研批复.jpg</span>
+                                            <span class="example-thumb" onclick="alert('预览：环评报告批复.pdf')">📄 环评报告批复.pdf</span>
+                                            <span class="example-thumb" onclick="alert('预览：能效评估报告.png')">📄 能效评估报告.png</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="proofPlaceholder" style="display:none;">
+                                <div class="empty-proof">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                        <path d="M2 17l10 5 10-5"/>
+                                        <path d="M2 12l10 5 10-5"/>
+                                    </svg>
+                                    <p>请从上方下拉列表中选择绿色分类</p>
+                                    <p class="sub">选择三级分类后将展示对应的佐证材料提示</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ===== 开发备注 ===== -->
+                <div class="dev-note-container">
+                    <div class="note-body">
+                        <strong>本段内容仅供开发了解。</strong>支持业务人员输入合同基本信息及客户基本信息查看模型识别结果。点击【清除结果】或【切换菜单】则清空模型识别结果。
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        // 佐证材料数据
+        // ================================================================
+        var proofData = {
+            '3.4.8': {
+                name: '3.4.8 电网节能改造项目',
+                proof: [
+                    '提供主体建设或运营内容为电网节能改造相关的可行性研究报告及批复',
+                    '环境影响报告书或其他有关证明材料',
+                    '节能评估报告或能源审计报告',
+                    '项目竣工验收报告及节能效果评估'
+                ],
+                examples: [
+                    { name: '节能改造可研批复.jpg' },
+                    { name: '环评报告批复.pdf' },
+                    { name: '能效评估报告.png' }
+                ],
+                tooltip: '电网节能改造项目指通过技术手段降低电网损耗、提升输配电效率的节能工程，包括智能电网建设、输变电设备节能改造等。'
+            },
+            '2.1.3': {
+                name: '2.1.3 节能锅炉制造',
+                proof: [
+                    '锅炉制造资质及特种设备生产许可证',
+                    '节能产品认证证书或能效标识',
+                    '产品能效测试报告',
+                    '相关专利证书或技术评估报告'
+                ],
+                examples: [
+                    { name: '锅炉能效报告.jpg' },
+                    { name: '节能认证证书.pdf' }
+                ],
+                tooltip: '节能锅炉制造指生产高效、低排放锅炉设备，包括燃煤锅炉节能改造、燃气锅炉、生物质锅炉等高效热能设备。'
+            },
+            '5.2.6': {
+                name: '5.2.6 充电基础设施',
+                proof: [
+                    '项目立项备案文件及建设用地规划许可',
+                    '充电设施建设方案及技术标准符合性说明',
+                    '电网接入方案及批复',
+                    '项目竣工验收报告及运营证明'
+                ],
+                examples: [
+                    { name: '充电站规划图.jpg' },
+                    { name: '电网接入批复.pdf' }
+                ],
+                tooltip: '充电基础设施指为电动汽车提供充电服务的设施，包括充电站、换电站、充电桩及其配套电网改造工程。'
+            }
+        };
+
+        // ================================================================
+        // 模拟分类数据
+        // ================================================================
+        var classData = [
+            { 
+                key: '3.4.8', 
+                level1: '3 清洁能源产业', 
+                level2: '3.4 能源系统改造', 
+                level3: '3.4.8 电网节能改造项目', 
+                active: true,
+                tooltip: '电网节能改造项目指通过技术手段降低电网损耗、提升输配电效率的节能工程，包括智能电网建设、输变电设备节能改造等。'
+            },
+            { 
+                key: '2.1.3', 
+                level1: '2 节能环保产业', 
+                level2: '2.1 高效节能装备制造', 
+                level3: '2.1.3 节能锅炉制造', 
+                active: false,
+                tooltip: '节能锅炉制造指生产高效、低排放锅炉设备，包括燃煤锅炉节能改造、燃气锅炉、生物质锅炉等高效热能设备。'
+            },
+            { 
+                key: '5.2.6', 
+                level1: '5 基础设施绿色升级', 
+                level2: '5.2 绿色交通', 
+                level3: '5.2.6 充电基础设施', 
+                active: false,
+                tooltip: '充电基础设施指为电动汽车提供充电服务的设施，包括充电站、换电站、充电桩及其配套电网改造工程。'
+            }
+        ];
+
+        // ================================================================
+        // 开始识别
+        // ================================================================
+        function handleRecognize() {
+            var purpose = document.getElementById('purposeInput').value.trim();
+            if (!purpose) {
+                alert('请输入或确认融资用途描述');
+                return;
+            }
+
+            var loading = document.getElementById('loadingSpinner');
+            var cardsContainer = document.getElementById('classCardsContainer');
+
+            loading.classList.add('active');
+            cardsContainer.innerHTML = '';
+
+            setTimeout(function() {
+                loading.classList.remove('active');
+                renderClassCards(classData);
+                selectClass('3.4.8');
+            }, 1000);
+        }
+
+        // ================================================================
+        // 清除结果
+        // ================================================================
+        function handleClear() {
+            var loading = document.getElementById('loadingSpinner');
+            var cardsContainer = document.getElementById('classCardsContainer');
+
+            loading.classList.remove('active');
+            cardsContainer.innerHTML = '';
+            classData.forEach(function(item) { item.active = false; });
+            if (classData.length > 0) classData[0].active = true;
+            renderClassCards(classData);
+            selectClass('3.4.8');
+
+            // 重置识别理由和填报建议为初始占位文本
+            document.getElementById('reasonText').textContent = '该贷款信息中项目描述内容为"xxxxx"，未包含任何与绿色智能相关的具体建设活动或资金用途描述，无法识别为《绿色金融支持项目目录》中任何三级目录所涵盖的绿色智能项目内容。';
+            document.getElementById('suggestionText').textContent = '建议明确项目建设内容，如涉及污水处理、水资源循环利用、节水改造等具体绿色工程，应详细说明建设内容、技术路径及绿色效益，以符合绿色金融认定要求。';
+        }
+
+        // ================================================================
+        // 渲染分类卡片
+        // ================================================================
+        function renderClassCards(data) {
+            var container = document.getElementById('classCardsContainer');
+            var html = '';
+            data.forEach(function(item) {
+                var activeClass = item.active ? 'active' : '';
+                var checkDisplay = item.active ? 'inline' : 'none';
+                var tooltipText = item.tooltip || '点击该分类查看对应佐证材料建议';
+                html += `
+                    <div class="green-class-card ${activeClass}" data-key="${item.key}" onclick="selectClass('${item.key}')">
+                        <div class="tooltip-wrapper" style="position:absolute;top:8px;right:10px;z-index:5;">
+                            <span class="card-help-icon" onclick="event.stopPropagation();">?</span>
+                            <div class="card-tooltip">${tooltipText}</div>
+                        </div>
+                        <div class="level-1">${item.level1}</div>
+                        <div class="level-2">${item.level2}</div>
+                        <div class="level-3">${item.level3}</div>
+                        <div class="check-mark" style="display:${checkDisplay};">✓ 已选</div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // ================================================================
+        // 选择分类
+        // ================================================================
+        function selectClass(key) {
+            document.querySelectorAll('.green-class-card').forEach(function(c) {
+                c.classList.remove('active');
+                var mark = c.querySelector('.check-mark');
+                if (mark) {
+                    mark.style.display = 'none';
+                }
+                if (c.dataset.key === key) {
+                    c.classList.add('active');
+                    if (mark) {
+                        mark.style.display = 'inline';
+                    }
+                }
+            });
+
+            var select = document.getElementById('categorySelect');
+            select.value = key;
+            updateCategory();
+
+            var reasons = {
+                '3.4.8': '融资用途中包含"废气回收系统""VOCs深度治理"等内容，符合3.4.8 电网节能改造项目的认定条件。',
+                '2.1.3': '融资用途中涉及节能装备相关内容，与2.1.3 节能锅炉制造存在关联，建议补充具体技术参数。',
+                '5.2.6': '融资用途中提及新能源相关应用，与5.2.6 充电基础设施有一定关联，建议明确建设内容。'
+            };
+            var suggestions = {
+                '3.4.8': '建议明确电网节能改造的具体技术方案、预期节能量及减排效果，提供相关设计文件及批复。',
+                '2.1.3': '建议补充节能锅炉的能效指标、技术参数及认证情况，说明其节能效益。',
+                '5.2.6': '建议明确充电设施的建设规模、技术路线及运营方案，提供电网接入等批复文件。'
+            };
+            document.getElementById('reasonText').textContent = reasons[key] || reasons['3.4.8'];
+            document.getElementById('suggestionText').textContent = suggestions[key] || suggestions['3.4.8'];
+        }
+
+        // ================================================================
+        // 更新佐证材料
+        // ================================================================
+        function updateCategory() {
+            var select = document.getElementById('categorySelect');
+            var value = select.value;
+            var display = document.getElementById('selectedCategoryDisplay');
+            var area = document.getElementById('proofDisplayArea');
+            var placeholder = document.getElementById('proofPlaceholder');
+
+            if (value && proofData[value]) {
+                var data = proofData[value];
+                display.textContent = '当前选择：' + data.name;
+                area.style.display = 'block';
+                placeholder.style.display = 'none';
+
+                document.getElementById('proofTitle').textContent = '📎 ' + data.name + ' — 佐证材料清单';
+
+                var list = document.getElementById('proofList');
+                list.innerHTML = data.proof.map(function(item) { return '<li>' + item + '</li>'; }).join('');
+
+                var examples = document.getElementById('proofExamples');
+                examples.innerHTML = data.examples.map(function(ex) {
+                    return '<span class="example-thumb" onclick="alert(\'预览：' + ex.name + '\')">📄 ' + ex.name + '</span>';
+                }).join('');
+
+                document.querySelectorAll('.green-class-card').forEach(function(c) {
+                    c.classList.remove('active');
+                    var mark = c.querySelector('.check-mark');
+                    if (mark) {
+                        mark.style.display = 'none';
+                    }
+                    if (c.dataset.key === value) {
+                        c.classList.add('active');
+                        if (mark) {
+                            mark.style.display = 'inline';
+                        }
+                    }
+                });
+
+                var reasons = {
+                    '3.4.8': '融资用途中包含"废气回收系统""VOCs深度治理"等内容，符合3.4.8 电网节能改造项目的认定条件。',
+                    '2.1.3': '融资用途中涉及节能装备相关内容，与2.1.3 节能锅炉制造存在关联，建议补充具体技术参数。',
+                    '5.2.6': '融资用途中提及新能源相关应用，与5.2.6 充电基础设施有一定关联，建议明确建设内容。'
+                };
+                var suggestions = {
+                    '3.4.8': '建议明确电网节能改造的具体技术方案、预期节能量及减排效果，提供相关设计文件及批复。',
+                    '2.1.3': '建议补充节能锅炉的能效指标、技术参数及认证情况，说明其节能效益。',
+                    '5.2.6': '建议明确充电设施的建设规模、技术路线及运营方案，提供电网接入等批复文件。'
+                };
+                document.getElementById('reasonText').textContent = reasons[value] || reasons['3.4.8'];
+                document.getElementById('suggestionText').textContent = suggestions[value] || suggestions['3.4.8'];
+
+                select.value = value;
+
+            } else {
+                display.textContent = '当前选择：未选择';
+                area.style.display = 'none';
+                placeholder.style.display = 'block';
+            }
+        }
+
+        // ================================================================
+        // 初始化
+        // ================================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            renderClassCards(classData);
+            setTimeout(function() {
+                selectClass('3.4.8');
+            }, 100);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>业务营销方案 · 潜在项目库</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --brand-50: #E8F0FB; --brand-100: #D1DFF4; --brand-300: #6E97D6;
+            --brand-500: #2A66C2; --brand-700: #143F8F; --brand-900: #01256A;
+            --green-50: #ECFDF5; --green-500: #10B981; --green-700: #047857;
+            --success: #10B981; --success-bg: #ECFDF5; --success-border: #A7F3D0;
+            --warning: #D97706; --warning-bg: #FFFBEB; --warning-border: #FDE68A;
+            --danger: #DC2626; --danger-bg: #FEF2F2; --danger-border: #FECACA;
+            --info: #2A66C2; --info-bg: #E8F0FB; --info-border: #D1DFF4;
+            --ink-900: #0F172A; --ink-800: #1E293B; --ink-600: #475569;
+            --ink-500: #64748B; --ink-400: #94A3B8; --ink-300: #CBD5E1;
+            --line-200: #E2E8F0; --bg-muted: #F1F5F9; --bg-subtle: #F8FAFC;
+            --white: #FFFFFF; --radius-sm: 4px; --radius-md: 6px;
+            --radius-lg: 8px; --radius-xl: 12px; --radius-2xl: 16px;
+            --font-sans: 'PingFang SC', 'Microsoft YaHei', 'Inter', system-ui, sans-serif;
+            --font-num: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--font-sans); color: var(--ink-800);
+            background: var(--bg-subtle); font-size: 14px; line-height: 1.7;
+            -webkit-font-smoothing: antialiased; height: 100vh; overflow: hidden;
+        }
+        .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: var(--brand-500); }
+        .btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            border-radius: var(--radius-md); font-family: inherit; font-weight: 500;
+            cursor: pointer; transition: all .15s; border: 1px solid transparent;
+            line-height: 1; white-space: nowrap;
+        }
+        .btn-md { padding: 8px 16px; font-size: 14px; line-height: 22px; height: 32px; }
+        .btn-primary { background: var(--brand-500); color: #fff; }
+        .btn-primary:hover { background: var(--brand-700); }
+        .btn-secondary { background: var(--white); color: var(--ink-800); border-color: var(--ink-300); }
+        .btn-secondary:hover { border-color: var(--brand-500); color: var(--brand-500); }
+        .tag {
+            display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px;
+            border-radius: var(--radius-sm); font-size: 12px; font-weight: 500;
+            line-height: 1.5; border: 1px solid transparent; white-space: nowrap;
+        }
+        .tag-success { background: var(--success-bg); color: var(--green-700); border-color: var(--success-border); }
+        .tag-info { background: var(--info-bg); color: var(--brand-700); border-color: var(--info-border); }
+        .tag-warning { background: var(--warning-bg); color: var(--warning); border-color: var(--warning-border); }
+        .section-card {
+            background: var(--white); border-radius: var(--radius-xl);
+            border: 1px solid var(--line-200); overflow: hidden; margin-bottom: 16px;
+        }
+        .section-card .card-head {
+            padding: 14px 24px; border-bottom: 1px solid var(--line-200);
+            background: var(--bg-subtle); font-weight: 600; color: var(--ink-900); font-size: 15px;
+        }
+        .section-card .card-body { padding: 18px 24px; }
+        table.data-table {
+            width: 100%; border-collapse: collapse; font-size: 13px;
+        }
+        table.data-table th, table.data-table td {
+            padding: 8px 12px; border: 1px solid var(--line-200);
+            text-align: left; vertical-align: top;
+        }
+        table.data-table th {
+            background: var(--bg-muted); font-weight: 600; color: var(--ink-600);
+            font-size: 12px; white-space: nowrap;
+        }
+        table.data-table td { color: var(--ink-800); }
+        .highlight-box {
+            background: var(--brand-50); border: 1px solid var(--brand-100);
+            border-radius: var(--radius-lg); padding: 16px 20px; margin: 12px 0;
+            font-size: 14px; color: var(--ink-700); line-height: 1.7;
+        }
+        .highlight-box strong { color: var(--brand-900); }
+        .step-list { list-style: none; padding: 0; }
+        .step-list li {
+            padding: 8px 0; padding-left: 24px; position: relative;
+            border-bottom: 1px solid var(--line-200);
+        }
+        .step-list li:last-child { border-bottom: none; }
+        .step-list li::before {
+            content: ''; position: absolute; left: 4px; top: 14px;
+            width: 8px; height: 8px; border-radius: 50%; background: var(--brand-500);
+        }
+        .section-title {
+            font-size: 16px; font-weight: 700; color: var(--ink-900);
+            margin: 20px 0 12px; padding-bottom: 8px;
+            border-bottom: 2px solid var(--brand-100);
+        }
+        .section-title:first-child { margin-top: 0; }
+        .sub-title {
+            font-size: 14px; font-weight: 600; color: var(--ink-800); margin: 14px 0 8px;
+        }
+        .quote-box {
+            background: #FFFBEB; border-left: 3px solid #D97706;
+            padding: 12px 16px; margin: 12px 0; border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            font-size: 13px; color: var(--ink-700); font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<div class="flex flex-col" style="height:100vh;background:var(--bg-subtle);">
+    <!-- 返回栏 -->
+    <div class="flex items-center px-6 py-3 flex-shrink-0" style="background:var(--white);border-bottom:1px solid var(--line-200);">
+        <button onclick="goBackToList()" style="display:inline-flex;align-items:center;gap:6px;color:#2A66C2;font-weight:500;cursor:pointer;border:none;background:none;font-size:14px;font-family:inherit;padding:0 8px;height:32px;border-radius:6px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            返回列表
+        </button>
+        <span style="margin-left:12px;font-size:15px;font-weight:600;color:var(--ink-900);">业务营销方案</span>
+    </div>
+    <!-- 内容区 -->
+    <div class="flex-1 overflow-y-auto custom-scroll" style="padding:20px 28px;">
+        <div class="max-w-4xl mx-auto">
+
+            <!-- 标题 -->
+            <h1 style="font-size:20px;font-weight:700;color:var(--ink-900);margin-bottom:4px;">业务营销方案</h1>
+            <p style="font-size:15px;font-weight:600;color:var(--brand-700);margin-bottom:20px;">兰州新区城市智慧能源岛协同耦合项目（段家川地区农光互补光伏发电示范工程）</p>
+
+            <!-- 一、项目基本信息 -->
+            <div class="section-card">
+                <div class="card-head">一、项目基本信息</div>
+                <div class="card-body">
+                    <table class="data-table">
+                        <tr><th style="width:160px;">项目名称</th><td>兰州新区城市智慧能源岛协同耦合项目（段家川地区农光互补光伏发电示范工程）</td></tr>
+                        <tr><th>项目代码</th><td style="font-family:monospace;">PNO202403270002</td></tr>
+                        <tr><th>所属试验区</th><td>甘肃省兰州新区绿色金融改革创新试验区</td></tr>
+                        <tr><th>园区类型</th><td><span class="tag tag-info">T1 能源转型型</span></td></tr>
+                        <tr><th>园区专题</th><td><span class="tag tag-success">零碳园区</span></td></tr>
+                        <tr><th>项目地点</th><td>甘肃兰州新区秦川园区段家川以北</td></tr>
+                        <tr><th>投资总额</th><td style="font-family:var(--font-num);font-weight:600;">100,000 万元</td></tr>
+                        <tr><th>项目建设规模及内容</th><td>使用单晶太阳能板，总装机容量200兆瓦，利用秦川园区段家川以北4000亩土地。预计年发电量26132.4万千瓦时，年发电时长1450小时，采用全额上网集中式光伏方式。</td></tr>
+                        <tr><th>项目库依据政策</th><td>《2022年兰州新区建设绿色金融改革创新试验区工作方案》、《兰州新区绿色项目认证及评级办法(修订)》</td></tr>
+                        <tr><th>平台建设情况</th><td>兰州新区"绿金通"综合服务平台，支持绿色项目认证、融资对接及动态管理</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 二、营销环境分析 -->
+            <div class="section-card">
+                <div class="card-head">二、营销环境分析</div>
+                <div class="card-body">
+                    <div class="sub-title">2.1 政策背景</div>
+                    <p>2025年6月，国家发改委、工信部、国家能源局联合发布《关于开展零碳园区建设的通知》，明确将零碳园区纳入国家战略实施体系。2025年12月，首批52个国家级零碳园区建设名单正式公布。2026年3月，"十五五"规划进一步提出建成100个左右国家级零碳园区的目标。零碳园区建设已成为连接产业政策、能源政策、财政金融政策和区域发展政策的重要交汇点。</p>
+                    <p style="margin-top:8px;">兰州新区作为甘肃省绿色金融改革创新试验区，已建立完善的绿色项目库和"绿金通"融资对接平台，对通过平台完成融资的"深绿""中绿""浅绿"项目分别给予<strong>10%、8%、6%</strong>的贷款贴息。本项目属于清洁能源领域，在政策窗口期具备显著的融资优势。</p>
+
+                    <div class="sub-title" style="margin-top:16px;">2.2 项目价值研判</div>
+                    <table class="data-table">
+                        <tr><th style="width:130px;">维度</th><th>分析</th></tr>
+                        <tr><td><strong>碳减排价值</strong></td><td>年发电量26132.4万kWh，按西北地区电网排放因子约0.65kgCO₂/kWh计算，年减碳约<strong>17万吨</strong>，碳减排效益显著，可纳入碳减排支持工具范围</td></tr>
+                        <tr><td><strong>产业带动价值</strong></td><td>农光互补模式实现"板上发电、板下种植"，兼顾清洁能源生产与农业土地利用，契合国家"光伏+"产业政策导向</td></tr>
+                        <tr><td><strong>示范效应</strong></td><td>200MW集中式光伏+农光互补，具备申报国家级零碳园区示范项目的条件，可形成可复制推广的经验模式</td></tr>
+                        <tr><td><strong>投资规模</strong></td><td>10亿元投资额，属于大型清洁能源基础设施项目，适合银团贷款和绿色债券组合融资</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 三、绿色/转型金融目录匹配 -->
+            <div class="section-card">
+                <div class="card-head">三、绿色/转型金融目录匹配</div>
+                <div class="card-body">
+                    <p style="margin-bottom:12px;">依据《绿色低碳转型产业指导目录（2024年版）》及人民银行碳减排支持工具范围，本项目匹配以下绿色金融支持目录：</p>
+                    <table class="data-table">
+                        <tr><th>匹配层级</th><th>分类名称</th><th>匹配依据</th></tr>
+                        <tr><td><strong>一级分类</strong></td><td>清洁能源产业</td><td>项目属于太阳能发电设施建设与运营</td></tr>
+                        <tr><td><strong>二级分类</strong></td><td>太阳能利用设施建设和运营</td><td>200MW集中式光伏电站</td></tr>
+                        <tr><td><strong>碳减排支持工具</strong></td><td>清洁能源领域</td><td>符合人民银行碳减排支持工具三大领域之一</td></tr>
+                        <tr><td><strong>绿色债券支持目录</strong></td><td>光伏发电设施建设与运营</td><td>满足绿色债券募集资金投向要求</td></tr>
+                        <tr><td><strong>绿色贷款专项统计制度</strong></td><td>可再生能源</td><td>属于绿色信贷统计口径</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 四、金融产品组合营销建议 -->
+            <div class="section-card">
+                <div class="card-head">四、金融产品组合营销建议</div>
+                <div class="card-body">
+                    <div class="quote-box">
+                        零（低）碳园区金融支持不是单一产品，而是"股权/基金做资本金，贷款和租赁支持建设，债券和ABS放量，REITs退出，保险和担保风控"的金融工具组合。
+                    </div>
+
+                    <div class="sub-title">4.1 第一梯队：优先落地产品</div>
+                    <p><strong>① 碳减排支持工具贷款</strong></p>
+                    <p>本项目符合人民银行碳减排支持工具覆盖的清洁能源领域要求。该工具向金融机构提供低成本资金，金融机构向清洁能源项目发放优惠利率贷款。建议对接当地人民银行分支机构，争取碳减排支持工具额度。截至2022年末，新疆昌吉州通过碳减排支持工具为5个绿色项目提供7.36亿元资金支持，同类项目可参照此路径申报。</p>
+                    <p style="margin-top:10px;"><strong>② 绿色项目贷款（银团）</strong></p>
+                    <p>本项目投资额超10亿元，单家银行授信集中度承压，建议组建银团贷款。优先邀请国家开发银行、农业发展银行等政策性银行作为牵头行，发挥其"长期限、低成本"优势，商业银行为参团行，形成政策性银行+大型国有银行+本地法人银行的银团结构。</p>
+                    <p style="margin-top:10px;"><strong>③ 兰州新区绿色贷款贴息</strong></p>
+                    <p>兰州新区政策明确：对通过"绿金通"平台完成融资的绿色项目，按绿色等级给予贷款贴息。本项目为清洁能源类，预计可获得"深绿"评级，享受<strong>10%的贴息优惠</strong>，显著降低融资成本。</p>
+
+                    <div class="sub-title">4.2 第二梯队：中后期扩量工具</div>
+                    <p><strong>④ 碳中和债/绿色债券</strong></p>
+                    <p>项目进入稳定运营期后，建议以项目公司或园区平台为主体发行碳中和债。当前绿色债券市场对清洁能源类项目认可度高，资金可用于偿还前期高成本债务或支持二期项目开发。首批零碳园区建成后预计产值达3.54万亿元，债券融资是规模化扩产的重要工具。</p>
+                    <p style="margin-top:10px;"><strong>⑤ 绿电收益权质押贷款</strong></p>
+                    <p>项目建成后，每年约2.6亿千瓦时发电量将带来稳定的绿电销售收益。可设计"绿电收益权质押贷款"产品，将未来电费收益作为质押物，提前回笼资金用于后续项目投资。该模式在重庆"长江绿融通"系统已有实践，金融机构基于项目授信并放款，成效显著。</p>
+
+                    <div class="sub-title">4.3 风险缓释与增信工具</div>
+                    <p><strong>⑥ 光伏售电信用保险</strong></p>
+                    <p>目前人保财险已落地全国首单光伏售电信用补偿保险，对应光伏发电项目电费回收不确定性的风险敞口。本项目投保后可降低银行对电费回款不确定性的担忧，提升授信审批通过率，也有助于争取更优利率。</p>
+                    <p style="margin-top:10px;"><strong>⑦ 储能系统性能保证保险</strong></p>
+                    <p>本项目为农光互补项目，若配套储能设施，可投保储能系统长期质量与效能保证保险，应对储能设备衰减、性能不达标等风险，为融资租赁方和设备投资方提供保障。</p>
+                </div>
+            </div>
+
+            <!-- 五、营销策略要点 -->
+            <div class="section-card">
+                <div class="card-head">五、营销策略要点</div>
+                <div class="card-body">
+                    <div class="sub-title">5.1 分阶段营销推进</div>
+                    <table class="data-table">
+                        <tr><th>阶段</th><th>时间节点</th><th>营销动作</th><th>目标产出</th></tr>
+                        <tr>
+                            <td><strong>第一阶段：<br>首次对接</strong></td>
+                            <td>项目入库后<br>1个月内</td>
+                            <td>拜访项目业主单位（兰州新区管委会下属平台公司），介绍碳减排支持工具+绿色贷款贴息政策组合方案</td>
+                            <td>签署融资顾问协议，确立银企合作关系</td>
+                        </tr>
+                        <tr>
+                            <td><strong>第二阶段：<br>方案设计</strong></td>
+                            <td>首次对接后<br>1个月内</td>
+                            <td>联合行内审批部门开展绿色项目预评估，提交碳减排支持工具申报材料</td>
+                            <td>完成绿色项目认定（争取"深绿"），提交碳减排工具申请</td>
+                        </tr>
+                        <tr>
+                            <td><strong>第三阶段：<br>授信审批</strong></td>
+                            <td>方案确定后<br>2个月内</td>
+                            <td>组建银团，完成内部授信审批流程，同步对接兰州新区"绿金通"平台完成融资登记</td>
+                            <td>银团贷款合同签署，首批资金到位</td>
+                        </tr>
+                        <tr>
+                            <td><strong>第四阶段：<br>贷后管理</strong></td>
+                            <td>放款后持续</td>
+                            <td>跟踪项目建设进度，按季度核查碳减排数据（需接入MRV体系），确保持续符合碳减排工具和绿色贷款存续期管理要求</td>
+                            <td>绿色信贷资产质量稳定，碳减排数据可追溯</td>
+                        </tr>
+                    </table>
+
+                    <div class="sub-title">5.2 目标客户画像</div>
+                    <table class="data-table">
+                        <tr><th style="width:130px;">维度</th><th>建议</th></tr>
+                        <tr><td><strong>核心客户</strong></td><td>兰州新区管委会下属平台公司（项目业主）、秦川园区管理方</td></tr>
+                        <tr><td><strong>协同营销对象</strong></td><td>国家开发银行甘肃省分行（银团牵头行）、农业发展银行</td></tr>
+                        <tr><td><strong>决策关键人</strong></td><td>兰州新区财政局/金融办负责人、平台公司融资部负责人</td></tr>
+                    </table>
+
+                    <div class="sub-title">5.3 差异化竞争优势</div>
+                    <table class="data-table">
+                        <tr><th style="width:130px;">竞争维度</th><th>本行优势定位</th></tr>
+                        <tr><td><strong>政策敏感度</strong></td><td>率先对接兰州新区"绿金通"平台，熟悉本地绿色项目认定流程</td></tr>
+                        <tr><td><strong>产品组合能力</strong></td><td>碳减排工具+绿色贷款贴息+银团贷款+保险增信的一站式方案</td></tr>
+                        <tr><td><strong>效率优势</strong></td><td>设立绿色审批通道，较常规项目审批周期缩短30%以上</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 六、预期收益测算 -->
+            <div class="section-card">
+                <div class="card-head">六、预期收益测算</div>
+                <div class="card-body">
+                    <table class="data-table">
+                        <tr><th>收益项</th><th>测算说明</th><th>预估金额</th></tr>
+                        <tr><td><strong>绿色贷款年利息收入</strong></td><td>假设贷款规模7亿元，利率3.5%（碳减排工具优惠利率）</td><td>2,450万元/年</td></tr>
+                        <tr><td><strong>银团贷款牵头费及安排费</strong></td><td>按银团总额0.3%-0.5%收取</td><td>300-500万元</td></tr>
+                        <tr><td><strong>绿色债券承销费（中后期）</strong></td><td>假设发债规模5亿元，承销费率0.3%</td><td>150万元</td></tr>
+                        <tr><td><strong>碳资产托管/交易服务费</strong></td><td>年减碳17万吨，CCER交易服务费</td><td>视碳价浮动，持续贡献</td></tr>
+                        <tr><td style="text-align:right;" colspan="2"><strong>综合年收益</strong></td><td><strong>约3,000-3,500万元</strong></td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 七、风险提示与应对 -->
+            <div class="section-card">
+                <div class="card-head">七、风险提示与应对</div>
+                <div class="card-body">
+                    <table class="data-table">
+                        <tr><th>风险类型</th><th>风险描述</th><th>应对措施</th></tr>
+                        <tr>
+                            <td><strong>政策风险</strong></td>
+                            <td>碳减排支持工具政策调整或额度收紧</td>
+                            <td>在政策窗口期尽快完成申报，锁定优惠利率；同步准备绿色债券融资通道作为备用方案</td>
+                        </tr>
+                        <tr>
+                            <td><strong>建设风险</strong></td>
+                            <td>项目建设延期或成本超支</td>
+                            <td>要求项目业主提供工程履约保函；贷款发放与工程进度挂钩，分批次放款</td>
+                        </tr>
+                        <tr>
+                            <td><strong>电价波动风险</strong></td>
+                            <td>上网电价下调影响项目收益</td>
+                            <td>关注甘肃省光伏上网电价政策；在贷款合同中设置弹性还款机制</td>
+                        </tr>
+                        <tr>
+                            <td><strong>碳数据风险</strong></td>
+                            <td>碳减排数据无法通过核查</td>
+                            <td>要求项目接入"动态碳账本"系统，确保碳排放数据的实时监测与精准核查</td>
+                        </tr>
+                        <tr>
+                            <td><strong>竞争风险</strong></td>
+                            <td>其他银行抢先介入</td>
+                            <td>加快首次对接节奏，以碳减排工具申报辅导为切入点建立客户粘性</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 八、营销话术要点 -->
+            <div class="section-card">
+                <div class="card-head">八、营销话术要点</div>
+                <div class="card-body">
+                    <p><strong>1. 政策切入点：</strong>"兰州新区作为绿色金融改革创新试验区，当前正在全力创建国家级零碳园区。贵项目属于典型的清洁能源基础设施，完全符合碳减排支持工具和绿色贷款贴息的政策条件。我们可以协助贵方对接人民银行碳减排工具，并同步申报兰州新区10%的贴息政策，两项叠加后实际融资成本可显著降低。"</p>
+                    <p style="margin-top:10px;"><strong>2. 专业价值点：</strong>"10亿元的光伏项目，单家银行授信难以全部覆盖。我们可以牵头组建银团，引入政策性银行作为中长期资金提供方，形成'政策性银行+国有大行+本地银行'的组合结构，既能满足项目资金需求，又能通过竞争性报价优化融资成本。"</p>
+                    <p style="margin-top:10px;"><strong>3. 长期合作点：</strong>"光伏电站建成后，年发电量2.6亿度，年碳减排约17万吨。后续我们还可以合作碳资产托管、绿证交易、碳中和债发行等业务，形成全生命周期的金融服务闭环。"</p>
+                </div>
+            </div>
+
+            <!-- 底部返回 -->
+            <div style="display:flex;justify-content:center;padding:20px 0 32px;">
+                <button class="btn btn-primary btn-md" onclick="goBackToList()">← 返回列表</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function getCurrentDir() {
+        var path = window.location.pathname;
+        return path.substring(0, path.lastIndexOf('/') + 1);
+    }
+    function goBackToList() {
+        var dir = getCurrentDir();
+        var targetUrl = dir + '潜在项目业务营销.html';
+        if (window.parent !== window) {
+            var pageId = 'back-to-list-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
+            window.parent.postMessage({ type: 'openPage', pageId: pageId, file: targetUrl, label: '潜在项目业务营销' }, '*');
+        } else {
+            window.location.href = targetUrl;
+        }
+    }
+</script>
+</body>
+</html>

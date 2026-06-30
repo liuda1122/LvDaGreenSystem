@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据字典管理 - 可持续金融系统</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <style>
+    /* ============ Design Tokens ============ */
+    :root {
+      --brand-50:#E8F0FB; --brand-100:#D1DFF4; --brand-300:#6E97D6;
+      --brand-500:#2A66C2; --brand-700:#143F8F; --brand-900:#01256A;
+      --green-50:#ECFDF5; --green-500:#10B981; --green-700:#047857;
+      --success:#10B981; --success-bg:#ECFDF5; --success-border:#A7F3D0;
+      --warning:#D97706; --warning-bg:#FFFBEB;
+      --danger:#DC2626;  --danger-bg:#FEF2F2;
+      --info:#2A66C2;    --info-bg:#E8F0FB;
+      --ink-900:#0F172A; --ink-800:#1E293B; --ink-600:#475569;
+      --ink-500:#64748B; --ink-400:#94A3B8; --ink-300:#CBD5E1;
+      --line-200:#E2E8F0; --bg-muted:#F1F5F9; --bg-subtle:#F8FAFC;
+      --white:#FFFFFF;
+      --radius-sm:4px; --radius-md:6px; --radius-lg:8px;
+      --radius-xl:12px; --radius-2xl:16px;
+      --shadow-sm:0 1px 3px rgba(15,23,42,.06),0 1px 2px rgba(15,23,42,.04);
+      --font-sans:"PingFang SC","Microsoft YaHei","Inter",system-ui,sans-serif;
+      --font-mono:"JetBrains Mono","SF Mono",Menlo,Consolas,monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--font-sans);color:var(--ink-800);background:var(--bg-subtle);font-size:14px;line-height:1.57}
+    .main-content{padding:20px;display:flex;flex-direction:column;gap:14px;}
+
+    .card{background:var(--white);border:1px solid var(--line-200);border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-sm)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:var(--radius-md);font-family:inherit;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid transparent;line-height:1;white-space:nowrap}
+    .btn-sm{padding:6px 12px;font-size:12px;line-height:20px;min-height:28px}
+    .btn-md{padding:8px 16px;font-size:14px;line-height:22px;min-height:32px}
+    .btn-primary{background:var(--brand-500);color:#fff}
+    .btn-primary:hover{background:var(--brand-700)}
+    .btn-secondary{background:var(--white);color:var(--ink-800);border-color:var(--ink-300)}
+    .btn-secondary:hover{border-color:var(--brand-500);color:var(--brand-500)}
+    .btn-ghost{background:transparent;color:var(--brand-500)}
+    .btn-ghost:hover{background:var(--brand-50)}
+    .btn-danger{background:var(--danger);color:#fff}
+    .btn-danger:hover{background:#b91c1c}
+    .btn-danger-ghost{background:transparent;color:var(--danger);border:1px solid var(--danger);padding:8px 16px}
+    .btn-danger-ghost:hover{background:var(--danger-bg)}
+    .btn svg{width:14px;height:14px;stroke-width:1.75}
+    .input,.select-native{width:100%;padding:5px 12px;height:32px;font-family:inherit;font-size:14px;line-height:22px;color:var(--ink-900);background:var(--white);border:1px solid var(--ink-300);border-radius:var(--radius-md);transition:all .15s;outline:none}
+    .input:focus,.select-native:focus{border-color:var(--brand-500);box-shadow:0 0 0 3px rgba(42,102,194,.12)}
+    .input[readonly]{background:var(--bg-muted);color:var(--ink-500);cursor:default}
+    .tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:var(--radius-sm);font-size:12px;font-weight:500;border:1px solid transparent;white-space:nowrap}
+    .tag-success{background:var(--success-bg);color:var(--green-700);border-color:#A7F3D0}
+    .tag-brand{background:var(--brand-50);color:var(--brand-700);border-color:var(--brand-100)}
+    .tag-warning{background:var(--warning-bg);color:var(--warning);border-color:#FDE68A}
+    .status-dot{width:6px;height:6px;border-radius:50%;display:inline-block;margin-right:6px}
+    .status-dot.success{background:var(--success)}
+    .status-dot.disabled{background:var(--ink-400)}
+    .checkbox-label{display:inline-flex;align-items:center;gap:6px;cursor:pointer;white-space:nowrap}
+    .checkbox-label input{width:16px;height:16px;cursor:pointer}
+    .pagination{display:flex;align-items:center;gap:12px;padding:12px 20px;border-top:1px solid var(--line-200);background:var(--white);font-size:14px}
+    .pagination-controls{margin-left:auto;display:flex;gap:4px;align-items:center}
+    .page-btn{min-width:32px;height:32px;padding:0 8px;border:1px solid var(--line-200);background:var(--white);border-radius:var(--radius-md);font-size:14px;color:var(--ink-800);cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+    .page-btn.active{background:var(--brand-500);border-color:var(--brand-500);color:#fff}
+    .page-btn:disabled{color:var(--ink-300);cursor:not-allowed}
+    
+    /* 表格容器 */
+    .table-wrapper{overflow-x:auto;position:relative}
+    
+    /* 树形表格 */
+    .dict-table{width:100%;border-collapse:collapse;table-layout:fixed;min-width:1100px}
+    .dict-table th{text-align:left;padding:12px 12px;background:var(--bg-subtle);color:var(--ink-600);font-weight:500;font-size:12px;border-bottom:1px solid var(--line-200);white-space:nowrap}
+    .dict-table td{padding:12px 12px;border-bottom:1px solid var(--line-200);vertical-align:middle;white-space:nowrap;height:52px}
+    .dict-table tr:last-child td{border-bottom:none}
+    .dict-table tr:hover{background:var(--bg-subtle)}
+    
+    /* 列宽定义 - 调整确保状态和操作不重叠 */
+    .dict-table th:nth-child(1),.dict-table td:nth-child(1){width:36px;text-align:center}
+    .dict-table th:nth-child(2),.dict-table td:nth-child(2){width:22%}
+    .dict-table th:nth-child(3),.dict-table td:nth-child(3){width:10%}
+    .dict-table th:nth-child(4),.dict-table td:nth-child(4){width:20%}
+    .dict-table th:nth-child(5),.dict-table td:nth-child(5){width:12%}
+    .dict-table th:nth-child(6),.dict-table td:nth-child(6){width:7%}
+    .dict-table th:nth-child(7),.dict-table td:nth-child(7){width:9%}
+    .dict-table th:nth-child(8),.dict-table td:nth-child(8){width:14%}
+    
+    /* 描述单元格 - 悬浮提示 */
+    .desc-cell{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;display:block}
+    .desc-cell:hover{color:var(--brand-500)}
+    .desc-cell[data-fulltext]:hover::after{content:attr(data-fulltext);position:absolute;left:0;top:100%;background:var(--ink-900);color:#fff;padding:6px 12px;border-radius:var(--radius-md);font-size:12px;white-space:normal;word-break:break-word;max-width:350px;z-index:1000;box-shadow:var(--shadow-md);margin-top:4px}
+    
+    .tree-toggle{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;cursor:pointer;color:var(--ink-500);border-radius:var(--radius-sm);margin-right:4px;flex-shrink:0}
+    .tree-toggle:hover{background:var(--bg-muted);color:var(--brand-500)}
+    .tree-toggle svg{width:12px;height:12px;transition:transform .2s}
+    .depth-0{padding-left:0}
+    .depth-1{padding-left:24px}
+    .depth-2{padding-left:48px}
+    .depth-3{padding-left:72px}
+    .depth-4{padding-left:96px}
+    .depth-5{padding-left:120px}
+    .dict-name{font-weight:500;color:var(--ink-900);white-space:nowrap}
+    .dict-code{font-family:var(--font-mono);font-size:12px;color:var(--ink-500);background:var(--bg-muted);padding:2px 8px;border-radius:4px;display:inline-block;white-space:nowrap}
+    .action-btns{display:flex;gap:4px;justify-content:flex-start;flex-wrap:nowrap}
+    .action-btns .btn-sm{padding:4px 8px;font-size:11px}
+    .toolbar{display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid var(--line-200);background:var(--white);flex-wrap:wrap}
+    .toolbar-left{display:flex;gap:8px;align-items:center}
+    .toolbar-right{margin-left:auto;display:flex;gap:8px;align-items:center}
+    .copy-icon{cursor:pointer;color:var(--ink-400);margin-left:4px;opacity:0.6;transition:opacity 0.15s}
+    .copy-icon:hover{opacity:1;color:var(--brand-500)}
+    
+    /* 模态框样式 */
+    .modal-mask{position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:1500;display:none;align-items:center;justify-content:center;padding:16px}
+    .modal-mask.open{display:flex}
+    .modal{background:var(--white);border-radius:var(--radius-2xl);box-shadow:0 20px 40px rgba(15,23,42,.16);width:100%;max-width:600px;overflow:hidden}
+    .modal-head{display:flex;align-items:center;padding:16px 24px;border-bottom:1px solid var(--line-200)}
+    .modal-title{font-size:16px;font-weight:600;color:var(--ink-900)}
+    .modal-close{margin-left:auto;background:none;border:none;cursor:pointer;color:var(--ink-500);padding:4px}
+    .modal-body{padding:24px;max-height:70vh;overflow-y:auto}
+    .modal-foot{display:flex;justify-content:flex-end;gap:12px;padding:12px 24px;border-top:1px solid var(--line-200);background:var(--bg-subtle)}
+    .form-field{margin-bottom:16px}
+    .form-label{font-size:14px;color:var(--ink-800);font-weight:500;margin-bottom:6px;display:block}
+    .form-label .req{color:var(--danger);margin-right:4px}
+    .radio-group{display:flex;gap:24px}
+    .radio{display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+    .radio input{appearance:none;width:16px;height:16px;border:1.5px solid var(--ink-300);border-radius:50%}
+    .radio input:checked{border-color:var(--brand-500);border-width:5px}
+    .row-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .flex-between{display:flex;justify-content:space-between;align-items:center}
+    .text-center{text-align:center}
+    .py-8{padding-top:32px;padding-bottom:32px}
+    .upload-zone{border:2px dashed var(--ink-300);border-radius:var(--radius-lg);padding:24px;text-align:center;cursor:pointer;transition:all .15s}
+    .upload-zone:hover{border-color:var(--brand-500);background:var(--brand-50)}
+    .mt-1{margin-top:4px}
+    .mb-2{margin-bottom:8px}
+  </style>
+</head>
+<body class="bg-slate-50">
+
+  <main class="main-content">
+
+  <!-- 筛选栏 -->
+  <div class="card mb-4">
+    <div class="p-4" style="border-bottom:none;background:var(--white)">
+      <div class="grid grid-cols-4 gap-4">
+        <div class="flex items-center gap-2">
+          <label class="text-sm text-slate-600 min-w-[80px]" style="text-align:right">字典名称</label>
+          <input type="text" class="input flex-1" id="searchName" placeholder="请输入字典名称">
+        </div>
+        <div class="flex items-center gap-2">
+          <label class="text-sm text-slate-600 min-w-[80px]" style="text-align:right">字典分类</label>
+          <select class="select-native flex-1" id="searchCategory">
+            <option value="">全部</option>
+            <option value="情景">情景</option>
+            <option value="风险因子">风险因子</option>
+            <option value="业务维护">业务维护</option>
+          </select>
+        </div>
+        <div class="flex items-center gap-2">
+          <label class="text-sm text-slate-600 min-w-[80px]" style="text-align:right">字典编码</label>
+          <input type="text" class="input flex-1" id="searchCode" placeholder="请输入字典编码">
+        </div>
+        <div class="flex items-center gap-2">
+          <label class="text-sm text-slate-600 min-w-[80px]" style="text-align:right">状态</label>
+          <select class="select-native flex-1" id="searchStatus">
+            <option value="">全部</option>
+            <option value="1">启用</option>
+            <option value="0">禁用</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex justify-end gap-2 mt-4">
+        <button class="btn btn-secondary btn-md" onclick="resetSearch()">重置</button>
+        <button class="btn btn-primary btn-md" onclick="searchDict()">查询</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 字典树形表格 -->
+  <div class="card">
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <button class="btn btn-primary btn-md" onclick="openDictModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          新建
+        </button>
+        <button class="btn btn-secondary btn-md" onclick="openImportModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          批量导入
+        </button>
+        <button class="btn btn-secondary btn-md" onclick="exportDictData()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          批量导出
+        </button>
+        <button class="btn btn-danger btn-md" id="batchDeleteBtn" onclick="batchDelete()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          批量删除
+        </button>
+      </div>
+      <div class="toolbar-right">
+        <label class="checkbox-label"><input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll()"> <span class="text-sm text-slate-600">全选</span></label>
+        <span class="text-sm text-slate-500" id="selectedCount">已选 0 项</span>
+      </div>
+    </div>
+    <div class="table-wrapper">
+      <table class="dict-table" id="dictTable">
+        <thead>
+          <tr>
+            <th style="text-align:center"><input type="checkbox" id="headerSelectAll" onchange="toggleSelectAll()"></th>
+            <th>字典名称</th>
+            <th>字典分类</th>
+            <th>描述</th>
+            <th>字典编码</th>
+            <th>排序</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="dictTreeBody">
+          <tr><td colspan="8" class="text-center py-8 text-slate-400">加载数据中...</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination">
+      <div class="pagination-info">共 <strong id="totalCount">0</strong> 条记录</div>
+      <div class="pagination-controls" id="paginationControls"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 新增/编辑字典模态框 -->
+<div class="modal-mask" id="dictModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="modalTitle">新建字典项</div>
+      <button class="modal-close" onclick="closeDictModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <form id="dictForm" onsubmit="return false">
+        <input type="hidden" id="dictId" value="">
+        <div class="form-field">
+          <label class="form-label"><span class="req">*</span>上级字典</label>
+          <select class="select-native" id="parentDictId">
+            <option value="">— 顶级字典 —</option>
+          </select>
+          <div class="text-xs text-slate-400 mt-1">最多支持5级深度</div>
+        </div>
+        <div class="row-2">
+          <div class="form-field">
+            <label class="form-label"><span class="req">*</span>字典名称</label>
+            <input class="input" id="dictName" placeholder="请输入字典名称">
+          </div>
+          <div class="form-field">
+            <label class="form-label">字典编码</label>
+            <div class="flex items-center gap-2">
+              <input class="input flex-1" id="dictCode" readonly placeholder="系统自动生成" style="background:var(--bg-muted)">
+              <span class="copy-icon" onclick="copyToClipboard('dictCode')" title="复制编码">📋</span>
+            </div>
+            <div class="text-xs text-slate-400 mt-1">编码由系统自动生成，不可编辑</div>
+          </div>
+        </div>
+        <div class="form-field">
+          <label class="form-label"><span class="req">*</span>字典分类</label>
+          <select class="select-native" id="dictCategory">
+            <option value="情景">情景</option>
+            <option value="风险因子">风险因子</option>
+            <option value="业务维护">业务维护</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">排序号</label>
+          <input type="number" class="input" id="sortOrder" value="0">
+        </div>
+        <div class="form-field">
+          <label class="form-label">描述</label>
+          <textarea class="textarea" id="description" rows="3" placeholder="详细描述该字典项的含义、用途等"></textarea>
+        </div>
+        <div class="form-field">
+          <label class="form-label">状态</label>
+          <div class="radio-group">
+            <label class="radio"><input type="radio" name="status" value="1" checked> 启用</label>
+            <label class="radio"><input type="radio" name="status" value="0"> 禁用</label>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-secondary btn-md" onclick="closeDictModal()">取消</button>
+      <button class="btn btn-primary btn-md" onclick="saveDict()">保存</button>
+    </div>
+  </div> 
+
+<!-- 批量导入模态框 -->
+<div class="modal-mask" id="importModal">
+  <div class="modal" style="max-width:700px">
+    <div class="modal-head">
+      <div class="modal-title">批量导入字典</div>
+      <button class="modal-close" onclick="closeImportModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-4">
+        <div class="flex-between mb-2">
+          <span class="font-medium text-slate-700">模板下载</span>
+          <button class="btn btn-ghost btn-sm" onclick="downloadTemplate()">下载导入模板.xlsx</button>
+        </div>
+        <div class="text-xs text-slate-500 mb-3">模板字段：名称、父级编码(可选)、分类、排序、状态(1启用/0禁用)、描述。编码自动生成</div>
+      </div>
+      <div class="upload-zone" id="uploadZone" onclick="document.getElementById('excelFile').click()">
+        <svg class="w-8 h-8 text-slate-400 mx-auto mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18v-4"/><path d="M9 14l3-4 3 4"/></svg>
+        <p class="text-sm text-slate-600">点击或拖拽文件至此区域</p>
+        <p class="text-xs text-slate-400 mt-1">支持 .xlsx, .xls 格式</p>
+        <input type="file" id="excelFile" accept=".xlsx,.xls" style="display:none" onchange="handleFileImport(this.files)">
+      </div>
+      <div id="importPreview" class="mt-4" style="display:none">
+        <div class="flex-between items-center mb-2">
+          <span class="font-medium">导入预览</span>
+          <button class="btn btn-primary btn-sm" onclick="confirmImport()">确认导入</button>
+        </div>
+        <div id="previewList" class="max-h-48 overflow-y-auto text-sm border rounded-md p-2 bg-slate-50"></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-secondary" onclick="closeImportModal()">取消</button>
+    </div>
+  </div>
+</div>
+
+<!-- 删除确认模态框 -->
+<div class="modal-mask" id="confirmModal">
+  <div class="modal modal-sm">
+    <div class="modal-head">
+      <div class="modal-title">确认删除</div>
+      <button class="modal-close" onclick="closeConfirmModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <p id="confirmMsg">确定删除该字典项吗？子项将一并删除。</p>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-secondary btn-md" onclick="closeConfirmModal()">取消</button>
+      <button class="btn btn-danger btn-md" id="confirmDeleteBtn">确认删除</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let dictData = [];
+  let expandedSet = new Set();
+  let currentPage = 1;
+  let pageSize = 20;
+  let currentFilter = { name: '', code: '', category: '', status: '' };
+  let pendingImportData = [];
+  let nextId = 1000;
+  let selectedIds = new Set();
+  let deleteTargetId = null;
+
+  function generateCode(name) {
+    let code = name.substring(0, 2).toUpperCase().replace(/[^A-Z]/g, 'X');
+    if (code.length < 2) code = code + 'X';
+    return `${code}${Date.now().toString().slice(-6)}`;
+  }
+
+  function copyToClipboard(id) {
+    let input = document.getElementById(id);
+    if (input && input.value) { navigator.clipboard.writeText(input.value); alert('已复制：' + input.value); }
+  }
+
+  function rebuildLevels() {
+    function compute(items, pid, lvl) { items.filter(i => i.parentId === pid).forEach(i => { i.level = lvl; compute(items, i.id, lvl+1); }); }
+    compute(dictData, null, 0);
+  }
+
+  function buildTree(list) {
+    let map = new Map(), roots = [];
+    list.forEach(i => map.set(i.id, { ...i, children: [] }));
+    list.forEach(i => { let n = map.get(i.id); if (i.parentId && map.has(i.parentId)) map.get(i.parentId).children.push(n); else roots.push(n); });
+    return roots;
+  }
+
+  function flattenTree(nodes, res = []) {
+    for (let n of nodes) { res.push(n); if (expandedSet.has(n.id) && n.children?.length) flattenTree(n.children, res); }
+    return res;
+  }
+
+  function getFiltered() {
+    let f = [...dictData];
+    if (currentFilter.name) f = f.filter(d => d.name.includes(currentFilter.name));
+    if (currentFilter.code) f = f.filter(d => d.code && d.code.includes(currentFilter.code));
+    if (currentFilter.category) f = f.filter(d => d.category === currentFilter.category);
+    if (currentFilter.status !== '') f = f.filter(d => d.status === parseInt(currentFilter.status));
+    return f;
+  }
+
+  function getAllDescendants(pid, data) {
+    let ids = [];
+    data.filter(d => d.parentId === pid).forEach(c => { ids.push(c.id); ids.push(...getAllDescendants(c.id, data)); });
+    return ids;
+  }
+
+  function renderTable() {
+    let filtered = getFiltered();
+    let flat = flattenTree(buildTree(filtered));
+    let total = flat.length;
+    document.getElementById('totalCount').innerText = total;
+    let start = (currentPage - 1) * pageSize;
+    let paged = flat.slice(start, start + pageSize);
+    let tbody = document.getElementById('dictTreeBody');
+    if (paged.length === 0) { tbody.innerHTML = '<tr><td colspan="8" class="text-center py-8 text-slate-400">暂无数据</td></tr>'; renderPagination(total); updateSelectedCount(); return; }
+    let html = '';
+    for (let node of paged) {
+      let indent = node.level || 0;
+      let indentClass = indent === 0 ? 'depth-0' : indent === 1 ? 'depth-1' : indent === 2 ? 'depth-2' : indent === 3 ? 'depth-3' : indent === 4 ? 'depth-4' : 'depth-5';
+      let hasChildren = node.children && node.children.length > 0;
+      let isExp = expandedSet.has(node.id);
+      let toggle = hasChildren ? `<div class="tree-toggle" onclick="event.stopPropagation();toggleNode(${node.id})">${isExp ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 9l6 6 6-6"/></svg>' : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg>'}</div>` : '<div class="tree-toggle" style="visibility:hidden"><svg></svg></div>';
+      let statusHtml = node.status === 1 ? '<span class="tag tag-success"><span class="status-dot success"></span>启用</span>' : '<span class="tag tag-warning"><span class="status-dot disabled"></span>禁用</span>';
+      let descText = node.description || '—';
+      html += `<tr>
+        <td style="text-align:center"><input type="checkbox" class="row-checkbox" data-id="${node.id}" onchange="toggleRowSelect(this)" ${selectedIds.has(node.id) ? 'checked' : ''}></td>
+        <td><div class="flex items-center ${indentClass}" style="gap:6px">${toggle}<span class="dict-name">${escapeHtml(node.name)}</span></div></td>
+        <td><span class="tag tag-brand">${escapeHtml(node.category)}</span></td>
+        <td><div class="desc-cell" data-fulltext="${escapeHtml(descText)}" title="${escapeHtml(descText)}">${descText.length > 40 ? escapeHtml(descText.substring(0, 40)) + '...' : escapeHtml(descText)}</div></td>
+        <td><span class="dict-code">${escapeHtml(node.code || '—')}</span></td>
+        <td class="text-center" style="font-family:var(--font-num)">${node.sort}</td>
+        <td class="text-center">${statusHtml}</td>
+        <td class="action-btns" style="white-space:nowrap"><button class="btn btn-ghost btn-sm" onclick="editDict(${node.id})">编辑</button><button class="btn btn-danger-ghost btn-sm" onclick="confirmDelete(${node.id})">删除</button><button class="btn btn-ghost btn-sm" onclick="openDictModalWithParent(${node.id})">添加子项</button></td>
+      </tr>`;
+    }
+    tbody.innerHTML = html;
+    renderPagination(total);
+    updateSelectedCount();
+  }
+
+  function renderPagination(total) {
+    let totalPages = Math.ceil(total / pageSize);
+    let controls = document.getElementById('paginationControls');
+    if (totalPages <= 1) { controls.innerHTML = ''; return; }
+    let html = `<button class="page-btn" ${currentPage===1?'disabled':''} onclick="goPage(${currentPage-1})">‹</button>`;
+    for (let i = 1; i <= Math.min(totalPages, 5); i++) html += `<button class="page-btn ${currentPage===i?'active':''}" onclick="goPage(${i})">${i}</button>`;
+    if (totalPages > 5) html += `<span class="px-2">...</span><button class="page-btn" onclick="goPage(${totalPages})">${totalPages}</button>`;
+    html += `<button class="page-btn" ${currentPage===totalPages?'disabled':''} onclick="goPage(${currentPage+1})">›</button>`;
+    controls.innerHTML = html;
+  }
+
+  function goPage(p) { currentPage = p; renderTable(); }
+  function toggleNode(id) { if (expandedSet.has(id)) expandedSet.delete(id); else expandedSet.add(id); renderTable(); }
+  function searchDict() { currentFilter.name = document.getElementById('searchName').value.trim(); currentFilter.code = document.getElementById('searchCode').value.trim(); currentFilter.category = document.getElementById('searchCategory').value; currentFilter.status = document.getElementById('searchStatus').value; currentPage = 1; renderTable(); }
+  function resetSearch() { document.getElementById('searchName').value = ''; document.getElementById('searchCode').value = ''; document.getElementById('searchCategory').value = ''; document.getElementById('searchStatus').value = ''; searchDict(); }
+  function toggleSelectAll() { let cbs = document.querySelectorAll('.row-checkbox'); let checked = document.getElementById('selectAllCheckbox').checked; cbs.forEach(cb => { cb.checked = checked; let id = parseInt(cb.dataset.id); if (checked) selectedIds.add(id); else selectedIds.delete(id); }); updateSelectedCount(); }
+  function toggleRowSelect(cb) { let id = parseInt(cb.dataset.id); if (cb.checked) selectedIds.add(id); else selectedIds.delete(id); updateSelectedCount(); document.getElementById('selectAllCheckbox').checked = document.querySelectorAll('.row-checkbox:checked').length === document.querySelectorAll('.row-checkbox').length; }
+  function updateSelectedCount() { document.getElementById('selectedCount').innerText = `已选 ${selectedIds.size} 项`; }
+
+  function batchDelete() {
+    if (selectedIds.size === 0) { alert('请先选择要删除的字典项'); return; }
+    let allIds = new Set(selectedIds);
+    for (let id of selectedIds) getAllDescendants(id, dictData).forEach(did => allIds.add(did));
+    if (confirm(`确定删除选中的 ${selectedIds.size} 个字典项及其所有子项（共 ${allIds.size} 项）吗？`)) {
+      dictData = dictData.filter(d => !allIds.has(d.id));
+      selectedIds.clear();
+      document.getElementById('selectAllCheckbox').checked = false;
+      rebuildLevels(); expandedSet.clear(); renderTable();
+    }
+  }
+
+  function buildParentOptions(excludeId) {
+    let opts = [{ id: '', name: '— 顶级字典 —' }];
+    let add = (items, pref) => { items.sort((a,b)=>a.sort-b.sort).forEach(i => { if (i.id !== excludeId) opts.push({ id: i.id, name: pref + i.name + (i.code ? ' (' + i.code + ')' : '') }); if (i.children?.length) add(i.children, pref + '　　'); }); };
+    add(buildTree(dictData), '');
+    return opts;
+  }
+  function refreshParentDropdown(excludeId) { let sel = document.getElementById('parentDictId'); let opts = buildParentOptions(excludeId); sel.innerHTML = opts.map(o => `<option value="${o.id}">${o.name}</option>`).join(''); }
+  function openDictModal() { currentEditId = null; document.getElementById('dictForm').reset(); document.getElementById('dictId').value = ''; document.getElementById('dictName').value = ''; document.getElementById('dictCode').value = ''; document.getElementById('description').value = ''; document.getElementById('sortOrder').value = '0'; document.querySelector('input[name="status"][value="1"]').checked = true; refreshParentDropdown(null); document.getElementById('dictModal').classList.add('open'); document.getElementById('modalTitle').innerText = '新建字典项'; }
+  function openDictModalWithParent(pid) { openDictModal(); document.getElementById('parentDictId').value = pid; let p = dictData.find(d => d.id === pid); if (p && p.level >= 4) alert('当前层级已达到5级深度限制'); }
+  let currentEditId = null;
+  function editDict(id) { let item = dictData.find(d => d.id === id); if (!item) return; currentEditId = id; document.getElementById('dictId').value = id; document.getElementById('dictName').value = item.name; document.getElementById('dictCode').value = item.code; document.getElementById('dictCategory').value = item.category; document.getElementById('sortOrder').value = item.sort; document.getElementById('description').value = item.description || ''; document.querySelector(`input[name="status"][value="${item.status}"]`).checked = true; refreshParentDropdown(id); document.getElementById('parentDictId').value = item.parentId || ''; document.getElementById('modalTitle').innerText = '编辑字典项'; document.getElementById('dictModal').classList.add('open'); }
+  function saveDict() {
+    let name = document.getElementById('dictName').value.trim();
+    if (!name) { alert('请填写字典名称'); return; }
+    let parentId = document.getElementById('parentDictId').value ? parseInt(document.getElementById('parentDictId').value) : null;
+    let category = document.getElementById('dictCategory').value;
+    let sort = parseInt(document.getElementById('sortOrder').value) || 0;
+    let status = parseInt(document.querySelector('input[name="status"]:checked').value);
+    let description = document.getElementById('description').value;
+    let targetLevel = 0;
+    if (parentId) { let p = dictData.find(d => d.id === parentId); if (p) targetLevel = p.level + 1; if (targetLevel > 5) { alert('层级超限，最多支持5级'); return; } }
+    let id = document.getElementById('dictId').value;
+    if (id) {
+      let idx = dictData.findIndex(d => d.id === parseInt(id));
+      if (idx !== -1) dictData[idx] = { ...dictData[idx], name, parentId, category, sort, status, description, level: targetLevel };
+    } else {
+      let newId = nextId++;
+      dictData.push({ id: newId, parentId, name, code: generateCode(name), category, sort, status, description, level: targetLevel });
+    }
+    rebuildLevels(); closeDictModal(); renderTable();
+  }
+  function closeDictModal() { document.getElementById('dictModal').classList.remove('open'); }
+  function confirmDelete(id) {
+    deleteTargetId = id;
+    let total = 1 + getAllDescendants(id, dictData).length;
+    document.getElementById('confirmMsg').innerHTML = `确定删除该字典项及其所有子项（共 ${total} 项）吗？`;
+    document.getElementById('confirmModal').classList.add('open');
+    document.getElementById('confirmDeleteBtn').onclick = () => {
+      if (deleteTargetId) {
+        let toRemove = new Set([deleteTargetId]);
+        getAllDescendants(deleteTargetId, dictData).forEach(did => toRemove.add(did));
+        dictData = dictData.filter(d => !toRemove.has(d.id));
+        rebuildLevels(); expandedSet.clear(); selectedIds.delete(deleteTargetId); renderTable();
+      }
+      closeConfirmModal();
+    };
+  }
+  function closeConfirmModal() { document.getElementById('confirmModal').classList.remove('open'); deleteTargetId = null; }
+  function openImportModal() { pendingImportData = []; document.getElementById('importPreview').style.display = 'none'; document.getElementById('excelFile').value = ''; document.getElementById('importModal').classList.add('open'); }
+  function closeImportModal() { document.getElementById('importModal').classList.remove('open'); }
+  function downloadTemplate() { let wsData = [['名称','父级编码','分类','排序','状态','描述'], ['测试字典项','','情景','10','1','测试描述']]; let wb = XLSX.utils.book_new(); let ws = XLSX.utils.aoa_to_sheet(wsData); XLSX.utils.book_append_sheet(wb, ws, '字典模板'); XLSX.writeFile(wb, 'dict_import_template.xlsx'); }
+  function handleFileImport(files) { if (!files[0]) return; let reader = new FileReader(); reader.onload = function(e) { let data = new Uint8Array(e.target.result); let wb = XLSX.read(data, {type: 'array'}); let sheet = wb.Sheets[wb.SheetNames[0]]; let rows = XLSX.utils.sheet_to_json(sheet, {header:1}); if (rows.length < 2) { alert('至少包含一行数据'); return; } pendingImportData = []; for (let i = 1; i < rows.length; i++) { let row = rows[i]; if (!row[0]) continue; let cat = row[2] || '情景'; if (!['情景','风险因子','业务维护'].includes(cat)) cat = '情景'; pendingImportData.push({ name: row[0]||'', parentCode: row[1]||'', category: cat, sort: parseInt(row[3])||0, status: row[4]==='1'||row[4]===1?1:0, description: row[5]||'' }); } let preview = document.getElementById('previewList'); if (pendingImportData.length) { preview.innerHTML = pendingImportData.slice(0,10).map(d => `<div class="py-1 border-b">${d.name} (${d.category})</div>`).join('') + (pendingImportData.length > 10 ? `<div class="text-slate-400 text-xs mt-1">...共${pendingImportData.length}条</div>` : ''); document.getElementById('importPreview').style.display = 'block'; } else { alert('未解析到有效数据'); } }; reader.readAsArrayBuffer(files[0]); }
+  function confirmImport() { if (!pendingImportData.length) { alert('无有效数据'); return; } for (let item of pendingImportData) { let parentItem = dictData.find(d => d.code === item.parentCode); let parentId = parentItem ? parentItem.id : null; let newId = nextId++; dictData.push({ id: newId, parentId, name: item.name, code: generateCode(item.name), category: item.category, sort: item.sort, status: item.status, description: item.description, level: 0 }); } rebuildLevels(); closeImportModal(); renderTable(); alert(`成功导入 ${pendingImportData.length} 条数据`); }
+  function exportDictData() { let exp = dictData.map(d => ({ 名称: d.name, 编码: d.code, 分类: d.category, 父级编码: dictData.find(p => p.id === d.parentId)?.code || '', 排序: d.sort, 状态: d.status === 1 ? '启用' : '禁用', 描述: d.description || '' })); let ws = XLSX.utils.json_to_sheet(exp); let wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, '字典数据'); XLSX.writeFile(wb, `dict_export_${new Date().toISOString().slice(0,19)}.xlsx`); }
+  function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[m]); }
+
+  function loadDictData() {
+    let script = document.createElement('script');
+    script.src = 'data.js?' + Date.now();
+    script.onload = function() {
+      if (typeof dictDataFromFile !== 'undefined') {
+        dictData = JSON.parse(JSON.stringify(dictDataFromFile));
+        nextId = Math.max(...dictData.map(d => d.id), 0) + 1;
+        rebuildLevels();
+        expandedSet = new Set(dictData.filter(d => d.level === 0).map(d => d.id));
+        renderTable();
+      } else { console.error('data.js 未正确导出'); document.getElementById('dictTreeBody').innerHTML = '<tr><td colspan="8" class="text-center py-8 text-slate-400">数据加载失败</td></tr>'; }
+    };
+    script.onerror = function() { document.getElementById('dictTreeBody').innerHTML = '<tr><td colspan="8" class="text-center py-8 text-slate-400">无法加载 data.js</td></tr>'; };
+    document.head.appendChild(script);
+  }
+  loadDictData();
+</script>
+</main>
+</body>
+</html>

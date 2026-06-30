@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>环境效益测算 · 潜在项目库</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --brand-50: #E8F0FB; --brand-100: #D1DFF4; --brand-300: #6E97D6;
+            --brand-500: #2A66C2; --brand-700: #143F8F; --brand-900: #01256A;
+            --green-50: #ECFDF5; --green-500: #10B981; --green-700: #047857;
+            --success: #10B981; --success-bg: #ECFDF5; --success-border: #A7F3D0;
+            --warning: #D97706; --warning-bg: #FFFBEB; --warning-border: #FDE68A;
+            --danger: #DC2626; --danger-bg: #FEF2F2; --danger-border: #FECACA;
+            --info: #2A66C2; --info-bg: #E8F0FB; --info-border: #D1DFF4;
+            --ink-900: #0F172A; --ink-800: #1E293B; --ink-600: #475569;
+            --ink-500: #64748B; --ink-400: #94A3B8; --ink-300: #CBD5E1;
+            --line-200: #E2E8F0; --bg-muted: #F1F5F9; --bg-subtle: #F8FAFC;
+            --white: #FFFFFF; --radius-sm: 4px; --radius-md: 6px;
+            --radius-lg: 8px; --radius-xl: 12px; --radius-2xl: 16px;
+            --font-sans: 'PingFang SC','Microsoft YaHei','Inter',system-ui,sans-serif;
+            --font-num: 'Inter','SF Pro Display',system-ui,sans-serif;
+        }
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:var(--font-sans);color:var(--ink-800);background:var(--bg-subtle);font-size:14px;line-height:1.57;-webkit-font-smoothing:antialiased;height:100vh;overflow:hidden}
+        .custom-scroll::-webkit-scrollbar{width:6px;height:6px}
+        .custom-scroll::-webkit-scrollbar-track{background:transparent}
+        .custom-scroll::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}
+        .custom-scroll::-webkit-scrollbar-thumb:hover{background:var(--brand-500)}
+        .btn{display:inline-flex;align-items:center;gap:6px;border-radius:var(--radius-md);font-family:inherit;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid transparent;line-height:1;white-space:nowrap}
+        .btn-sm{padding:6px 12px;font-size:12px;line-height:20px;height:28px}
+        .btn-md{padding:8px 16px;font-size:14px;line-height:22px;height:32px}
+        .btn-primary{background:var(--brand-500);color:#fff}
+        .btn-primary:hover{background:var(--brand-700)}
+        .btn-secondary{background:var(--white);color:var(--ink-800);border-color:var(--ink-300)}
+        .btn-secondary:hover{border-color:var(--brand-500);color:var(--brand-500)}
+        .btn-deep-blue{background:var(--brand-700);color:#fff}
+        .btn-deep-blue:hover{background:var(--brand-900)}
+        .btn-light-blue{background:var(--brand-100);color:var(--brand-700);border-color:var(--brand-300)}
+        .btn-light-blue:hover{background:var(--brand-50);border-color:var(--brand-500)}
+        .btn-outline-brand{background:var(--white);color:var(--brand-500);border-color:var(--brand-300)}
+        .btn-outline-brand:hover{background:var(--brand-50);border-color:var(--brand-500)}
+        .tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:var(--radius-sm);font-size:12px;font-weight:500;line-height:1.5;border:1px solid transparent;white-space:nowrap}
+        .tag-success{background:var(--success-bg);color:var(--green-700);border-color:var(--success-border)}
+        .tag-info{background:var(--info-bg);color:var(--brand-700);border-color:var(--info-border)}
+        .tag-warning{background:var(--warning-bg);color:var(--warning);border-color:var(--warning-border)}
+        .tag-danger{background:var(--danger-bg);color:var(--danger);border-color:var(--danger-border)}
+        .stat-card{background:var(--white);border-radius:var(--radius-md);border:1px solid var(--line-200);padding:6px 12px;display:flex;flex-direction:column;gap:1px;min-width:110px}
+        .stat-card .stat-value{font-size:18px;font-weight:700;font-family:var(--font-num)}
+        .stat-card .stat-label{font-size:11px;color:var(--ink-500)}
+        .section-card{background:var(--white);border-radius:var(--radius-xl);border:1px solid var(--line-200);overflow:hidden;margin-bottom:16px}
+        .section-card .card-head{padding:14px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);font-weight:600;color:var(--ink-900);font-size:15px;display:flex;align-items:center;justify-content:space-between}
+        .section-card .card-body{padding:16px 24px}
+        .table-wrap{overflow:auto;position:relative}
+        .table-wrap table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;min-width:2200px}
+        .table-wrap thead{position:sticky;top:0;z-index:10}
+        .table-wrap th{background:var(--bg-muted);padding:10px 14px;text-align:left;font-weight:600;color:var(--ink-600);border-bottom:1px solid var(--line-200);white-space:nowrap;font-size:12px}
+        .table-wrap td{padding:10px 14px;border-bottom:1px solid var(--line-200);vertical-align:middle;white-space:nowrap}
+        .table-wrap tbody tr:hover{background:var(--bg-subtle)}
+        .table-wrap .col-seq{width:50px;text-align:center;color:var(--ink-400)}
+        .table-wrap .col-actions{position:sticky;right:0;background:var(--white);z-index:5;min-width:120px;box-shadow:-4px 0 12px rgba(0,0,0,0.06)}
+        .table-wrap thead .col-actions{background:var(--bg-muted);z-index:11}
+        .table-wrap tbody tr:hover .col-actions{background:var(--bg-subtle)}
+        .table-wrap .col-approval{position:sticky;right:120px;background:var(--white);z-index:5;box-shadow:-4px 0 8px rgba(0,0,0,0.04)}
+        .table-wrap thead .col-approval{background:var(--bg-muted);z-index:10}
+        .table-wrap tbody tr:hover .col-approval{background:var(--bg-subtle)}
+        .filter-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px}
+        .filter-group-inline{display:flex;align-items:center;gap:6px;white-space:nowrap}
+        .filter-group-inline label{font-size:13px;color:var(--ink-600);font-weight:500;white-space:nowrap}
+        .filter-group-inline input,.filter-group-inline select{padding:5px 10px;border:1px solid var(--line-200);border-radius:var(--radius-md);font-size:13px;background:var(--white);outline:none;width:160px}
+        .filter-group-inline input:focus,.filter-group-inline select:focus{border-color:var(--brand-500)}
+        .filter-group-inline input.wide{width:220px}
+        .filter-group-inline select.wide{width:200px}
+        .filter-group-inline .date-range{display:flex;align-items:center;gap:4px}
+        .filter-group-inline .date-range input{width:120px}
+    </style>
+</head>
+<body>
+<div class="flex flex-col" style="height:100vh;background:var(--bg-subtle);">
+    <div class="flex-1 overflow-y-auto custom-scroll" style="padding:12px 24px 24px 24px;">
+
+        <!-- 统计卡片区 -->
+        <div class="section-card" style="border:none;">
+            <div class="card-body" style="padding:12px 16px;">
+                <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:6px;">绿色信贷环境效益统计</div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px;">
+                    <div class="stat-card"><div class="stat-value" style="color:#DC2626;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">二氧化碳当量</div></div>
+                    <div class="stat-card"><div class="stat-value" style="color:#EA580C;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">二氧化硫</div></div>
+                    <div class="stat-card"><div class="stat-value" style="color:#D97706;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">氮氧化物</div></div>
+                    <div class="stat-card"><div class="stat-value" style="color:#7C3AED;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">化学需氧量</div></div>
+                    <div class="stat-card"><div class="stat-value" style="color:#2563EB;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">氨氮</div></div>
+                    <div class="stat-card"><div class="stat-value" style="color:#0891B2;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">总氮</div></div>
+                    <div class="stat-card"><div class="stat-value" style="color:#059669;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">总磷</div></div>
+                    <div class="stat-card"><div class="stat-value" style="color:#4F46E5;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">细颗粒物（PM2.5）</div></div>
+                    <div class="stat-card"><div class="stat-value" style="color:#9333EA;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">挥发性有机物（VOCs）</div></div>
+                    <div class="stat-card"><div class="stat-value" style="color:#B45309;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">标准煤</div></div>
+                    <div class="stat-card"><div class="stat-value" style="color:#10B981;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">节水量</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 筛选条件区 -->
+        <div class="section-card">
+            <!-- 筛选栏 -->
+            <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);flex-shrink:0;">
+                <!-- 第一行：始终显示 -->
+                <div class="filter-row" id="filterRow1">
+                    <div class="filter-group-inline"><label>客户信息：</label><input type="text" class="wide" placeholder="客户名称/编号/信用代码"></div>
+                    <div class="filter-group-inline"><label>国民经济行业分类：</label><select class="wide"><option>全部行业</option><option>火力发电</option><option>炼钢</option><option>太阳能发电</option><option>热电联产</option><option>大气污染治理</option></select></div>
+                    <div class="filter-group-inline"><label>所属支行机构：</label><select><option>全部机构</option><option>重庆银行渝北支行</option><option>重庆银行江北支行</option><option>重庆银行南岸支行</option></select></div>
+                    <div class="filter-group-inline"><label>审批状态：</label><select><option>全部状态</option><option>待审批</option><option>审批中</option><option>已审批</option><option>已驳回</option><option>未提交</option></select></div>
+                    <div class="filter-group-inline" style="margin-left:auto;gap:4px;">
+                        <span id="filterToggleBtn" style="cursor:pointer;color:var(--brand-500);font-size:12px;white-space:nowrap;" onclick="toggleFilter()">▼ 展开</span>
+                        <button class="btn btn-primary btn-sm">查询</button>
+                        <button class="btn btn-secondary btn-sm">重置</button>
+                    </div>
+                </div>
+                <!-- 展开行（默认隐藏） -->
+                <div id="filterExpandRows" style="display:none;">
+                    <div class="filter-row" id="filterRow2" style="margin-top:12px;">
+                        <div class="filter-group-inline"><label>绿色金融分类(2025)：</label><select class="wide"><option>全部分类</option><option>1.1.1节能锅炉制造</option><option>3.2.1节能技术改造</option><option>5.1.1.1超低能耗建筑建设</option><option>5.1.1资源循环利用</option></select></div>
+                        <div class="filter-group-inline"><label>主办经理：</label><input type="text" placeholder="输入姓名/工号"></div>
+                        <div class="filter-group-inline"><label>项目信息：</label><input type="text" class="wide" placeholder="项目名称/代码/本行编号"></div>
+                    </div>
+                    <div class="filter-row" id="filterRow3" style="margin-top:12px;">
+                        <div class="filter-group-inline"><label>数据日期：</label><div class="date-range"><input type="date" value="2015-10-02"><span>~</span><input type="date" value="2015-10-10"></div></div>
+                    </div>
+                </div>
+            </div>
+            <!-- 操作栏：导出数据在左 -->
+            <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100 flex-shrink-0">
+                <div class="flex gap-2 flex-wrap">
+                    <button class="btn btn-secondary btn-sm" onclick="alert('统计数据已下载！')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        导出数据
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 测算任务列表 -->
+        <div class="section-card">
+            <div class="card-body" style="padding:0;">
+                <div class="table-wrap custom-scroll" style="max-height:450px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-seq">序号</th>
+                                <th>项目代码</th>
+                                <th>本行项目编号</th>
+                                <th>项目名称</th>
+                                <th>项目所属行业</th>
+                                <th>项目总投资额（万元）</th>
+                                <th>项目所在地</th>
+                                <th>客户名称</th>
+                                <th>统一社会信用代码</th>
+                                <th>客户国民经济行业</th>
+                                <th>绿色金融分类(2025)</th>
+                                <th>主办机构</th>
+                                <th>管理辖区</th>
+                                <th>主办经理</th>
+                                <th>当前任务节点</th>
+                                <th>测算状态</th>
+                                <th class="col-approval">审批状态</th>
+                                <th>最近更新时间</th>
+                                <th>创建时间</th>
+                                <th class="col-actions">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-seq">1</td>
+                                <td style="font-family:monospace;font-size:12px;">test000001</td>
+                                <td style="font-family:monospace;font-size:12px;">02001071613</td>
+                                <td style="font-weight:500;color:var(--ink-900);">超低能耗建筑建设项目</td>
+                                <td>火力发电</td>
+                                <td style="font-family:var(--font-num);text-align:right;">21,232,323,123</td>
+                                <td>广州市</td>
+                                <td>广州XXXXXXX有限公司</td>
+                                <td style="font-family:monospace;font-size:12px;">02001071613</td>
+                                <td>火力发电</td>
+                                <td>5.1.1.1超低能耗建筑建设</td>
+                                <td>重庆银行渝北支行</td>
+                                <td>渝北区</td>
+                                <td>张三/0122323</td>
+                                <td><span class="tag tag-info">测算填报</span></td>
+                                <td><span class="tag tag-success">已测算</span></td>
+                                <td class="col-approval"><span class="tag tag-warning">待审批</span></td>
+                                <td>2025/05/31 10:59:59</td>
+                                <td>2025/05/15 09:00:00</td>
+                                <td class="col-actions"><button class="btn btn-deep-blue btn-sm" onclick="goToDetail('view')">查看详情</button></td>
+                            </tr>
+                            <tr>
+                                <td class="col-seq">2</td>
+                                <td style="font-family:monospace;font-size:12px;">test000002</td>
+                                <td style="font-family:monospace;font-size:12px;">02001071614</td>
+                                <td style="font-weight:500;color:var(--ink-900);">太阳能光伏发电项目</td>
+                                <td>太阳能发电</td>
+                                <td style="font-family:var(--font-num);text-align:right;">50,000</td>
+                                <td>浙江省湖州市</td>
+                                <td>浙江XXXX能源有限公司</td>
+                                <td style="font-family:monospace;font-size:12px;">91330502MA28C6K2XJ</td>
+                                <td>太阳能发电</td>
+                                <td>3.1.1太阳能发电设施建设</td>
+                                <td>重庆银行渝北支行</td>
+                                <td>渝北区</td>
+                                <td>李四/002</td>
+                                <td><span class="tag tag-warning">待填报</span></td>
+                                <td><span class="tag tag-danger">未测算</span></td>
+                                <td class="col-approval"><span class="tag tag-default">未提交</span></td>
+                                <td>2025/05/20 14:30:00</td>
+                                <td>2025/05/20 14:30:00</td>
+                                <td class="col-actions"><button class="btn btn-primary btn-sm" onclick="goToDetail('edit')">去处理</button></td>
+                            </tr>
+                            <tr>
+                                <td class="col-seq">3</td>
+                                <td style="font-family:monospace;font-size:12px;">test000003</td>
+                                <td style="font-family:monospace;font-size:12px;">02001071615</td>
+                                <td style="font-weight:500;color:var(--ink-900);">工业余热回收利用项目</td>
+                                <td>热电联产</td>
+                                <td style="font-family:var(--font-num);text-align:right;">100,030</td>
+                                <td>河北省唐山市</td>
+                                <td>迁安轧一钢铁集团有限公司</td>
+                                <td style="font-family:monospace;font-size:12px;">123456789123456789</td>
+                                <td>炼钢</td>
+                                <td>3.2.1节能技术改造</td>
+                                <td>重庆银行渝北支行</td>
+                                <td>渝北区</td>
+                                <td>王五/001</td>
+                                <td><span class="tag tag-success">已完成</span></td>
+                                <td><span class="tag tag-success">已测算</span></td>
+                                <td class="col-approval"><span class="tag tag-success">已审批</span></td>
+                                <td>2025/05/31 10:59:59</td>
+                                <td>2025/04/01 08:30:00</td>
+                                <td class="col-actions"><button class="btn btn-deep-blue btn-sm" onclick="goToDetail('view')">查看详情</button></td>
+                            </tr>
+                            <tr>
+                                <td class="col-seq">4</td>
+                                <td style="font-family:monospace;font-size:12px;">test000004</td>
+                                <td style="font-family:monospace;font-size:12px;">02001071616</td>
+                                <td style="font-weight:500;color:var(--ink-900);">污水处理升级改造项目</td>
+                                <td>大气污染治理</td>
+                                <td style="font-family:var(--font-num);text-align:right;">90,000</td>
+                                <td>重庆市渝北区</td>
+                                <td>重庆绿能新能源有限公司</td>
+                                <td style="font-family:monospace;font-size:12px;">123456789123456789</td>
+                                <td>太阳能发电</td>
+                                <td>4.2.1污水处理设施建设</td>
+                                <td>重庆银行渝北支行</td>
+                                <td>渝北区</td>
+                                <td>赵六/003</td>
+                                <td><span class="tag tag-ingo">测算填报</span></td>
+                                <td><span class="tag tag-success">已测算</span></td>
+                                <td class="col-approval"><span class="tag tag-danger">已驳回</span></td>
+                                <td>2025/06/15 16:00:00</td>
+                                <td>2025/06/10 10:00:00</td>
+                                <td class="col-actions"><button class="btn btn-primary btn-sm" onclick="goToDetail('edit')">去处理</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- 分页 -->
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-top:1px solid var(--line-200);">
+                <span style="font-size:13px;color:var(--ink-400);">共 1,126 条</span>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <span style="font-size:13px;color:var(--ink-500);">20条/页</span>
+                    <button class="btn btn-secondary btn-sm">‹</button>
+                    <span style="padding:2px 8px;font-size:13px;background:var(--brand-500);color:white;border-radius:4px;">1</span>
+                    <button class="btn btn-secondary btn-sm">2</button>
+                    <button class="btn btn-secondary btn-sm">3</button>
+                    <span style="font-size:13px;color:var(--ink-400);">…</span>
+                    <button class="btn btn-secondary btn-sm">50</button>
+                    <button class="btn btn-secondary btn-sm">›</button>
+                    <span style="font-size:13px;color:var(--ink-500);">11/50页 跳至 <input type="number" style="width:48px;padding:2px 6px;border:1px solid var(--line-200);border-radius:4px;text-align:center;" value="1"> 页</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var filterExpanded=false;
+    function toggleFilter(){
+        var rows=document.getElementById('filterExpandRows');
+        var btn=document.getElementById('filterToggleBtn');
+        if(filterExpanded){
+            rows.style.display='none';
+            btn.innerHTML='▼ 展开';
+            filterExpanded=false;
+        }else{
+            rows.style.display='block';
+            btn.innerHTML='▲ 收起';
+            filterExpanded=true;
+        }
+    }
+    function getCurrentDir(){var p=window.location.pathname;return p.substring(0,p.lastIndexOf('/')+1)}
+    function goToDetail(mode){
+        var dir=getCurrentDir();
+        var targetUrl=dir+'环境效益测算填报.html';
+        if(window.parent!==window){
+            var pageId='env-detail-'+Date.now()+'-'+Math.random().toString(36).substr(2,6);
+            var label=mode==='view'?'环境效益测算详情':'环境效益测算填报';
+            window.parent.postMessage({type:'openPage',pageId:pageId,file:targetUrl,label:label},'*');
+        }else{window.location.href=targetUrl}
+    }
+</script>
+</body>
+</html>

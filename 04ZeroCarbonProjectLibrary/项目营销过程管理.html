@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目营销过程管理 · 零碳园区项目库</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --brand-50: #E8F0FB; --brand-100: #D1DFF4; --brand-300: #6E97D6;
+            --brand-500: #2A66C2; --brand-700: #143F8F; --brand-900: #01256A;
+            --green-50: #ECFDF5; --green-500: #10B981; --green-700: #047857;
+            --success: #10B981; --success-bg: #ECFDF5; --success-border: #A7F3D0;
+            --warning: #D97706; --warning-bg: #FFFBEB; --warning-border: #FDE68A;
+            --danger: #DC2626; --danger-bg: #FEF2F2; --danger-border: #FECACA;
+            --info: #2A66C2; --info-bg: #E8F0FB; --info-border: #D1DFF4;
+            --ink-900: #0F172A; --ink-800: #1E293B; --ink-600: #475569;
+            --ink-500: #64748B; --ink-400: #94A3B8; --ink-300: #CBD5E1;
+            --line-200: #E2E8F0; --bg-muted: #F1F5F9; --bg-subtle: #F8FAFC;
+            --white: #FFFFFF; --radius-sm: 4px; --radius-md: 6px;
+            --radius-lg: 8px; --radius-xl: 12px; --radius-2xl: 16px;
+            --shadow-lg: 0 10px 24px rgba(15,23,42,.10),0 4px 8px rgba(15,23,42,.04);
+            --shadow-xl: 0 20px 40px rgba(15,23,42,.16),0 8px 16px rgba(15,23,42,.06);
+            --font-sans: 'PingFang SC', 'Microsoft YaHei', 'Inter', system-ui, sans-serif;
+            --font-num: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--font-sans); color: var(--ink-800);
+            background: var(--bg-subtle); font-size: 14px; line-height: 1.57;
+            -webkit-font-smoothing: antialiased; height: 100vh; overflow: hidden;
+        }
+        .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: var(--brand-500); }
+        .btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            border-radius: var(--radius-md); font-family: inherit; font-weight: 500;
+            cursor: pointer; transition: all .15s; border: 1px solid transparent;
+            line-height: 1; white-space: nowrap;
+        }
+        .btn-sm { padding: 6px 12px; font-size: 12px; line-height: 20px; height: 28px; }
+        .btn-md { padding: 8px 16px; font-size: 14px; line-height: 22px; height: 32px; }
+        .btn-primary { background: var(--brand-500); color: #fff; }
+        .btn-primary:hover { background: var(--brand-700); }
+        .btn-secondary { background: var(--white); color: var(--ink-800); border-color: var(--ink-300); }
+        .btn-secondary:hover { border-color: var(--brand-500); color: var(--brand-500); }
+        .btn-success { background: var(--green-500); color: #fff; }
+        .btn-success:hover { background: var(--green-700); }
+        .btn-outline-brand { background: var(--white); color: var(--brand-500); border-color: var(--brand-300); }
+        .btn-outline-brand:hover { background: var(--brand-50); border-color: var(--brand-500); }
+        .btn-deep-blue { background: var(--brand-700); color: #fff; }
+        .btn-deep-blue:hover { background: var(--brand-900); }
+        .btn-light-blue { background: var(--brand-100); color: var(--brand-700); border-color: var(--brand-300); }
+        .btn-light-blue:hover { background: var(--brand-50); border-color: var(--brand-500); }
+        .btn-danger { background: var(--danger); color: #fff; }
+        .btn-danger:hover { background: #B91C1C; }
+        .tag {
+            display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px;
+            border-radius: var(--radius-sm); font-size: 12px; font-weight: 500;
+            line-height: 1.5; border: 1px solid transparent; white-space: nowrap;
+        }
+        .tag-success { background: var(--success-bg); color: var(--green-700); border-color: var(--success-border); }
+        .tag-info { background: var(--info-bg); color: var(--brand-700); border-color: var(--info-border); }
+        .tag-warning { background: var(--warning-bg); color: var(--warning); border-color: var(--warning-border); }
+        .tag-danger { background: var(--danger-bg); color: var(--danger); border-color: var(--danger-border); }
+        .section-card {
+            background: var(--white); border-radius: var(--radius-xl);
+            border: 1px solid var(--line-200); overflow: hidden;
+            height: 100%; display: flex; flex-direction: column;
+        }
+        .table-wrap { overflow: auto; flex: 1; position: relative; }
+        .table-wrap table {
+            width: 100%; border-collapse: separate; border-spacing: 0;
+            font-size: 13px; min-width: 1500px;
+        }
+        .table-wrap thead { position: sticky; top: 0; z-index: 10; }
+        .table-wrap th {
+            background: var(--bg-muted); padding: 10px 14px; text-align: left;
+            font-weight: 600; color: var(--ink-600); border-bottom: 1px solid var(--line-200);
+            white-space: nowrap; font-size: 12px; text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .table-wrap td { padding: 10px 14px; border-bottom: 1px solid var(--line-200); vertical-align: middle; white-space: nowrap; }
+        .table-wrap tbody tr:hover { background: var(--bg-subtle); }
+        .table-wrap .col-seq { width: 50px; text-align: center; color: var(--ink-400); }
+        .table-wrap .col-actions {
+            position: sticky; right: 0; background: var(--white); z-index: 5;
+            min-width: 170px; box-shadow: -4px 0 12px rgba(0,0,0,0.06);
+        }
+        .table-wrap thead .col-actions { background: var(--bg-muted); z-index: 11; }
+        .table-wrap tbody tr:hover .col-actions { background: var(--bg-subtle); }
+        .table-wrap .col-actions .action-btns { display: flex; gap: 6px; flex-wrap: nowrap; }
+        .filter-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 16px; }
+        .filter-group { display: flex; flex-direction: column; gap: 4px; min-width: 150px; flex: 1 0 auto; }
+        .filter-group label { font-size: 12px; color: var(--ink-500); font-weight: 500; }
+        .filter-group input, .filter-group select {
+            padding: 6px 10px; border: 1px solid var(--line-200); border-radius: var(--radius-md);
+            font-size: 13px; background: var(--white); outline: none; transition: border-color .2s; width: 100%;
+        }
+        .filter-group input:focus, .filter-group select:focus { border-color: var(--brand-500); }
+        .priority-high { background: #FEF2F2; color: #DC2626; border-color: #FECACA; }
+        .priority-mid { background: #FFFBEB; color: #D97706; border-color: #FDE68A; }
+        .priority-low { background: #ECFDF5; color: #047857; border-color: #A7F3D0; }
+        .stage-tag { padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; }
+        .stage-init { background: #F1F5F9; color: #475569; }
+        .stage-ongoing { background: #FEF3C7; color: #92400E; }
+        .stage-finance { background: #DBEAFE; color: #1E40AF; }
+        .stage-credit { background: #E0E7FF; color: #3730A3; }
+        .stage-success-credit { background: #D1FAE5; color: #065F46; }
+        .stage-success-loan { background: #A7F3D0; color: #064E3B; }
+        .stage-fail { background: #FEE2E2; color: #991B1B; }
+        /* Modal */
+        .modal-mask {
+            display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.55);
+            z-index: 2000; align-items: flex-start; justify-content: center;
+            padding: 30px 20px; overflow-y: auto;
+        }
+        .modal-mask.open { display: flex; }
+        .modal-md {
+            background: var(--white); border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-xl); width: 100%; max-width: 620px;
+            animation: modalIn .2s ease-out; margin-bottom: 40px;
+        }
+        @keyframes modalIn { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
+        .modal-head {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 24px; border-bottom: 1px solid var(--line-200);
+            position: sticky; top: 0; background: var(--white); z-index: 1;
+            border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+        }
+        .modal-title { font-size: 16px; font-weight: 700; color: var(--ink-900); }
+        .modal-close {
+            background: none; border: none; cursor: pointer; color: var(--ink-500);
+            padding: 6px; display: flex; border-radius: var(--radius-sm); transition: all .15s;
+        }
+        .modal-close:hover { background: var(--bg-muted); color: var(--ink-900); }
+        .modal-body { padding: 20px 24px; max-height: 60vh; overflow-y: auto; }
+        .modal-foot {
+            display: flex; justify-content: flex-end; gap: 10px; padding: 14px 24px;
+            border-top: 1px solid var(--line-200); background: var(--bg-subtle);
+            border-radius: 0 0 var(--radius-2xl) var(--radius-2xl);
+        }
+        .form-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
+        .form-group label { font-size: 13px; color: var(--ink-700); font-weight: 500; }
+        .form-group label .required { color: var(--danger); margin-left: 2px; }
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 8px 12px; border: 1px solid var(--line-200); border-radius: var(--radius-md);
+            font-size: 14px; font-family: inherit; background: var(--white); outline: none; width: 100%;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--brand-500); }
+        .form-group textarea { resize: vertical; min-height: 80px; }
+        .upload-zone {
+            border: 2px dashed var(--line-200); border-radius: var(--radius-lg);
+            padding: 16px; text-align: center; color: var(--ink-400); cursor: pointer; transition: all .2s;
+        }
+        .upload-zone:hover { border-color: var(--brand-500); background: var(--brand-50); }
+        /* Drawer */
+        .drawer-mask {
+            display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.45);
+            z-index: 2000; justify-content: flex-end;
+        }
+        .drawer-mask.open { display: flex; }
+        .drawer {
+            background: var(--white); width: 100%; max-width: 720px; height: 100vh;
+            display: flex; flex-direction: column; overflow: hidden;
+            animation: drawerIn .25s ease-out;
+            box-shadow: -8px 0 30px rgba(15,23,42,.12);
+        }
+        @keyframes drawerIn { from { transform: translateX(40px); opacity: 0.8; } to { transform: none; opacity: 1; } }
+        .drawer-head {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 24px; border-bottom: 1px solid var(--line-200); flex-shrink: 0;
+        }
+        .drawer-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
+        .info-grid {
+            display: grid; grid-template-columns: 140px 1fr; gap: 6px 16px; align-items: baseline;
+        }
+        .info-label { font-size: 13px; color: var(--ink-500); font-weight: 500; }
+        .info-value { font-size: 14px; color: var(--ink-900); word-break: break-word; }
+        .info-block { background: var(--bg-subtle); border-radius: var(--radius-lg); padding: 16px 20px; margin-bottom: 14px; }
+        .info-block-title { font-size: 14px; font-weight: 600; color: var(--ink-800); margin-bottom: 10px; }
+        .record-item {
+            border: 1px solid var(--line-200); border-radius: var(--radius-lg); padding: 14px 18px; margin-bottom: 10px;
+            transition: all .15s;
+        }
+        .record-item:hover { border-color: var(--brand-300); background: var(--bg-subtle); }
+        .record-item .rec-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+        .record-item .rec-date { font-size: 12px; color: var(--ink-400); }
+    </style>
+</head>
+<body>
+<div class="flex flex-col" style="height:100vh;background:var(--bg-subtle);">
+    <div style="padding:16px 24px 0 24px;flex-shrink:0;">
+        <h1 style="font-size:20px;font-weight:700;color:var(--ink-900);">项目营销过程管理</h1>
+        <p style="font-size:13px;color:var(--ink-500);margin-top:2px;">零碳园区项目库 · 已引入营销管理项目清单及进度跟踪</p>
+    </div>
+    <div class="flex-1 overflow-hidden" style="padding:16px 24px 24px 24px;">
+        <div class="section-card" style="height:100%;">
+            <!-- 筛选栏 -->
+            <div style="padding:14px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);flex-shrink:0;">
+                <div class="filter-row">
+                    <div class="filter-group" style="min-width:200px;flex:1.5;">
+                        <label>项目名称/项目代码</label>
+                        <input type="text" id="filterName" placeholder="请输入项目名称或代码">
+                    </div>
+                    <div class="filter-group" style="min-width:150px;flex:1;">
+                        <label>所属试验区</label>
+                        <select id="filterZone"><option>全部试验区</option><option>兰州新区</option><option>湖州市</option><option>衢州市</option><option>广州市</option><option>赣江新区</option><option>重庆市</option><option>其他</option></select>
+                    </div>
+                    <div class="filter-group" style="min-width:160px;flex:1;">
+                        <label>营销阶段</label>
+                        <select id="filterStage"><option>全部阶段</option><option>初步对接</option><option>持续营销中</option><option>融资方案对接</option><option>申报授信</option><option>营销成功，已批复授信</option><option>营销成功，已放款</option><option>未营销成功，客户无意向</option><option>未营销成功，客户已选其他产品</option></select>
+                    </div>
+                    <div class="filter-group" style="min-width:120px;flex:0.8;">
+                        <label>营销优先级</label>
+                        <select id="filterPriority"><option>全部优先级</option><option>高</option><option>中</option><option>低</option></select>
+                    </div>
+                    <div class="filter-group" style="min-width:140px;flex:0.8;">
+                        <label>对接人</label>
+                        <input type="text" id="filterPerson" placeholder="输入姓名/工号">
+                    </div>
+                    <div class="filter-group" style="flex:0 0 auto;flex-direction:row;align-items:flex-end;gap:8px;padding-bottom:1px;">
+                        <button class="btn btn-primary btn-sm" onclick="doFilter()">查询</button>
+                        <button class="btn btn-secondary btn-sm" onclick="doReset()">重置</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 操作栏 -->
+            <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100 flex-shrink-0">
+                <div class="flex gap-2">
+                    <button class="btn btn-secondary btn-sm" onclick="alert('数据导出成功！')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        导出
+                    </button>
+                </div>
+                <span class="text-sm text-slate-400" id="totalCount">共 0 条</span>
+            </div>
+            <!-- 表格 -->
+            <div class="table-wrap custom-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-seq">序号</th>
+                            <th>项目名称</th>
+                            <th>项目代码</th>
+                            <th>所属试验区</th>
+                            <th>园区类型</th>
+                            <th>投资总额（万元）</th>
+                            <th>营销方案</th>
+                            <th>当前营销阶段</th>
+                            <th>对接人</th>
+                            <th>最近更新日期</th>
+                            <th>下次跟进计划</th>
+                            <th class="col-actions">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr><td colspan="12" style="text-align:center;color:var(--ink-400);padding:40px;">暂无数据，请从"潜在项目业务营销"页面导入项目</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- 分页 -->
+            <div class="flex items-center justify-between px-6 py-3 border-t border-slate-100 flex-shrink-0">
+                <span class="text-sm text-slate-400" id="pageInfo">共 0 条</span>
+                <div class="flex items-center gap-2" id="pagination"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 更新进度浮窗 -->
+<div class="modal-mask" id="updateModal">
+    <div class="modal-md">
+        <div class="modal-head">
+            <span class="modal-title">更新营销进度</span>
+            <button class="modal-close" onclick="closeUpdateModal()">
+                <svg style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group"><label>当前营销阶段 <span class="required">*</span></label>
+                <select id="updStage"><option value="">请选择</option><option>初步对接</option><option>持续营销中</option><option>融资方案对接</option><option>申报授信</option><option>营销成功，已批复授信</option><option>营销成功，已放款</option><option>未营销成功，客户无意向</option><option>未营销成功，客户已选其他产品</option></select>
+                <div style="font-size:11px;color:var(--ink-400);margin-top:2px;">⚠ 阶段不可逆向回退（如不可从"持续营销中"回退至"初步对接"）</div>
+            </div>
+            <div class="form-group"><label>对接人 <span class="required">*</span></label>
+                <input type="text" id="updPerson" placeholder="请输入负责营销的员工姓名">
+            </div>
+            <div class="form-group"><label>对接机构</label>
+                <input type="text" id="updOrg" placeholder="请输入对接的金融机构名称">
+            </div>
+            <div class="form-group"><label>进度说明</label>
+                <textarea id="updDesc" placeholder="请详细描述本次营销进度情况..."></textarea>
+            </div>
+            <div class="form-group"><label>下次跟进计划</label>
+                <input type="date" id="updFollowUp">
+            </div>
+            <div class="form-group"><label>附件</label>
+                <div class="upload-zone" onclick="document.getElementById('updFileInput').click()">
+                    <div>点击上传文件（会议纪要、方案文档等）</div>
+                    <div style="font-size:12px;color:var(--ink-400);">支持 docx、pdf、png、jpg 格式</div>
+                    <input type="file" id="updFileInput" style="display:none;" multiple onchange="handleUpdFiles(this)">
+                </div>
+                <div id="updFileList" style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;"></div>
+            </div>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-primary btn-md" onclick="submitUpdate()">提交</button>
+            <button class="btn btn-secondary btn-md" onclick="closeUpdateModal()">取消</button>
+        </div>
+    </div>
+</div>
+
+<!-- 查看记录抽屉 -->
+<div class="drawer-mask" id="recordDrawer">
+    <div class="drawer">
+        <div class="drawer-head">
+            <span style="font-size:17px;font-weight:700;color:var(--ink-900);">营销记录详情</span>
+            <button class="modal-close" onclick="closeRecordDrawer()">
+                <svg style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="drawer-body custom-scroll" id="drawerContent"></div>
+    </div>
+</div>
+
+<script>
+    function loadProjects() {
+        var stored = localStorage.getItem('zc_marketing_projects');
+        return stored ? JSON.parse(stored) : [];
+    }
+    function saveProjects(list) {
+        localStorage.setItem('zc_marketing_projects', JSON.stringify(list));
+    }
+    var stages = ['初步对接','持续营销中','融资方案对接','申报授信','营销成功，已批复授信','营销成功，已放款','未营销成功，客户无意向','未营销成功，客户已选其他产品'];
+
+    function getStageClass(stage) {
+        var m = {
+            '初步对接':'stage-init','持续营销中':'stage-ongoing','融资方案对接':'stage-finance',
+            '申报授信':'stage-credit','营销成功，已批复授信':'stage-success-credit',
+            '营销成功，已放款':'stage-success-loan','未营销成功，客户无意向':'stage-fail',
+            '未营销成功，客户已选其他产品':'stage-fail'
+        };
+        return m[stage] || 'stage-init';
+    }
+    function getPriorityHtml(p) {
+        if (!p) return '';
+        if (p.indexOf('高')>-1 || p.indexOf('🔴')>-1) return '<span class="tag priority-high">高</span>';
+        if (p.indexOf('中')>-1 || p.indexOf('🟡')>-1) return '<span class="tag priority-mid">中</span>';
+        return '<span class="tag priority-low">低</span>';
+    }
+    function shortStr(s, max) {
+        if (!s) return '—';
+        return s.length > max ? s.substring(0, max) + '…' : s;
+    }
+
+    function renderTable(filteredList) {
+        var list = filteredList || loadProjects();
+        var tbody = document.getElementById('tableBody');
+        document.getElementById('totalCount').textContent = '共 ' + list.length + ' 条';
+        document.getElementById('pageInfo').textContent = '共 ' + list.length + ' 条';
+        if (list.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="12" style="text-align:center;color:var(--ink-400);padding:40px;">暂无数据，请从"潜在项目业务营销"页面导入项目</td></tr>';
+            return;
+        }
+        var html = '';
+        for (var i = 0; i < list.length; i++) {
+            var p = list[i];
+            var stage = p.stage || '初步对接';
+            var person = p.contactPerson || '—';
+            var lastUpd = p.lastUpdate || '—';
+            var followUp = p.nextFollowUp || '—';
+            var strategy = p.strategy || '—';
+            html += '<tr>';
+            html += '<td class="col-seq">'+(i+1)+'</td>';
+            html += '<td style="font-weight:500;color:var(--brand-700);cursor:pointer;" onclick="openRecordDrawer('+i+')">'+p.name+'</td>';
+            html += '<td style="font-family:monospace;font-size:12px;">'+p.code+'</td>';
+            html += '<td>'+p.zone+'</td>';
+            html += '<td><span class="tag tag-info">'+p.type+'</span></td>';
+            html += '<td style="font-family:var(--font-num);text-align:right;">'+p.amount+'</td>';
+            html += '<td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;" title="'+strategy.replace(/"/g,'&quot;')+'">'+shortStr(strategy, 30)+'</td>';
+            html += '<td><span class="stage-tag '+getStageClass(stage)+'">'+stage+'</span></td>';
+            html += '<td>'+person+'</td>';
+            html += '<td>'+lastUpd+'</td>';
+            html += '<td>'+followUp+'</td>';
+            html += '<td class="col-actions"><div class="action-btns">';
+            html += '<button class="btn btn-deep-blue btn-sm" onclick="openUpdateModal('+i+')">更新进度</button>';
+            html += '<button class="btn btn-light-blue btn-sm" onclick="openRecordDrawer('+i+')">查看记录</button>';
+            html += '</div></td></tr>';
+        }
+        tbody.innerHTML = html;
+    }
+
+    // 筛选
+    function doFilter() {
+        var name = document.getElementById('filterName').value.toLowerCase();
+        var zone = document.getElementById('filterZone').value;
+        var stage = document.getElementById('filterStage').value;
+        var priority = document.getElementById('filterPriority').value;
+        var person = document.getElementById('filterPerson').value.toLowerCase();
+        var list = loadProjects();
+        var filtered = list.filter(function(p) {
+            if (name && p.name.toLowerCase().indexOf(name)===-1 && p.code.toLowerCase().indexOf(name)===-1) return false;
+            if (zone !== '全部试验区' && p.zone !== zone) return false;
+            if (stage !== '全部阶段' && p.stage !== stage) return false;
+            if (priority !== '全部优先级' && p.priority && p.priority.indexOf(priority)===-1) return false;
+            if (person && p.contactPerson && p.contactPerson.toLowerCase().indexOf(person)===-1) return false;
+            return true;
+        });
+        renderTable(filtered);
+    }
+    function doReset() {
+        document.getElementById('filterName').value = '';
+        document.getElementById('filterZone').value = '全部试验区';
+        document.getElementById('filterStage').value = '全部阶段';
+        document.getElementById('filterPriority').value = '全部优先级';
+        document.getElementById('filterPerson').value = '';
+        renderTable();
+    }
+
+    // 更新进度
+    var currentUpdateIndex = -1;
+    function openUpdateModal(index) {
+        currentUpdateIndex = index;
+        document.getElementById('updStage').value = '';
+        document.getElementById('updPerson').value = '';
+        document.getElementById('updOrg').value = '';
+        document.getElementById('updDesc').value = '';
+        document.getElementById('updFollowUp').value = '';
+        document.getElementById('updFileList').innerHTML = '';
+        document.getElementById('updateModal').classList.add('open');
+    }
+    function closeUpdateModal() {
+        document.getElementById('updateModal').classList.remove('open');
+        currentUpdateIndex = -1;
+    }
+    function handleUpdFiles(input) {
+        var list = document.getElementById('updFileList');
+        list.innerHTML = '';
+        for (var i=0;i<input.files.length;i++) {
+            var f = input.files[i];
+            var el = document.createElement('span');
+            el.style.cssText = 'display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--success-bg);border-radius:var(--radius-sm);font-size:13px;border:1px solid var(--success-border);';
+            el.innerHTML = '📄 '+f.name+'<button style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:14px;" onclick="this.parentElement.remove()">×</button>';
+            list.appendChild(el);
+        }
+    }
+    function submitUpdate() {
+        var stage = document.getElementById('updStage').value;
+        var person = document.getElementById('updPerson').value;
+        if (!stage) { alert('请选择营销阶段'); return; }
+        if (!person) { alert('请输入对接人'); return; }
+        var projects = loadProjects();
+        if (currentUpdateIndex < 0 || currentUpdateIndex >= projects.length) return;
+        var p = projects[currentUpdateIndex];
+        // 阶段不可回退校验
+        var oldStageIdx = stages.indexOf(p.stage || '初步对接');
+        var newStageIdx = stages.indexOf(stage);
+        if (newStageIdx < oldStageIdx && oldStageIdx >= 0) {
+            if (!confirm('营销阶段不可逆向回退！\n\n当前阶段：' + p.stage + '\n选择阶段：' + stage + '\n\n确定要更新为此阶段吗？')) return;
+        }
+        var now = new Date();
+        var dateStr = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+        var record = {
+            date: dateStr,
+            stage: stage,
+            person: person,
+            org: document.getElementById('updOrg').value || '—',
+            desc: document.getElementById('updDesc').value || '—',
+            followUp: document.getElementById('updFollowUp').value || '—',
+            files: document.getElementById('updFileList').innerText || '—'
+        };
+        if (!p.records) p.records = [];
+        p.records.unshift(record);
+        p.stage = stage;
+        p.contactPerson = person;
+        p.contactOrg = document.getElementById('updOrg').value || '';
+        p.lastUpdate = dateStr;
+        p.nextFollowUp = document.getElementById('updFollowUp').value || '';
+        projects[currentUpdateIndex] = p;
+        saveProjects(projects);
+        closeUpdateModal();
+        renderTable();
+        alert('进度更新已提交！');
+    }
+
+    // 查看记录抽屉
+    function openRecordDrawer(index) {
+        var projects = loadProjects();
+        var p = projects[index];
+        var records = p.records || [];
+        var html = '';
+        // 项目基本信息
+        html += '<div class="info-block"><div class="info-block-title">📋 项目基本信息</div>';
+        html += '<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">';
+        html += '<div class="info-grid"><span class="info-label">项目名称</span><span class="info-value" style="font-weight:500;">'+p.name+'</span></div>';
+        html += '<div class="info-grid"><span class="info-label">项目代码</span><span class="info-value" style="font-family:monospace;">'+p.code+'</span></div>';
+        html += '<div class="info-grid"><span class="info-label">所属试验区</span><span class="info-value">'+p.zone+'</span></div>';
+        html += '<div class="info-grid"><span class="info-label">园区类型</span><span class="info-value"><span class="tag tag-info">'+p.type+'</span></span></div>';
+        html += '<div class="info-grid"><span class="info-label">投资总额</span><span class="info-value" style="font-family:var(--font-num);">'+p.amount+' 万元</span></div>';
+        html += '<div class="info-grid"><span class="info-label">项目地点</span><span class="info-value">'+(p.location||'—')+'</span></div>';
+        html += '<div class="info-grid" style="grid-column:1/-1;"><span class="info-label">建设规模及内容</span><span class="info-value">'+(p.content||'—')+'</span></div>';
+        html += '<div class="info-grid" style="grid-column:1/-1;"><span class="info-label">对应绿色目录</span><span class="info-value">'+(p.directory||'—')+'</span></div>';
+        html += '<div class="info-grid"><span class="info-label">营销优先级</span><span class="info-value">'+getPriorityHtml(p.priority||'')+'</span></div>';
+        html += '<div class="info-grid" style="grid-column:1/-1;"><span class="info-label">营销方案</span><span class="info-value" style="white-space:pre-wrap;">'+(p.strategy||'—')+'</span></div>';
+        html += '</div></div>';
+        // 营销过程记录
+        html += '<div class="info-block"><div class="info-block-title">📝 营销过程记录 <span style="font-size:12px;color:var(--ink-400);font-weight:400;margin-left:4px;">按时间倒序</span></div>';
+        if (records.length === 0) {
+            html += '<div style="text-align:center;color:var(--ink-400);padding:24px;">暂无营销记录</div>';
+        } else {
+            for (var i=0;i<records.length;i++) {
+                var r = records[i];
+                var isLatest = (i === 0);
+                html += '<div class="record-item">';
+                html += '<div class="rec-header"><span class="stage-tag '+getStageClass(r.stage)+'">'+r.stage+'</span><span class="rec-date">'+r.date+'</span></div>';
+                html += '<div style="display:grid;grid-template-columns:80px 1fr;gap:4px 12px;font-size:13px;">';
+                html += '<span style="color:var(--ink-500);">对接人</span><span>'+r.person+'</span>';
+                html += '<span style="color:var(--ink-500);">对接机构</span><span>'+r.org+'</span>';
+                html += '<span style="color:var(--ink-500);">进度说明</span><span>'+r.desc+'</span>';
+                html += '<span style="color:var(--ink-500);">下次跟进</span><span>'+r.followUp+'</span>';
+                html += '<span style="color:var(--ink-500);">附件</span><span>'+r.files+'</span>';
+                html += '</div>';
+                html += '<div style="margin-top:8px;display:flex;gap:6px;justify-content:flex-end;">';
+                if (isLatest) html += '<button class="btn btn-outline-brand btn-sm">编辑</button>';
+                html += '<button class="btn btn-danger btn-sm">删除</button>';
+                html += '</div></div>';
+            }
+        }
+        html += '</div>';
+        document.getElementById('drawerContent').innerHTML = html;
+        document.getElementById('recordDrawer').classList.add('open');
+    }
+    function closeRecordDrawer() {
+        document.getElementById('recordDrawer').classList.remove('open');
+    }
+
+    // 弹窗遮罩点击 & ESC
+    document.getElementById('updateModal').addEventListener('click', function(e){ if(e.target===this) closeUpdateModal(); });
+    document.getElementById('recordDrawer').addEventListener('click', function(e){ if(e.target===this) closeRecordDrawer(); });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') { closeUpdateModal(); closeRecordDrawer(); }
+    });
+
+    renderTable();
+</script>
+</body>
+</html>

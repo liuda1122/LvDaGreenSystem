@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>潜在项目营销 · 可持续金融管理系统</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --brand-50: #E8F0FB;
+            --brand-100: #D1DFF4;
+            --brand-300: #6E97D6;
+            --brand-500: #2A66C2;
+            --brand-700: #143F8F;
+            --brand-900: #01256A;
+            --green-50: #ECFDF5;
+            --green-500: #10B981;
+            --green-700: #047857;
+            --success: #10B981;
+            --success-bg: #ECFDF5;
+            --success-border: #A7F3D0;
+            --warning: #D97706;
+            --warning-bg: #FFFBEB;
+            --warning-border: #FDE68A;
+            --danger: #DC2626;
+            --danger-bg: #FEF2F2;
+            --danger-border: #FECACA;
+            --info: #2A66C2;
+            --info-bg: #E8F0FB;
+            --info-border: #D1DFF4;
+            --ink-900: #0F172A;
+            --ink-800: #1E293B;
+            --ink-600: #475569;
+            --ink-500: #64748B;
+            --ink-400: #94A3B8;
+            --ink-300: #CBD5E1;
+            --line-200: #E2E8F0;
+            --bg-muted: #F1F5F9;
+            --bg-subtle: #F8FAFC;
+            --white: #FFFFFF;
+            --radius-sm: 4px;
+            --radius-md: 6px;
+            --radius-lg: 8px;
+            --radius-xl: 12px;
+            --radius-2xl: 16px;
+            --shadow-xs: 0 1px 2px rgba(15, 23, 42, .04);
+            --shadow-sm: 0 1px 3px rgba(15, 23, 42, .06), 0 1px 2px rgba(15, 23, 42, .04);
+            --shadow-md: 0 4px 12px rgba(15, 23, 42, .08), 0 2px 4px rgba(15, 23, 42, .04);
+            --font-sans: 'PingFang SC', 'Microsoft YaHei', 'Inter', system-ui, sans-serif;
+            --font-num: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--ink-800);
+            background: var(--bg-subtle);
+            font-size: 14px;
+            line-height: 1.57;
+            -webkit-font-smoothing: antialiased;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: var(--brand-500);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all .15s;
+            border: 1px solid transparent;
+            line-height: 1;
+            white-space: nowrap;
+        }
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+            line-height: 20px;
+            height: 28px;
+        }
+        .btn-md {
+            padding: 8px 16px;
+            font-size: 14px;
+            line-height: 22px;
+            height: 32px;
+        }
+        .btn-primary {
+            background: var(--brand-500);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: var(--brand-700);
+        }
+        .btn-secondary {
+            background: var(--white);
+            color: var(--ink-800);
+            border-color: var(--ink-300);
+        }
+        .btn-secondary:hover {
+            border-color: var(--brand-500);
+            color: var(--brand-500);
+        }
+        .btn-deep-blue {
+            background: var(--brand-700);
+            color: #fff;
+        }
+        .btn-deep-blue:hover {
+            background: var(--brand-900);
+        }
+        .btn-light-blue {
+            background: var(--brand-100);
+            color: var(--brand-700);
+            border-color: var(--brand-300);
+        }
+        .btn-light-blue:hover {
+            background: var(--brand-50);
+            border-color: var(--brand-500);
+            color: var(--brand-700);
+        }
+        .btn-success {
+            background: var(--green-500);
+            color: #fff;
+        }
+        .btn-success:hover {
+            background: var(--green-700);
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1.5;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+        .tag-success {
+            background: var(--success-bg);
+            color: var(--green-700);
+            border-color: var(--success-border);
+        }
+        .tag-info {
+            background: var(--info-bg);
+            color: var(--brand-700);
+            border-color: var(--info-border);
+        }
+
+        .section-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--line-200);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 表格容器 */
+        .table-wrap {
+            overflow: auto;
+            flex: 1;
+            position: relative;
+        }
+        .table-wrap table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 13px;
+            min-width: 900px;
+        }
+        .table-wrap thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .table-wrap th {
+            background: var(--bg-muted);
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--ink-600);
+            border-bottom: 1px solid var(--line-200);
+            white-space: nowrap;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .table-wrap td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--line-200);
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+        .table-wrap tbody tr:hover {
+            background: var(--bg-subtle);
+        }
+        .table-wrap .col-seq {
+            width: 50px;
+            text-align: center;
+            color: var(--ink-400);
+        }
+        .table-wrap .col-actions {
+            position: sticky;
+            right: 0;
+            background: var(--white);
+            z-index: 5;
+            min-width: 160px;
+            box-shadow: -4px 0 12px rgba(0, 0, 0, 0.06);
+        }
+        .table-wrap thead .col-actions {
+            background: var(--bg-muted);
+            z-index: 11;
+        }
+        .table-wrap tbody tr:hover .col-actions {
+            background: var(--bg-subtle);
+        }
+        .table-wrap .col-actions .action-btns {
+            display: flex;
+            gap: 8px;
+            flex-wrap: nowrap;
+        }
+
+        /* 区块标题 */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--ink-900);
+        }
+        .section-title .icon-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--brand-500);
+            flex-shrink: 0;
+        }
+        .section-title .icon-dot.green {
+            background: var(--green-500);
+        }
+
+        .section-subtitle {
+            font-size: 12px;
+            color: var(--ink-500);
+            margin-top: 2px;
+        }
+
+        /* 高亮卡片 */
+        .highlight-card {
+            background: linear-gradient(135deg, var(--brand-50) 0%, var(--white) 100%);
+            border: 1px solid var(--brand-100);
+            border-radius: var(--radius-lg);
+            padding: 16px 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 主体 -->
+    <div class="flex flex-col" style="height:100vh;background:var(--bg-subtle);">
+
+        <!-- 内容区域 -->
+        <div class="flex-1 overflow-hidden custom-scroll" style="padding:20px 24px 24px 24px;">
+
+            <!-- 页面标题 -->
+            <div style="margin-bottom:20px;">
+                <h1 style="font-size:20px;font-weight:700;color:var(--ink-900);">潜在项目营销</h1>
+                <p style="font-size:13px;color:var(--ink-500);margin-top:4px;">面向绿色低碳项目的业务营销管理，覆盖零碳/低碳园区及碳排放双控专题</p>
+            </div>
+
+            <!-- ==================== 区块一：零碳/低碳园区项目业务营销 ==================== -->
+            <div class="section-card" style="margin-bottom:20px;">
+                <!-- 区块标题栏 -->
+                <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);flex-shrink:0;">
+                    <div class="section-title">
+                        <span class="icon-dot green"></span>
+                        ① 零碳/低碳园区项目业务营销
+                    </div>
+                    <div class="section-subtitle">聚焦园区绿色转型，围绕八大项目类型开展精准营销</div>
+                </div>
+
+                <!-- 统计概览卡片 -->
+                <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);flex-shrink:0;display:flex;gap:16px;flex-wrap:wrap;">
+                    <div class="highlight-card" style="flex:1;min-width:160px;">
+                        <div style="font-size:12px;color:var(--ink-500);">项目类型总数</div>
+                        <div style="font-size:24px;font-weight:700;color:var(--brand-700);">8</div>
+                    </div>
+                    <div class="highlight-card" style="flex:1;min-width:160px;">
+                        <div style="font-size:12px;color:var(--ink-500);">在推项目数</div>
+                        <div style="font-size:24px;font-weight:700;color:var(--green-700);">36</div>
+                    </div>
+                    <div class="highlight-card" style="flex:1;min-width:160px;">
+                        <div style="font-size:12px;color:var(--ink-500);">潜在融资需求</div>
+                        <div style="font-size:24px;font-weight:700;color:var(--brand-700);">126.8<span style="font-size:14px;"> 亿元</span></div>
+                    </div>
+                </div>
+
+                <!-- 操作栏 -->
+                <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100 flex-shrink-0">
+                    <div class="flex gap-2 flex-wrap">
+                        <button class="btn btn-secondary btn-sm">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            导出数据
+                        </button>
+                    </div>
+                    <span class="text-sm text-slate-400">共 8 类项目</span>
+                </div>
+
+                <!-- 表格 -->
+                <div class="table-wrap custom-scroll" style="max-height:340px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-seq">序号</th>
+                                <th>项目类型</th>
+                                <th>实施路径</th>
+                                <th>绿色等级</th>
+                                <th>在推数量</th>
+                                <th>典型项目案例</th>
+                                <th class="col-actions">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-seq">1</td>
+                                <td style="font-weight:600;color:var(--ink-900);">用能结构转型</td>
+                                <td>推动园区能源消费从化石能源向清洁能源转变，发展分布式光伏、风电、氢能等</td>
+                                <td><span class="tag tag-success">深绿</span></td>
+                                <td style="font-family:var(--font-num);">8</td>
+                                <td>XX经开区屋顶光伏全覆盖项目</td>
+                                <td class="col-actions">
+                                    <div class="action-btns">
+                                        <button class="btn btn-deep-blue btn-sm">项目详情</button>
+                                        <button class="btn btn-light-blue btn-sm">营销方案</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-seq">2</td>
+                                <td style="font-weight:600;color:var(--ink-900);">节能降碳</td>
+                                <td>实施重点用能设备节能改造、工艺优化、余热回收利用等能效提升工程</td>
+                                <td><span class="tag tag-success">深绿</span></td>
+                                <td style="font-family:var(--font-num);">6</td>
+                                <td>XX化工园区余热梯级利用项目</td>
+                                <td class="col-actions">
+                                    <div class="action-btns">
+                                        <button class="btn btn-deep-blue btn-sm">项目详情</button>
+                                        <button class="btn btn-light-blue btn-sm">营销方案</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-seq">3</td>
+                                <td style="font-weight:600;color:var(--ink-900);">优化产业结构</td>
+                                <td>引导园区产业向绿色低碳方向升级，培育节能环保、清洁能源等战略性新兴产业</td>
+                                <td><span class="tag tag-info">中绿</span></td>
+                                <td style="font-family:var(--font-num);">5</td>
+                                <td>XX高新区绿色产业孵化基地</td>
+                                <td class="col-actions">
+                                    <div class="action-btns">
+                                        <button class="btn btn-deep-blue btn-sm">项目详情</button>
+                                        <button class="btn btn-light-blue btn-sm">营销方案</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-seq">4</td>
+                                <td style="font-weight:600;color:var(--ink-900);">资源节约集约</td>
+                                <td>推进园区土地集约利用、水资源循环利用、固废资源化利用等循环经济模式</td>
+                                <td><span class="tag tag-info">中绿</span></td>
+                                <td style="font-family:var(--font-num);">4</td>
+                                <td>XX工业园区水循环综合利用项目</td>
+                                <td class="col-actions">
+                                    <div class="action-btns">
+                                        <button class="btn btn-deep-blue btn-sm">项目详情</button>
+                                        <button class="btn btn-light-blue btn-sm">营销方案</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-seq">5</td>
+                                <td style="font-weight:600;color:var(--ink-900);">完善基础设施</td>
+                                <td>建设绿色交通、智慧电网、集中供热供冷、充电桩等低碳基础设施</td>
+                                <td><span class="tag tag-info">中绿</span></td>
+                                <td style="font-family:var(--font-num);">5</td>
+                                <td>XX经开区智慧能源管网项目</td>
+                                <td class="col-actions">
+                                    <div class="action-btns">
+                                        <button class="btn btn-deep-blue btn-sm">项目详情</button>
+                                        <button class="btn btn-light-blue btn-sm">营销方案</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-seq">6</td>
+                                <td style="font-weight:600;color:var(--ink-900);">加强先进适用技术</td>
+                                <td>推广应用碳捕集利用与封存（CCUS）、智能微网、数字化能碳管理等前沿技术</td>
+                                <td><span class="tag tag-info">中绿</span></td>
+                                <td style="font-family:var(--font-num);">3</td>
+                                <td>XX新材料园区CCUS示范项目</td>
+                                <td class="col-actions">
+                                    <div class="action-btns">
+                                        <button class="btn btn-deep-blue btn-sm">项目详情</button>
+                                        <button class="btn btn-light-blue btn-sm">营销方案</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-seq">7</td>
+                                <td style="font-weight:600;color:var(--ink-900);">提升能碳管理能力</td>
+                                <td>建立园区能源管理中心、碳排放监测平台，完善碳排放统计核算体系</td>
+                                <td><span class="tag tag-info">中绿</span></td>
+                                <td style="font-family:var(--font-num);">3</td>
+                                <td>XX高新区能碳管理数字化平台</td>
+                                <td class="col-actions">
+                                    <div class="action-btns">
+                                        <button class="btn btn-deep-blue btn-sm">项目详情</button>
+                                        <button class="btn btn-light-blue btn-sm">营销方案</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-seq">8</td>
+                                <td style="font-weight:600;color:var(--ink-900);">改革创新</td>
+                                <td>探索绿色金融产品创新、碳排放权交易、用能权交易等市场化机制改革</td>
+                                <td><span class="tag tag-success">深绿</span></td>
+                                <td style="font-family:var(--font-num);">2</td>
+                                <td>XX自贸区碳金融创新试点项目</td>
+                                <td class="col-actions">
+                                    <div class="action-btns">
+                                        <button class="btn btn-deep-blue btn-sm">项目详情</button>
+                                        <button class="btn btn-light-blue btn-sm">营销方案</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 分页 -->
+                <div class="flex items-center justify-between px-6 py-3 border-t border-slate-100 flex-shrink-0">
+                    <span class="text-sm text-slate-400">共 8 条</span>
+                    <div class="flex items-center gap-2">
+                        <button class="btn btn-secondary btn-sm" disabled>‹</button>
+                        <span class="px-2 py-1 text-sm bg-brand-500 text-white rounded">1</span>
+                        <button class="btn btn-secondary btn-sm" disabled>›</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 区块二：碳排放双控专题项目业务营销 ==================== -->
+            <div class="section-card">
+                <!-- 区块标题栏 -->
+                <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);flex-shrink:0;">
+                    <div class="section-title">
+                        <span class="icon-dot"></span>
+                        ② "碳排放双控"专题项目业务营销
+                    </div>
+                    <div class="section-subtitle">围绕碳排放总量和强度双控目标，聚焦四大领域推进项目营销</div>
+                </div>
+
+                <!-- 统计概览卡片 -->
+                <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);flex-shrink:0;display:flex;gap:16px;flex-wrap:wrap;">
+                    <div class="highlight-card" style="flex:1;min-width:160px;">
+                        <div style="font-size:12px;color:var(--ink-500);">专题领域总数</div>
+                        <div style="font-size:24px;font-weight:700;color:var(--brand-700);">4</div>
+                    </div>
+                    <div class="highlight-card" style="flex:1;min-width:160px;">
+                        <div style="font-size:12px;color:var(--ink-500);">在推项目数</div>
+                        <div style="font-size:24px;font-weight:700;color:var(--green-700);">24</div>
+                    </div>
+                    <div class="highlight-card" style="flex:1;min-width:160px;">
+                        <div style="font-size:12px;color:var(--ink-500);">潜在融资需求</div>
+                        <div style="font-size:24px;font-weight:700;color:var(--brand-700);">89.5<span style="font-size:14px;"> 亿元</span></div>
+                    </div>
+                </div>
+
+                <!-- 操作栏 -->
+                <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100 flex-shrink-0">
+                    <div class="flex gap-2 flex-wrap">
+                        <button class="btn btn-secondary btn-sm">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            导出数据
+                        </button>
+                    </div>
+                    <span class="text-sm text-slate-400">共 4 个专题领域</span>
+                </div>
+
+                <!-- 表格 -->
+                <div class="table-wrap custom-scroll" style="max-height:260px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-seq">序号</th>
+                                <th>专题领域</th>
+                                <th>双控实施路径</th>
+                                <th>优先级</th>
+                                <th>在推数量</th>
+                                <th>典型项目案例</th>
+                                <th class="col-actions">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-seq">1</td>
+                                <td style="font-weight:600;color:var(--ink-900);">能源转型</td>
+                                <td>大力发展非化石能源，推动化石能源清洁高效利用，构建新型电力系统，加速终端用能电气化</td>
+                                <td><span class="tag tag-success">高优先级</span></td>
+                                <td style="font-family:var(--font-num);">9</td>
+                                <td>XX沿海风电基地+储能配套项目</td>
+                                <td class="col-actions">
+                                    <div class="action-btns">
+                                        <button class="btn btn-deep-blue btn-sm">项目详情</button>
+                                        <button class="btn btn-light-blue btn-sm">营销方案</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-seq">2</td>
+                                <td style="font-weight:600;color:var(--ink-900);">产业升级</td>
+                                <td>严控高耗能高排放项目盲目发展，推动传统产业绿色低碳改造，培育壮大绿色低碳产业</td>
+                                <td><span class="tag tag-success">高优先级</span></td>
+                                <td style="font-family:var(--font-num);">7</td>
+                                <td>XX钢铁集团氢基直接还原铁示范线</td>
+                                <td class="col-actions">
+                                    <div class="action-btns">
+                                        <button class="btn btn-deep-blue btn-sm">项目详情</button>
+                                        <button class="btn btn-light-blue btn-sm">营销方案</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-seq">3</td>
+                                <td style="font-weight:600;color:var(--ink-900);">全面节约</td>
+                                <td>实施全面节约战略，推进能源、水、土地、材料等资源节约集约利用，发展循环经济</td>
+                                <td><span class="tag tag-info">中优先级</span></td>
+                                <td style="font-family:var(--font-num);">5</td>
+                                <td>XX城市矿产示范基地循环利用项目</td>
+                                <td class="col-actions">
+                                    <div class="action-btns">
+                                        <button class="btn btn-deep-blue btn-sm">项目详情</button>
+                                        <button class="btn btn-light-blue btn-sm">营销方案</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-seq">4</td>
+                                <td style="font-weight:600;color:var(--ink-900);">落实五碳</td>
+                                <td>统筹推进"降碳、减污、扩绿、增长"协同增效，落实碳达峰碳中和目标任务分解与考核</td>
+                                <td><span class="tag tag-info">中优先级</span></td>
+                                <td style="font-family:var(--font-num);">3</td>
+                                <td>XX市全域碳达峰碳中和综合示范项目</td>
+                                <td class="col-actions">
+                                    <div class="action-btns">
+                                        <button class="btn btn-deep-blue btn-sm">项目详情</button>
+                                        <button class="btn btn-light-blue btn-sm">营销方案</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 分页 -->
+                <div class="flex items-center justify-between px-6 py-3 border-t border-slate-100 flex-shrink-0">
+                    <span class="text-sm text-slate-400">共 4 条</span>
+                    <div class="flex items-center gap-2">
+                        <button class="btn btn-secondary btn-sm" disabled>‹</button>
+                        <span class="px-2 py-1 text-sm bg-brand-500 text-white rounded">1</span>
+                        <button class="btn btn-secondary btn-sm" disabled>›</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // ==================== 通过 postMessage 通知父框架打开详情页 ====================
+        function openDetail(type) {
+            var pageId = 'project-detail-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
+            var label = type + ' - 项目详情';
+
+            if (window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'openPage',
+                    pageId: pageId,
+                    file: window.location.href,
+                    label: label
+                }, '*');
+            }
+        }
+
+        // 导出数据
+        function exportData() {
+            alert('数据导出成功！共导出 12 条项目类型记录。');
+        }
+
+        // 页面加载时，通知父框架调整 iframe 高度
+        window.addEventListener('load', function() {
+            if (window.parent !== window) {
+                window.parent.postMessage({ type: 'resize', height: document.body.scrollHeight }, '*');
+            }
+        });
+    </script>
+
+</body>
+</html>
