@@ -456,7 +456,7 @@
             position: relative;
         }
         .dev-note-container::before {
-            content: '🔧 开发备注';
+            content: '开发备注';
             position: absolute;
             top: -12px;
             left: 20px;
@@ -561,7 +561,7 @@
 
                         <!-- 业务填报建议 -->
                         <div id="suggestionContainer" class="suggestion-card" style="margin-bottom:16px;">
-                            <div style="font-size:13px;font-weight:600;color:var(--green-700);margin-bottom:4px;">📋 业务填报建议</div>
+                            <div style="font-size:13px;font-weight:600;color:var(--green-700);margin-bottom:4px;"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="11" y2="9" stroke="currentColor" stroke-width="1.3"/></svg> 业务填报建议</div>
                             <div style="font-size:14px;color:var(--ink-700);" id="suggestionText">建议明确项目建设内容，如涉及污水处理、水资源循环利用、节水改造等具体绿色工程，应详细说明建设内容、技术路径及绿色效益，以符合绿色金融认定要求。</div>
                         </div>
 
@@ -595,9 +595,9 @@
                                         </ul>
                                         <div style="font-size:13px;color:var(--ink-500);margin-bottom:8px;">佐证材料示例：</div>
                                         <div id="proofExamples" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;">
-                                            <span class="example-thumb" onclick="alert('预览：节能改造可研批复.jpg')">📄 节能改造可研批复.jpg</span>
-                                            <span class="example-thumb" onclick="alert('预览：环评报告批复.pdf')">📄 环评报告批复.pdf</span>
-                                            <span class="example-thumb" onclick="alert('预览：能效评估报告.png')">📄 能效评估报告.png</span>
+                                            <span class="example-thumb" onclick="alert('预览：节能改造可研批复.jpg')"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><path d="M4 2h5l4 4v8a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" fill="none" stroke-width="1.3"/><polyline points="9 2 9 6 13 6" stroke="currentColor" fill="none" stroke-width="1.3"/></svg> 节能改造可研批复.jpg</span>
+                                            <span class="example-thumb" onclick="alert('预览：环评报告批复.pdf')"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><path d="M4 2h5l4 4v8a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" fill="none" stroke-width="1.3"/><polyline points="9 2 9 6 13 6" stroke="currentColor" fill="none" stroke-width="1.3"/></svg> 环评报告批复.pdf</span>
+                                            <span class="example-thumb" onclick="alert('预览：能效评估报告.png')"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><path d="M4 2h5l4 4v8a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" fill="none" stroke-width="1.3"/><polyline points="9 2 9 6 13 6" stroke="currentColor" fill="none" stroke-width="1.3"/></svg> 能效评估报告.png</span>
                                         </div>
                                     </div>
                                 </div>
@@ -837,7 +837,7 @@
 
                 var examples = document.getElementById('proofExamples');
                 examples.innerHTML = data.examples.map(function(ex) {
-                    return '<span class="example-thumb" onclick="alert(\'预览：' + ex.name + '\')">📄 ' + ex.name + '</span>';
+                    return '<span class="example-thumb" onclick="alert(\'预览：' + ex.name + '\')"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><path d="M4 2h5l4 4v8a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" fill="none" stroke-width="1.3"/><polyline points="9 2 9 6 13 6" stroke="currentColor" fill="none" stroke-width="1.3"/></svg> ' + ex.name + '</span>';
                 }).join('');
 
                 document.querySelectorAll('.green-class-card').forEach(function(c) {

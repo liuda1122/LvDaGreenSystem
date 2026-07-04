@@ -127,6 +127,15 @@
         .btn-success:hover {
             background: var(--green-700);
         }
+        .btn-outline-brand {
+            background: var(--white);
+            color: var(--brand-500);
+            border-color: #A3C2E8;
+        }
+        .btn-outline-brand:hover {
+            background: var(--brand-50);
+            border-color: var(--brand-500);
+        }
 
         .tag {
             display: inline-flex;
@@ -165,6 +174,16 @@
             color: var(--info);
             border-color: var(--info-border);
         }
+        .tag-identified {
+            background: #D1FAE5;
+            color: #065F46;
+            border-color: #A7F3D0;
+        }
+        .tag-unidentified {
+            background: #FEF3C7;
+            color: #92400E;
+            border-color: #FDE68A;
+        }
 
         .section-card {
             background: var(--white);
@@ -190,95 +209,6 @@
             word-break: break-word;
         }
 
-        .breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--ink-500);
-            font-size: 14px;
-        }
-        .breadcrumb a {
-            color: var(--ink-500);
-            text-decoration: none;
-        }
-        .breadcrumb a:hover {
-            color: var(--brand-500);
-        }
-
-        .leaf-sway {
-            animation: leaf-sway 3.5s ease-in-out infinite;
-            transform-origin: 50% 90%;
-        }
-        @keyframes leaf-sway {
-            0%,
-            100% {
-                transform: rotate(-3deg);
-            }
-            50% {
-                transform: rotate(3deg);
-            }
-        }
-        @keyframes breathe {
-            0%,
-            100% {
-                opacity: .4;
-                transform: scale(1);
-            }
-            50% {
-                opacity: .7;
-                transform: scale(1.08);
-            }
-        }
-        .breathe {
-            animation: breathe 4s ease-in-out infinite;
-        }
-        @keyframes shimmer {
-            0% {
-                background-position: -200% 0;
-            }
-            100% {
-                background-position: 200% 0;
-            }
-        }
-        .shimmer-text {
-            background: linear-gradient(90deg, var(--brand-900) 0%, var(--brand-500) 40%, var(--green-500) 60%, var(--brand-900) 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shimmer 6s linear infinite;
-        }
-
-        .top-menu-item {
-            transition: all .2s ease;
-            cursor: pointer;
-        }
-        .top-menu-item:hover {
-            background: rgba(42, 102, 194, .06);
-            color: var(--brand-900);
-        }
-        .top-menu-item.active {
-            background: rgba(42, 102, 194, .1);
-            color: var(--brand-900);
-            box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-        }
-
-        .side-menu-item {
-            transition: all .2s ease;
-            cursor: pointer;
-        }
-        .side-menu-item:hover {
-            background: #F1F5F9;
-            border-radius: 6px;
-            color: var(--brand-900);
-        }
-        .side-menu-item.active {
-            background: rgba(42, 102, 194, .1);
-            color: var(--brand-900);
-            font-weight: 500;
-            border-radius: 8px;
-        }
-
         /* 绿色分类卡片 */
         .green-class-card {
             border: 2px solid var(--line-200);
@@ -287,6 +217,7 @@
             transition: all .2s;
             cursor: pointer;
             background: var(--white);
+            position: relative;
         }
         .green-class-card:hover {
             border-color: var(--brand-300);
@@ -320,6 +251,49 @@
         }
         .green-class-card.active .check-mark {
             display: inline;
+        }
+        .green-class-card .info-hint {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            color: var(--ink-400);
+            cursor: pointer;
+            font-size: 16px;
+            transition: color .2s;
+        }
+        .green-class-card .info-hint:hover {
+            color: var(--brand-500);
+        }
+        .hint-tooltip {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 6px;
+            background: var(--ink-900);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 400;
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            max-width: 380px;
+            width: max-content;
+            z-index: 50;
+            line-height: 1.6;
+            box-shadow: var(--shadow-lg);
+            text-align: left;
+        }
+        .hint-tooltip::before {
+            content: '';
+            position: absolute;
+            right: 12px;
+            top: -6px;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 6px solid var(--ink-900);
+        }
+        .green-class-card:hover .hint-tooltip {
+            display: block;
         }
 
         .reason-card {
@@ -484,6 +458,26 @@
             border-top: 1px solid var(--line-200);
             background: var(--bg-subtle);
         }
+
+        /* 空状态提示 */
+        .empty-result {
+            text-align: center;
+            padding: 32px 20px;
+            color: var(--ink-400);
+        }
+        .empty-result svg {
+            margin: 0 auto 12px;
+            color: var(--ink-300);
+        }
+        .empty-result .title {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--ink-600);
+            margin-bottom: 4px;
+        }
+        .empty-result .desc {
+            font-size: 13px;
+        }
     </style>
 </head>
 <body>
@@ -491,220 +485,126 @@
     <!-- Main Content -->
     <main class="flex-1 flex flex-col overflow-hidden" style="height:100vh;background:var(--bg-subtle);">
         <!-- 返回栏 -->
-        <div class="flex items-center px-8 py-3 flex-shrink-0" style="background:var(--white);border-bottom:1px solid var(--line-200)">
-                <button onclick="goBackToList()" style="display:inline-flex;align-items:center;gap:6px;color:#2A66C2;font-weight:500;cursor:pointer;border:none;background:none;font-size:14px;font-family:inherit;padding:0 8px;height:32px;border-radius:6px;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-                    返回
-                </button>
-            </div>
+        <div class="flex items-center justify-between px-8 py-3 flex-shrink-0" style="background:var(--white);border-bottom:1px solid var(--line-200)">
+            <button onclick="goBackToList()" style="display:inline-flex;align-items:center;gap:6px;color:#2A66C2;font-weight:500;cursor:pointer;border:none;background:none;font-size:14px;font-family:inherit;padding:0 8px;height:32px;border-radius:6px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                返回
+            </button>
+            <span id="pageTitle" style="font-weight:600;color:var(--ink-800);font-size:15px;">项目绿色认定</span>
+            <span id="statusBadge" style="font-size:12px;"></span>
+        </div>
 
-            <!-- Content -->
-            <div class="flex-1 overflow-y-auto custom-scroll" style="padding:24px;">
-                <div class="max-w-5xl mx-auto space-y-6">
+        <!-- Content -->
+        <div class="flex-1 overflow-y-auto custom-scroll" style="padding:24px;">
+            <div class="max-w-5xl mx-auto space-y-6">
 
-                    <!-- 企业信息 -->
-                    <div class="section-card">
-                        <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);">
-                            <span style="font-weight:600;color:var(--ink-900);font-size:15px;">企业信息</span>
-                        </div>
-                        <div style="padding:20px 24px;">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
-                                <div class="info-grid"><span class="info-label">企业名称</span><span class="info-value">XXXXXXXX有限公司</span></div>
-                                <div class="info-grid"><span class="info-label">统一社会信用代码</span><span class="info-value font-mono text-sm">91130283783456789X</span></div>
-                                <div class="info-grid"><span class="info-label">客户国民经济行业</span><span class="info-value">国民经济行业四级分类</span></div>
-                                <div class="info-grid"><span class="info-label">地区</span><span class="info-value">浙江省 宁波市 鄞州区</span></div>
-                                <div class="info-grid col-span-2"><span class="info-label">主营业务</span><span class="info-value">XXXXXXXXXXXXXXXXXXXXXX</span></div>
-                            </div>
+                <!-- 企业信息 -->
+                <div class="section-card">
+                    <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);">
+                        <span style="font-weight:600;color:var(--ink-900);font-size:15px;">企业信息</span>
+                    </div>
+                    <div style="padding:20px 24px;">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3" id="companyInfo">
+                            <!-- 由 JS 动态渲染 -->
                         </div>
                     </div>
+                </div>
 
-                    <!-- 项目信息（只读） -->
-                    <div class="section-card">
-                        <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);">
-                            <span style="font-weight:600;color:var(--ink-900);font-size:15px;">项目信息</span>
-                        </div>
-                        <div style="padding:20px 24px;">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
-                                <div class="info-grid"><span class="info-label">项目名称</span><span class="info-value">XXXXXX项目</span></div>
-                                <div class="info-grid"><span class="info-label">项目代码</span><span class="info-value font-mono">XXXXXX代码</span></div>
-                                <div class="info-grid"><span class="info-label">项目所属行业</span><span class="info-value">XXXXXXXX国民经济行业四级分类</span></div>
-                                <div class="info-grid"><span class="info-label">项目建设地点</span><span class="info-value">浙江省 湖州市 XX区 X详细地址</span></div>
-                                <div class="info-grid col-span-2"><span class="info-label">项目建设内容与规模</span><span class="info-value">XXXXXXXXXXXXXXXXXXXXXX</span></div>
-                            </div>
+                <!-- 项目信息（只读） -->
+                <div class="section-card">
+                    <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);">
+                        <span style="font-weight:600;color:var(--ink-900);font-size:15px;">项目信息</span>
+                    </div>
+                    <div style="padding:20px 24px;">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3" id="projectInfo">
+                            <!-- 由 JS 动态渲染 -->
                         </div>
                     </div>
+                </div>
 
-                    <!-- 绿色智能识别 -->
-                    <div class="section-card">
-                        <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);display:flex;align-items:center;justify-content:space-between;">
-                            <span style="font-weight:600;color:var(--ink-900);font-size:15px;">绿色智能识别</span>
-                            <span class="tag tag-info">大模型</span>
+                <!-- 绿色智能识别 -->
+                <div class="section-card">
+                    <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);display:flex;align-items:center;justify-content:space-between;">
+                        <span style="font-weight:600;color:var(--ink-900);font-size:15px;">绿色智能识别</span>
+                        <span class="tag tag-info">大模型</span>
+                    </div>
+                    <div style="padding:20px 24px;">
+                        <!-- 项目建设内容输入栏 -->
+                        <div style="margin-bottom:16px;padding:12px 16px;background:var(--info-bg);border-radius:var(--radius-lg);border:1px solid var(--info-border);">
+                            <div style="font-size:13px;color:var(--info);font-weight:500;margin-bottom:6px;">
+                                项目建设内容
+                            </div>
+                            <textarea rows="3" id="projectContent" style="width:100%;padding:8px 12px;border:1px solid var(--line-200);border-radius:var(--radius-md);font-size:14px;font-family:inherit;resize:vertical;outline:none;transition:border .2s;background:var(--white);" onfocus="this.style.borderColor='var(--brand-500)'" onblur="this.style.borderColor='var(--line-200)'"></textarea>
+                            <div style="margin-top:10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                                <span style="font-size:13px;color:var(--ink-500);">如需重新识别，可修改上述内容后点击：</span>
+                                <button class="btn btn-primary btn-sm" onclick="handleRecognize()">模型识别</button>
+                            </div>
                         </div>
-                        <div style="padding:20px 24px;">
-                            <!-- 项目建设内容输入栏（直接展示，可编辑） -->
-                            <div style="margin-bottom:16px;padding:12px 16px;background:var(--info-bg);border-radius:var(--radius-lg);border:1px solid var(--info-border);">
-                                <div style="font-size:13px;color:var(--info);font-weight:500;margin-bottom:6px;">
-                                    项目建设内容
-                                </div>
-                                <textarea rows="3" id="projectContent" style="width:100%;padding:8px 12px;border:1px solid var(--line-200);border-radius:var(--radius-md);font-size:14px;font-family:inherit;resize:vertical;outline:none;transition:border .2s;background:var(--white);" onfocus="this.style.borderColor='var(--brand-500)'" onblur="this.style.borderColor='var(--line-200)'">XXXXXXXXXXXXXXXXXXXXXX</textarea>
-                                <div style="margin-top:10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-                                    <span style="font-size:13px;color:var(--ink-500);">如需重新识别，可修改上述内容后点击：</span>
-                                    <button class="btn btn-primary btn-sm" onclick="handleRecognize()">模型识别</button>
-                                </div>
+
+                        <!-- 智能识别结果 -->
+                        <div id="resultSection">
+                            <!-- 空状态：未识别项目进入时显示 -->
+                            <div id="emptyState" class="empty-result">
+                                <svg class="w-16 h-16 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor"/>
+                                    <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-linecap="round"/>
+                                </svg>
+                                <div class="title">暂未识别</div>
+                                <div class="desc">点击上方「模型识别」按钮，AI 将自动分析项目绿色属性</div>
                             </div>
 
-                            <!-- 智能识别结果（点击模型识别后展示） -->
-                            <div id="resultSection" style="display:none;">
+                            <!-- 识别结果内容（默认隐藏） -->
+                            <div id="resultContent" style="display:none;">
                                 <div style="font-size:13px;font-weight:600;color:var(--ink-800);margin-bottom:8px;">智能识别结果</div>
                                 <div style="font-size:13px;color:var(--ink-500);margin-bottom:12px;">绿色金融标准：<span style="color:var(--ink-800);font-weight:500;">《绿色金融支持项目目录（2025年版）》</span></div>
 
-                                <!-- 命中绿色分类 - 卡片式展示（前3名） -->
-                                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
-                                    <div class="green-class-card active" onclick="selectClass(this, 'proof-1')">
-                                        <div class="level-1">3 清洁能源产业</div>
-                                        <div class="level-2">3.4 能源系统改造</div>
-                                        <div class="level-3">3.4.8 电网节能改造项目</div>
-                                        <div class="check-mark" style="display:inline;">✓ 已选</div>
-                                    </div>
-                                    <div class="green-class-card" onclick="selectClass(this, 'proof-2')">
-                                        <div class="level-1">2 节能环保产业</div>
-                                        <div class="level-2">2.1 高效节能装备制造</div>
-                                        <div class="level-3">2.1.3 节能锅炉制造</div>
-                                        <div class="check-mark" style="display:none;">✓ 已选</div>
-                                    </div>
-                                    <div class="green-class-card" onclick="selectClass(this, 'proof-3')">
-                                        <div class="level-1">5 基础设施绿色升级</div>
-                                        <div class="level-2">5.2 绿色交通</div>
-                                        <div class="level-3">5.2.6 充电基础设施</div>
-                                        <div class="check-mark" style="display:none;">✓ 已选</div>
-                                    </div>
+                                <!-- 命中绿色分类 - 卡片式展示 -->
+                                <div id="classCards" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
+                                    <!-- 由 JS 动态渲染 -->
                                 </div>
 
                                 <!-- 识别理由 -->
-                                <div class="reason-card" style="margin-bottom:12px;">
+                                <div class="reason-card" id="reasonCard" style="margin-bottom:12px;">
                                     <div style="font-size:13px;font-weight:600;color:var(--ink-800);margin-bottom:4px;">识别理由</div>
-                                    <div style="font-size:14px;color:var(--ink-700);">该贷款信息中项目描述内容为"xxxxx"，未包含任何与绿色智能相关的具体建设活动或资金用途描述，无法识别为《绿色金融支持项目目录》中任何三级目录所涵盖的绿色智能项目内容。</div>
+                                    <div id="reasonText" style="font-size:14px;color:var(--ink-700);"></div>
                                 </div>
 
                                 <!-- 业务填报建议 -->
-                                <div class="suggestion-card">
-                                    <div style="font-size:13px;font-weight:600;color:var(--green-700);margin-bottom:4px;">📋 业务填报建议</div>
-                                    <div style="font-size:14px;color:var(--ink-700);">建议明确项目建设内容，如涉及污水处理、水资源循环利用、节水改造等具体绿色工程，应详细说明建设内容、技术路径及绿色效益，以符合绿色金融认定要求。</div>
+                                <div class="suggestion-card" id="suggestionCard">
+                                    <div style="font-size:13px;font-weight:600;color:var(--green-700);margin-bottom:4px;">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="11" y2="9" stroke="currentColor" stroke-width="1.3"/></svg> 业务填报建议
+                                    </div>
+                                    <div id="suggestionText" style="font-size:14px;color:var(--ink-700);"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- 绿色佐证材料 -->
-                    <div class="section-card" id="proof-section-wrapper">
-                        <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);display:flex;align-items:center;justify-content:space-between;">
-                            <span style="font-weight:600;color:var(--ink-900);font-size:15px;">绿色佐证材料</span>
-                            <span style="font-size:12px;color:var(--ink-400);">请点击上方绿色分类卡片查看对应佐证材料</span>
-                        </div>
-                        <div style="padding:20px 24px;">
-                            <!-- 分类1 佐证材料 -->
-                            <div class="proof-section active" id="proof-1">
-                                <div class="proof-header">
-                                    <span>📎 3.4.8 电网节能改造项目 — 佐证材料清单</span>
-                                    <span class="tag tag-success">当前分类</span>
-                                </div>
-                                <div class="proof-body">
-                                    <div style="font-size:13px;color:var(--ink-600);margin-bottom:12px;">建议提供下列佐证材料：</div>
-                                    <ul style="list-style:disc;padding-left:20px;margin-bottom:16px;font-size:13px;color:var(--ink-700);">
-                                        <li>提供主体建设或运营内容为电网节能改造相关的可行性研究报告及批复</li>
-                                        <li>环境影响报告书或其他有关证明材料</li>
-                                        <li>节能评估报告或能源审计报告</li>
-                                        <li>项目竣工验收报告及节能效果评估</li>
-                                    </ul>
-                                    <div style="font-size:13px;color:var(--ink-500);margin-bottom:8px;">佐证材料示例：</div>
-                                    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
-                                        <span class="example-thumb" onclick="openModal('https://picsum.photos/seed/energy1/800/600', '节能改造可研批复.jpg')">📄 节能改造可研批复.jpg</span>
-                                        <span class="example-thumb" onclick="openModal('https://picsum.photos/seed/energy2/800/600', '环评报告批复.pdf')">📄 环评报告批复.pdf</span>
-                                        <span class="example-thumb" onclick="openModal('https://picsum.photos/seed/energy3/800/600', '能效评估报告.png')">📄 能效评估报告.png</span>
-                                    </div>
-                                    <div class="upload-zone" onclick="alert('触发文件选择器')">
-                                        <svg class="w-10 h-10 mx-auto text-slate-300 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                                        <div>将文件拖拽到此处，或 <span style="color:var(--brand-500);font-weight:500;">点击上传</span></div>
-                                        <div style="font-size:12px;color:var(--ink-400);margin-top:4px;">支持 docx、pdf、png、jpg、jpeg 格式，单个文件不超过 50M</div>
-                                    </div>
-                                    <!-- 已上传文件 -->
-                                    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
-                                        <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--success-bg);border-radius:var(--radius-sm);font-size:13px;border:1px solid var(--success-border);">
-                                            📄 可行性研究报告.pdf
-                                            <button style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:14px;" onclick="this.closest('span').remove()">×</button>
-                                        </span>
-                                        <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--success-bg);border-radius:var(--radius-sm);font-size:13px;border:1px solid var(--success-border);">
-                                            📄 环评报告批复.pdf
-                                            <button style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:14px;" onclick="this.closest('span').remove()">×</button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 分类2 佐证材料 -->
-                            <div class="proof-section" id="proof-2" style="display:none;">
-                                <div class="proof-header">
-                                    <span>📎 2.1.3 节能锅炉制造 — 佐证材料清单</span>
-                                    <span class="tag tag-default">点击选择</span>
-                                </div>
-                                <div class="proof-body">
-                                    <div style="font-size:13px;color:var(--ink-600);margin-bottom:12px;">建议提供下列佐证材料：</div>
-                                    <ul style="list-style:disc;padding-left:20px;margin-bottom:16px;font-size:13px;color:var(--ink-700);">
-                                        <li>锅炉制造资质及特种设备生产许可证</li>
-                                        <li>节能产品认证证书或能效标识</li>
-                                        <li>产品能效测试报告</li>
-                                        <li>相关专利证书或技术评估报告</li>
-                                    </ul>
-                                    <div style="font-size:13px;color:var(--ink-500);margin-bottom:8px;">佐证材料示例：</div>
-                                    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
-                                        <span class="example-thumb" onclick="openModal('https://picsum.photos/seed/boiler1/800/600', '锅炉能效报告.jpg')">📄 锅炉能效报告.jpg</span>
-                                        <span class="example-thumb" onclick="openModal('https://picsum.photos/seed/boiler2/800/600', '节能认证证书.pdf')">📄 节能认证证书.pdf</span>
-                                    </div>
-                                    <div class="upload-zone" onclick="alert('触发文件选择器')">
-                                        <svg class="w-10 h-10 mx-auto text-slate-300 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                                        <div>将文件拖拽到此处，或 <span style="color:var(--brand-500);font-weight:500;">点击上传</span></div>
-                                        <div style="font-size:12px;color:var(--ink-400);margin-top:4px;">支持 docx、pdf、png、jpg、jpeg 格式，单个文件不超过 50M</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 分类3 佐证材料 -->
-                            <div class="proof-section" id="proof-3" style="display:none;">
-                                <div class="proof-header">
-                                    <span>📎 5.2.6 充电基础设施 — 佐证材料清单</span>
-                                    <span class="tag tag-default">点击选择</span>
-                                </div>
-                                <div class="proof-body">
-                                    <div style="font-size:13px;color:var(--ink-600);margin-bottom:12px;">建议提供下列佐证材料：</div>
-                                    <ul style="list-style:disc;padding-left:20px;margin-bottom:16px;font-size:13px;color:var(--ink-700);">
-                                        <li>项目立项备案文件及建设用地规划许可</li>
-                                        <li>充电设施建设方案及技术标准符合性说明</li>
-                                        <li>电网接入方案及批复</li>
-                                        <li>项目竣工验收报告及运营证明</li>
-                                    </ul>
-                                    <div style="font-size:13px;color:var(--ink-500);margin-bottom:8px;">佐证材料示例：</div>
-                                    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
-                                        <span class="example-thumb" onclick="openModal('https://picsum.photos/seed/charge1/800/600', '充电站规划图.jpg')">📄 充电站规划图.jpg</span>
-                                        <span class="example-thumb" onclick="openModal('https://picsum.photos/seed/charge2/800/600', '电网接入批复.pdf')">📄 电网接入批复.pdf</span>
-                                    </div>
-                                    <div class="upload-zone" onclick="alert('触发文件选择器')">
-                                        <svg class="w-10 h-10 mx-auto text-slate-300 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                                        <div>将文件拖拽到此处，或 <span style="color:var(--brand-500);font-weight:500;">点击上传</span></div>
-                                        <div style="font-size:12px;color:var(--ink-400);margin-top:4px;">支持 docx、pdf、png、jpg、jpeg 格式，单个文件不超过 50M</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 底部操作栏 -->
-                    <div style="display:flex;justify-content:flex-end;gap:12px;padding:4px 0 8px;">
-                        <button class="btn btn-secondary btn-md" onclick="goBackToList()">返回</button>
-                        <button class="btn btn-primary btn-md" onclick="alert('保存成功！')">💾 保存</button>
-                    </div>
-
                 </div>
+
+                <!-- 绿色佐证材料 -->
+                <div class="section-card" id="proof-section-wrapper">
+                    <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);display:flex;align-items:center;justify-content:space-between;">
+                        <span style="font-weight:600;color:var(--ink-900);font-size:15px;">绿色佐证材料</span>
+                        <span style="font-size:12px;color:var(--ink-400);" id="proofHint">请点击上方绿色分类卡片查看对应佐证材料</span>
+                    </div>
+                    <div style="padding:20px 24px;" id="proofContainer">
+                        <!-- 由 JS 动态渲染 -->
+                        <div class="empty-result" id="proofEmpty" style="padding:24px 20px;">
+                            <div class="desc">请先进行模型识别，识别完成后将展示对应的佐证材料清单</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 底部操作栏 -->
+                <div style="display:flex;justify-content:flex-end;gap:12px;padding:4px 0 8px;">
+                    <button class="btn btn-secondary btn-md" onclick="goBackToList()">返回</button>
+                    <button class="btn btn-primary btn-md" onclick="handleSave()">
+                        <svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><path d="M14 12v3H2v-3M5 6l3 3 3-3M8 9V2" stroke="currentColor" fill="none" stroke-width="1.5"/></svg> 保存
+                    </button>
+                </div>
+
             </div>
+        </div>
     </main>
 
     <!-- Modal - 图片预览弹窗 -->
@@ -727,31 +627,417 @@
     </div>
 
     <script>
-        // ==================== 返回项目绿色认定列表 ====================
-        function goBackToList() {
-            var dir = window.location.pathname;
-            dir = dir.substring(0, dir.lastIndexOf('/') + 1);
-            var targetUrl = dir + '项目绿色认定.html';
+        // ============================================================
+        //  项目预设数据配置
+        //  status: 'unidentified' 未识别，'identified' 已识别
+        // ============================================================
+        const PROJECT_DATA = {
+            'PRJ-2026-001': {
+                status: 'unidentified',  // 未识别
+                company: {
+                    name: '贵州乌江水电开发有限责任公司',
+                    creditCode: '91520000714735261Y',
+                    industry: '水电开发',
+                    region: '贵州省 遵义市',
+                    business: '乌江流域能源梯级的开发与建设；电力、热力、煤炭、新能源的开发、投资、建设、经营和管理；电能、热能的生产和销售等'
+                },
+                project: {
+                    name: '构皮滩水电站项目建设和营运资金',
+                    code: 'PRJ-2026-001',
+                    industry: '水电开发',
+                    location: '贵州省 遵义市 构皮滩',
+                    content: '乌江流域能源梯级开发，构皮滩水电站项目建设及营运。'
+                },
+                result: {
+                    classes: [
+                        {
+                            level1: '4.能源绿色低碳转型',
+                            level2: '4.2 清洁能源设施建设和运营',
+                            level3: '4.2.4 大型水利发电设施建设和运营',
+                            standard: '4.2.4列入《"十四五"现代能源体系规划》、《"十四五"可再生能源发展规划》内的大型水电基地的建设活动。',
+                            remark: ''
+                        },
+                        {
+                            level1: '5.生态保护修复和利用',
+                            level2: '5.2 生态保护修复',
+                            level3: '5.2.11 水生态系统旱涝灾害防控及应对',
+                            standard: '5.2.11河湖治理及防洪设施工程建筑建设活动中江河堤坝设施、城市防洪设施、海堤设施、蓄滞洪区设施等建设。',
+                            remark: ''
+                        }
+                    ],
+                    reason: '该项目为乌江流域大型水电基地建设，符合《"十四五"现代能源体系规划》及《"十四五"可再生能源发展规划》内的大型水电设施建设要求。同时，水电站建设涉及河湖治理及防洪设施建设，符合水生态系统旱涝灾害防控要求。',
+                    suggestion: '建议补充项目纳入"十四五"相关规划的证明文件，以及水电站防洪设施建设相关的设计批复、环评报告等佐证材料，以强化绿色认定依据。'
+                }
+            },
+            'PRJ-2026-002': {
+                status: 'unidentified',  // 未识别
+                company: {
+                    name: '中交一公局集团有限公司',
+                    creditCode: '91110000100088498T',
+                    industry: '土木工程建筑业',
+                    region: '山西省 吕梁市',
+                    business: '许可项目：建设工程施工；建设工程设计。一般项目：承接总公司工程建设业务；工程管理服务；对外承包工程；园林绿化工程施工；货物进出口等'
+                },
+                project: {
+                    name: '吕梁市区长输集中供热工程',
+                    code: 'PRJ-2026-002',
+                    industry: '土木工程建筑业',
+                    location: '山西省 吕梁市',
+                    content: '以华光电厂2×600MW机组为热源，通过建设长输管网为吕梁市区及沿线乡镇供热，实现热电联产。'
+                },
+                result: {
+                    classes: [
+                        {
+                            level1: '6.基础设施绿色升级',
+                            level2: '6.5 城乡能源基础设施',
+                            level3: '6.5.3 城镇集中供热系统清洁化、低碳化建设运营和改造',
+                            standard: '6.5.3：节能工程施工活动中城镇集中供热锅炉节能降碳环保改造、城镇集中供热管网节能降碳改造，以及长输供热管道设施建设和改造活动，低品位工业余热供暖系统建设活动。',
+                            remark: ''
+                        }
+                    ],
+                    reason: '该项目通过建设长输供热管网，利用华光电厂热源为吕梁市区及沿线乡镇供热，实现了热电联产，属于城镇集中供热系统清洁化、低碳化建设运营和改造，符合《绿色金融支持项目目录》6.5.3条款要求。',
+                    suggestion: '建议补充供热管网节能降碳改造方案、热电联产项目核准文件、节能评估报告等佐证材料，以充分证明项目的绿色属性。'
+                }
+            },
+            'PRJ-2026-003': {
+                status: 'identified',  // 已识别
+                company: {
+                    name: '宁德时代新能源科技股份有限公司',
+                    creditCode: '91350900587627358C',
+                    industry: '电气机械及器材制造业 / 制造业',
+                    region: '福建省 宁德市',
+                    business: '锂离子电池、锂聚合物电池、燃料电池、动力电池、超大容量储能电池等开发、生产和销售；对新能源行业的投资；锂电池及相关产品的技术服务等'
+                },
+                project: {
+                    name: '锂电池生产基地项目，动力及储能锂离子电池研发与生产',
+                    code: 'PRJ-2026-003',
+                    industry: '锂离子电池制造',
+                    location: '福建省 宁德市',
+                    content: '动力及储能锂离子电池的研发、生产与销售，同时满足新能源汽车和新型储能两大领域需求。'
+                },
+                result: {
+                    classes: [
+                        {
+                            level1: '1.节能降碳产业',
+                            level2: '1.2 先进交通装备制造',
+                            level3: '1.2.1 新能源汽车及关键零部件制造（3841锂离子电池制造）',
+                            standard: '1.2.1：锂离子电池制造活动中用于新能源汽车动力蓄电池使用且符合下列条件的电池制造：\n1.《电动汽车用动力蓄电池安全要求》（GB38031）规定要求；\n2.《电动汽车用动力蓄电池电性能要求及试验方法》（GB/T 31486）规定要求；\n3.《电动汽车用动力蓄电池循环寿命要求及试验方法》（GB/T 31484）规定要求。',
+                            remark: '本项目同时满足新能源汽车和新型储能两大领域的锂离子电池制造条件。'
+                        },
+                        {
+                            level1: '4.能源绿色低碳转型',
+                            level2: '4.1 新能源与清洁能源装备制造',
+                            level3: '4.1.8 新型储能产品制造（3841锂离子电池制造）',
+                            standard: '4.1.8：电池制造活动中用于功率型、能量型储能的可充放电池制造，以及配套储能变流器、电池管理系统、能量智能管理系统、安全预警与系统防护技术设备、先进冷却与消防技术设备制造。包括但不限于锂离子电池、铅炭电池、液流电池、钠离子电池、水系电池及其配套系统设备制造。',
+                            remark: ''
+                        }
+                    ],
+                    reason: '该项目产品为动力及储能锂离子电池，同时满足新能源汽车动力电池（符合GB38031、GB/T 31486、GB/T 31484标准）和新型储能产品（用于功率型、能量型储能）两大绿色领域要求，属于节能降碳产业和能源绿色低碳转型双重认定。',
+                    suggestion: '建议提供产品符合GB38031、GB/T 31486、GB/T 31484标准的第三方检测报告，以及储能产品相关认证文件，作为绿色认定的核心佐证材料。'
+                }
+            },
+            // 后续已识别项目可继续添加...
+            'PRJ-2026-004': {
+                status: 'identified',
+                company: {
+                    name: '广东省环保集团有限公司',
+                    creditCode: '91440000100034167A',
+                    industry: '水利、环境和公共设施管理业 / 商务服务业',
+                    region: '广东省 广州市',
+                    business: '资产经营与管理；组织资产重组、优化配置；项目投资、经营及管理；资产受托管理；教育培训；房屋租赁服务等'
+                },
+                project: {
+                    name: '城市污水处理厂新建和改造，生产过程水污染治理项目',
+                    code: 'PRJ-2026-004',
+                    industry: '水污染治理',
+                    location: '广东省 广州市',
+                    content: '城市污水处理厂新建和改造，生产过程水污染治理。'
+                },
+                result: {
+                    classes: [
+                        {
+                            level1: '5.基础设施绿色升级',
+                            level2: '5.3 污染防治',
+                            level3: '5.3.1.1 污水处理、再生利用及污泥处理处置设施建设运营',
+                            standard: '6.4.7 (对应5.3.1.1)：工矿工程建筑活动中城镇和农村污水处理及再生利用设施建设活动；污泥浓缩、调理和脱水等减量化处置设施建设活动；厌氧消化处理、高温好氧发酵处理、石灰稳定、热干化、焚烧等处理设施建设活动。',
+                            remark: '技术改造或设施建设后，企业排放废水应符合：\n1.国家、地方有关水污染物排放规范标准规定要求；\n2.所在行业清洁生产评价指标体系规定要求；\n3.《工业废水处理与回用技术评价导则》（GB/T 32327）规定要求。'
+                        },
+                        {
+                            level1: '2.清洁生产产业',
+                            level2: '2.1 污染防治',
+                            level3: '2.1.2.1 重点行业水污染治理',
+                            standard: '2.3.4 (对应2.1.2.1)：在造纸、焦化、氮肥、有色金属、印染、农副食品加工、原料药制造、制革、农药、电镀等产生生产污水的重点行业实施的污废水治理设施建设，工业废水循环利用设施建设，以及既有污水处理设施提标改造活动。',
+                            remark: ''
+                        }
+                    ],
+                    reason: '该项目为城市污水处理厂新建和改造，属于城镇环境基础设施建设和重点行业水污染治理，符合《绿色金融支持项目目录》5.3.1.1和2.1.2.1条款要求。',
+                    suggestion: '建议补充污水处理厂设计处理能力、排放标准达标证明、污泥处置方案等佐证材料。'
+                }
+            }
+        };
 
-            // 如果在 iframe 中，通过 postMessage 通知父框架
-            if (window.parent !== window) {
-                var pageId = 'project-list-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
-                window.parent.postMessage({
-                    type: 'openPage',
-                    pageId: pageId,
-                    file: targetUrl,
-                    label: '项目绿色识别'
-                }, '*');
+        // ============================================================
+        //  本地图片路径配置
+        //  图片存放在与当前页面同级的 01GreenIdentifyManagement 文件夹下
+        // ============================================================
+        const IMAGE_BASE_PATH = './';
+
+        // ============================================================
+        //  页面逻辑
+        // ============================================================
+
+        // 获取 URL 参数
+        function getUrlParam(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+
+        // 获取当前项目ID
+        function getProjectId() {
+            return getUrlParam('projectId') || 'PRJ-2026-001';
+        }
+
+        // 渲染企业信息
+        function renderCompany(data) {
+            const container = document.getElementById('companyInfo');
+            if (!data) {
+                container.innerHTML = '<div class="info-value" style="grid-column:1/-1;color:var(--ink-400);">未找到项目数据</div>';
+                return;
+            }
+            container.innerHTML = `
+                <div class="info-grid"><span class="info-label">企业名称</span><span class="info-value">${data.name}</span></div>
+                <div class="info-grid"><span class="info-label">统一社会信用代码</span><span class="info-value font-mono text-sm">${data.creditCode}</span></div>
+                <div class="info-grid"><span class="info-label">客户国民经济行业</span><span class="info-value">${data.industry}</span></div>
+                <div class="info-grid"><span class="info-label">地区</span><span class="info-value">${data.region}</span></div>
+                <div class="info-grid col-span-2"><span class="info-label">主营业务</span><span class="info-value">${data.business}</span></div>
+            `;
+        }
+
+        // 渲染项目信息
+        function renderProject(data) {
+            const container = document.getElementById('projectInfo');
+            if (!data) {
+                container.innerHTML = '<div class="info-value" style="grid-column:1/-1;color:var(--ink-400);">未找到项目数据</div>';
+                return;
+            }
+            container.innerHTML = `
+                <div class="info-grid"><span class="info-label">项目名称</span><span class="info-value">${data.name}</span></div>
+                <div class="info-grid"><span class="info-label">项目代码</span><span class="info-value font-mono">${data.code}</span></div>
+                <div class="info-grid"><span class="info-label">项目所属行业</span><span class="info-value">${data.industry}</span></div>
+                <div class="info-grid"><span class="info-label">项目建设地点</span><span class="info-value">${data.location}</span></div>
+                <div class="info-grid col-span-2"><span class="info-label">项目建设内容与规模</span><span class="info-value">${data.content}</span></div>
+            `;
+            // 同步到 textarea
+            document.getElementById('projectContent').value = data.content;
+            // 更新页面标题
+            document.getElementById('pageTitle').textContent = data.name;
+        }
+
+        // 渲染识别状态标签
+        function renderStatusBadge(status) {
+            const container = document.getElementById('statusBadge');
+            if (status === 'unidentified') {
+                container.innerHTML = '<span class="tag tag-unidentified">未识别</span>';
+            } else if (status === 'identified') {
+                container.innerHTML = '<span class="tag tag-identified">已识别</span>';
             } else {
-                window.location.href = targetUrl;
+                container.innerHTML = '';
             }
         }
 
-        // 模型识别 - 显示识别结果
-        function handleRecognize() {
-            const section = document.getElementById('resultSection');
-            section.style.display = 'block';
-            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // 渲染识别结果
+        function renderResult(resultData, showResult) {
+            const emptyState = document.getElementById('emptyState');
+            const resultContent = document.getElementById('resultContent');
+            const proofEmpty = document.getElementById('proofEmpty');
+            const proofContainer = document.getElementById('proofContainer');
+
+            if (!resultData || !showResult) {
+                // 显示空状态
+                emptyState.style.display = 'block';
+                resultContent.style.display = 'none';
+                proofEmpty.style.display = 'block';
+                // 隐藏已渲染的佐证材料
+                const existingProofs = proofContainer.querySelectorAll('.proof-section');
+                existingProofs.forEach(el => el.remove());
+                document.getElementById('proofHint').textContent = '请先进行模型识别，识别完成后将展示对应的佐证材料清单';
+                return;
+            }
+
+            // 隐藏空状态，显示结果
+            emptyState.style.display = 'none';
+            resultContent.style.display = 'block';
+            proofEmpty.style.display = 'none';
+            document.getElementById('proofHint').textContent = '请点击上方绿色分类卡片查看对应佐证材料';
+
+            // 渲染分类卡片
+            const cardContainer = document.getElementById('classCards');
+
+            let cardsHtml = '';
+            let proofsHtml = '';
+
+            resultData.classes.forEach((cls, index) => {
+                const proofId = 'proof-' + (index + 1);
+                let hintText = cls.standard || '';
+                if (cls.remark) {
+                    hintText += (hintText ? '\n\n' : '') + '备注：' + cls.remark;
+                }
+                hintText = hintText.replace(/\n/g, '<br>');
+
+                cardsHtml += `
+                    <div class="green-class-card ${index === 0 ? 'active' : ''}" onclick="selectClass(this, '${proofId}')">
+                        <span class="info-hint" title="查看条件/标准">ⓘ
+                            <span class="hint-tooltip">${hintText || '暂无详细标准信息'}</span>
+                        </span>
+                        <div class="level-1">${cls.level1}</div>
+                        <div class="level-2">${cls.level2}</div>
+                        <div class="level-3">${cls.level3}</div>
+                        <div class="check-mark" style="${index === 0 ? 'display:inline;' : 'display:none;'}">✓ 已选</div>
+                    </div>
+                `;
+
+                const proofItems = getProofItems(cls.level3);
+                proofsHtml += `
+                    <div class="proof-section ${index === 0 ? 'active' : ''}" id="${proofId}" style="${index === 0 ? '' : 'display:none;'}">
+                        <div class="proof-header">
+                            <span>📎 ${cls.level3} — 佐证材料清单</span>
+                            <span class="tag ${index === 0 ? 'tag-success' : 'tag-default'}">${index === 0 ? '当前分类' : '点击选择'}</span>
+                        </div>
+                        <div class="proof-body">
+                            <div style="font-size:13px;color:var(--ink-600);margin-bottom:12px;">建议提供下列佐证材料：</div>
+                            <ul style="list-style:disc;padding-left:20px;margin-bottom:16px;font-size:13px;color:var(--ink-700);">
+                                ${proofItems.map(item => `<li>${item}</li>`).join('')}
+                            </ul>
+                            <div style="font-size:13px;color:var(--ink-500);margin-bottom:8px;">佐证材料示例：</div>
+                            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+                                ${getExampleFiles(cls.level3).map(f => `
+                                    <span class="example-thumb" onclick="openModal('${f.url}', '${f.name}')">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><path d="M4 2h5l4 4v8a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" fill="none" stroke-width="1.3"/><polyline points="9 2 9 6 13 6" stroke="currentColor" fill="none" stroke-width="1.3"/></svg> ${f.name}
+                                    </span>
+                                `).join('')}
+                            </div>
+                            <div class="upload-zone" onclick="alert('触发文件选择器')">
+                                <svg class="w-10 h-10 mx-auto text-slate-300 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                <div>将文件拖拽到此处，或 <span style="color:var(--brand-500);font-weight:500;">点击上传</span></div>
+                                <div style="font-size:12px;color:var(--ink-400);margin-top:4px;">支持 docx、pdf、png、jpg、jpeg 格式，单个文件不超过 50M</div>
+                            </div>
+                            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+                                <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--success-bg);border-radius:var(--radius-sm);font-size:13px;border:1px solid var(--success-border);">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><path d="M4 2h5l4 4v8a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" fill="none" stroke-width="1.3"/><polyline points="9 2 9 6 13 6" stroke="currentColor" fill="none" stroke-width="1.3"/></svg> 示例材料_${index+1}.pdf
+                                    <button style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:14px;" onclick="this.closest('span').remove()">×</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            cardContainer.innerHTML = cardsHtml;
+
+            // 移除旧的佐证材料，插入新的
+            const oldProofs = proofContainer.querySelectorAll('.proof-section');
+            oldProofs.forEach(el => el.remove());
+            // 确保 proofEmpty 被移除或隐藏
+            const emptyEl = proofContainer.querySelector('#proofEmpty');
+            if (emptyEl) emptyEl.style.display = 'none';
+            // 插入新的 proof sections
+            proofContainer.insertAdjacentHTML('afterbegin', proofsHtml);
+
+            // 识别理由
+            document.getElementById('reasonText').textContent = resultData.reason;
+            document.getElementById('suggestionText').textContent = resultData.suggestion;
+        }
+
+        // 根据绿色分类生成佐证材料清单
+        function getProofItems(level3) {
+            const map = {
+                '4.2.4 大型水利发电设施建设和运营': [
+                    '项目纳入《"十四五"现代能源体系规划》或《"十四五"可再生能源发展规划》的证明文件',
+                    '水电站建设项目核准/批复文件',
+                    '环境影响报告书及批复',
+                    '水土保持方案及批复',
+                    '防洪影响评价报告及批复'
+                ],
+                '5.2.11 水生态系统旱涝灾害防控及应对': [
+                    '河湖治理工程可行性研究报告及批复',
+                    '防洪设施建设设计文件及批复',
+                    '蓄滞洪区建设相关规划及批复',
+                    '环境影响评价文件'
+                ],
+                '6.5.3 城镇集中供热系统清洁化、低碳化建设运营和改造': [
+                    '热电联产项目核准/批复文件',
+                    '供热管网节能降碳改造方案',
+                    '节能评估报告',
+                    '项目竣工验收报告及节能效果评估'
+                ],
+                '1.2.1 新能源汽车及关键零部件制造（3841锂离子电池制造）': [
+                    'GB38031《电动汽车用动力蓄电池安全要求》检测报告',
+                    'GB/T 31486《电动汽车用动力蓄电池电性能要求及试验方法》检测报告',
+                    'GB/T 31484《电动汽车用动力蓄电池循环寿命要求及试验方法》检测报告',
+                    '产品认证证书'
+                ],
+                '4.1.8 新型储能产品制造（3841锂离子电池制造）': [
+                    '储能产品技术规格及性能说明',
+                    '储能变流器、电池管理系统等配套设备说明',
+                    '安全预警与系统防护技术设备说明',
+                    '先进冷却与消防技术设备说明'
+                ],
+                '5.3.1.1 污水处理、再生利用及污泥处理处置设施建设运营': [
+                    '污水处理厂建设项目核准/批复文件',
+                    '环境影响报告书及批复',
+                    '污水处理工艺设计方案',
+                    '排放标准达标证明'
+                ],
+                '2.1.2.1 重点行业水污染治理': [
+                    '重点行业污废水治理设施建设方案',
+                    '工业废水循环利用设施建设方案',
+                    '既有污水处理设施提标改造方案',
+                    '清洁生产审核报告'
+                ]
+            };
+            return map[level3] || [
+                '项目立项/备案文件',
+                '可行性研究报告及批复',
+                '环境影响评价文件',
+                '其他相关技术证明文件'
+            ];
+        }
+
+        // ============================================================
+        //  根据绿色分类生成示例文件（使用本地图片）
+        //  图片存放在与当前页面同级的 "01GreenIdentifyManagement" 文件夹下
+        //  没有对应图片的分类显示 "暂无示例"
+        // ============================================================
+        function getExampleFiles(level3) {
+            const map = {
+                '4.2.4 大型水利发电设施建设和运营': [
+                    { name: '大型水电批复', url: IMAGE_BASE_PATH + '大型水电批复.png' }
+                ],
+                '5.2.11 水生态系统旱涝灾害防控及应对': [
+                    { name: '蓄滞洪区可行性批复', url: IMAGE_BASE_PATH + '蓄滞洪区可行性批复.png' }
+                ],
+                '6.5.3 城镇集中供热系统清洁化、低碳化建设运营和改造': [
+                    { name: '集中供热批复', url: IMAGE_BASE_PATH + '集中供热批复.png' },
+                    { name: '集中供热系统-上大压小、清洁利用', url: IMAGE_BASE_PATH + '集中供热系统-上大压小、清洁利用.png' }
+                ],
+                '1.2.1 新能源汽车及关键零部件制造（3841锂离子电池制造）': [
+                    { name: '新能源汽车关键零部件制造项目批复', url: IMAGE_BASE_PATH + '新能源汽车关键零部件制造项目批复.png' }
+                ],
+                // 以下分类暂无本地图片，显示 "暂无示例"
+                '4.1.8 新型储能产品制造（3841锂离子电池制造）': [
+                    { name: '暂无示例', url: '' }
+                ],
+                '5.3.1.1 污水处理、再生利用及污泥处理处置设施建设运营': [
+                    { name: '暂无示例', url: '' }
+                ],
+                '2.1.2.1 重点行业水污染治理': [
+                    { name: '暂无示例', url: '' }
+                ]
+            };
+            // 未在 map 中定义的其他分类，返回 "暂无示例"
+            return map[level3] || [
+                { name: '暂无示例', url: '' }
+            ];
         }
 
         // 绿色分类卡片点击 -> 联动佐证材料
@@ -761,7 +1047,6 @@
                 const mark = c.querySelector('.check-mark');
                 if (mark) {
                     mark.style.display = 'none';
-                    mark.textContent = '✓ 已选';
                 }
             });
             el.classList.add('active');
@@ -792,7 +1077,37 @@
             }
         }
 
-        // 图片预览弹窗
+        // 模型识别 - 显示识别结果
+        function handleRecognize() {
+            const projectId = getProjectId();
+            const data = PROJECT_DATA[projectId];
+            if (!data || !data.result) {
+                alert('未找到该项目的预设识别数据');
+                return;
+            }
+            // 展示识别结果（第二个参数 true 表示展示）
+            renderResult(data.result, true);
+            // 滚动到结果区域
+            const section = document.getElementById('resultContent');
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // 保存
+        function handleSave() {
+            const projectId = getProjectId();
+            const data = PROJECT_DATA[projectId];
+            if (data) {
+                alert('项目「' + data.project.name + '」绿色认定已保存成功！');
+            } else {
+                alert('保存成功！');
+            }
+        }
+
+        // ============================================================
+        //  图片预览弹窗
+        // ============================================================
         function openModal(imageUrl, imageName) {
             const modal = document.getElementById('imageModal');
             const img = document.getElementById('modalImage');
@@ -801,6 +1116,7 @@
 
             title.textContent = imageName || '图片预览';
 
+            // 如果 URL 为空或 "暂无示例"，显示"暂无示例"状态
             if (imageUrl) {
                 img.src = imageUrl;
                 img.style.display = 'block';
@@ -808,12 +1124,12 @@
                 img.onerror = function() {
                     img.style.display = 'none';
                     noImage.style.display = 'block';
-                    noImage.textContent = '图片加载失败，请检查链接';
+                    noImage.textContent = '图片加载失败，请检查文件是否存在';
                 };
             } else {
                 img.style.display = 'none';
                 noImage.style.display = 'block';
-                noImage.textContent = '暂无图片预览';
+                noImage.textContent = '暂无示例';
             }
 
             modal.classList.add('open');
@@ -825,15 +1141,65 @@
             document.body.style.overflow = '';
         }
 
-        // 点击modal外部关闭
         document.getElementById('imageModal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
         });
 
-        // ESC关闭
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeModal();
         });
+
+        // ============================================================
+        //  返回列表
+        // ============================================================
+        function goBackToList() {
+            var dir = window.location.pathname;
+            dir = dir.substring(0, dir.lastIndexOf('/') + 1);
+            var targetUrl = dir + '项目绿色认定.html';
+
+            if (window.parent !== window) {
+                var pageId = 'project-list-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
+                window.parent.postMessage({
+                    type: 'openPage',
+                    pageId: pageId,
+                    file: targetUrl,
+                    label: '项目绿色识别'
+                }, '*');
+            } else {
+                window.location.href = targetUrl;
+            }
+        }
+
+        // ============================================================
+        //  页面初始化
+        // ============================================================
+        function init() {
+            const projectId = getProjectId();
+            const data = PROJECT_DATA[projectId];
+
+            if (!data) {
+                document.getElementById('companyInfo').innerHTML = '<div class="info-value" style="grid-column:1/-1;color:var(--danger);">未找到项目数据，请检查 projectId 参数</div>';
+                document.getElementById('projectInfo').innerHTML = '<div class="info-value" style="grid-column:1/-1;color:var(--danger);">未找到项目数据</div>';
+                return;
+            }
+
+            renderCompany(data.company);
+            renderProject(data.project);
+            renderStatusBadge(data.status);
+
+            // 根据识别状态决定是否展示识别结果
+            const isIdentified = data.status === 'identified';
+            if (isIdentified && data.result) {
+                // 已识别：直接展示识别结果
+                renderResult(data.result, true);
+            } else {
+                // 未识别：显示空状态
+                renderResult(null, false);
+            }
+        }
+
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 
 </body>
