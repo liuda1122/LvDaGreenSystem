@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>项目营销过程管理 · 零碳园区项目库</title>
+    <title data-i18n="pageTitle">项目营销过程管理 · 零碳园区项目库</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../i18n.js"></script>
     <style>
         :root {
             --brand-50: #E8F0FB; --brand-100: #D1DFF4; --brand-300: #6E97D6;
@@ -192,130 +193,169 @@
 <body>
 <div class="flex flex-col" style="height:100vh;background:var(--bg-subtle);">
     <div style="padding:16px 24px 0 24px;flex-shrink:0;">
-        <h1 style="font-size:20px;font-weight:700;color:var(--ink-900);">项目营销过程管理</h1>
-        <p style="font-size:13px;color:var(--ink-500);margin-top:2px;">零碳园区项目库 · 已引入营销管理项目清单及进度跟踪</p>
+        <h1 style="font-size:18px;font-weight:700;color:var(--ink-900);" data-i18n="pageTitleH1">项目营销过程管理</h1>
     </div>
     <div class="flex-1 overflow-hidden" style="padding:16px 24px 24px 24px;">
         <div class="section-card" style="height:100%;">
-            <!-- 筛选栏 -->
+            <!-- Filter bar -->
             <div style="padding:14px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);flex-shrink:0;">
                 <div class="filter-row">
                     <div class="filter-group" style="min-width:200px;flex:1.5;">
-                        <label>项目名称/项目代码</label>
-                        <input type="text" id="filterName" placeholder="请输入项目名称或代码">
+                        <label data-i18n="filterNameCode">项目名称/项目代码</label>
+                        <input type="text" id="filterName" data-i18n-placeholder="filterNamePlaceholder" placeholder="请输入项目名称或代码">
                     </div>
                     <div class="filter-group" style="min-width:150px;flex:1;">
-                        <label>所属试验区</label>
-                        <select id="filterZone"><option>全部试验区</option><option>兰州新区</option><option>湖州市</option><option>衢州市</option><option>广州市</option><option>赣江新区</option><option>重庆市</option><option>其他</option></select>
+                        <label data-i18n="filterZone">所属试验区</label>
+                        <select id="filterZone">
+                            <option value="全部试验区" data-i18n="allZones">全部试验区</option>
+                            <option value="兰州新区">兰州新区</option>
+                            <option value="湖州市">湖州市</option>
+                            <option value="衢州市">衢州市</option>
+                            <option value="广州市">广州市</option>
+                            <option value="赣江新区">赣江新区</option>
+                            <option value="重庆市">重庆市</option>
+                            <option value="其他">其他</option>
+                        </select>
                     </div>
                     <div class="filter-group" style="min-width:160px;flex:1;">
-                        <label>营销阶段</label>
-                        <select id="filterStage"><option>全部阶段</option><option>初步对接</option><option>持续营销中</option><option>融资方案对接</option><option>申报授信</option><option>营销成功，已批复授信</option><option>营销成功，已放款</option><option>未营销成功，客户无意向</option><option>未营销成功，客户已选其他产品</option></select>
+                        <label data-i18n="filterStage">营销阶段</label>
+                        <select id="filterStage">
+                            <option value="全部阶段" data-i18n="allStages">全部阶段</option>
+                            <option value="初步对接" data-i18n="stageInitialContact">初步对接</option>
+                            <option value="持续营销中" data-i18n="stageOngoing">持续营销中</option>
+                            <option value="融资方案对接" data-i18n="stageFinancing">融资方案对接</option>
+                            <option value="申报授信" data-i18n="stageCreditApply">申报授信</option>
+                            <option value="营销成功，已批复授信" data-i18n="stageApproved">营销成功，已批复授信</option>
+                            <option value="营销成功，已放款" data-i18n="stageDisbursed">营销成功，已放款</option>
+                            <option value="未营销成功，客户无意向" data-i18n="stageNoInterest">未营销成功，客户无意向</option>
+                            <option value="未营销成功，客户已选其他产品" data-i18n="stageOtherProduct">未营销成功，客户已选其他产品</option>
+                        </select>
                     </div>
                     <div class="filter-group" style="min-width:120px;flex:0.8;">
-                        <label>营销优先级</label>
-                        <select id="filterPriority"><option>全部优先级</option><option>高</option><option>中</option><option>低</option></select>
+                        <label data-i18n="filterPriority">营销优先级</label>
+                        <select id="filterPriority">
+                            <option value="全部优先级" data-i18n="allPriorities">全部优先级</option>
+                            <option value="高" data-i18n="priorityHigh">高</option>
+                            <option value="中" data-i18n="priorityMedium">中</option>
+                            <option value="低" data-i18n="priorityLow">低</option>
+                        </select>
                     </div>
                     <div class="filter-group" style="min-width:140px;flex:0.8;">
-                        <label>对接人</label>
-                        <input type="text" id="filterPerson" placeholder="输入姓名/工号">
+                        <label data-i18n="filterPerson">对接人</label>
+                        <input type="text" id="filterPerson" data-i18n-placeholder="filterPersonPlaceholder" placeholder="输入姓名/工号">
                     </div>
                     <div class="filter-group" style="flex:0 0 auto;flex-direction:row;align-items:flex-end;gap:8px;padding-bottom:1px;">
-                        <button class="btn btn-primary btn-sm" onclick="doFilter()">查询</button>
-                        <button class="btn btn-secondary btn-sm" onclick="doReset()">重置</button>
+                        <button class="btn btn-primary btn-sm" onclick="doFilter()" data-i18n="btnSearch">查询</button>
+                        <button class="btn btn-secondary btn-sm" onclick="doReset()" data-i18n="btnReset">重置</button>
                     </div>
                 </div>
             </div>
-            <!-- 操作栏 -->
+            <!-- Action bar -->
             <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100 flex-shrink-0">
                 <div class="flex gap-2">
-                    <button class="btn btn-secondary btn-sm" onclick="alert('数据导出成功！')">
+                    <button class="btn btn-secondary btn-sm" onclick="alert(I18N.t('alertExport'))">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                        导出
+                        <span data-i18n="btnExport">导出</span>
                     </button>
                 </div>
-                <span class="text-sm text-slate-400" id="totalCount">共 0 条</span>
+                <span class="text-sm text-slate-400" id="totalCount" data-i18n="totalPlaceholder">共 0 条</span>
             </div>
-            <!-- 表格 -->
+            <!-- Table -->
             <div class="table-wrap custom-scroll">
                 <table>
                     <thead>
                         <tr>
-                            <th class="col-seq">序号</th>
-                            <th>项目名称</th>
-                            <th>项目代码</th>
-                            <th>所属试验区</th>
-                            <th>园区类型</th>
-                            <th>投资总额（万元）</th>
-                            <th>营销方案</th>
-                            <th>当前营销阶段</th>
-                            <th>对接人</th>
-                            <th>最近更新日期</th>
-                            <th>下次跟进计划</th>
-                            <th class="col-actions">操作</th>
+                            <th class="col-seq" data-i18n="thSeq">序号</th>
+                            <th data-i18n="thName">项目名称</th>
+                            <th data-i18n="thCode">项目代码</th>
+                            <th data-i18n="thZone">所属试验区</th>
+                            <th data-i18n="thType">园区类型</th>
+                            <th data-i18n="thInvest">投资总额（万元）</th>
+                            <th data-i18n="thPlan">营销方案</th>
+                            <th data-i18n="thStage">当前营销阶段</th>
+                            <th data-i18n="thPerson">对接人</th>
+                            <th data-i18n="thLastUpdate">最近更新日期</th>
+                            <th data-i18n="thNextFollowUp">下次跟进计划</th>
+                            <th class="col-actions" data-i18n="thActions">操作</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
-                        <tr><td colspan="12" style="text-align:center;color:var(--ink-400);padding:40px;">暂无数据，请从"潜在项目业务营销"页面导入项目</td></tr>
+                        <tr><td colspan="12" style="text-align:center;color:var(--ink-400);padding:40px;" data-i18n="noData">暂无数据，请从"潜在项目业务营销"页面导入项目</td></tr>
                     </tbody>
                 </table>
             </div>
-            <!-- 分页 -->
+            <!-- Pagination -->
             <div class="flex items-center justify-between px-6 py-3 border-t border-slate-100 flex-shrink-0">
-                <span class="text-sm text-slate-400" id="pageInfo">共 0 条</span>
+                <span class="text-sm text-slate-400" id="pageInfo" data-i18n="totalPlaceholder">共 0 条</span>
                 <div class="flex items-center gap-2" id="pagination"></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- 更新进度浮窗 -->
+<!-- Update Progress Modal -->
 <div class="modal-mask" id="updateModal">
     <div class="modal-md">
         <div class="modal-head">
-            <span class="modal-title">更新营销进度</span>
+            <span class="modal-title" data-i18n="modalUpdateTitle">更新营销进度</span>
             <button class="modal-close" onclick="closeUpdateModal()">
                 <svg style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
             </button>
         </div>
         <div class="modal-body">
-            <div class="form-group"><label>当前营销阶段 <span class="required">*</span></label>
-                <select id="updStage"><option value="">请选择</option><option>初步对接</option><option>持续营销中</option><option>融资方案对接</option><option>申报授信</option><option>营销成功，已批复授信</option><option>营销成功，已放款</option><option>未营销成功，客户无意向</option><option>未营销成功，客户已选其他产品</option></select>
-                <div style="font-size:11px;color:var(--ink-400);margin-top:2px;">⚠ 阶段不可逆向回退（如不可从"持续营销中"回退至"初步对接"）</div>
+            <div class="form-group">
+                <label><span data-i18n="labelStageRequired">当前营销阶段</span> <span class="required">*</span></label>
+                <select id="updStage">
+                    <option value="" data-i18n="pleaseSelect">请选择</option>
+                    <option value="初步对接" data-i18n="stageInitialContact">初步对接</option>
+                    <option value="持续营销中" data-i18n="stageOngoing">持续营销中</option>
+                    <option value="融资方案对接" data-i18n="stageFinancing">融资方案对接</option>
+                    <option value="申报授信" data-i18n="stageCreditApply">申报授信</option>
+                    <option value="营销成功，已批复授信" data-i18n="stageApproved">营销成功，已批复授信</option>
+                    <option value="营销成功，已放款" data-i18n="stageDisbursed">营销成功，已放款</option>
+                    <option value="未营销成功，客户无意向" data-i18n="stageNoInterest">未营销成功，客户无意向</option>
+                    <option value="未营销成功，客户已选其他产品" data-i18n="stageOtherProduct">未营销成功，客户已选其他产品</option>
+                </select>
+                <div style="font-size:11px;color:var(--ink-400);margin-top:2px;" data-i18n="stageWarning">⚠ 阶段不可逆向回退（如不可从"持续营销中"回退至"初步对接"）</div>
             </div>
-            <div class="form-group"><label>对接人 <span class="required">*</span></label>
-                <input type="text" id="updPerson" placeholder="请输入负责营销的员工姓名">
+            <div class="form-group">
+                <label><span data-i18n="labelPersonRequired">对接人</span> <span class="required">*</span></label>
+                <input type="text" id="updPerson" data-i18n-placeholder="updPersonPlaceholder" placeholder="请输入负责营销的员工姓名">
             </div>
-            <div class="form-group"><label>对接机构</label>
-                <input type="text" id="updOrg" placeholder="请输入对接的金融机构名称">
+            <div class="form-group">
+                <label data-i18n="labelOrg">对接机构</label>
+                <input type="text" id="updOrg" data-i18n-placeholder="updOrgPlaceholder" placeholder="请输入对接的金融机构名称">
             </div>
-            <div class="form-group"><label>进度说明</label>
-                <textarea id="updDesc" placeholder="请详细描述本次营销进度情况..."></textarea>
+            <div class="form-group">
+                <label data-i18n="labelDesc">进度说明</label>
+                <textarea id="updDesc" data-i18n-placeholder="updDescPlaceholder" placeholder="请详细描述本次营销进度情况..."></textarea>
             </div>
-            <div class="form-group"><label>下次跟进计划</label>
+            <div class="form-group">
+                <label data-i18n="labelNextPlan">下次跟进计划</label>
                 <input type="date" id="updFollowUp">
             </div>
-            <div class="form-group"><label>附件</label>
+            <div class="form-group">
+                <label data-i18n="labelAttachment">附件</label>
                 <div class="upload-zone" onclick="document.getElementById('updFileInput').click()">
-                    <div>点击上传文件（会议纪要、方案文档等）</div>
-                    <div style="font-size:12px;color:var(--ink-400);">支持 docx、pdf、png、jpg 格式</div>
+                    <div data-i18n="uploadHint">点击上传文件（会议纪要、方案文档等）</div>
+                    <div style="font-size:12px;color:var(--ink-400);" data-i18n="uploadFormat">支持 docx、pdf、png、jpg 格式</div>
                     <input type="file" id="updFileInput" style="display:none;" multiple onchange="handleUpdFiles(this)">
                 </div>
                 <div id="updFileList" style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;"></div>
             </div>
         </div>
         <div class="modal-foot">
-            <button class="btn btn-primary btn-md" onclick="submitUpdate()">提交</button>
-            <button class="btn btn-secondary btn-md" onclick="closeUpdateModal()">取消</button>
+            <button class="btn btn-primary btn-md" onclick="submitUpdate()" data-i18n="btnSubmit">提交</button>
+            <button class="btn btn-secondary btn-md" onclick="closeUpdateModal()" data-i18n="btnCancel">取消</button>
         </div>
     </div>
 </div>
 
-<!-- 查看记录抽屉 -->
+<!-- Record Details Drawer -->
 <div class="drawer-mask" id="recordDrawer">
     <div class="drawer">
         <div class="drawer-head">
-            <span style="font-size:17px;font-weight:700;color:var(--ink-900);">营销记录详情</span>
+            <span style="font-size:17px;font-weight:700;color:var(--ink-900);" data-i18n="drawerTitle">营销记录详情</span>
             <button class="modal-close" onclick="closeRecordDrawer()">
                 <svg style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
             </button>
@@ -325,224 +365,371 @@
 </div>
 
 <script>
-    function loadProjects() {
-        var stored = localStorage.getItem('zc_marketing_projects');
-        return stored ? JSON.parse(stored) : [];
-    }
-    function saveProjects(list) {
-        localStorage.setItem('zc_marketing_projects', JSON.stringify(list));
-    }
-    var stages = ['初步对接','持续营销中','融资方案对接','申报授信','营销成功，已批复授信','营销成功，已放款','未营销成功，客户无意向','未营销成功，客户已选其他产品'];
+// ==================== I18N Dictionary ====================
+I18N.setDict({
+    // Page title
+    pageTitle:       { zh:'项目营销过程管理 · 零碳园区项目库', en:'Project Marketing Process Mgmt · Zero-Carbon Park Library' },
+    pageTitleH1:     { zh:'项目营销过程管理', en:'Project Marketing Process Mgmt' },
 
-    function getStageClass(stage) {
-        var m = {
-            '初步对接':'stage-init','持续营销中':'stage-ongoing','融资方案对接':'stage-finance',
-            '申报授信':'stage-credit','营销成功，已批复授信':'stage-success-credit',
-            '营销成功，已放款':'stage-success-loan','未营销成功，客户无意向':'stage-fail',
-            '未营销成功，客户已选其他产品':'stage-fail'
-        };
-        return m[stage] || 'stage-init';
-    }
-    function getPriorityHtml(p) {
-        if (!p) return '';
-        if (p.indexOf('高')>-1 || p.indexOf('🔴')>-1) return '<span class="tag priority-high">高</span>';
-        if (p.indexOf('中')>-1 || p.indexOf('🟡')>-1) return '<span class="tag priority-mid">中</span>';
-        return '<span class="tag priority-low">低</span>';
-    }
-    function shortStr(s, max) {
-        if (!s) return '—';
-        return s.length > max ? s.substring(0, max) + '…' : s;
-    }
+    // Filter labels
+    filterNameCode:  { zh:'项目名称/项目代码', en:'Name/Code' },
+    filterNamePlaceholder:{ zh:'请输入项目名称或代码', en:'Enter project name or code' },
+    filterZone:      { zh:'所属试验区', en:'Pilot Zone' },
+    filterStage:     { zh:'营销阶段', en:'Stage' },
+    filterPriority:  { zh:'营销优先级', en:'Priority' },
+    filterPerson:    { zh:'对接人', en:'Contact' },
+    filterPersonPlaceholder:{ zh:'输入姓名/工号', en:'Enter name/employee ID' },
 
-    function renderTable(filteredList) {
-        var list = filteredList || loadProjects();
-        var tbody = document.getElementById('tableBody');
-        document.getElementById('totalCount').textContent = '共 ' + list.length + ' 条';
-        document.getElementById('pageInfo').textContent = '共 ' + list.length + ' 条';
-        if (list.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="12" style="text-align:center;color:var(--ink-400);padding:40px;">暂无数据，请从"潜在项目业务营销"页面导入项目</td></tr>';
-            return;
-        }
-        var html = '';
-        for (var i = 0; i < list.length; i++) {
-            var p = list[i];
-            var stage = p.stage || '初步对接';
-            var person = p.contactPerson || '—';
-            var lastUpd = p.lastUpdate || '—';
-            var followUp = p.nextFollowUp || '—';
-            var strategy = p.strategy || '—';
-            html += '<tr>';
-            html += '<td class="col-seq">'+(i+1)+'</td>';
-            html += '<td style="font-weight:500;color:var(--brand-700);cursor:pointer;" onclick="openRecordDrawer('+i+')">'+p.name+'</td>';
-            html += '<td style="font-family:monospace;font-size:12px;">'+p.code+'</td>';
-            html += '<td>'+p.zone+'</td>';
-            html += '<td><span class="tag tag-info">'+p.type+'</span></td>';
-            html += '<td style="font-family:var(--font-num);text-align:right;">'+p.amount+'</td>';
-            html += '<td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;" title="'+strategy.replace(/"/g,'&quot;')+'">'+shortStr(strategy, 30)+'</td>';
-            html += '<td><span class="stage-tag '+getStageClass(stage)+'">'+stage+'</span></td>';
-            html += '<td>'+person+'</td>';
-            html += '<td>'+lastUpd+'</td>';
-            html += '<td>'+followUp+'</td>';
-            html += '<td class="col-actions"><div class="action-btns">';
-            html += '<button class="btn btn-deep-blue btn-sm" onclick="openUpdateModal('+i+')">更新进度</button>';
-            html += '<button class="btn btn-light-blue btn-sm" onclick="openRecordDrawer('+i+')">查看记录</button>';
-            html += '</div></td></tr>';
-        }
-        tbody.innerHTML = html;
-    }
+    // Filter options
+    allZones:        { zh:'全部试验区', en:'All Zones' },
+    allStages:       { zh:'全部阶段', en:'All Stages' },
+    allPriorities:   { zh:'全部优先级', en:'All Priorities' },
 
-    // 筛选
-    function doFilter() {
-        var name = document.getElementById('filterName').value.toLowerCase();
-        var zone = document.getElementById('filterZone').value;
-        var stage = document.getElementById('filterStage').value;
-        var priority = document.getElementById('filterPriority').value;
-        var person = document.getElementById('filterPerson').value.toLowerCase();
-        var list = loadProjects();
-        var filtered = list.filter(function(p) {
-            if (name && p.name.toLowerCase().indexOf(name)===-1 && p.code.toLowerCase().indexOf(name)===-1) return false;
-            if (zone !== '全部试验区' && p.zone !== zone) return false;
-            if (stage !== '全部阶段' && p.stage !== stage) return false;
-            if (priority !== '全部优先级' && p.priority && p.priority.indexOf(priority)===-1) return false;
-            if (person && p.contactPerson && p.contactPerson.toLowerCase().indexOf(person)===-1) return false;
-            return true;
-        });
-        renderTable(filtered);
-    }
-    function doReset() {
-        document.getElementById('filterName').value = '';
-        document.getElementById('filterZone').value = '全部试验区';
-        document.getElementById('filterStage').value = '全部阶段';
-        document.getElementById('filterPriority').value = '全部优先级';
-        document.getElementById('filterPerson').value = '';
-        renderTable();
-    }
+    // Buttons
+    btnSearch:       { zh:'查询', en:'Search' },
+    btnReset:        { zh:'重置', en:'Reset' },
+    btnExport:       { zh:'导出', en:'Export' },
 
-    // 更新进度
-    var currentUpdateIndex = -1;
-    function openUpdateModal(index) {
-        currentUpdateIndex = index;
-        document.getElementById('updStage').value = '';
-        document.getElementById('updPerson').value = '';
-        document.getElementById('updOrg').value = '';
-        document.getElementById('updDesc').value = '';
-        document.getElementById('updFollowUp').value = '';
-        document.getElementById('updFileList').innerHTML = '';
-        document.getElementById('updateModal').classList.add('open');
-    }
-    function closeUpdateModal() {
-        document.getElementById('updateModal').classList.remove('open');
-        currentUpdateIndex = -1;
-    }
-    function handleUpdFiles(input) {
-        var list = document.getElementById('updFileList');
-        list.innerHTML = '';
-        for (var i=0;i<input.files.length;i++) {
-            var f = input.files[i];
-            var el = document.createElement('span');
-            el.style.cssText = 'display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--success-bg);border-radius:var(--radius-sm);font-size:13px;border:1px solid var(--success-border);';
-            el.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><path d="M4 2h5l4 4v8a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" fill="none" stroke-width="1.3"/><polyline points="9 2 9 6 13 6" stroke="currentColor" fill="none" stroke-width="1.3"/></svg> '+f.name+'<button style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:14px;" onclick="this.parentElement.remove()">×</button>';
-            list.appendChild(el);
-        }
-    }
-    function submitUpdate() {
-        var stage = document.getElementById('updStage').value;
-        var person = document.getElementById('updPerson').value;
-        if (!stage) { alert('请选择营销阶段'); return; }
-        if (!person) { alert('请输入对接人'); return; }
-        var projects = loadProjects();
-        if (currentUpdateIndex < 0 || currentUpdateIndex >= projects.length) return;
-        var p = projects[currentUpdateIndex];
-        // 阶段不可回退校验
-        var oldStageIdx = stages.indexOf(p.stage || '初步对接');
-        var newStageIdx = stages.indexOf(stage);
-        if (newStageIdx < oldStageIdx && oldStageIdx >= 0) {
-            if (!confirm('营销阶段不可逆向回退！\n\n当前阶段：' + p.stage + '\n选择阶段：' + stage + '\n\n确定要更新为此阶段吗？')) return;
-        }
-        var now = new Date();
-        var dateStr = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
-        var record = {
-            date: dateStr,
-            stage: stage,
-            person: person,
-            org: document.getElementById('updOrg').value || '—',
-            desc: document.getElementById('updDesc').value || '—',
-            followUp: document.getElementById('updFollowUp').value || '—',
-            files: document.getElementById('updFileList').innerText || '—'
-        };
-        if (!p.records) p.records = [];
-        p.records.unshift(record);
-        p.stage = stage;
-        p.contactPerson = person;
-        p.contactOrg = document.getElementById('updOrg').value || '';
-        p.lastUpdate = dateStr;
-        p.nextFollowUp = document.getElementById('updFollowUp').value || '';
-        projects[currentUpdateIndex] = p;
-        saveProjects(projects);
-        closeUpdateModal();
-        renderTable();
-        alert('进度更新已提交！');
-    }
+    // Table headers
+    thSeq:           { zh:'序号', en:'#' },
+    thName:          { zh:'项目名称', en:'Project Name' },
+    thCode:          { zh:'项目代码', en:'Code' },
+    thZone:          { zh:'所属试验区', en:'Zone' },
+    thType:          { zh:'园区类型', en:'Park Type' },
+    thInvest:        { zh:'投资总额（万元）', en:'Investment (10k CNY)' },
+    thPlan:          { zh:'营销方案', en:'Plan' },
+    thStage:         { zh:'当前营销阶段', en:'Stage' },
+    thPerson:        { zh:'对接人', en:'Contact' },
+    thLastUpdate:    { zh:'最近更新日期', en:'Last Updated' },
+    thNextFollowUp:  { zh:'下次跟进计划', en:'Next Follow-up' },
+    thActions:       { zh:'操作', en:'Actions' },
 
-    // 查看记录抽屉
-    function openRecordDrawer(index) {
-        var projects = loadProjects();
-        var p = projects[index];
-        var records = p.records || [];
-        var html = '';
-        // 项目基本信息
-        html += '<div class="info-block"><div class="info-block-title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="11" y2="9" stroke="currentColor" stroke-width="1.3"/></svg> 项目基本信息</div>';
-        html += '<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">';
-        html += '<div class="info-grid"><span class="info-label">项目名称</span><span class="info-value" style="font-weight:500;">'+p.name+'</span></div>';
-        html += '<div class="info-grid"><span class="info-label">项目代码</span><span class="info-value" style="font-family:monospace;">'+p.code+'</span></div>';
-        html += '<div class="info-grid"><span class="info-label">所属试验区</span><span class="info-value">'+p.zone+'</span></div>';
-        html += '<div class="info-grid"><span class="info-label">园区类型</span><span class="info-value"><span class="tag tag-info">'+p.type+'</span></span></div>';
-        html += '<div class="info-grid"><span class="info-label">投资总额</span><span class="info-value" style="font-family:var(--font-num);">'+p.amount+' 万元</span></div>';
-        html += '<div class="info-grid"><span class="info-label">项目地点</span><span class="info-value">'+(p.location||'—')+'</span></div>';
-        html += '<div class="info-grid" style="grid-column:1/-1;"><span class="info-label">建设规模及内容</span><span class="info-value">'+(p.content||'—')+'</span></div>';
-        html += '<div class="info-grid" style="grid-column:1/-1;"><span class="info-label">对应绿色目录</span><span class="info-value">'+(p.directory||'—')+'</span></div>';
-        html += '<div class="info-grid"><span class="info-label">营销优先级</span><span class="info-value">'+getPriorityHtml(p.priority||'')+'</span></div>';
-        html += '<div class="info-grid" style="grid-column:1/-1;"><span class="info-label">营销方案</span><span class="info-value" style="white-space:pre-wrap;">'+(p.strategy||'—')+'</span></div>';
-        html += '</div></div>';
-        // 营销过程记录
-        html += '<div class="info-block"><div class="info-block-title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="3" width="12" height="10" rx="1" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="9" y2="9" stroke="currentColor" stroke-width="1.3"/></svg> 营销过程记录 <span style="font-size:12px;color:var(--ink-400);font-weight:400;margin-left:4px;">按时间倒序</span></div>';
-        if (records.length === 0) {
-            html += '<div style="text-align:center;color:var(--ink-400);padding:24px;">暂无营销记录</div>';
-        } else {
-            for (var i=0;i<records.length;i++) {
-                var r = records[i];
-                var isLatest = (i === 0);
-                html += '<div class="record-item">';
-                html += '<div class="rec-header"><span class="stage-tag '+getStageClass(r.stage)+'">'+r.stage+'</span><span class="rec-date">'+r.date+'</span></div>';
-                html += '<div style="display:grid;grid-template-columns:80px 1fr;gap:4px 12px;font-size:13px;">';
-                html += '<span style="color:var(--ink-500);">对接人</span><span>'+r.person+'</span>';
-                html += '<span style="color:var(--ink-500);">对接机构</span><span>'+r.org+'</span>';
-                html += '<span style="color:var(--ink-500);">进度说明</span><span>'+r.desc+'</span>';
-                html += '<span style="color:var(--ink-500);">下次跟进</span><span>'+r.followUp+'</span>';
-                html += '<span style="color:var(--ink-500);">附件</span><span>'+r.files+'</span>';
-                html += '</div>';
-                html += '<div style="margin-top:8px;display:flex;gap:6px;justify-content:flex-end;">';
-                if (isLatest) html += '<button class="btn btn-outline-brand btn-sm">编辑</button>';
-                html += '<button class="btn btn-danger btn-sm">删除</button>';
-                html += '</div></div>';
-            }
-        }
-        html += '</div>';
-        document.getElementById('drawerContent').innerHTML = html;
-        document.getElementById('recordDrawer').classList.add('open');
-    }
-    function closeRecordDrawer() {
-        document.getElementById('recordDrawer').classList.remove('open');
-    }
+    // Action buttons
+    btnUpdate:       { zh:'更新进度', en:'Update' },
+    btnRecords:      { zh:'查看记录', en:'Records' },
 
-    // 弹窗遮罩点击 & ESC
-    document.getElementById('updateModal').addEventListener('click', function(e){ if(e.target===this) closeUpdateModal(); });
-    document.getElementById('recordDrawer').addEventListener('click', function(e){ if(e.target===this) closeRecordDrawer(); });
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') { closeUpdateModal(); closeRecordDrawer(); }
+    // Modal
+    modalUpdateTitle:{ zh:'更新营销进度', en:'Update Progress' },
+    labelStageRequired:{ zh:'当前营销阶段', en:'Stage' },
+    labelPersonRequired:{ zh:'对接人', en:'Contact' },
+    labelOrg:        { zh:'对接机构', en:'Institution' },
+    labelDesc:       { zh:'进度说明', en:'Description' },
+    labelNextPlan:   { zh:'下次跟进计划', en:'Next Plan' },
+    labelAttachment: { zh:'附件', en:'Attachment' },
+    uploadHint:      { zh:'点击上传文件（会议纪要、方案文档等）', en:'Upload files (meeting minutes, plans, etc.)' },
+    uploadFormat:    { zh:'支持 docx、pdf、png、jpg 格式', en:'Supports docx, pdf, png, jpg' },
+    stageWarning:    { zh:'⚠ 阶段不可逆向回退（如不可从"持续营销中"回退至"初步对接"）', en:'Warning: Stage cannot be rolled back (e.g. cannot go back from "Ongoing Marketing" to "Initial Contact")' },
+    btnSubmit:       { zh:'提交', en:'Submit' },
+    btnCancel:       { zh:'取消', en:'Cancel' },
+    pleaseSelect:    { zh:'请选择', en:'Please select' },
+
+    // Stage names
+    stageInitialContact:{ zh:'初步对接', en:'Initial Contact' },
+    stageOngoing:    { zh:'持续营销中', en:'Ongoing Marketing' },
+    stageFinancing:  { zh:'融资方案对接', en:'Financing Discussion' },
+    stageCreditApply:{ zh:'申报授信', en:'Credit Application' },
+    stageApproved:   { zh:'营销成功，已批复授信', en:'Credit Approved' },
+    stageDisbursed:  { zh:'营销成功，已放款', en:'Loan Disbursed' },
+    stageNoInterest: { zh:'未营销成功，客户无意向', en:'No Client Interest' },
+    stageOtherProduct:{ zh:'未营销成功，客户已选其他产品', en:'Chose Other Product' },
+
+    // Priority
+    priorityHigh:    { zh:'高', en:'High' },
+    priorityMedium:  { zh:'中', en:'Medium' },
+    priorityLow:     { zh:'低', en:'Low' },
+
+    // Drawer
+    drawerTitle:     { zh:'营销记录详情', en:'Record Details' },
+    basicInfo:       { zh:'项目基本信息', en:'Basic Info' },
+    processRecords:  { zh:'营销过程记录', en:'Process Records' },
+    reverseOrder:    { zh:'按时间倒序', en:'Reverse chronological' },
+    noRecords:       { zh:'暂无营销记录', en:'No marketing records' },
+    noData:          { zh:'暂无数据，请从"潜在项目业务营销"页面导入项目', en:'No data. Import projects from "Potential Project Marketing" page' },
+    btnEdit:         { zh:'编辑', en:'Edit' },
+    btnDelete:       { zh:'删除', en:'Delete' },
+
+    // Info labels (drawer)
+    labelProjectName:{ zh:'项目名称', en:'Project Name' },
+    labelProjectCode:{ zh:'项目代码', en:'Code' },
+    labelZoneInfo:   { zh:'所属试验区', en:'Pilot Zone' },
+    labelTypeInfo:   { zh:'园区类型', en:'Park Type' },
+    labelInvestInfo: { zh:'投资总额', en:'Total Investment' },
+    labelLocationInfo:{ zh:'项目地点', en:'Project Location' },
+    labelContentInfo:{ zh:'建设规模及内容', en:'Construction Scale & Content' },
+    labelDirectoryInfo:{ zh:'对应绿色目录', en:'Green Directory' },
+    labelPriorityInfo:{ zh:'营销优先级', en:'Marketing Priority' },
+    labelPlanInfo:   { zh:'营销方案', en:'Marketing Plan' },
+
+    // Record field labels
+    labelContactPerson:{ zh:'对接人', en:'Contact Person' },
+    labelContactOrg: { zh:'对接机构', en:'Institution' },
+    labelDescription:{ zh:'进度说明', en:'Description' },
+    labelFollowUp:   { zh:'下次跟进', en:'Next Follow-up' },
+    labelFiles:      { zh:'附件', en:'Files' },
+
+    // Total count
+    totalPrefix:     { zh:'共 ', en:'Total ' },
+    totalSuffix:     { zh:' 条', en:' records' },
+    totalPlaceholder:{ zh:'共 0 条', en:'Total 0 records' },
+
+    // Unit
+    unitWanYuan:     { zh:'万元', en:'10k CNY' },
+
+    // Upload placeholders
+    updPersonPlaceholder:{ zh:'请输入负责营销的员工姓名', en:'Enter responsible employee name' },
+    updOrgPlaceholder:{ zh:'请输入对接的金融机构名称', en:'Enter financial institution name' },
+    updDescPlaceholder:{ zh:'请详细描述本次营销进度情况...', en:'Please describe the progress details...' },
+
+    // Alerts
+    alertSelectStage:{ zh:'请选择营销阶段', en:'Please select marketing stage' },
+    alertSelectPerson:{ zh:'请输入对接人', en:'Please enter contact person' },
+    alertUpdateSuccess:{ zh:'进度更新已提交！', en:'Progress update submitted!' },
+    alertExport:     { zh:'数据导出成功！', en:'Data export successful!' },
+
+    // Confirm dialog
+    confirmStageBack:{ zh:'营销阶段不可逆向回退！\n\n当前阶段：', en:'Stage cannot be rolled back!\n\nCurrent stage: ' },
+    confirmStageBack2:{ zh:'\n选择阶段：', en:'\nSelected stage: ' },
+    confirmStageBack3:{ zh:'\n\n确定要更新为此阶段吗？', en:'\n\nConfirm this update?' }
+});
+
+// ==================== Main Logic ====================
+function loadProjects() {
+    var stored = localStorage.getItem('zc_marketing_projects');
+    return stored ? JSON.parse(stored) : [];
+}
+function saveProjects(list) {
+    localStorage.setItem('zc_marketing_projects', JSON.stringify(list));
+}
+var stages = ['初步对接','持续营销中','融资方案对接','申报授信','营销成功，已批复授信','营销成功，已放款','未营销成功，客户无意向','未营销成功，客户已选其他产品'];
+
+function getStageClass(stage) {
+    var m = {
+        '初步对接':'stage-init','持续营销中':'stage-ongoing','融资方案对接':'stage-finance',
+        '申报授信':'stage-credit','营销成功，已批复授信':'stage-success-credit',
+        '营销成功，已放款':'stage-success-loan','未营销成功，客户无意向':'stage-fail',
+        '未营销成功，客户已选其他产品':'stage-fail'
+    };
+    return m[stage] || 'stage-init';
+}
+
+function getPriorityHtml(p) {
+    if (!p) return '';
+    if (p.indexOf('高') > -1) return '<span class="tag priority-high">' + I18N.t('priorityHigh') + '</span>';
+    if (p.indexOf('中') > -1) return '<span class="tag priority-mid">' + I18N.t('priorityMedium') + '</span>';
+    return '<span class="tag priority-low">' + I18N.t('priorityLow') + '</span>';
+}
+
+// Translate stage name using i18n (key: stage_ + stage name)
+function tStage(stage) {
+    var keyMap = {
+        '初步对接':'stageInitialContact','持续营销中':'stageOngoing','融资方案对接':'stageFinancing',
+        '申报授信':'stageCreditApply','营销成功，已批复授信':'stageApproved',
+        '营销成功，已放款':'stageDisbursed','未营销成功，客户无意向':'stageNoInterest',
+        '未营销成功，客户已选其他产品':'stageOtherProduct'
+    };
+    var key = keyMap[stage];
+    return key ? I18N.t(key) : stage;
+}
+
+function shortStr(s, max) {
+    if (!s) return '—';
+    return s.length > max ? s.substring(0, max) + '…' : s;
+}
+
+function totalText(count) {
+    return I18N.t('totalPrefix') + count + I18N.t('totalSuffix');
+}
+
+function renderTable(filteredList) {
+    var list = filteredList || loadProjects();
+    var tbody = document.getElementById('tableBody');
+    var cnt = totalText(list.length);
+    document.getElementById('totalCount').textContent = cnt;
+    document.getElementById('pageInfo').textContent = cnt;
+    if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="12" style="text-align:center;color:var(--ink-400);padding:40px;">' + I18N.t('noData') + '</td></tr>';
+        return;
+    }
+    var html = '';
+    for (var i = 0; i < list.length; i++) {
+        var p = list[i];
+        var stage = p.stage || '初步对接';
+        var person = p.contactPerson || '—';
+        var lastUpd = p.lastUpdate || '—';
+        var followUp = p.nextFollowUp || '—';
+        var strategy = p.strategy || '—';
+        html += '<tr>';
+        html += '<td class="col-seq">' + (i+1) + '</td>';
+        html += '<td style="font-weight:500;color:var(--brand-700);cursor:pointer;" onclick="openRecordDrawer(' + i + ')">' + p.name + '</td>';
+        html += '<td style="font-family:monospace;font-size:12px;">' + p.code + '</td>';
+        html += '<td>' + p.zone + '</td>';
+        html += '<td><span class="tag tag-info">' + p.type + '</span></td>';
+        html += '<td style="font-family:var(--font-num);text-align:right;">' + p.amount + '</td>';
+        html += '<td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;" title="' + strategy.replace(/"/g,'&quot;') + '">' + shortStr(strategy, 30) + '</td>';
+        html += '<td><span class="stage-tag ' + getStageClass(stage) + '">' + tStage(stage) + '</span></td>';
+        html += '<td>' + person + '</td>';
+        html += '<td>' + lastUpd + '</td>';
+        html += '<td>' + followUp + '</td>';
+        html += '<td class="col-actions"><div class="action-btns">';
+        html += '<button class="btn btn-deep-blue btn-sm" onclick="openUpdateModal(' + i + ')">' + I18N.t('btnUpdate') + '</button>';
+        html += '<button class="btn btn-light-blue btn-sm" onclick="openRecordDrawer(' + i + ')">' + I18N.t('btnRecords') + '</button>';
+        html += '</div></td></tr>';
+    }
+    tbody.innerHTML = html;
+}
+
+// Filter
+function doFilter() {
+    var name = document.getElementById('filterName').value.toLowerCase();
+    var zone = document.getElementById('filterZone').value;
+    var stage = document.getElementById('filterStage').value;
+    var priority = document.getElementById('filterPriority').value;
+    var person = document.getElementById('filterPerson').value.toLowerCase();
+    var list = loadProjects();
+    var filtered = list.filter(function(p) {
+        if (name && p.name.toLowerCase().indexOf(name)===-1 && p.code.toLowerCase().indexOf(name)===-1) return false;
+        if (zone !== '全部试验区' && p.zone !== zone) return false;
+        if (stage !== '全部阶段' && p.stage !== stage) return false;
+        if (priority !== '全部优先级' && p.priority && p.priority.indexOf(priority)===-1) return false;
+        if (person && p.contactPerson && p.contactPerson.toLowerCase().indexOf(person)===-1) return false;
+        return true;
     });
-
+    renderTable(filtered);
+}
+function doReset() {
+    document.getElementById('filterName').value = '';
+    document.getElementById('filterZone').value = '全部试验区';
+    document.getElementById('filterStage').value = '全部阶段';
+    document.getElementById('filterPriority').value = '全部优先级';
+    document.getElementById('filterPerson').value = '';
     renderTable();
+}
+
+// Update progress
+var currentUpdateIndex = -1;
+function openUpdateModal(index) {
+    currentUpdateIndex = index;
+    document.getElementById('updStage').value = '';
+    document.getElementById('updPerson').value = '';
+    document.getElementById('updOrg').value = '';
+    document.getElementById('updDesc').value = '';
+    document.getElementById('updFollowUp').value = '';
+    document.getElementById('updFileList').innerHTML = '';
+    document.getElementById('updateModal').classList.add('open');
+}
+function closeUpdateModal() {
+    document.getElementById('updateModal').classList.remove('open');
+    currentUpdateIndex = -1;
+}
+function handleUpdFiles(input) {
+    var list = document.getElementById('updFileList');
+    list.innerHTML = '';
+    for (var i=0;i<input.files.length;i++) {
+        var f = input.files[i];
+        var el = document.createElement('span');
+        el.style.cssText = 'display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--success-bg);border-radius:var(--radius-sm);font-size:13px;border:1px solid var(--success-border);';
+        el.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><path d="M4 2h5l4 4v8a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" fill="none" stroke-width="1.3"/><polyline points="9 2 9 6 13 6" stroke="currentColor" fill="none" stroke-width="1.3"/></svg> '+f.name+'<button style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:14px;" onclick="this.parentElement.remove()">x</button>';
+        list.appendChild(el);
+    }
+}
+function submitUpdate() {
+    var stage = document.getElementById('updStage').value;
+    var person = document.getElementById('updPerson').value;
+    if (!stage) { alert(I18N.t('alertSelectStage')); return; }
+    if (!person) { alert(I18N.t('alertSelectPerson')); return; }
+    var projects = loadProjects();
+    if (currentUpdateIndex < 0 || currentUpdateIndex >= projects.length) return;
+    var p = projects[currentUpdateIndex];
+    // Stage rollback validation
+    var oldStageIdx = stages.indexOf(p.stage || '初步对接');
+    var newStageIdx = stages.indexOf(stage);
+    if (newStageIdx < oldStageIdx && oldStageIdx >= 0) {
+        if (!confirm(I18N.t('confirmStageBack') + p.stage + I18N.t('confirmStageBack2') + stage + I18N.t('confirmStageBack3'))) return;
+    }
+    var now = new Date();
+    var dateStr = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+    var record = {
+        date: dateStr,
+        stage: stage,
+        person: person,
+        org: document.getElementById('updOrg').value || '—',
+        desc: document.getElementById('updDesc').value || '—',
+        followUp: document.getElementById('updFollowUp').value || '—',
+        files: document.getElementById('updFileList').innerText || '—'
+    };
+    if (!p.records) p.records = [];
+    p.records.unshift(record);
+    p.stage = stage;
+    p.contactPerson = person;
+    p.contactOrg = document.getElementById('updOrg').value || '';
+    p.lastUpdate = dateStr;
+    p.nextFollowUp = document.getElementById('updFollowUp').value || '';
+    projects[currentUpdateIndex] = p;
+    saveProjects(projects);
+    closeUpdateModal();
+    renderTable();
+    alert(I18N.t('alertUpdateSuccess'));
+}
+
+// View record drawer
+function openRecordDrawer(index) {
+    var projects = loadProjects();
+    var p = projects[index];
+    var records = p.records || [];
+    var html = '';
+    // Project Basic Info
+    html += '<div class="info-block"><div class="info-block-title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="11" y2="9" stroke="currentColor" stroke-width="1.3"/></svg> ' + I18N.t('basicInfo') + '</div>';
+    html += '<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">';
+    html += '<div class="info-grid"><span class="info-label">' + I18N.t('labelProjectName') + '</span><span class="info-value" style="font-weight:500;">' + p.name + '</span></div>';
+    html += '<div class="info-grid"><span class="info-label">' + I18N.t('labelProjectCode') + '</span><span class="info-value" style="font-family:monospace;">' + p.code + '</span></div>';
+    html += '<div class="info-grid"><span class="info-label">' + I18N.t('labelZoneInfo') + '</span><span class="info-value">' + p.zone + '</span></div>';
+    html += '<div class="info-grid"><span class="info-label">' + I18N.t('labelTypeInfo') + '</span><span class="info-value"><span class="tag tag-info">' + p.type + '</span></span></div>';
+    html += '<div class="info-grid"><span class="info-label">' + I18N.t('labelInvestInfo') + '</span><span class="info-value" style="font-family:var(--font-num);">' + p.amount + ' ' + I18N.t('unitWanYuan') + '</span></div>';
+    html += '<div class="info-grid"><span class="info-label">' + I18N.t('labelLocationInfo') + '</span><span class="info-value">' + (p.location||'—') + '</span></div>';
+    html += '<div class="info-grid" style="grid-column:1/-1;"><span class="info-label">' + I18N.t('labelContentInfo') + '</span><span class="info-value">' + (p.content||'—') + '</span></div>';
+    html += '<div class="info-grid" style="grid-column:1/-1;"><span class="info-label">' + I18N.t('labelDirectoryInfo') + '</span><span class="info-value">' + (p.directory||'—') + '</span></div>';
+    html += '<div class="info-grid"><span class="info-label">' + I18N.t('labelPriorityInfo') + '</span><span class="info-value">' + getPriorityHtml(p.priority||'') + '</span></div>';
+    html += '<div class="info-grid" style="grid-column:1/-1;"><span class="info-label">' + I18N.t('labelPlanInfo') + '</span><span class="info-value" style="white-space:pre-wrap;">' + (p.strategy||'—') + '</span></div>';
+    html += '</div></div>';
+    // Process Records
+    html += '<div class="info-block"><div class="info-block-title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="3" width="12" height="10" rx="1" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="9" y2="9" stroke="currentColor" stroke-width="1.3"/></svg> ' + I18N.t('processRecords') + ' <span style="font-size:12px;color:var(--ink-400);font-weight:400;margin-left:4px;">' + I18N.t('reverseOrder') + '</span></div>';
+    if (records.length === 0) {
+        html += '<div style="text-align:center;color:var(--ink-400);padding:24px;">' + I18N.t('noRecords') + '</div>';
+    } else {
+        for (var i=0;i<records.length;i++) {
+            var r = records[i];
+            var isLatest = (i === 0);
+            html += '<div class="record-item">';
+            html += '<div class="rec-header"><span class="stage-tag ' + getStageClass(r.stage) + '">' + tStage(r.stage) + '</span><span class="rec-date">' + r.date + '</span></div>';
+            html += '<div style="display:grid;grid-template-columns:80px 1fr;gap:4px 12px;font-size:13px;">';
+            html += '<span style="color:var(--ink-500);">' + I18N.t('labelContactPerson') + '</span><span>' + r.person + '</span>';
+            html += '<span style="color:var(--ink-500);">' + I18N.t('labelContactOrg') + '</span><span>' + r.org + '</span>';
+            html += '<span style="color:var(--ink-500);">' + I18N.t('labelDescription') + '</span><span>' + r.desc + '</span>';
+            html += '<span style="color:var(--ink-500);">' + I18N.t('labelFollowUp') + '</span><span>' + r.followUp + '</span>';
+            html += '<span style="color:var(--ink-500);">' + I18N.t('labelFiles') + '</span><span>' + r.files + '</span>';
+            html += '</div>';
+            html += '<div style="margin-top:8px;display:flex;gap:6px;justify-content:flex-end;">';
+            if (isLatest) html += '<button class="btn btn-outline-brand btn-sm">' + I18N.t('btnEdit') + '</button>';
+            html += '<button class="btn btn-danger btn-sm">' + I18N.t('btnDelete') + '</button>';
+            html += '</div></div>';
+        }
+    }
+    html += '</div>';
+    document.getElementById('drawerContent').innerHTML = html;
+    document.getElementById('recordDrawer').classList.add('open');
+}
+function closeRecordDrawer() {
+    document.getElementById('recordDrawer').classList.remove('open');
+}
+
+// Modal mask click & ESC
+document.getElementById('updateModal').addEventListener('click', function(e){ if(e.target===this) closeUpdateModal(); });
+document.getElementById('recordDrawer').addEventListener('click', function(e){ if(e.target===this) closeRecordDrawer(); });
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { closeUpdateModal(); closeRecordDrawer(); }
+});
+
+renderTable();
 </script>
 </body>
 </html>

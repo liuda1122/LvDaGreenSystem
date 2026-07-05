@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>绿色业务营销报告 · 动态版</title>
+    <title data-i18n="pageTitle">绿色业务营销报告 · 动态版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 引入报告数据（内容与UI分离） -->
     <script src="report-data.js"></script>
@@ -297,6 +297,7 @@
             .green-class-card .level-3 { font-size: 12px; }
         }
     </style>
+    <script src="../i18n.js"></script>
 </head>
 <body>
 
@@ -304,7 +305,7 @@
 <div style="position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;gap:12px;padding:8px 24px;background:#fff;border-bottom:1px solid #E2E8F0;height:52px;box-sizing:border-box;">
     <button onclick="goBack()" style="display:inline-flex;align-items:center;gap:6px;color:#2A66C2;font-weight:500;cursor:pointer;border:none;background:none;font-size:14px;font-family:inherit;padding:0 8px;height:32px;border-radius:6px;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-        返回
+        <span data-i18n="back">返回</span>
     </button>
     <span class="text-sm text-slate-400 hidden sm:inline" data-render="pageSubtitle">浙江嘉化能源化工 · 绿色业务营销报告</span>
 </div>
@@ -334,8 +335,8 @@
             </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-            <div class="bg-slate-50 p-3 rounded-lg"><span class="font-semibold">经营范围亮点：</span><div class="text-slate-600 mt-1" data-render="businessScope">许可项目包括危险化学品生产/经营、发电/输电、危险废物经营；一般项目涵盖热力生产和供应、合同能源管理、非常规水源利用、污水处理、新兴能源技术研发、站用加氢及储氢设施、固体废物治理等。</div></div>
-            <div class="bg-slate-50 p-3 rounded-lg"><span class="font-semibold">绿色属性标签：</span><div class="flex flex-wrap gap-2 mt-1" data-render="greenTags">
+            <div class="bg-slate-50 p-3 rounded-lg"><span class="font-semibold" data-i18n="businessScopeLabel">经营范围亮点：</span><div class="text-slate-600 mt-1" data-render="businessScope">许可项目包括危险化学品生产/经营、发电/输电、危险废物经营；一般项目涵盖热力生产和供应、合同能源管理、非常规水源利用、污水处理、新兴能源技术研发、站用加氢及储氢设施、固体废物治理等。</div></div>
+            <div class="bg-slate-50 p-3 rounded-lg"><span class="font-semibold" data-i18n="greenAttrLabel">绿色属性标签：</span><div class="flex flex-wrap gap-2 mt-1" data-render="greenTags">
                 <span class="text-xs bg-white px-2 py-1 rounded border">2.5.2 危险废物处理处置</span>
                 <span class="text-xs bg-white px-2 py-1 rounded border">3.2.7 废气回收利用</span>
                 <span class="text-xs bg-white px-2 py-1 rounded border">氢能/热电联产</span>
@@ -349,7 +350,7 @@
     </div>
 
     <!-- ============================================================ -->
-    <!-- 二、行业分析 · 全部从 JS 读取（已删除区域布局部分） -->
+    <!-- 二、行业分析 -->
     <!-- ============================================================ -->
     <div class="card-diagnostic p-5 mb-8">
         <div class="flex items-center gap-2 mb-3">
@@ -386,11 +387,11 @@
             <h3 class="font-semibold text-slate-800 text-md mb-2" data-render="s2_guideline_title">（一）绿色信贷指引提示</h3>
             <div class="bg-slate-50 p-4 rounded-lg space-y-4 text-sm">
                 <!-- 是否绿色贷款分类 -->
-                <div class="flex justify-between border-b pb-1"><span class="font-medium">是否绿色贷款分类</span><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full text-xs">是</span></div>
+                <div class="flex justify-between border-b pb-1"><span class="font-medium" data-i18n="isGreenLoan">是否绿色贷款分类</span><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full text-xs" data-i18n="yesGreen">是</span></div>
 
                 <!-- 绿色金融支持目录：卡片样式展示三级分类 -->
                 <div>
-                    <span class="font-medium block mb-2">绿色金融支持项目目录：</span>
+                    <span class="font-medium block mb-2" data-i18n="gfDirLabel">绿色金融支持项目目录：</span>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3" data-render="greenClassCards">
                         <!-- 由 JS 动态渲染 -->
                     </div>
@@ -398,25 +399,25 @@
 
                 <!-- 认定依据 - 文本容器 -->
                 <div>
-                    <span class="font-medium block mb-1">认定依据</span>
+                    <span class="font-medium block mb-1" data-i18n="basisLabel">认定依据</span>
                     <div class="info-text-box" data-render="s2_guideline_basis"></div>
                 </div>
 
                 <!-- 填报建议 - 文本容器 -->
                 <div>
-                    <span class="font-medium block mb-1">填报建议</span>
+                    <span class="font-medium block mb-1" data-i18n="suggestionLabel">填报建议</span>
                     <div class="info-text-box" data-render="s2_guideline_suggestion"></div>
                 </div>
 
                 <!-- 佐证材料提示 - 文本容器 -->
                 <div>
-                    <span class="font-medium block mb-1">佐证材料提示</span>
+                    <span class="font-medium block mb-1" data-i18n="proofLabel">佐证材料提示</span>
                     <div class="info-text-box" data-render="s2_guideline_proof"></div>
                 </div>
 
                 <!-- 绿色信贷资金用途潜在方向 - 文本容器 -->
                 <div>
-                    <span class="font-medium block mb-1">绿色信贷资金用途潜在方向</span>
+                    <span class="font-medium block mb-1" data-i18n="usageLabel">绿色信贷资金用途潜在方向</span>
                     <div class="info-text-box" data-render="s2_guideline_usage"></div>
                 </div>
             </div>
@@ -424,7 +425,7 @@
     </div>
 
     <!-- ============================================================ -->
-    <!-- 四、绿色产品建议 · 全部从 JS 读取 -->
+    <!-- 四、绿色产品建议 -->
     <!-- ============================================================ -->
     <div class="card-diagnostic p-5 mb-8">
         <h3 class="font-bold text-slate-800 text-xl mb-3 flex items-center gap-2" data-render="section3Title">三、绿色产品建议</h3>
@@ -440,16 +441,6 @@
     </div>
 
     <!-- ============================================================ -->
-    <!-- 五、融资案例（已暂时拿掉） -->
-    <!-- ============================================================ -->
-    <!-- 该部分已按您的要求暂时移除 -->
-
-    <!-- ============================================================ -->
-    <!-- 六、非金融增值服务方案（已完全删除） -->
-    <!-- ============================================================ -->
-    <!-- 该部分已按您的要求全部移除 -->
-
-    <!-- ============================================================ -->
     <!-- 页脚 -->
     <!-- ============================================================ -->
     <div class="text-center text-xs text-slate-400 border-t border-slate-200 pt-6 mt-2" data-render="pageFooter">
@@ -459,30 +450,24 @@
 
 <script>
 // ================================================================
-// 返回功能 - 在 iframe 内跳转到绿色潜在客户清单页面
+// 返回功能
 // ================================================================
 function goBack() {
-    // 获取当前页面所在目录
     var currentPath = window.location.pathname;
     var currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
     if (currentDir === '') {
         currentDir = './';
     }
     var targetUrl = currentDir + '绿色潜在客户清单.html';
-    
-    // 直接在 iframe 内跳转（无论是 iframe 还是独立页面都适用）
     window.location.href = targetUrl;
 }
 
 // ================================================================
-// 数据渲染：从 report-data.js 读取
+// 数据渲染函数
 // ================================================================
-document.addEventListener('DOMContentLoaded', function() {
-    if (typeof REPORT_DATA === 'undefined') {
-        console.warn('REPORT_DATA 未定义，请确保 report-data.js 已加载。');
-        return;
-    }
-    var data = REPORT_DATA;
+function renderAll(lang) {
+    lang = lang || 'zh';
+    var data = getReportData(lang);
 
     // 1. 基础文本渲染（含 HTML 内容）
     document.querySelectorAll('[data-render]').forEach(function(el) {
@@ -504,66 +489,78 @@ document.addEventListener('DOMContentLoaded', function() {
     if (cardsContainer && data.greenClassCards) {
         var cardsHtml = '';
         data.greenClassCards.forEach(function(card) {
-            cardsHtml += `
-                <div class="green-class-card active">
-                    <div class="level-1">${card.level1}</div>
-                    <div class="level-2">${card.level2}</div>
-                    <div class="level-3">${card.level3}</div>
-                    <div class="check-mark">✓ 已选</div>
-                </div>
-            `;
+            var checkMark = lang === 'zh' ? '✓ 已选' : '✓ Selected';
+            cardsHtml +=
+                '<div class="green-class-card active">' +
+                    '<div class="level-1">' + card.level1 + '</div>' +
+                    '<div class="level-2">' + card.level2 + '</div>' +
+                    '<div class="level-3">' + card.level3 + '</div>' +
+                    '<div class="check-mark">' + checkMark + '</div>' +
+                '</div>';
         });
         cardsContainer.innerHTML = cardsHtml;
     }
 
-    // 3. 区域布局表格 - 已删除，不再渲染
-    // var regionTable = document.querySelector('[data-render="s1_region_table"]');
-    // if (regionTable && data.s1_region_table) { ... }
-
-    // 4. 绿色产品建议表格
+    // 3. 绿色产品建议表格
     var productTable = document.querySelector('[data-render="s3_productTable"]');
     if (productTable && data.s3_productTable) {
         productTable.innerHTML = data.s3_productTable;
     }
+}
 
-    // 5. 融资案例网格 - 已删除，不再渲染
-    // var caseGrid = document.querySelector('[data-render="s4_caseGrid"]');
-    // if (caseGrid && data.s4_caseGrid) { ... }
-
-    // 6. 非金融增值服务表格 - 已删除，不再渲染
-    // var serviceTable = document.querySelector('[data-render="s5_serviceTable"]');
-    // if (serviceTable && data.s5_serviceTable) { ... }
-
-    // 7. 营销话术 - 已删除，不再渲染
-    // var talkContainer = document.getElementById('talkContainer');
-    // if (talkContainer && data.talkSections) { ... }
+// ================================================================
+// 初始化
+// ================================================================
+document.addEventListener('DOMContentLoaded', function() {
+    var initialLang = (typeof I18N !== 'undefined' && I18N.getLang) ? I18N.getLang() : 'zh';
+    renderAll(initialLang);
 });
 
 // ================================================================
-// 父级折叠面板切换（保留以防其他部分使用）
+// I18N
+// ================================================================
+I18N.setDict({
+    pageTitle:{zh:'绿色业务营销报告 · 动态版',en:'Green Business Marketing Report · Dynamic'},
+    back:{zh:'返回',en:'Back'},
+    businessScopeLabel:{zh:'经营范围亮点：',en:'Business Scope Highlights: '},
+    greenAttrLabel:{zh:'绿色属性标签：',en:'Green Attribute Tags: '},
+    isGreenLoan:{zh:'是否绿色贷款分类',en:'Green Loan Classification'},
+    yesGreen:{zh:'是',en:'Yes'},
+    gfDirLabel:{zh:'绿色金融支持项目目录：',en:'Green Finance Project Directory: '},
+    basisLabel:{zh:'认定依据',en:'Basis for Determination'},
+    suggestionLabel:{zh:'填报建议',en:'Reporting Suggestions'},
+    proofLabel:{zh:'佐证材料提示',en:'Supporting Documents'},
+    usageLabel:{zh:'绿色信贷资金用途潜在方向',en:'Potential Green Credit Fund Uses'}
+});
+
+window.onLangChange = function(lang) {
+    document.title = I18N.t('pageTitle');
+    renderAll(lang);
+};
+document.title = I18N.t('pageTitle');
+
+// ================================================================
+// 父级折叠面板切换
 // ================================================================
 function toggleParent(header) {
-    var isOpen = header.classList.contains('open');
     header.classList.toggle('open');
     var body = header.nextElementSibling;
     if (body) body.classList.toggle('open');
 }
 
 // ================================================================
-// 子级折叠面板切换（保留以防其他部分使用）
+// 子级折叠面板切换
 // ================================================================
 function toggleChild(header) {
-    var isOpen = header.classList.contains('open');
     header.classList.toggle('open');
     var body = header.nextElementSibling;
     if (body) body.classList.toggle('open');
 }
 
 // ================================================================
-// 兼容旧格式折叠面板切换（保留以防其他部分使用）
+// 兼容旧格式折叠面板切换
 // ================================================================
 function toggleTalk(header) {
-    var isOpen = header.classList.contains('open');
     header.classList.toggle('open');
     var body = header.nextElementSibling;
     if (body) body.classList.toggle('open');

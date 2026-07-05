@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>角色管理 - 角色列表</title>
+  <title data-i18n="pageTitle">角色管理 - 角色列表</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root {
@@ -188,6 +188,7 @@
     .export-success .icon{font-size:32px;display:block;margin-bottom:8px}
     .export-success .count{font-weight:600;font-size:16px}
   </style>
+  <script src="../i18n.js"></script>
 </head>
 <body class="min-h-screen flex flex-col">
 
@@ -199,12 +200,12 @@
         <div class="section-card mb-6">
           <div style="padding:var(--s-4)">
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-4);align-items:end">
-              <div><label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block">角色名称</label><input type="text" class="input" placeholder="请输入角色名称" id="filterRoleName"></div>
-              <div><label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block">状态</label><select class="select-native" id="filterStatus"><option value="">全部</option><option value="启用">启用</option><option value="停用">停用</option></select></div>
+              <div><label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block" data-i18n="lblRoleName">角色名称</label><input type="text" class="input" data-i18n-placeholder="placeholderRoleName" placeholder="请输入角色名称" id="filterRoleName"></div>
+              <div><label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block" data-i18n="thStatus">状态</label><select class="select-native" id="filterStatus"><option value="" data-i18n="filterAll">全部</option><option value="启用" data-i18n="statusEnabled">启用</option><option value="停用" data-i18n="statusDisabled">停用</option></select></div>
             </div>
             <div style="display:flex;gap:var(--s-3);margin-top:var(--s-4);justify-content:flex-end">
-              <button class="btn btn-primary btn-md" onclick="handleSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>查询</button>
-              <button class="btn btn-secondary btn-md" onclick="handleReset()">重置</button>
+              <button class="btn btn-primary btn-md" onclick="handleSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span data-i18n="btnSearch">查询</span></button>
+              <button class="btn btn-secondary btn-md" onclick="handleReset()" data-i18n="btnReset">重置</button>
             </div>
           </div>
         </div>
@@ -214,29 +215,29 @@
           <div style="display:flex;align-items:center;gap:var(--s-2);padding:var(--s-3) var(--s-4);border-bottom:1px solid var(--line-200)">
             <button class="btn btn-md btn-secondary" onclick="exportRoleData()">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              批量导出
+              <span data-i18n="btnBatchExport">批量导出</span>
             </button>
           </div>
           <table>
             <thead>
               <tr>
-                <th style="width:50px">序号</th>
-                <th>角色名称</th>
-                <th>角色编码</th>
-                <th>描述</th>
-                <th style="width:80px">状态</th>
-                <th style="width:280px;text-align:right">操作</th>
+                <th style="width:50px" data-i18n="thSeq">序号</th>
+                <th data-i18n="thRoleName">角色名称</th>
+                <th data-i18n="thRoleCode">角色编码</th>
+                <th data-i18n="thDesc">描述</th>
+                <th style="width:80px" data-i18n="thStatus">状态</th>
+                <th style="width:280px;text-align:right" data-i18n="thActions">操作</th>
               </tr>
             </thead>
             <tbody id="roleTableBody"></tbody>
           </table>
           <div class="pagination" id="paginationBar">
-            <span class="pagination-info">共 <strong id="pageTotal">8</strong> 条</span>
+            <span class="pagination-info"><span data-i18n="paginationTotal">共</span> <strong id="pageTotal">8</strong> <span data-i18n="paginationSuffix">条</span></span>
             <div class="pagination-controls" id="paginationControls"></div>
             <div style="display:flex;align-items:center;gap:6px;margin-left:16px">
-              <span style="font-size:13px;color:var(--ink-500)">每页</span>
+              <span style="font-size:13px;color:var(--ink-500)" data-i18n="paginationPerPage">每页</span>
               <select class="select-native" style="width:auto;height:32px;padding:0 28px 0 10px" onchange="changePageSize(this.value)"><option value="20" selected>20</option><option value="50">50</option><option value="100">100</option></select>
-              <span style="font-size:13px;color:var(--ink-500)">条</span>
+              <span style="font-size:13px;color:var(--ink-500)" data-i18n="paginationUnit">条</span>
             </div>
           </div>
         </div>
@@ -248,32 +249,32 @@
   <div class="modal-mask" id="addRoleModal">
     <div class="modal">
       <div class="modal-head">
-        <span class="modal-title" id="addRoleModalTitle">编辑角色</span>
+        <span class="modal-title" data-i18n="modalEditTitle" id="addRoleModalTitle">编辑角色</span>
         <button class="modal-close" onclick="closeModal('addRoleModal')"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
       </div>
       <div class="modal-body">
         <div style="display:flex;flex-direction:column;gap:16px">
           <div>
-            <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block"><span style="color:var(--danger);margin-right:4px">*</span>角色名称</label>
-            <input type="text" class="input" placeholder="请输入角色名称" id="newRoleName">
+            <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block"><span style="color:var(--danger);margin-right:4px">*</span><span data-i18n="lblRoleName">角色名称</span></label>
+            <input type="text" class="input" data-i18n-placeholder="placeholderRoleName" placeholder="请输入角色名称" id="newRoleName">
           </div>
           <div>
-            <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block"><span style="color:var(--danger);margin-right:4px">*</span>角色编码</label>
-            <input type="text" class="input input-readonly" readonly placeholder="角色编码不可编辑" id="newRoleCode">
+            <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block"><span style="color:var(--danger);margin-right:4px">*</span><span data-i18n="lblRoleCode">角色编码</span></label>
+            <input type="text" class="input input-readonly" readonly data-i18n-placeholder="placeholderRoleCode" placeholder="角色编码不可编辑" id="newRoleCode">
           </div>
           <div>
-            <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block">描述</label>
-            <textarea class="input" style="height:80px;resize:vertical" placeholder="请输入角色描述" id="newRoleDesc"></textarea>
+            <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block" data-i18n="thDesc">描述</label>
+            <textarea class="input" style="height:80px;resize:vertical" data-i18n-placeholder="placeholderRoleDesc" placeholder="请输入角色描述" id="newRoleDesc"></textarea>
           </div>
           <div>
-            <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block">角色状态</label>
-            <label class="switch" style="font-size:14px"><input type="checkbox" id="newRoleStatus" checked><span>启用</span></label>
+            <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block" data-i18n="lblRoleStatus">角色状态</label>
+            <label class="switch" style="font-size:14px"><input type="checkbox" id="newRoleStatus" checked><span data-i18n="statusEnabled">启用</span></label>
           </div>
         </div>
       </div>
       <div class="modal-foot">
-        <button class="btn btn-secondary btn-md" onclick="closeModal('addRoleModal')">取消</button>
-        <button class="btn btn-primary btn-md" onclick="saveRole()">保存</button>
+        <button class="btn btn-secondary btn-md" onclick="closeModal('addRoleModal')" data-i18n="btnCancel">取消</button>
+        <button class="btn btn-primary btn-md" onclick="saveRole()" data-i18n="btnSave">保存</button>
       </div>
     </div>
   </div>
@@ -282,7 +283,7 @@
   <div class="modal-mask" id="permModal">
     <div class="modal" style="max-width:720px">
       <div class="modal-head">
-        <span class="modal-title">权限分配</span>
+        <span class="modal-title" data-i18n="modalPermTitle">权限分配</span>
         <span style="margin-left:12px;font-size:13px;color:var(--ink-500)" id="permRoleName"></span>
         <button class="modal-close" onclick="closeModal('permModal')"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
       </div>
@@ -290,21 +291,21 @@
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s-6)">
           <!-- Left: Permission tree -->
           <div>
-            <div style="font-size:14px;font-weight:600;color:var(--ink-900);margin-bottom:12px">菜单/按钮权限</div>
+            <div style="font-size:14px;font-weight:600;color:var(--ink-900);margin-bottom:12px" data-i18n="permMenuBtn">菜单/按钮权限</div>
             <div style="max-height:360px;overflow-y:auto;border:1px solid var(--line-200);border-radius:var(--radius-md);padding:8px" id="permTreeContainer">
             </div>
           </div>
           <!-- Right: Data permission -->
           <div>
-            <div style="font-size:14px;font-weight:600;color:var(--ink-900);margin-bottom:12px">数据权限范围</div>
+            <div style="font-size:14px;font-weight:600;color:var(--ink-900);margin-bottom:12px" data-i18n="permDataScope">数据权限范围</div>
             <div style="border:1px solid var(--line-200);border-radius:var(--radius-md);padding:16px">
               <div>
-                <div style="font-size:13px;font-weight:600;color:var(--ink-700);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--line-200)">机构维度</div>
+                <div style="font-size:13px;font-weight:600;color:var(--ink-700);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--line-200)" data-i18n="permOrgDimension">机构维度</div>
                 <div class="radio-group" id="orgPermRadio">
-                  <label class="radio"><input type="radio" name="orgPerm" value="all" checked>全部</label>
-                  <label class="radio"><input type="radio" name="orgPerm" value="self_and_sub">本机构及下设机构</label>
-                  <label class="radio"><input type="radio" name="orgPerm" value="self">本机构</label>
-                  <label class="radio"><input type="radio" name="orgPerm" value="mine">本人</label>
+                  <label class="radio"><input type="radio" name="orgPerm" value="all" checked><span data-i18n="permAll">全部</span></label>
+                  <label class="radio"><input type="radio" name="orgPerm" value="self_and_sub"><span data-i18n="permSelfAndSub">本机构及下设机构</span></label>
+                  <label class="radio"><input type="radio" name="orgPerm" value="self"><span data-i18n="permSelf">本机构</span></label>
+                  <label class="radio"><input type="radio" name="orgPerm" value="mine"><span data-i18n="permMine">本人</span></label>
                 </div>
               </div>
             </div>
@@ -312,8 +313,8 @@
         </div>
       </div>
       <div class="modal-foot">
-        <button class="btn btn-secondary btn-md" onclick="closeModal('permModal')">取消</button>
-        <button class="btn btn-primary btn-md" onclick="savePermission()">保存</button>
+        <button class="btn btn-secondary btn-md" onclick="closeModal('permModal')" data-i18n="btnCancel">取消</button>
+        <button class="btn btn-primary btn-md" onclick="savePermission()" data-i18n="btnSave">保存</button>
       </div>
     </div>
   </div>
@@ -323,28 +324,28 @@
   <div class="drawer" id="userListDrawer">
     <div class="drawer-head">
       <div>
-        <div class="drawer-title">用户清单</div>
-        <div class="drawer-subtitle" id="userListDrawerRole">角色：系统管理员</div>
+        <div class="drawer-title" data-i18n="drawerUserList">用户清单</div>
+        <div class="drawer-subtitle" id="userListDrawerRole"><span data-i18n="drawerRolePrefix">角色：</span>系统管理员</div>
       </div>
       <button class="drawer-close" onclick="closeUserListDrawer()"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
     </div>
     <div class="drawer-body">
       <div style="display:flex;gap:var(--s-3);margin-bottom:16px">
-        <input type="text" class="input" placeholder="搜索姓名/工号" id="userListSearch" oninput="filterUserList(this.value)" style="flex:1">
+        <input type="text" class="input" data-i18n-placeholder="placeholderUserSearch" placeholder="搜索姓名/工号" id="userListSearch" oninput="filterUserList(this.value)" style="flex:1">
         <button class="btn btn-primary btn-md" onclick="openAddUserToRoleModal()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          添加用户
+          <span data-i18n="btnAddUser">添加用户</span>
         </button>
       </div>
       <div style="border:1px solid var(--line-200);border-radius:var(--radius-md);overflow:hidden">
         <table>
           <thead>
-            <tr><th style="width:40px">序号</th><th>姓名</th><th>工号</th><th>所属机构</th><th>岗位</th><th>状态</th><th style="width:80px;text-align:right">操作</th></tr>
+            <tr><th style="width:40px" data-i18n="thSeq">序号</th><th data-i18n="thName">姓名</th><th data-i18n="thEmpNo">工号</th><th data-i18n="thOrg">所属机构</th><th data-i18n="thPosition">岗位</th><th data-i18n="thStatus">状态</th><th style="width:80px;text-align:right" data-i18n="thActions">操作</th></tr>
           </thead>
           <tbody id="userListTableBody"></tbody>
         </table>
       </div>
-      <div style="margin-top:12px;font-size:12px;color:var(--ink-500)">共 <strong id="userListCount" style="color:var(--brand-500)">0</strong> 位用户</div>
+      <div style="margin-top:12px;font-size:12px;color:var(--ink-500)"><span data-i18n="userCountPrefix">共</span> <strong id="userListCount" style="color:var(--brand-500)">0</strong> <span data-i18n="userCountSuffix">位用户</span></div>
     </div>
   </div>
 
@@ -352,19 +353,19 @@
   <div class="modal-mask" id="addUserToRoleModal">
     <div class="modal">
       <div class="modal-head">
-        <span class="modal-title">添加用户</span>
+        <span class="modal-title" data-i18n="modalAddUser">添加用户</span>
         <button class="modal-close" onclick="closeModal('addUserToRoleModal')"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
       </div>
       <div class="modal-body">
         <div style="margin-bottom:12px">
-          <input type="text" class="input" placeholder="搜索姓名/工号" id="addUserSearchInput" oninput="filterAvailableUsers(this.value)">
+          <input type="text" class="input" data-i18n-placeholder="placeholderUserSearch" placeholder="搜索姓名/工号" id="addUserSearchInput" oninput="filterAvailableUsers(this.value)">
         </div>
         <div style="max-height:240px;overflow-y:auto;border:1px solid var(--line-200);border-radius:var(--radius-md);padding:4px" id="availableUserList"></div>
-        <div style="margin-top:12px;font-size:12px;color:var(--ink-500)">已选择 <strong id="selectedUserCount" style="color:var(--brand-500)">0</strong> 位用户</div>
+        <div style="margin-top:12px;font-size:12px;color:var(--ink-500)"><span data-i18n="selectedUserCount1">已选择</span> <strong id="selectedUserCount" style="color:var(--brand-500)">0</strong> <span data-i18n="selectedUserCount2">位用户</span></div>
       </div>
       <div class="modal-foot">
-        <button class="btn btn-secondary btn-md" onclick="closeModal('addUserToRoleModal')">取消</button>
-        <button class="btn btn-primary btn-md" onclick="confirmAddUsersToRole()">确认添加</button>
+        <button class="btn btn-secondary btn-md" onclick="closeModal('addUserToRoleModal')" data-i18n="btnCancel">取消</button>
+        <button class="btn btn-primary btn-md" onclick="confirmAddUsersToRole()" data-i18n="btnConfirmAdd">确认添加</button>
       </div>
     </div>
   </div>
@@ -373,7 +374,7 @@
   <div class="modal-mask" id="deleteModal">
     <div class="modal modal-sm">
       <div class="modal-head">
-        <span class="modal-title">删除确认</span>
+        <span class="modal-title" data-i18n="modalDeleteTitle">删除确认</span>
         <button class="modal-close" onclick="closeModal('deleteModal')"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
       </div>
       <div class="modal-body">
@@ -382,14 +383,14 @@
             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
           </div>
           <div style="flex:1">
-            <div style="font-size:14px;font-weight:600;color:var(--ink-900);margin-bottom:4px">确认删除角色？</div>
-            <div style="font-size:14px;color:var(--ink-600);line-height:1.5" id="deleteModalDesc">删除后不可恢复。</div>
+            <div style="font-size:14px;font-weight:600;color:var(--ink-900);margin-bottom:4px" data-i18n="deleteConfirmText">确认删除角色？</div>
+            <div style="font-size:14px;color:var(--ink-600);line-height:1.5" id="deleteModalDesc" data-i18n="deleteCannotRecover">删除后不可恢复。</div>
           </div>
         </div>
       </div>
       <div class="modal-foot">
-        <button class="btn btn-secondary btn-md" onclick="closeModal('deleteModal')">取消</button>
-        <button class="btn btn-primary btn-md" style="background:var(--danger)" onclick="confirmDelete()">确认删除</button>
+        <button class="btn btn-secondary btn-md" onclick="closeModal('deleteModal')" data-i18n="btnCancel">取消</button>
+        <button class="btn btn-primary btn-md" style="background:var(--danger)" onclick="confirmDelete()" data-i18n="btnConfirmDelete">确认删除</button>
       </div>
     </div>
   </div>
@@ -398,18 +399,18 @@
   <div class="modal-mask" id="exportModal">
     <div class="modal modal-sm modal-form">
       <div class="modal-head">
-        <div class="modal-title">导出成功</div>
+        <div class="modal-title" data-i18n="modalExportSuccess">导出成功</div>
         <button class="modal-close" onclick="closeModal('exportModal')"><svg style="width:16px;height:16px"><use href="#i-x"></use></svg></button>
       </div>
       <div class="modal-body" style="text-align:center;padding:32px 24px;">
         <div class="export-success">
           <span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><circle cx="8" cy="8" r="7" stroke="currentColor" fill="none" stroke-width="1.3"/><polyline points="5 8 7 11 11 6" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></span>
-          <div style="font-weight:600;font-size:16px;margin-bottom:4px;">角色数据已导出</div>
-          <div style="font-size:13px;color:var(--ink-500);margin-top:4px;" id="exportCount">共导出 0 条角色记录</div>
+          <div style="font-weight:600;font-size:16px;margin-bottom:4px;" data-i18n="exportSuccessText">角色数据已导出</div>
+          <div style="font-size:13px;color:var(--ink-500);margin-top:4px;" id="exportCount"><span data-i18n="exportCountPrefix">共导出</span> 0 <span data-i18n="exportCountSuffix">条角色记录</span></div>
         </div>
       </div>
       <div class="modal-foot" style="justify-content:center;">
-        <button class="btn btn-md btn-primary" onclick="closeModal('exportModal')">我知道了</button>
+        <button class="btn btn-md btn-primary" onclick="closeModal('exportModal')" data-i18n="btnGotIt">我知道了</button>
       </div>
     </div>
   </div>
@@ -470,7 +471,7 @@
     var currentPermRole = null;
     var currentUserListRole = null;
 
-    // ===== 更新后的权限树：合同绿色认定、项目绿色认定、绿色潜在客户清单 =====
+    // ===== Permission tree data =====
     var permModules = [
       { name:'合同绿色认定', collapsed:false, pages:[
         { name:'合同绿色认定', perms:['开始认定','查看详情'] }
@@ -482,6 +483,20 @@
         { name:'绿色潜在客户清单', perms:['查看企业评价报告','查看企业业务营销报告'] }
       ]}
     ];
+
+    // Map Chinese perm names to i18n keys
+    function getPermI18nKey(name) {
+      var map = {
+        '合同绿色认定': 'permModuleContractGreen',
+        '项目绿色认定': 'permModuleProjectGreen',
+        '绿色潜在客户清单': 'permModuleGreenCustomer',
+        '开始认定': 'permActionStartCert',
+        '查看详情': 'permActionViewDetail',
+        '查看企业评价报告': 'permActionViewEval',
+        '查看企业业务营销报告': 'permActionViewBizReport'
+      };
+      return map[name] || name;
+    }
 
     // Users for each role (mock)
     var roleUsers = {
@@ -540,9 +555,10 @@
       var pageRoles = allRoles.slice(start, end);
       var html = '';
       pageRoles.forEach(function(r, i) {
-        var statusTag = r.status === '启用'
-          ? '<span class="status"><span class="status-dot s-success"></span>启用</span>'
-          : '<span class="status"><span class="status-dot s-danger"></span>停用</span>';
+        var statusKey = r.status === '启用' ? 'statusEnabled' : 'statusDisabled';
+        var statusText = I18N.t(statusKey, r.status);
+        var dotClass = r.status === '启用' ? 's-success' : 's-danger';
+        var statusTag = '<span class="status"><span class="status-dot ' + dotClass + '"></span>' + statusText + '</span>';
         var globalIdx = start + i;
         html += '<tr>'
           + '<td style="color:var(--ink-500);font-family:var(--font-num);text-align:right">' + (start + i + 1) + '</td>'
@@ -551,9 +567,9 @@
           + '<td style="max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink-600)">' + r.desc + '</td>'
           + '<td>' + statusTag + '</td>'
           + '<td style="text-align:right;white-space:nowrap">'
-          + '<button class="btn-ghost" onclick="openEditRoleModal(' + globalIdx + ')">编辑</button>'
-          + '<button class="btn-ghost" onclick="openPermModal(' + globalIdx + ')">权限分配</button>'
-          + '<button class="btn-ghost" onclick="openUserListDrawer(' + globalIdx + ')">查看用户清单</button>'
+          + '<button class="btn-ghost" onclick="openEditRoleModal(' + globalIdx + ')">' + I18N.t('actionEdit', '编辑') + '</button>'
+          + '<button class="btn-ghost" onclick="openPermModal(' + globalIdx + ')">' + I18N.t('actionPermAssign', '权限分配') + '</button>'
+          + '<button class="btn-ghost" onclick="openUserListDrawer(' + globalIdx + ')">' + I18N.t('actionViewUsers', '查看用户清单') + '</button>'
           + '</td></tr>';
       });
       tbody.innerHTML = html;
@@ -584,7 +600,6 @@
     // Edit role
     function openEditRoleModal(idx) {
       editingRoleIndex = idx;
-      document.getElementById('addRoleModalTitle').textContent = '编辑角色';
       document.getElementById('newRoleName').value = allRoles[idx].name;
       document.getElementById('newRoleCode').value = allRoles[idx].code;
       document.getElementById('newRoleDesc').value = allRoles[idx].desc;
@@ -595,15 +610,16 @@
     function saveRole() {
       var name = document.getElementById('newRoleName').value.trim();
       var desc = document.getElementById('newRoleDesc').value.trim();
-      var status = document.getElementById('newRoleStatus').checked ? '启用' : '停用';
-      if (!name) { alert('请填写角色名称'); return; }
+      var checked = document.getElementById('newRoleStatus').checked;
+      var status = checked ? '启用' : '停用';
+      if (!name) { alert(I18N.t('alertRoleNameRequired', '请填写角色名称')); return; }
 
       if (editingRoleIndex >= 0) {
         var oldRole = allRoles[editingRoleIndex];
         if (status === '停用' && oldRole.status === '启用') {
           var users = roleUsers[oldRole.name] || [];
           if (users.length > 0) {
-            var confirmMsg = '角色「' + name + '」当前已关联 ' + users.length + ' 位用户，禁用后这些用户将失去该角色权限。是否确认禁用？';
+            var confirmMsg = I18N.t('alertDisableRoleHaveUsers1', '角色「') + name + I18N.t('alertDisableRoleHaveUsers2', '」当前已关联 ') + users.length + I18N.t('alertDisableRoleHaveUsers3', ' 位用户，禁用后这些用户将失去该角色权限。是否确认禁用？');
             if (!confirm(confirmMsg)) {
               document.getElementById('newRoleStatus').checked = true;
               return;
@@ -621,7 +637,7 @@
     // Permission assignment
     function openPermModal(idx) {
       currentPermRole = allRoles[idx];
-      document.getElementById('permRoleName').textContent = '— ' + currentPermRole.name;
+      document.getElementById('permRoleName').textContent = I18N.t('drawerRolePrefix', '角色：') + currentPermRole.name;
       renderPermTree();
       document.getElementById('permModal').classList.add('open');
     }
@@ -630,25 +646,25 @@
       var container = document.getElementById('permTreeContainer');
       var html = '';
       permModules.forEach(function(mod, mi) {
-        // 模块级别：带"全选"标签
+        // Module level: with "Select All" tag
         html += '<div style="margin-bottom:4px">';
         html += '<div style="display:flex;align-items:center;gap:6px;padding:6px 8px;background:var(--brand-50);border-radius:var(--radius-sm);cursor:pointer;font-weight:600;color:var(--brand-900);font-size:14px" onclick="toggleModule(' + mi + ')">';
         html += '<svg class="w-4 h-4 flex-shrink-0" style="transform:' + (mod.collapsed ? 'rotate(-90deg)' : 'rotate(0)') + ';transition:transform .15s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
-        html += '<label class="checkbox" onclick="event.stopPropagation()"><input type="checkbox" onchange="toggleModuleCheck(' + mi + ', this.checked)" id="modChk_' + mi + '">' + mod.name + '</label>';
-        html += '<span class="tag tag-perm-menu" style="margin-left:4px">全选</span>';
+        html += '<label class="checkbox" onclick="event.stopPropagation()"><input type="checkbox" onchange="toggleModuleCheck(' + mi + ', this.checked)" id="modChk_' + mi + '">' + I18N.t(getPermI18nKey(mod.name), mod.name) + '</label>';
+        html += '<span class="tag tag-perm-menu" style="margin-left:4px">' + I18N.t('tagSelectAll', '全选') + '</span>';
         html += '</div>';
         if (!mod.collapsed) {
           mod.pages.forEach(function(page, pi) {
             html += '<div style="margin-left:16px;margin-top:4px">';
-            // 页面级别：带"列表"标签
+            // Page level: with "List" tag
             html += '<div style="display:flex;align-items:center;gap:6px;padding:4px 8px;border-radius:var(--radius-sm);font-size:14px;font-weight:500;color:var(--ink-700)">';
-            html += '<label class="checkbox" onclick="event.stopPropagation()"><input type="checkbox" onchange="togglePageCheck(' + mi + ',' + pi + ', this.checked)" id="pageChk_' + mi + '_' + pi + '">' + page.name + '</label>';
-            html += '<span class="tag tag-perm-list" style="margin-left:4px">列表</span>';
+            html += '<label class="checkbox" onclick="event.stopPropagation()"><input type="checkbox" onchange="togglePageCheck(' + mi + ',' + pi + ', this.checked)" id="pageChk_' + mi + '_' + pi + '">' + I18N.t(getPermI18nKey(page.name), page.name) + '</label>';
+            html += '<span class="tag tag-perm-list" style="margin-left:4px">' + I18N.t('tagList', '列表') + '</span>';
             html += '</div>';
-            // 操作级别：带"按钮"标签
+            // Action level: with "Button" tag
             html += '<div style="margin-left:16px">';
             page.perms.forEach(function(perm, oi) {
-              html += '<div style="padding:2px 0"><label class="perm-label" style="font-size:13px"><span class="checkbox"><input type="checkbox" onchange="togglePermCheck(' + mi + ',' + pi + ',' + oi + ', this.checked)" id="permChk_' + mi + '_' + pi + '_' + oi + '">' + perm + '</span><span class="tag tag-perm-button" style="margin-left:4px">按钮</span></label></div>';
+              html += '<div style="padding:2px 0"><label class="perm-label" style="font-size:13px"><span class="checkbox"><input type="checkbox" onchange="togglePermCheck(' + mi + ',' + pi + ',' + oi + ', this.checked)" id="permChk_' + mi + '_' + pi + '_' + oi + '">' + I18N.t(getPermI18nKey(perm), perm) + '</span><span class="tag tag-perm-button" style="margin-left:4px">' + I18N.t('tagButton', '按钮') + '</span></label></div>';
             });
             html += '</div>';
             html += '</div>';
@@ -707,7 +723,7 @@
     // User list drawer
     function openUserListDrawer(idx) {
       currentUserListRole = allRoles[idx];
-      document.getElementById('userListDrawerRole').textContent = '角色：' + currentUserListRole.name;
+      document.getElementById('userListDrawerRole').innerHTML = '<span data-i18n="drawerRolePrefix">' + I18N.t('drawerRolePrefix', '角色：') + '</span>' + currentUserListRole.name;
       var users = roleUsers[currentUserListRole.name] || [];
       renderUserListTable(users);
       document.getElementById('userListDrawerMask').classList.add('open');
@@ -718,20 +734,21 @@
       var tbody = document.getElementById('userListTableBody');
       var html = '';
       users.forEach(function(u, i) {
-        var statusTag = u.status === '启用'
-          ? '<span class="status"><span class="status-dot s-success"></span>启用</span>'
-          : '<span class="status"><span class="status-dot s-danger"></span>停用</span>';
+        var statusKey = u.status === '启用' ? 'statusEnabled' : 'statusDisabled';
+        var statusText = I18N.t(statusKey, u.status);
+        var dotClass = u.status === '启用' ? 's-success' : 's-danger';
+        var statusTag = '<span class="status"><span class="status-dot ' + dotClass + '"></span>' + statusText + '</span>';
 
         var taskBadge = '';
         if (pendingTasks[u.empNo] && pendingTasks[u.empNo].length > 0) {
-          taskBadge = '<span class="tag tag-warning" style="margin-left:6px" title="' + pendingTasks[u.empNo].join('、') + '">' + pendingTasks[u.empNo].length + ' 个待办任务</span>';
+          taskBadge = '<span class="tag tag-warning" style="margin-left:6px" title="' + pendingTasks[u.empNo].join('、') + '">' + pendingTasks[u.empNo].length + ' ' + I18N.t('pendingTasksSuffix', '个待办任务') + '</span>';
         }
 
         var removeBtn = '';
         if (pendingTasks[u.empNo] && pendingTasks[u.empNo].length > 0) {
-          removeBtn = '<span style="color:var(--ink-400);font-size:13px;cursor:not-allowed" title="有待办任务不可移除">移除</span>';
+          removeBtn = '<span style="color:var(--ink-400);font-size:13px;cursor:not-allowed" title="' + I18N.t('pendingTaskTitle', '有待办任务不可移除') + '">' + I18N.t('actionRemove', '移除') + '</span>';
         } else {
-          removeBtn = '<button class="btn-danger-ghost" onclick="removeUserFromRole(\'' + u.empNo + '\')">移除</button>';
+          removeBtn = '<button class="btn-danger-ghost" onclick="removeUserFromRole(\'' + u.empNo + '\')">' + I18N.t('actionRemove', '移除') + '</button>';
         }
 
         html += '<tr><td style="color:var(--ink-500);font-family:var(--font-num);text-align:right">' + (i + 1) + '</td>'
@@ -765,15 +782,16 @@
         return true;
       });
       if (available.length === 0) {
-        container.innerHTML = '<div style="padding:16px;text-align:center;color:var(--ink-400);font-size:13px">暂无可选用户</div>';
+        container.innerHTML = '<div style="padding:16px;text-align:center;color:var(--ink-400);font-size:13px">' + I18N.t('noAvailableUsers', '暂无可选用户') + '</div>';
         return;
       }
       var html = '';
       available.forEach(function(u) {
         var checked = selectedAddUsers.indexOf(u.empNo) > -1;
-        var statusTag = u.status === '启用'
-          ? '<span class="status"><span class="status-dot s-success"></span>启用</span>'
-          : '<span class="status"><span class="status-dot s-danger"></span>停用</span>';
+        var statusKey = u.status === '启用' ? 'statusEnabled' : 'statusDisabled';
+        var statusText = I18N.t(statusKey, u.status);
+        var dotClass = u.status === '启用' ? 's-success' : 's-danger';
+        var statusTag = '<span class="status"><span class="status-dot ' + dotClass + '"></span>' + statusText + '</span>';
         html += '<div class="tree-option' + (checked ? ' selected' : '') + '" onclick="toggleSelectUser(this, \'' + u.empNo + '\')" style="justify-content:space-between">';
         html += '<label class="checkbox"><input type="checkbox" ' + (checked ? 'checked' : '') + ' style="pointer-events:none">' + u.name + ' <span style="font-family:var(--font-mono);font-size:12px;color:var(--ink-500)">' + u.empNo + '</span></label>';
         html += statusTag;
@@ -803,7 +821,7 @@
 
     function confirmAddUsersToRole() {
       if (selectedAddUsers.length === 0) {
-        alert('请至少选择一个用户');
+        alert(I18N.t('alertSelectUser', '请至少选择一个用户'));
         return;
       }
       var currentUsers = roleUsers[currentUserListRole.name] || [];
@@ -835,12 +853,12 @@
       if (!user) return;
 
       if (pendingTasks[empNo] && pendingTasks[empNo].length > 0) {
-        alert('该用户当前有待审批任务：' + pendingTasks[empNo].join('、') + '，请先处理完成或转移审批任务后再移除。');
+        alert(I18N.t('alertUserHasPendingTasks1', '该用户当前有待审批任务：') + pendingTasks[empNo].join('、') + I18N.t('alertUserHasPendingTasks2', '，请先处理完成或转移审批任务后再移除。'));
         return;
       }
 
       if (users.length <= 1) {
-        alert('该角色下仅剩此用户，移除后该角色将无关联用户，建议先分配其他用户后再移除。');
+        alert(I18N.t('alertLastUserInRole', '该角色下仅剩此用户，移除后该角色将无关联用户，建议先分配其他用户后再移除。'));
         return;
       }
       var idx = users.indexOf(user);
@@ -880,9 +898,9 @@
       deletingRoleIndex = idx;
       var r = allRoles[idx];
       if (r.userCount > 0) {
-        document.getElementById('deleteModalDesc').textContent = '该角色已关联 ' + r.userCount + ' 位用户，请先解除关联用户/流程后再删除。';
+        document.getElementById('deleteModalDesc').textContent = I18N.t('alertDeleteRoleHaveUsers1', '该角色已关联 ') + r.userCount + I18N.t('alertDeleteRoleHaveUsers2', ' 位用户，请先解除关联用户/流程后再删除。');
       } else {
-        document.getElementById('deleteModalDesc').textContent = '确认删除角色「' + r.name + '」？删除后不可恢复。';
+        document.getElementById('deleteModalDesc').textContent = I18N.t('alertDeleteRoleConfirm1', '确认删除角色「') + r.name + I18N.t('alertDeleteRoleConfirm2', '」？删除后不可恢复。');
       }
       document.getElementById('deleteModal').classList.add('open');
     }
@@ -890,7 +908,7 @@
     function confirmDelete() {
       if (deletingRoleIndex >= 0) {
         if (allRoles[deletingRoleIndex].userCount > 0) {
-          alert('请先解除关联用户/流程后再删除');
+          alert(I18N.t('alertDeleteRoleNeedUnbind', '请先解除关联用户/流程后再删除'));
         } else {
           allRoles.splice(deletingRoleIndex, 1);
           renderTable();
@@ -899,10 +917,10 @@
       closeModal('deleteModal');
     }
 
-    // ===== 批量导出 =====
+    // ===== Export =====
     function exportRoleData() {
       var count = allRoles.length;
-      document.getElementById('exportCount').textContent = '共导出 ' + count + ' 条角色记录';
+      document.getElementById('exportCount').innerHTML = '<span data-i18n="exportCountPrefix">' + I18N.t('exportCountPrefix', '共导出') + '</span> ' + count + ' <span data-i18n="exportCountSuffix">' + I18N.t('exportCountSuffix', '条角色记录') + '</span>';
       document.getElementById('exportModal').classList.add('open');
     }
 
@@ -926,6 +944,151 @@
     });
 
     renderTable();
+
+    // ===== i18n dictionary =====
+    I18N.setDict({
+      // Page
+      pageTitle: {zh:'角色管理 - 角色列表', en:'Role Management - Role List'},
+
+      // Filter
+      lblRoleName: {zh:'角色名称', en:'Role Name'},
+      placeholderRoleName: {zh:'请输入角色名称', en:'Please enter role name'},
+      filterAll: {zh:'全部', en:'All'},
+      statusEnabled: {zh:'启用', en:'Enabled'},
+      statusDisabled: {zh:'停用', en:'Disabled'},
+
+      // Buttons
+      btnSearch: {zh:'查询', en:'Search'},
+      btnReset: {zh:'重置', en:'Reset'},
+      btnBatchExport: {zh:'批量导出', en:'Export'},
+      btnCancel: {zh:'取消', en:'Cancel'},
+      btnSave: {zh:'保存', en:'Save'},
+      btnGotIt: {zh:'我知道了', en:'Got it'},
+      btnConfirmDelete: {zh:'确认删除', en:'Confirm Delete'},
+      btnConfirmAdd: {zh:'确认添加', en:'Confirm'},
+      btnAddUser: {zh:'添加用户', en:'Add User'},
+
+      // Table headers
+      thSeq: {zh:'序号', en:'No.'},
+      thRoleName: {zh:'角色名称', en:'Role Name'},
+      thRoleCode: {zh:'角色编码', en:'Role Code'},
+      thDesc: {zh:'描述', en:'Description'},
+      thStatus: {zh:'状态', en:'Status'},
+      thActions: {zh:'操作', en:'Actions'},
+      thName: {zh:'姓名', en:'Name'},
+      thEmpNo: {zh:'工号', en:'Employee ID'},
+      thOrg: {zh:'所属机构', en:'Organization'},
+      thPosition: {zh:'岗位', en:'Position'},
+
+      // Pagination
+      paginationTotal: {zh:'共', en:'Total '},
+      paginationSuffix: {zh:'条', en:' items'},
+      paginationPerPage: {zh:'每页', en:'Per page'},
+      paginationUnit: {zh:'条', en:''},
+
+      // Edit Modal
+      modalEditTitle: {zh:'编辑角色', en:'Edit Role'},
+      lblRoleCode: {zh:'角色编码', en:'Role Code'},
+      placeholderRoleCode: {zh:'角色编码不可编辑', en:'Role code is not editable'},
+      placeholderRoleDesc: {zh:'请输入角色描述', en:'Please enter role description'},
+      lblRoleStatus: {zh:'角色状态', en:'Role Status'},
+
+      // Permission Modal
+      modalPermTitle: {zh:'权限分配', en:'Permission Assignment'},
+      permMenuBtn: {zh:'菜单/按钮权限', en:'Menu/Button Permissions'},
+      permDataScope: {zh:'数据权限范围', en:'Data Permission Scope'},
+      permOrgDimension: {zh:'机构维度', en:'Organization Dimension'},
+      permAll: {zh:'全部', en:'All'},
+      permSelfAndSub: {zh:'本机构及下设机构', en:'This Org & Sub-orgs'},
+      permSelf: {zh:'本机构', en:'This Organization'},
+      permMine: {zh:'本人', en:'Myself'},
+
+      // User List Drawer
+      drawerUserList: {zh:'用户清单', en:'User List'},
+      drawerRolePrefix: {zh:'角色：', en:'Role: '},
+      placeholderUserSearch: {zh:'搜索姓名/工号', en:'Search name/employee ID'},
+      userCountPrefix: {zh:'共', en:'Total: '},
+      userCountSuffix: {zh:'位用户', en:' users'},
+
+      // Add User Modal
+      modalAddUser: {zh:'添加用户', en:'Add User'},
+      selectedUserCount1: {zh:'已选择', en:'Selected: '},
+      selectedUserCount2: {zh:'位用户', en:' user(s)'},
+
+      // Delete Modal
+      modalDeleteTitle: {zh:'删除确认', en:'Delete Confirmation'},
+      deleteConfirmText: {zh:'确认删除角色？', en:'Confirm to delete this role?'},
+      deleteCannotRecover: {zh:'删除后不可恢复。', en:'This action cannot be undone.'},
+
+      // Export Modal
+      modalExportSuccess: {zh:'导出成功', en:'Export Successful'},
+      exportSuccessText: {zh:'角色数据已导出', en:'Role data has been exported'},
+      exportCountPrefix: {zh:'共导出', en:'Exported '},
+      exportCountSuffix: {zh:'条角色记录', en:' role record(s)'},
+
+      // Permission tags
+      tagSelectAll: {zh:'全选', en:'Select All'},
+      tagList: {zh:'列表', en:'List'},
+      tagButton: {zh:'按钮', en:'Button'},
+
+      // JS action strings
+      actionEdit: {zh:'编辑', en:'Edit'},
+      actionPermAssign: {zh:'权限分配', en:'Permission'},
+      actionViewUsers: {zh:'查看用户清单', en:'View Users'},
+      actionRemove: {zh:'移除', en:'Remove'},
+
+      // Alert messages
+      alertRoleNameRequired: {zh:'请填写角色名称', en:'Please enter role name'},
+      alertSelectUser: {zh:'请至少选择一个用户', en:'Please select at least one user'},
+      alertDisableRoleHaveUsers1: {zh:'角色「', en:'Role "'},
+      alertDisableRoleHaveUsers2: {zh:'」当前已关联 ', en:'" currently has '},
+      alertDisableRoleHaveUsers3: {zh:' 位用户，禁用后这些用户将失去该角色权限。是否确认禁用？', en:' associated user(s). Disabling will revoke the role permissions for these users. Confirm disable?'},
+      alertDeleteRoleHaveUsers1: {zh:'该角色已关联 ', en:'This role has '},
+      alertDeleteRoleHaveUsers2: {zh:' 位用户，请先解除关联用户/流程后再删除。', en:' associated user(s). Please remove user/process associations before deleting.'},
+      alertDeleteRoleConfirm1: {zh:'确认删除角色「', en:'Confirm to delete role "'},
+      alertDeleteRoleConfirm2: {zh:'」？删除后不可恢复。', en:'"? This action cannot be undone.'},
+      alertDeleteRoleNeedUnbind: {zh:'请先解除关联用户/流程后再删除', en:'Please remove user/process associations before deleting'},
+      alertUserHasPendingTasks1: {zh:'该用户当前有待审批任务：', en:'This user has pending approval tasks: '},
+      alertUserHasPendingTasks2: {zh:'，请先处理完成或转移审批任务后再移除。', en:'. Please complete or reassign pending tasks before removing.'},
+      alertLastUserInRole: {zh:'该角色下仅剩此用户，移除后该角色将无关联用户，建议先分配其他用户后再移除。', en:'This is the last user in this role. Removing will leave the role with no users. Please assign another user first.'},
+      pendingTasksSuffix: {zh:'个待办任务', en:' pending task(s)'},
+      pendingTaskTitle: {zh:'有待办任务不可移除', en:'Cannot remove: has pending tasks'},
+      noAvailableUsers: {zh:'暂无可选用户', en:'No available users'},
+
+      // Permission modules
+      permModuleContractGreen: {zh:'合同绿色认定', en:'Contract Green Certification'},
+      permModuleProjectGreen: {zh:'项目绿色认定', en:'Project Green Certification'},
+      permModuleGreenCustomer: {zh:'绿色潜在客户清单', en:'Green Potential Customer List'},
+
+      // Permission actions
+      permActionStartCert: {zh:'开始认定', en:'Start Certification'},
+      permActionViewDetail: {zh:'查看详情', en:'View Details'},
+      permActionViewEval: {zh:'查看企业评价报告', en:'View Enterprise Evaluation Report'},
+      permActionViewBizReport: {zh:'查看企业业务营销报告', en:'View Enterprise Business Marketing Report'}
+    });
+
+    window.onLangChange = function(lang) {
+      renderTable();
+      // Re-render permission tree if modal is open
+      if (document.getElementById('permModal').classList.contains('open')) {
+        if (currentPermRole) {
+          document.getElementById('permRoleName').textContent = I18N.t('drawerRolePrefix', '角色：') + currentPermRole.name;
+        }
+        renderPermTree();
+      }
+      // Re-render user list drawer if open
+      if (document.getElementById('userListDrawer').classList.contains('open')) {
+        if (currentUserListRole) {
+          document.getElementById('userListDrawerRole').innerHTML = '<span data-i18n="drawerRolePrefix">' + I18N.t('drawerRolePrefix', '角色：') + '</span>' + currentUserListRole.name;
+          var users = roleUsers[currentUserListRole.name] || [];
+          renderUserListTable(users);
+        }
+      }
+      // Re-render add user modal if open
+      if (document.getElementById('addUserToRoleModal').classList.contains('open')) {
+        renderAvailableUsers();
+      }
+    };
   </script>
 </body>
 </html>

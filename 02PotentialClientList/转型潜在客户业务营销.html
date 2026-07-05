@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>转型潜在客户业务营销</title>
+    <title data-i18n="page_title">转型潜在客户业务营销</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../i18n.js"></script>
     <style>
         :root {
             --brand-50: #E8F0FB; --brand-100: #D1DFF4; --brand-300: #6E97D6;
@@ -70,173 +71,212 @@
 <body>
 <div class="flex flex-col" style="height:100vh;background:var(--bg-subtle);">
     <div style="padding:16px 24px 0 24px;flex-shrink:0;">
-        <h1 style="font-size:20px;font-weight:700;color:var(--ink-900);">转型潜在客户业务营销</h1>
-        <p style="font-size:13px;color:var(--ink-500);margin-top:2px;">潜在客户业务营销 · 高碳行业转型企业识别与营销管理</p>
+        <h1 style="font-size:18px;font-weight:700;color:var(--ink-900);" data-i18n="page_title">转型潜在客户业务营销</h1>
     </div>
     <div class="flex-1 overflow-hidden" style="padding:16px 24px 24px 24px;">
         <div class="section-card" style="height:100%;">
             <!-- 筛选栏 -->
             <div style="padding:14px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);flex-shrink:0;">
                 <div class="filter-row">
-                    <div class="filter-group" style="min-width:200px;flex:1.5;"><label>企业信息</label><input type="text" placeholder="企业名称/编号/统一社会信用代码"></div>
-                    <div class="filter-group" style="min-width:160px;flex:1;"><label>转型类别</label><select><option>全部类别</option><option>钢铁行业转型</option><option>化工行业转型</option><option>水泥行业转型</option><option>煤电行业转型</option><option>其他高碳行业</option></select></div>
-                    <div class="filter-group" style="min-width:140px;flex:0.8;"><label>转型阶段</label><select><option>全部阶段</option><option>未启动转型</option><option>转型规划中</option><option>转型实施中</option><option>已实现低碳</option></select></div>
-                    <div class="filter-group" style="min-width:140px;flex:0.8;"><label>关注状态</label><select><option>全部状态</option><option>已关注</option><option>未关注</option></select></div>
-                    <div class="filter-group" style="min-width:160px;flex:1;"><label>所属地区</label><select><option>全部地区</option><option>河北省</option><option>浙江省</option><option>江苏省</option><option>山东省</option><option>广东省</option><option>重庆市</option></select></div>
+                    <div class="filter-group" style="min-width:200px;flex:1.5;">
+                        <label data-i18n="filter_enterprise_info">企业信息</label>
+                        <input type="text" data-i18n-placeholder="placeholder_enterprise_search" placeholder="企业名称/编号/统一社会信用代码">
+                    </div>
+                    <div class="filter-group" style="min-width:160px;flex:1;">
+                        <label data-i18n="filter_transition_category">转型类别</label>
+                        <select>
+                            <option data-i18n="all_categories">全部类别</option>
+                            <option data-i18n="steel_transition">钢铁行业转型</option>
+                            <option data-i18n="chemical_transition">化工行业转型</option>
+                            <option data-i18n="cement_transition">水泥行业转型</option>
+                            <option data-i18n="coal_power_transition">煤电行业转型</option>
+                            <option data-i18n="other_high_carbon">其他高碳行业</option>
+                        </select>
+                    </div>
+                    <div class="filter-group" style="min-width:140px;flex:0.8;">
+                        <label data-i18n="filter_transition_stage">转型阶段</label>
+                        <select>
+                            <option data-i18n="all_stages">全部阶段</option>
+                            <option data-i18n="not_started">未启动转型</option>
+                            <option data-i18n="planning">转型规划中</option>
+                            <option data-i18n="in_progress">转型实施中</option>
+                            <option data-i18n="low_carbon_achieved">已实现低碳</option>
+                        </select>
+                    </div>
+                    <div class="filter-group" style="min-width:140px;flex:0.8;">
+                        <label data-i18n="filter_follow_status">关注状态</label>
+                        <select>
+                            <option data-i18n="all_status">全部状态</option>
+                            <option data-i18n="followed">已关注</option>
+                            <option data-i18n="not_followed">未关注</option>
+                        </select>
+                    </div>
+                    <div class="filter-group" style="min-width:160px;flex:1;">
+                        <label data-i18n="filter_region">所属地区</label>
+                        <select>
+                            <option data-i18n="all_regions">全部地区</option>
+                            <option>河北省</option>
+                            <option>浙江省</option>
+                            <option>江苏省</option>
+                            <option>山东省</option>
+                            <option>广东省</option>
+                            <option>重庆市</option>
+                        </select>
+                    </div>
                     <div style="flex:0 0 auto;display:flex;gap:8px;align-items:flex-end;padding-bottom:1px;">
-                        <button class="btn btn-primary btn-sm">查询</button>
-                        <button class="btn btn-secondary btn-sm">重置</button>
+                        <button class="btn btn-primary btn-sm" data-i18n="search">查询</button>
+                        <button class="btn btn-secondary btn-sm" data-i18n="reset">重置</button>
                     </div>
                 </div>
             </div>
             <!-- 操作栏 -->
             <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100 flex-shrink-0">
                 <div class="flex gap-2">
-                    <button class="btn btn-secondary btn-sm" onclick="alert('数据导出成功！共导出 856 条记录。')">
+                    <button class="btn btn-secondary btn-sm" onclick="alert(I18N.t('export_success'))">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                        导出数据
+                        <span data-i18n="export_data">导出数据</span>
                     </button>
                 </div>
-                <span class="text-sm text-slate-400">共 856 条</span>
+                <span class="text-sm text-slate-400" data-i18n="total_records">共 856 条</span>
             </div>
             <!-- 表格 -->
             <div class="table-wrap custom-scroll">
                 <table>
                     <thead>
                         <tr>
-                            <th class="col-seq">序号</th>
-                            <th>企业名称</th>
-                            <th>统一社会信用代码</th>
-                            <th>转型类别</th>
-                            <th>所属地区</th>
-                            <th>经营状态</th>
-                            <th>注册资本</th>
-                            <th>高碳业务占比</th>
-                            <th>转型阶段</th>
-                            <th>转型技术路径</th>
-                            <th>转型资金需求（万元）</th>
-                            <th>适宜转型金融工具</th>
-                            <th class="col-actions">操作</th>
+                            <th class="col-seq" data-i18n="col_seq">序号</th>
+                            <th data-i18n="col_enterprise_name">企业名称</th>
+                            <th data-i18n="col_credit_code">统一社会信用代码</th>
+                            <th data-i18n="col_transition_category">转型类别</th>
+                            <th data-i18n="col_region">所属地区</th>
+                            <th data-i18n="col_status">经营状态</th>
+                            <th data-i18n="col_registered_capital">注册资本</th>
+                            <th data-i18n="col_high_carbon_ratio">高碳业务占比</th>
+                            <th data-i18n="col_stage">转型阶段</th>
+                            <th data-i18n="col_tech_pathway">转型技术路径</th>
+                            <th data-i18n="col_funding_need">转型资金需求（万元）</th>
+                            <th data-i18n="col_financial_tools">适宜转型金融工具</th>
+                            <th class="col-actions" data-i18n="col_actions">操作</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td class="col-seq">1</td>
-                            <td style="font-weight:500;color:var(--ink-900);">迁安轧一钢铁集团有限公司</td>
+                            <td style="font-weight:500;color:var(--ink-900);" data-i18n="迁安钢铁有限责任公司">迁安钢铁有限责任公司</td>
                             <td style="font-family:monospace;font-size:12px;">123456789123456789</td>
-                            <td><span class="transition-tag trans-steel">钢铁行业转型</span></td>
+                            <td><span class="transition-tag trans-steel" data-i18n="steel_transition">钢铁行业转型</span></td>
                             <td>河北省唐山市</td>
-                            <td><span class="tag tag-success">存续</span></td>
+                            <td><span class="tag tag-success" data-i18n="status_active">存续</span></td>
                             <td style="font-family:var(--font-num);">1,356,879,522</td>
                             <td style="font-family:var(--font-num);color:var(--danger);">82%</td>
-                            <td><span class="tag tag-warning">转型规划中</span></td>
-                            <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;" title="氢基直接还原铁（DRI）+ 电弧炉短流程炼钢">氢基直接还原铁（DRI）+ 电弧炉短流程炼钢</td>
+                            <td><span class="tag tag-warning" data-i18n="planning">转型规划中</span></td>
+                            <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;" data-i18n="氢基直接还原铁（DRI）+ 电弧炉短流程炼钢" title="氢基直接还原铁（DRI）+ 电弧炉短流程炼钢">氢基直接还原铁（DRI）+ 电弧炉短流程炼钢</td>
                             <td style="font-family:var(--font-num);text-align:right;">350,000</td>
                             <td>转型债券 + 可持续发展挂钩贷款</td>
                             <td class="col-actions">
                                 <div class="action-btns">
-                                    <button class="btn btn-deep-blue btn-sm">企业评价报告</button>
-                                    <button class="btn btn-light-blue btn-sm">转型业务营销报告</button>
+                                    <button class="btn btn-deep-blue btn-sm" data-i18n="enterprise_report">企业评价报告</button>
+                                    <button class="btn btn-light-blue btn-sm" data-i18n="transition_marketing_report">转型业务营销报告</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="col-seq">2</td>
-                            <td style="font-weight:500;color:var(--ink-900);">浙江龙盛集团股份有限公司</td>
+                            <td style="font-weight:500;color:var(--ink-900);" data-i18n="龙森化工集团有限公司">龙森化工集团有限公司</td>
                             <td style="font-family:monospace;font-size:12px;">91330000146212345X</td>
-                            <td><span class="transition-tag trans-chem">化工行业转型</span></td>
+                            <td><span class="transition-tag trans-chem" data-i18n="chemical_transition">化工行业转型</span></td>
                             <td>浙江省绍兴市</td>
-                            <td><span class="tag tag-success">存续</span></td>
+                            <td><span class="tag tag-success" data-i18n="status_active">存续</span></td>
                             <td style="font-family:var(--font-num);">2,233,282,743</td>
                             <td style="font-family:var(--font-num);color:var(--danger);">75%</td>
-                            <td><span class="tag tag-warning">转型实施中</span></td>
-                            <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;" title="化工过程电气化+绿电替代+碳捕集利用（CCUS）">化工过程电气化+绿电替代+碳捕集利用（CCUS）</td>
+                            <td><span class="tag tag-warning" data-i18n="in_progress">转型实施中</span></td>
+                            <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;" data-i18n="化工过程电气化+绿电替代+碳捕集利用（CCUS）" title="化工过程电气化+绿电替代+碳捕集利用（CCUS）">化工过程电气化+绿电替代+碳捕集利用（CCUS）</td>
                             <td style="font-family:var(--font-num);text-align:right;">280,000</td>
                             <td>可持续发展挂钩债券 + 转型贷款</td>
                             <td class="col-actions">
                                 <div class="action-btns">
-                                    <button class="btn btn-deep-blue btn-sm">企业评价报告</button>
-                                    <button class="btn btn-light-blue btn-sm">转型业务营销报告</button>
+                                    <button class="btn btn-deep-blue btn-sm" data-i18n="enterprise_report">企业评价报告</button>
+                                    <button class="btn btn-light-blue btn-sm" data-i18n="transition_marketing_report">转型业务营销报告</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="col-seq">3</td>
-                            <td style="font-weight:500;color:var(--ink-900);">唐山冀东水泥股份有限公司</td>
+                            <td style="font-weight:500;color:var(--ink-900);" data-i18n="冀东水泥股份有限公司">冀东水泥股份有限公司</td>
                             <td style="font-family:monospace;font-size:12px;">911302001234567890</td>
-                            <td><span class="transition-tag trans-cement">水泥行业转型</span></td>
+                            <td><span class="transition-tag trans-cement" data-i18n="cement_transition">水泥行业转型</span></td>
                             <td>河北省唐山市</td>
-                            <td><span class="tag tag-success">存续</span></td>
+                            <td><span class="tag tag-success" data-i18n="status_active">存续</span></td>
                             <td style="font-family:var(--font-num);">2,472,000,000</td>
                             <td style="font-family:var(--font-num);color:var(--danger);">90%</td>
-                            <td><span class="tag tag-warning">转型规划中</span></td>
-                            <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;" title="替代燃料（RDF）+低碳水泥熟料+碳捕集">替代燃料（RDF）+低碳水泥熟料+碳捕集</td>
+                            <td><span class="tag tag-warning" data-i18n="planning">转型规划中</span></td>
+                            <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;" data-i18n="替代燃料（RDF）+低碳水泥熟料+碳捕集" title="替代燃料（RDF）+低碳水泥熟料+碳捕集">替代燃料（RDF）+低碳水泥熟料+碳捕集</td>
                             <td style="font-family:var(--font-num);text-align:right;">500,000</td>
                             <td>转型债券 + 碳减排支持工具</td>
                             <td class="col-actions">
                                 <div class="action-btns">
-                                    <button class="btn btn-deep-blue btn-sm">企业评价报告</button>
-                                    <button class="btn btn-light-blue btn-sm">转型业务营销报告</button>
+                                    <button class="btn btn-deep-blue btn-sm" data-i18n="enterprise_report">企业评价报告</button>
+                                    <button class="btn btn-light-blue btn-sm" data-i18n="transition_marketing_report">转型业务营销报告</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="col-seq">4</td>
-                            <td style="font-weight:500;color:var(--ink-900);">华能国际电力股份有限公司德州电厂</td>
+                            <td style="font-weight:500;color:var(--ink-900);" data-i18n="华能德州电厂">华能德州电厂</td>
                             <td style="font-family:monospace;font-size:12px;">913714001234567890</td>
-                            <td><span class="transition-tag trans-power">煤电行业转型</span></td>
+                            <td><span class="transition-tag trans-power" data-i18n="coal_power_transition">煤电行业转型</span></td>
                             <td>山东省德州市</td>
-                            <td><span class="tag tag-success">存续</span></td>
+                            <td><span class="tag tag-success" data-i18n="status_active">存续</span></td>
                             <td style="font-family:var(--font-num);">500,000</td>
                             <td style="font-family:var(--font-num);color:var(--danger);">95%</td>
-                            <td><span class="tag tag-danger">未启动转型</span></td>
-                            <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;" title="煤电+生物质耦合发电+CCUS改造">煤电+生物质耦合发电+CCUS改造</td>
+                            <td><span class="tag tag-danger" data-i18n="not_started">未启动转型</span></td>
+                            <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;" data-i18n="煤电+生物质耦合发电+CCUS改造" title="煤电+生物质耦合发电+CCUS改造">煤电+生物质耦合发电+CCUS改造</td>
                             <td style="font-family:var(--font-num);text-align:right;">420,000</td>
                             <td>转型贷款 + 碳减排支持工具</td>
                             <td class="col-actions">
                                 <div class="action-btns">
-                                    <button class="btn btn-deep-blue btn-sm">企业评价报告</button>
-                                    <button class="btn btn-light-blue btn-sm">转型业务营销报告</button>
+                                    <button class="btn btn-deep-blue btn-sm" data-i18n="enterprise_report">企业评价报告</button>
+                                    <button class="btn btn-light-blue btn-sm" data-i18n="transition_marketing_report">转型业务营销报告</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="col-seq">5</td>
-                            <td style="font-weight:500;color:var(--ink-900);">江苏沙钢集团有限公司</td>
+                            <td style="font-weight:500;color:var(--ink-900);" data-i18n="沙钢集团有限公司">沙钢集团有限公司</td>
                             <td style="font-family:monospace;font-size:12px;">913205821234567890</td>
-                            <td><span class="transition-tag trans-steel">钢铁行业转型</span></td>
+                            <td><span class="transition-tag trans-steel" data-i18n="steel_transition">钢铁行业转型</span></td>
                             <td>江苏省张家港市</td>
-                            <td><span class="tag tag-success">存续</span></td>
+                            <td><span class="tag tag-success" data-i18n="status_active">存续</span></td>
                             <td style="font-family:var(--font-num);">4,500,000,000</td>
                             <td style="font-family:var(--font-num);color:var(--danger);">88%</td>
-                            <td><span class="tag tag-warning">转型实施中</span></td>
-                            <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;" title="全废钢电弧炉短流程+智慧能碳管理平台">全废钢电弧炉短流程+智慧能碳管理平台</td>
+                            <td><span class="tag tag-warning" data-i18n="in_progress">转型实施中</span></td>
+                            <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;" data-i18n="全废钢电弧炉短流程+智慧能碳管理平台" title="全废钢电弧炉短流程+智慧能碳管理平台">全废钢电弧炉短流程+智慧能碳管理平台</td>
                             <td style="font-family:var(--font-num);text-align:right;">800,000</td>
                             <td>可持续发展挂钩贷款 + 绿色债券</td>
                             <td class="col-actions">
                                 <div class="action-btns">
-                                    <button class="btn btn-deep-blue btn-sm">企业评价报告</button>
-                                    <button class="btn btn-light-blue btn-sm">转型业务营销报告</button>
+                                    <button class="btn btn-deep-blue btn-sm" data-i18n="enterprise_report">企业评价报告</button>
+                                    <button class="btn btn-light-blue btn-sm" data-i18n="transition_marketing_report">转型业务营销报告</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="col-seq">6</td>
-                            <td style="font-weight:500;color:var(--ink-900);">重庆钢铁股份有限公司</td>
+                            <td style="font-weight:500;color:var(--ink-900);" data-i18n="重庆钢铁股份有限公司">重庆钢铁股份有限公司</td>
                             <td style="font-family:monospace;font-size:12px;">915000001234567890</td>
-                            <td><span class="transition-tag trans-steel">钢铁行业转型</span></td>
+                            <td><span class="transition-tag trans-steel" data-i18n="steel_transition">钢铁行业转型</span></td>
                             <td>重庆市长寿区</td>
-                            <td><span class="tag tag-success">存续</span></td>
+                            <td><span class="tag tag-success" data-i18n="status_active">存续</span></td>
                             <td style="font-family:var(--font-num);">8,919,822,739</td>
                             <td style="font-family:var(--font-num);color:var(--danger);">85%</td>
-                            <td><span class="tag tag-warning">转型规划中</span></td>
-                            <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;" title="高炉富氢冶炼+连铸连轧节能改造">高炉富氢冶炼+连铸连轧节能改造</td>
+                            <td><span class="tag tag-warning" data-i18n="planning">转型规划中</span></td>
+                            <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;" data-i18n="高炉富氢冶炼+连铸连轧节能改造" title="高炉富氢冶炼+连铸连轧节能改造">高炉富氢冶炼+连铸连轧节能改造</td>
                             <td style="font-family:var(--font-num);text-align:right;">650,000</td>
                             <td>转型债券 + 可持续发展挂钩贷款</td>
                             <td class="col-actions">
                                 <div class="action-btns">
-                                    <button class="btn btn-deep-blue btn-sm">企业评价报告</button>
-                                    <button class="btn btn-light-blue btn-sm">转型业务营销报告</button>
+                                    <button class="btn btn-deep-blue btn-sm" data-i18n="enterprise_report">企业评价报告</button>
+                                    <button class="btn btn-light-blue btn-sm" data-i18n="transition_marketing_report">转型业务营销报告</button>
                                 </div>
                             </td>
                         </tr>
@@ -245,20 +285,114 @@
             </div>
             <!-- 分页 -->
             <div class="flex items-center justify-between px-6 py-3 border-t border-slate-100 flex-shrink-0">
-                <span class="text-sm text-slate-400">共 856 条</span>
+                <span class="text-sm text-slate-400" data-i18n="total_records">共 856 条</span>
                 <div class="flex items-center gap-2">
-                    <button class="btn btn-secondary btn-sm">‹</button>
+                    <button class="btn btn-secondary btn-sm">&#8249;</button>
                     <span class="px-2 py-1 text-sm bg-brand-500 text-white rounded">1</span>
                     <button class="btn btn-secondary btn-sm">2</button>
                     <button class="btn btn-secondary btn-sm">3</button>
-                    <span class="text-sm text-slate-400">…</span>
+                    <span class="text-sm text-slate-400">&hellip;</span>
                     <button class="btn btn-secondary btn-sm">43</button>
-                    <button class="btn btn-secondary btn-sm">›</button>
-                    <span class="text-sm text-slate-500 ml-2">跳至 <input type="number" class="w-12 px-1 py-0.5 border border-slate-300 rounded text-center text-sm" value="1"> /43页</span>
+                    <button class="btn btn-secondary btn-sm">&#8250;</button>
+                    <span class="text-sm text-slate-500 ml-2">
+                        <span data-i18n="jump_to">跳至</span>
+                        <input type="number" class="w-12 px-1 py-0.5 border border-slate-300 rounded text-center text-sm" value="1" data-i18n-placeholder="page_input_placeholder" placeholder="1">
+                        <span> /43<span data-i18n="page_unit">页</span></span>
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+I18N.setDict({
+    page_title: {zh:'转型潜在客户业务营销', en:'Transition Client Marketing'},
+
+    // 筛选栏 - 标签
+    filter_enterprise_info: {zh:'企业信息', en:'Enterprise Info'},
+    filter_transition_category: {zh:'转型类别', en:'Transition Category'},
+    filter_transition_stage: {zh:'转型阶段', en:'Transition Stage'},
+    filter_follow_status: {zh:'关注状态', en:'Follow Status'},
+    filter_region: {zh:'所属地区', en:'Region'},
+
+    // 筛选栏 - 输入提示
+    placeholder_enterprise_search: {zh:'企业名称/编号/统一社会信用代码', en:'Enterprise Name/ID/Credit Code'},
+
+    // 筛选栏 - 转型类别选项
+    all_categories: {zh:'全部类别', en:'All Categories'},
+    steel_transition: {zh:'钢铁行业转型', en:'Steel Transition'},
+    chemical_transition: {zh:'化工行业转型', en:'Chemical Transition'},
+    cement_transition: {zh:'水泥行业转型', en:'Cement Transition'},
+    coal_power_transition: {zh:'煤电行业转型', en:'Coal Power Transition'},
+    other_high_carbon: {zh:'其他高碳行业', en:'Other High-Carbon'},
+
+    // 筛选栏 - 转型阶段选项
+    all_stages: {zh:'全部阶段', en:'All Stages'},
+    not_started: {zh:'未启动转型', en:'Not Started'},
+    planning: {zh:'转型规划中', en:'Planning'},
+    in_progress: {zh:'转型实施中', en:'In Progress'},
+    low_carbon_achieved: {zh:'已实现低碳', en:'Low-Carbon Achieved'},
+
+    // 筛选栏 - 关注状态选项
+    all_status: {zh:'全部状态', en:'All'},
+    followed: {zh:'已关注', en:'Followed'},
+    not_followed: {zh:'未关注', en:'Not Followed'},
+
+    // 筛选栏 - 地区选项（通用项）
+    all_regions: {zh:'全部地区', en:'All Regions'},
+
+    // 按钮
+    search: {zh:'查询', en:'Search'},
+    reset: {zh:'重置', en:'Reset'},
+    export_data: {zh:'导出数据', en:'Export Data'},
+
+    // 表格列头
+    col_seq: {zh:'序号', en:'#'},
+    col_enterprise_name: {zh:'企业名称', en:'Enterprise Name'},
+    col_credit_code: {zh:'统一社会信用代码', en:'Credit Code'},
+    col_transition_category: {zh:'转型类别', en:'Transition Category'},
+    col_region: {zh:'所属地区', en:'Region'},
+    col_status: {zh:'经营状态', en:'Status'},
+    col_registered_capital: {zh:'注册资本', en:'Registered Capital'},
+    col_high_carbon_ratio: {zh:'高碳业务占比', en:'High-Carbon Ratio'},
+    col_stage: {zh:'转型阶段', en:'Stage'},
+    col_tech_pathway: {zh:'转型技术路径', en:'Tech Pathway'},
+    col_funding_need: {zh:'转型资金需求（万元）', en:'Funding Need (10k CNY)'},
+    col_financial_tools: {zh:'适宜转型金融工具', en:'Suitable Financial Tools'},
+    col_actions: {zh:'操作', en:'Actions'},
+
+    // 经营状态
+    status_active: {zh:'存续', en:'Active'},
+
+    // 操作按钮
+    enterprise_report: {zh:'企业评价报告', en:'Enterprise Report'},
+    transition_marketing_report: {zh:'转型业务营销报告', en:'Transition Marketing Report'},
+
+    // 分页
+    total_records: {zh:'共 856 条', en:'Total 856 records'},
+    jump_to: {zh:'跳至', en:'Jump to'},
+    page_unit: {zh:'页', en:'Page'},
+    page_input_placeholder: {zh:'1', en:'1'},
+
+    // 导出提示
+    export_success: {zh:'数据导出成功！共导出 856 条记录。', en:'Data exported successfully! Total 856 records exported.'},
+
+    // 公司名称（中文作为 key）
+    '迁安钢铁有限责任公司': {zh:'迁安钢铁有限责任公司', en:"Qian'an Iron & Steel Co., Ltd."},
+    '龙森化工集团有限公司': {zh:'龙森化工集团有限公司', en:'Longsen Chemical Group Co., Ltd.'},
+    '冀东水泥股份有限公司': {zh:'冀东水泥股份有限公司', en:'Jidong Cement Co., Ltd.'},
+    '华能德州电厂': {zh:'华能德州电厂', en:'Huaneng Dezhou Power Plant'},
+    '沙钢集团有限公司': {zh:'沙钢集团有限公司', en:'Shagang Group Co., Ltd.'},
+    '重庆钢铁股份有限公司': {zh:'重庆钢铁股份有限公司', en:"Chongqing Iron & Steel Co., Ltd."},
+
+    // 转型技术路径（中文作为 key）
+    '氢基直接还原铁（DRI）+ 电弧炉短流程炼钢': {zh:'氢基直接还原铁（DRI）+ 电弧炉短流程炼钢', en:'H₂-based DRI + EAF Short Process'},
+    '化工过程电气化+绿电替代+碳捕集利用（CCUS）': {zh:'化工过程电气化+绿电替代+碳捕集利用（CCUS）', en:'Chemical Electrification + Green Power + CCUS'},
+    '替代燃料（RDF）+低碳水泥熟料+碳捕集': {zh:'替代燃料（RDF）+低碳水泥熟料+碳捕集', en:'Alternative Fuel (RDF) + Low-Carbon Clinker + CC'},
+    '煤电+生物质耦合发电+CCUS改造': {zh:'煤电+生物质耦合发电+CCUS改造', en:'Coal-Biomass Co-firing + CCUS Retrofit'},
+    '全废钢电弧炉短流程+智慧能碳管理平台': {zh:'全废钢电弧炉短流程+智慧能碳管理平台', en:'Full-scrap EAF + Smart Carbon Mgmt Platform'},
+    '高炉富氢冶炼+连铸连轧节能改造': {zh:'高炉富氢冶炼+连铸连轧节能改造', en:'H₂-rich BF Smelting + Continuous Casting Upgrade'},
+});
+</script>
 </body>
 </html>

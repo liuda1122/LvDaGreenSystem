@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>潜在客户营销过程管理</title>
+    <title data-i18n="pageTitle">潜在客户营销过程管理</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
@@ -90,131 +90,140 @@
         .form-item input,.form-item select,.form-item textarea{padding:8px 12px;border:1px solid var(--line-200);border-radius:var(--radius-md);font-size:14px;font-family:inherit;background:var(--white);outline:none;width:100%}
         .form-item input:focus,.form-item select:focus,.form-item textarea:focus{border-color:var(--brand-500)}
         .form-item textarea{resize:vertical;min-height:70px}
+        .lang-switch{display:inline-flex;align-items:center;gap:4px;font-size:12px;cursor:pointer;padding:2px 8px;border:1px solid var(--line-200);border-radius:var(--radius-md);background:var(--white);color:var(--ink-500);transition:all .15s}
+        .lang-switch:hover{border-color:var(--brand-500);color:var(--brand-500)}
+        .lang-switch.active{background:var(--brand-50);color:var(--brand-700);border-color:var(--brand-500);font-weight:600}
     </style>
+    <script src="../i18n.js"></script>
 </head>
 <body>
 <div class="flex flex-col" style="height:100vh;background:var(--bg-subtle);">
     <div style="padding:16px 24px 0 24px;flex-shrink:0;">
-        <h1 style="font-size:20px;font-weight:700;color:var(--ink-900);">潜在客户营销过程管理</h1>
-        <p style="font-size:13px;color:var(--ink-500);margin-top:2px;">潜在客户业务营销 · 已引入营销管理的客户清单及进度跟踪</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+            <h1 style="font-size:20px;font-weight:700;color:var(--ink-900);" data-i18n="pageTitle">潜在客户营销过程管理</h1>
+            <div style="display:flex;gap:4px;">
+                <button class="lang-switch active" id="btnZh" onclick="I18N.setLang('zh')">中</button>
+                <button class="lang-switch" id="btnEn" onclick="I18N.setLang('en')">EN</button>
+            </div>
+        </div>
     </div>
     <div class="flex-1 overflow-hidden" style="padding:16px 24px 24px 24px;">
         <div class="section-card" style="height:100%;">
             <!-- 筛选栏 -->
             <div style="padding:14px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);flex-shrink:0;">
                 <div class="filter-row">
-                    <div class="filter-group" style="min-width:200px;flex:1.5;"><label>企业名称/编号</label><input type="text" placeholder="请输入企业名称或编号"></div>
-                    <div class="filter-group" style="min-width:150px;flex:1;"><label>所属地区</label><select><option>全部地区</option><option>浙江省</option><option>江苏省</option><option>上海市</option><option>北京市</option><option>河北省</option><option>广东省</option><option>重庆市</option></select></div>
-                    <div class="filter-group" style="min-width:150px;flex:1;"><label>营销阶段</label><select><option>全部阶段</option><option>初步对接</option><option>持续营销中</option><option>融资方案对接</option><option>申报授信</option><option>营销成功，已批复授信</option><option>营销成功，已放款</option><option>未营销成功</option></select></div>
-                    <div class="filter-group" style="min-width:120px;flex:0.8;"><label>营销优先级</label><select><option>全部优先级</option><option>高</option><option>中</option><option>低</option></select></div>
-                    <div class="filter-group" style="min-width:140px;flex:0.8;"><label>对接人</label><input type="text" placeholder="输入姓名/工号"></div>
+                    <div class="filter-group" style="min-width:200px;flex:1.5;"><label data-i18n="filterNameCode">企业名称/编号</label><input type="text" data-i18n-placeholder="placeholderNameCode" placeholder="请输入企业名称或编号"></div>
+                    <div class="filter-group" style="min-width:150px;flex:1;"><label data-i18n="filterRegion">所属地区</label><select><option data-i18n="allRegions">全部地区</option><option>浙江省</option><option>江苏省</option><option>上海市</option><option>北京市</option><option>河北省</option><option>广东省</option><option>重庆市</option></select></div>
+                    <div class="filter-group" style="min-width:150px;flex:1;"><label data-i18n="filterStage">营销阶段</label><select><option data-i18n="allStages">全部阶段</option><option data-i18n="stageInit">初步对接</option><option data-i18n="stageOngoing">持续营销中</option><option data-i18n="stageFinance">融资方案对接</option><option data-i18n="stageCredit">申报授信</option><option data-i18n="stageSuccessCredit">营销成功，已批复授信</option><option data-i18n="stageSuccessLoan">营销成功，已放款</option><option data-i18n="stageFail">未营销成功</option></select></div>
+                    <div class="filter-group" style="min-width:120px;flex:0.8;"><label data-i18n="filterPriority">营销优先级</label><select><option data-i18n="allPriorities">全部优先级</option><option data-i18n="priorityHigh">高</option><option data-i18n="priorityMid">中</option><option data-i18n="priorityLow">低</option></select></div>
+                    <div class="filter-group" style="min-width:140px;flex:0.8;"><label data-i18n="filterContact">对接人</label><input type="text" data-i18n-placeholder="placeholderContact" placeholder="输入姓名/工号"></div>
                     <div class="filter-group" style="flex:0 0 auto;flex-direction:row;align-items:flex-end;gap:8px;padding-bottom:1px;">
-                        <button class="btn btn-primary btn-sm">查询</button>
-                        <button class="btn btn-secondary btn-sm">重置</button>
+                        <button class="btn btn-primary btn-sm" data-i18n="btnSearch">查询</button>
+                        <button class="btn btn-secondary btn-sm" data-i18n="btnReset">重置</button>
                     </div>
                 </div>
             </div>
             <!-- 操作栏 -->
             <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100 flex-shrink-0">
-                <div class="flex gap-2"><button class="btn btn-secondary btn-sm" onclick="alert('数据导出成功！')">导出</button></div>
-                <span class="text-sm text-slate-400">共 18 条</span>
+                <div class="flex gap-2"><button class="btn btn-secondary btn-sm" data-i18n="btnExport" onclick="alert(I18N.t('msgExportSuccess'))">导出</button></div>
+                <span class="text-sm text-slate-400" data-i18n="totalRecordsCount">共 18 条</span>
             </div>
             <!-- 表格 -->
             <div class="table-wrap custom-scroll">
                 <table>
                     <thead>
                         <tr>
-                            <th class="col-seq">序号</th>
-                            <th>企业名称</th>
-                            <th>企业编号</th>
-                            <th>所属地区</th>
-                            <th>所属行业</th>
-                            <th>绿色等级</th>
-                            <th>营销方案</th>
-                            <th>当前营销阶段</th>
-                            <th>对接人</th>
-                            <th>最近更新日期</th>
-                            <th>下次跟进计划</th>
-                            <th class="col-actions">操作</th>
+                            <th class="col-seq" data-i18n="colSeq">序号</th>
+                            <th data-i18n="colEnterpriseName">企业名称</th>
+                            <th data-i18n="colCode">企业编号</th>
+                            <th data-i18n="colRegion">所属地区</th>
+                            <th data-i18n="colIndustry">所属行业</th>
+                            <th data-i18n="colGreenLevel">绿色等级</th>
+                            <th data-i18n="colMarketingPlan">营销方案</th>
+                            <th data-i18n="colCurrentStage">当前营销阶段</th>
+                            <th data-i18n="colContact">对接人</th>
+                            <th data-i18n="colLastUpdated">最近更新日期</th>
+                            <th data-i18n="colNextFollowUp">下次跟进计划</th>
+                            <th class="col-actions" data-i18n="colActions">操作</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td class="col-seq">1</td>
-                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;">浙江嘉化能源化工股份有限公司</td>
+                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;" data-i18n="companyJiahuaEnergy">浙江嘉化能源化工股份有限公司</td>
                             <td style="font-family:monospace;font-size:12px;">913300007463411432</td>
                             <td>浙江省嘉兴市</td>
                             <td>化学原料和化学制品制造业</td>
-                            <td><span class="tag tag-success">深绿</span></td>
+                            <td><span class="tag tag-success" data-i18n="greenDeep">深绿</span></td>
                             <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;">推荐绿色项目贷款+10%贴息申报</td>
-                            <td><span class="stage-tag stage-finance">融资方案对接</span></td>
+                            <td><span class="stage-tag stage-finance" data-i18n="stageFinance">融资方案对接</span></td>
                             <td>张伟</td>
                             <td>2025-06-28</td>
                             <td>2025-07-15</td>
-                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" onclick="openUpdateModal(0)">更新进度</button><button class="btn btn-light-blue btn-sm" onclick="openRecordDrawer(0)">查看记录</button></div></td>
+                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" data-i18n="btnUpdateProgress" onclick="openUpdateModal(0)">更新进度</button><button class="btn btn-light-blue btn-sm" data-i18n="btnViewRecords" onclick="openRecordDrawer(0)">查看记录</button></div></td>
                         </tr>
                         <tr>
                             <td class="col-seq">2</td>
-                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;">桐昆集团浙江恒越化纤有限公司</td>
+                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;" data-i18n="companyTongkunHengyue">桐昆恒岳新材料有限公司</td>
                             <td style="font-family:monospace;font-size:12px;">91330400MA2B85HP0Y</td>
                             <td>浙江省嘉兴市</td>
                             <td>合成纤维制造</td>
-                            <td><span class="tag tag-success">深绿</span></td>
+                            <td><span class="tag tag-success" data-i18n="greenDeep">深绿</span></td>
                             <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;">推荐能效贷款+碳排放权质押</td>
-                            <td><span class="stage-tag stage-ongoing">持续营销中</span></td>
+                            <td><span class="stage-tag stage-ongoing" data-i18n="stageOngoing">持续营销中</span></td>
                             <td>赵丽</td>
                             <td>2025-06-25</td>
                             <td>2025-07-08</td>
-                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" onclick="openUpdateModal(1)">更新进度</button><button class="btn btn-light-blue btn-sm" onclick="openRecordDrawer(1)">查看记录</button></div></td>
+                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" data-i18n="btnUpdateProgress" onclick="openUpdateModal(1)">更新进度</button><button class="btn btn-light-blue btn-sm" data-i18n="btnViewRecords" onclick="openRecordDrawer(1)">查看记录</button></div></td>
                         </tr>
                         <tr>
                             <td class="col-seq">3</td>
-                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;">湖州南太湖绿色能源有限公司</td>
+                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;" data-i18n="companyHuzhouNantaihu">湖州南太湖环保能源有限公司</td>
                             <td style="font-family:monospace;font-size:12px;">91330502MA28C6K2XJ</td>
                             <td>浙江省湖州市</td>
                             <td>太阳能发电</td>
-                            <td><span class="tag tag-success">中绿</span></td>
+                            <td><span class="tag tag-success" data-i18n="greenMid">中绿</span></td>
                             <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;">推荐碳减排支持工具贷款</td>
-                            <td><span class="stage-tag stage-init">初步对接</span></td>
+                            <td><span class="stage-tag stage-init" data-i18n="stageInit">初步对接</span></td>
                             <td>李明</td>
                             <td>2025-06-20</td>
                             <td>2025-07-02</td>
-                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" onclick="openUpdateModal(2)">更新进度</button><button class="btn btn-light-blue btn-sm" onclick="openRecordDrawer(2)">查看记录</button></div></td>
+                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" data-i18n="btnUpdateProgress" onclick="openUpdateModal(2)">更新进度</button><button class="btn btn-light-blue btn-sm" data-i18n="btnViewRecords" onclick="openRecordDrawer(2)">查看记录</button></div></td>
                         </tr>
                         <tr>
                             <td class="col-seq">4</td>
-                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;">迁安轧一钢铁集团有限公司</td>
+                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;" data-i18n="companyQiananSteel">迁安钢铁有限责任公司</td>
                             <td style="font-family:monospace;font-size:12px;">123456789123456789</td>
                             <td>河北省唐山市</td>
                             <td>炼钢</td>
-                            <td><span class="tag tag-warning">非绿</span></td>
+                            <td><span class="tag tag-warning" data-i18n="greenNonGreen">非绿</span></td>
                             <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;">推荐转型贷款+节能减排改造</td>
-                            <td><span class="stage-tag stage-success-credit">营销成功，已批复授信</span></td>
+                            <td><span class="stage-tag stage-success-credit" data-i18n="stageSuccessCredit">营销成功，已批复授信</span></td>
                             <td>王强</td>
                             <td>2025-06-18</td>
                             <td>—</td>
-                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" onclick="openUpdateModal(3)">更新进度</button><button class="btn btn-light-blue btn-sm" onclick="openRecordDrawer(3)">查看记录</button></div></td>
+                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" data-i18n="btnUpdateProgress" onclick="openUpdateModal(3)">更新进度</button><button class="btn btn-light-blue btn-sm" data-i18n="btnViewRecords" onclick="openRecordDrawer(3)">查看记录</button></div></td>
                         </tr>
                         <tr>
                             <td class="col-seq">5</td>
-                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;">北京绿色科技发展有限公司</td>
+                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;" data-i18n="companyBeijingLvyuan">北京绿源科技有限公司</td>
                             <td style="font-family:monospace;font-size:12px;">91110108MA01WQ4K8T</td>
                             <td>北京市</td>
                             <td>科技推广和应用服务业</td>
-                            <td><span class="tag tag-success">深绿</span></td>
+                            <td><span class="tag tag-success" data-i18n="greenDeep">深绿</span></td>
                             <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;">推荐绿色科创贷款+知识产权质押</td>
-                            <td><span class="stage-tag stage-success-loan">营销成功，已放款</span></td>
+                            <td><span class="stage-tag stage-success-loan" data-i18n="stageSuccessLoan">营销成功，已放款</span></td>
                             <td>陈雪</td>
                             <td>2025-06-10</td>
                             <td>—</td>
-                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" onclick="openUpdateModal(4)">更新进度</button><button class="btn btn-light-blue btn-sm" onclick="openRecordDrawer(4)">查看记录</button></div></td>
+                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" data-i18n="btnUpdateProgress" onclick="openUpdateModal(4)">更新进度</button><button class="btn btn-light-blue btn-sm" data-i18n="btnViewRecords" onclick="openRecordDrawer(4)">查看记录</button></div></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <!-- 分页 -->
             <div class="flex items-center justify-between px-6 py-3 border-t border-slate-100 flex-shrink-0">
-                <span class="text-sm text-slate-400">共 18 条</span>
+                <span class="text-sm text-slate-400" data-i18n="totalRecordsCount">共 18 条</span>
                 <div class="flex items-center gap-2">
                     <button class="btn btn-secondary btn-sm">‹</button><span class="px-2 py-1 text-sm bg-brand-500 text-white rounded">1</span><button class="btn btn-secondary btn-sm">2</button><button class="btn btn-secondary btn-sm">3</button><button class="btn btn-secondary btn-sm">›</button>
                 </div>
@@ -224,50 +233,194 @@
 </div>
 <!-- 更新进度浮窗 -->
 <div class="modal-mask" id="updateModal">
-    <div class="modal-md"><div class="modal-head"><span class="modal-title" style="font-size:16px;font-weight:700;">更新营销进度</span><button class="btn btn-secondary btn-sm" onclick="closeUpdateModal()">✕</button></div>
+    <div class="modal-md"><div class="modal-head"><span class="modal-title" style="font-size:16px;font-weight:700;" data-i18n="modalTitle">更新营销进度</span><button class="btn btn-secondary btn-sm" onclick="closeUpdateModal()">✕</button></div>
     <div class="modal-body">
-        <div class="form-item"><label><span class="req">*</span> 当前营销阶段</label><select><option>请选择</option><option>初步对接</option><option>持续营销中</option><option>融资方案对接</option><option>申报授信</option><option>营销成功，已批复授信</option><option>营销成功，已放款</option><option>未营销成功，客户无意向</option><option>未营销成功，客户已选其他产品</option></select></div>
-        <div class="form-item"><label><span class="req">*</span> 对接人</label><input type="text" placeholder="请输入负责营销的员工姓名"></div>
-        <div class="form-item"><label>对接机构</label><input type="text" placeholder="请输入对接的金融机构名称"></div>
-        <div class="form-item"><label>进度说明</label><textarea placeholder="请详细描述本次营销进度情况..."></textarea></div>
-        <div class="form-item"><label>下次跟进计划</label><input type="date"></div>
+        <div class="form-item"><label><span class="req" aria-label="required">*</span> <span data-i18n="formStage">当前营销阶段</span></label><select>
+            <option data-i18n="optSelect">请选择</option>
+            <option data-i18n="stageInit">初步对接</option>
+            <option data-i18n="stageOngoing">持续营销中</option>
+            <option data-i18n="stageFinance">融资方案对接</option>
+            <option data-i18n="stageCredit">申报授信</option>
+            <option data-i18n="stageSuccessCredit">营销成功，已批复授信</option>
+            <option data-i18n="stageSuccessLoan">营销成功，已放款</option>
+            <option data-i18n="stageFailNoInterest">未营销成功，客户无意向</option>
+            <option data-i18n="stageFailChoseOther">未营销成功，客户已选其他产品</option>
+        </select></div>
+        <div class="form-item"><label><span class="req" aria-label="required">*</span> <span data-i18n="formContact">对接人</span></label><input type="text" data-i18n-placeholder="placeholderStaff" placeholder="请输入负责营销的员工姓名"></div>
+        <div class="form-item"><label data-i18n="formInstitution">对接机构</label><input type="text" data-i18n-placeholder="placeholderInstitution" placeholder="请输入对接的金融机构名称"></div>
+        <div class="form-item"><label data-i18n="formDescription">进度说明</label><textarea data-i18n-placeholder="placeholderDescription" placeholder="请详细描述本次营销进度情况..."></textarea></div>
+        <div class="form-item"><label data-i18n="formNextFollowUp">下次跟进计划</label><input type="date"></div>
     </div>
-    <div class="modal-foot"><button class="btn btn-primary btn-sm" onclick="submitUpdate()">提交</button><button class="btn btn-secondary btn-sm" onclick="closeUpdateModal()">取消</button></div></div>
+    <div class="modal-foot"><button class="btn btn-primary btn-sm" data-i18n="btnSubmit" onclick="submitUpdate()">提交</button><button class="btn btn-secondary btn-sm" data-i18n="btnCancel" onclick="closeUpdateModal()">取消</button></div></div>
 </div>
 <!-- 查看记录抽屉 -->
 <div class="drawer-mask" id="recordDrawer">
-    <div class="drawer"><div class="drawer-head"><span style="font-size:17px;font-weight:700;">营销记录详情</span><button class="btn btn-secondary btn-sm" onclick="closeRecordDrawer()">✕</button></div>
+    <div class="drawer"><div class="drawer-head"><span style="font-size:17px;font-weight:700;" data-i18n="drawerTitle">营销记录详情</span><button class="btn btn-secondary btn-sm" onclick="closeRecordDrawer()">✕</button></div>
     <div class="drawer-body custom-scroll" id="drawerContent">
-        <div class="info-block"><div class="info-block-title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="11" y2="9" stroke="currentColor" stroke-width="1.3"/></svg> 企业基本信息</div>
+        <div class="info-block"><div class="info-block-title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="11" y2="9" stroke="currentColor" stroke-width="1.3"/></svg> <span data-i18n="drawerEnterpriseInfo">企业基本信息</span></div>
             <div style="display:grid;grid-template-columns:100px 1fr;gap:4px 16px;font-size:13px;">
-                <span style="color:var(--ink-500);">企业名称：</span><span>浙江嘉化能源化工股份有限公司</span>
-                <span style="color:var(--ink-500);">企业编号：</span><span style="font-family:monospace;">913300007463411432</span>
-                <span style="color:var(--ink-500);">所属地区：</span><span>浙江省嘉兴市</span>
-                <span style="color:var(--ink-500);">绿色等级：</span><span><span class="tag tag-success">深绿</span></span>
-                <span style="color:var(--ink-500);">营销方案：</span><span>推荐绿色项目贷款+10%贴息申报</span>
+                <span style="color:var(--ink-500);" data-i18n="infoEnterpriseName">企业名称：</span><span data-i18n="companyJiahuaEnergy">浙江嘉化能源化工股份有限公司</span>
+                <span style="color:var(--ink-500);" data-i18n="infoCode">企业编号：</span><span style="font-family:monospace;">913300007463411432</span>
+                <span style="color:var(--ink-500);" data-i18n="infoRegion">所属地区：</span><span>浙江省嘉兴市</span>
+                <span style="color:var(--ink-500);" data-i18n="infoGreenLevel">绿色等级：</span><span><span class="tag tag-success" data-i18n="greenDeep">深绿</span></span>
+                <span style="color:var(--ink-500);" data-i18n="infoMarketingPlan">营销方案：</span><span>推荐绿色项目贷款+10%贴息申报</span>
             </div>
         </div>
-        <div class="info-block"><div class="info-block-title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="3" width="12" height="10" rx="1" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="9" y2="9" stroke="currentColor" stroke-width="1.3"/></svg> 营销过程记录</div>
-            <div class="record-item"><div class="rec-header"><span class="stage-tag stage-finance">融资方案对接</span><span class="rec-date">2025-06-28 14:30</span></div>
-                <div style="display:grid;grid-template-columns:80px 1fr;gap:4px 12px;font-size:13px;"><span style="color:var(--ink-500);">对接人</span><span>张伟</span><span style="color:var(--ink-500);">对接机构</span><span>兰州银行新区支行</span><span style="color:var(--ink-500);">进度说明</span><span>已向客户提交绿色项目贷款方案，客户表示认可</span><span style="color:var(--ink-500);">下次跟进</span><span>2025-07-15</span></div>
-                <div style="margin-top:8px;display:flex;gap:6px;justify-content:flex-end;"><button class="btn btn-outline-brand btn-sm">编辑</button><button class="btn btn-danger btn-sm">删除</button></div>
+        <div class="info-block"><div class="info-block-title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="3" width="12" height="10" rx="1" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="9" y2="9" stroke="currentColor" stroke-width="1.3"/></svg> <span data-i18n="drawerMarketingRecords">营销过程记录</span></div>
+            <div class="record-item"><div class="rec-header"><span class="stage-tag stage-finance" data-i18n="stageFinance">融资方案对接</span><span class="rec-date">2025-06-28 14:30</span></div>
+                <div style="display:grid;grid-template-columns:80px 1fr;gap:4px 12px;font-size:13px;">
+                    <span style="color:var(--ink-500);" data-i18n="drawerContact">对接人</span><span>张伟</span>
+                    <span style="color:var(--ink-500);" data-i18n="drawerInstitution">对接机构</span><span>兰州银行新区支行</span>
+                    <span style="color:var(--ink-500);" data-i18n="drawerDescription">进度说明</span><span>已向客户提交绿色项目贷款方案，客户表示认可</span>
+                    <span style="color:var(--ink-500);" data-i18n="drawerNextFollowUp">下次跟进</span><span>2025-07-15</span>
+                </div>
+                <div style="margin-top:8px;display:flex;gap:6px;justify-content:flex-end;"><button class="btn btn-outline-brand btn-sm" data-i18n="btnEdit">编辑</button><button class="btn btn-danger btn-sm" data-i18n="btnDelete">删除</button></div>
             </div>
-            <div class="record-item"><div class="rec-header"><span class="stage-tag stage-ongoing">持续营销中</span><span class="rec-date">2025-06-15 09:15</span></div>
-                <div style="display:grid;grid-template-columns:80px 1fr;gap:4px 12px;font-size:13px;"><span style="color:var(--ink-500);">对接人</span><span>张伟</span><span style="color:var(--ink-500);">进度说明</span><span>与客户财务总监第二次沟通，了解资金需求细节</span><span style="color:var(--ink-500);">下次跟进</span><span>2025-06-25</span></div>
-                <div style="margin-top:8px;display:flex;gap:6px;justify-content:flex-end;"><button class="btn btn-danger btn-sm">删除</button></div>
+            <div class="record-item"><div class="rec-header"><span class="stage-tag stage-ongoing" data-i18n="stageOngoing">持续营销中</span><span class="rec-date">2025-06-15 09:15</span></div>
+                <div style="display:grid;grid-template-columns:80px 1fr;gap:4px 12px;font-size:13px;">
+                    <span style="color:var(--ink-500);" data-i18n="drawerContact">对接人</span><span>张伟</span>
+                    <span style="color:var(--ink-500);" data-i18n="drawerDescription">进度说明</span><span>与客户财务总监第二次沟通，了解资金需求细节</span>
+                    <span style="color:var(--ink-500);" data-i18n="drawerNextFollowUp">下次跟进</span><span>2025-06-25</span>
+                </div>
+                <div style="margin-top:8px;display:flex;gap:6px;justify-content:flex-end;"><button class="btn btn-danger btn-sm" data-i18n="btnDelete">删除</button></div>
             </div>
         </div>
     </div></div>
 </div>
 <script>
+    // ==================== i18n Dictionary ====================
+    I18N.setDict({
+        // Page
+        pageTitle: {zh:'潜在客户营销过程管理', en:'Client Marketing Process Mgmt'},
+
+        // Filter labels
+        filterNameCode: {zh:'企业名称/编号', en:'Name/Code'},
+        filterRegion: {zh:'所属地区', en:'Region'},
+        filterStage: {zh:'营销阶段', en:'Marketing Stage'},
+        filterPriority: {zh:'营销优先级', en:'Priority'},
+        filterContact: {zh:'对接人', en:'Contact Person'},
+
+        // Filter placeholders
+        placeholderNameCode: {zh:'请输入企业名称或编号', en:'Enter enterprise name or code'},
+        placeholderContact: {zh:'输入姓名/工号', en:'Enter name/ID'},
+
+        // Filter select options
+        allRegions: {zh:'全部地区', en:'All Regions'},
+        allStages: {zh:'全部阶段', en:'All Stages'},
+        allPriorities: {zh:'全部优先级', en:'All Priorities'},
+
+        // Priority
+        priorityHigh: {zh:'高', en:'High'},
+        priorityMid: {zh:'中', en:'Medium'},
+        priorityLow: {zh:'低', en:'Low'},
+
+        // Buttons
+        btnSearch: {zh:'查询', en:'Search'},
+        btnReset: {zh:'重置', en:'Reset'},
+        btnExport: {zh:'导出', en:'Export'},
+        btnUpdateProgress: {zh:'更新进度', en:'Update Progress'},
+        btnViewRecords: {zh:'查看记录', en:'View Records'},
+        btnSubmit: {zh:'提交', en:'Submit'},
+        btnCancel: {zh:'取消', en:'Cancel'},
+        btnEdit: {zh:'编辑', en:'Edit'},
+        btnDelete: {zh:'删除', en:'Delete'},
+
+        // Table headers
+        colSeq: {zh:'序号', en:'#'},
+        colEnterpriseName: {zh:'企业名称', en:'Enterprise Name'},
+        colCode: {zh:'企业编号', en:'Code'},
+        colRegion: {zh:'所属地区', en:'Region'},
+        colIndustry: {zh:'所属行业', en:'Industry'},
+        colGreenLevel: {zh:'绿色等级', en:'Green Level'},
+        colMarketingPlan: {zh:'营销方案', en:'Marketing Plan'},
+        colCurrentStage: {zh:'当前营销阶段', en:'Current Stage'},
+        colContact: {zh:'对接人', en:'Contact'},
+        colLastUpdated: {zh:'最近更新日期', en:'Last Updated'},
+        colNextFollowUp: {zh:'下次跟进计划', en:'Next Follow-up'},
+        colActions: {zh:'操作', en:'Actions'},
+
+        // Green levels
+        greenDeep: {zh:'深绿', en:'Dark Green'},
+        greenMid: {zh:'中绿', en:'Medium Green'},
+        greenNonGreen: {zh:'非绿', en:'Non-Green'},
+
+        // Marketing stages
+        stageInit: {zh:'初步对接', en:'Initial Contact'},
+        stageOngoing: {zh:'持续营销中', en:'Ongoing Marketing'},
+        stageFinance: {zh:'融资方案对接', en:'Financing Plan'},
+        stageCredit: {zh:'申报授信', en:'Credit Application'},
+        stageSuccessCredit: {zh:'营销成功，已批复授信', en:'Success-Approved'},
+        stageSuccessLoan: {zh:'营销成功，已放款', en:'Success-Disbursed'},
+        stageFail: {zh:'未营销成功', en:'Unsuccessful'},
+        stageFailNoInterest: {zh:'未营销成功，客户无意向', en:'Unsuccessful-No Interest'},
+        stageFailChoseOther: {zh:'未营销成功，客户已选其他产品', en:'Unsuccessful-Chose Other'},
+
+        // Pagination
+        totalRecordsCount: {zh:'共 18 条', en:'Total 18 records'},
+
+        // Modal
+        modalTitle: {zh:'更新营销进度', en:'Update Marketing Progress'},
+        formStage: {zh:'当前营销阶段', en:'Stage'},
+        formContact: {zh:'对接人', en:'Contact'},
+        formInstitution: {zh:'对接机构', en:'Institution'},
+        formDescription: {zh:'进度说明', en:'Description'},
+        formNextFollowUp: {zh:'下次跟进计划', en:'Next Follow-up Plan'},
+        optSelect: {zh:'请选择', en:'Select'},
+
+        // Modal placeholders
+        placeholderStaff: {zh:'请输入负责营销的员工姓名', en:'Enter staff name'},
+        placeholderInstitution: {zh:'请输入对接的金融机构名称', en:'Enter institution name'},
+        placeholderDescription: {zh:'请详细描述本次营销进度情况...', en:'Describe marketing progress in detail...'},
+
+        // Drawer
+        drawerTitle: {zh:'营销记录详情', en:'Marketing Record Details'},
+        drawerEnterpriseInfo: {zh:'企业基本信息', en:'Enterprise Basic Info'},
+        drawerMarketingRecords: {zh:'营销过程记录', en:'Marketing Process Records'},
+        drawerContact: {zh:'对接人', en:'Contact'},
+        drawerInstitution: {zh:'对接机构', en:'Institution'},
+        drawerDescription: {zh:'进度说明', en:'Description'},
+        drawerNextFollowUp: {zh:'下次跟进', en:'Next Follow-up'},
+
+        // Info labels
+        infoEnterpriseName: {zh:'企业名称：', en:'Enterprise Name:'},
+        infoCode: {zh:'企业编号：', en:'Code:'},
+        infoRegion: {zh:'所属地区：', en:'Region:'},
+        infoGreenLevel: {zh:'绿色等级：', en:'Green Level:'},
+        infoMarketingPlan: {zh:'营销方案：', en:'Marketing Plan:'},
+
+        // Company names (mock data)
+        companyJiahuaEnergy: {zh:'浙江嘉化能源化工股份有限公司', en:'Zhejiang Jiahua Energy Chemical Co., Ltd.'},
+        companyTongkunHengyue: {zh:'桐昆恒岳新材料有限公司', en:'Tongkun Hengyue New Materials Co., Ltd.'},
+        companyHuzhouNantaihu: {zh:'湖州南太湖环保能源有限公司', en:'Huzhou Nantaihu Environmental Energy Co., Ltd.'},
+        companyQiananSteel: {zh:'迁安钢铁有限责任公司', en:"Qian'an Iron & Steel Co., Ltd."},
+        companyBeijingLvyuan: {zh:'北京绿源科技有限公司', en:'Beijing Lvyuan Technology Co., Ltd.'},
+
+        // Alert messages
+        msgExportSuccess: {zh:'数据导出成功！', en:'Data exported successfully!'},
+        msgUpdateSubmitted: {zh:'进度更新已提交！', en:'Progress update submitted!'}
+    });
+
+    // ==================== Business Logic ====================
     function openUpdateModal(idx){document.getElementById('updateModal').classList.add('open')}
     function closeUpdateModal(){document.getElementById('updateModal').classList.remove('open')}
     function openRecordDrawer(idx){document.getElementById('recordDrawer').classList.add('open')}
     function closeRecordDrawer(){document.getElementById('recordDrawer').classList.remove('open')}
-    function submitUpdate(){closeUpdateModal();alert('进度更新已提交！')}
+    function submitUpdate(){closeUpdateModal();alert(I18N.t('msgUpdateSubmitted'))}
     document.getElementById('updateModal').addEventListener('click',function(e){if(e.target===this)closeUpdateModal()})
     document.getElementById('recordDrawer').addEventListener('click',function(e){if(e.target===this)closeRecordDrawer()})
     document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeUpdateModal();closeRecordDrawer()}})
+
+    // Update language switch button active states
+    window.onLangChange = function(lang) {
+        document.getElementById('btnZh').classList.toggle('active', lang === 'zh');
+        document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+    };
+    // Set initial active state
+    (function(){
+        var cur = I18N.getLang();
+        document.getElementById('btnZh').classList.toggle('active', cur === 'zh');
+        document.getElementById('btnEn').classList.toggle('active', cur === 'en');
+    })();
 </script>
 </body>
 </html>

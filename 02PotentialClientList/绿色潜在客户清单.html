@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>绿色潜在客户清单</title>
+    <title data-i18n="pageTitle">绿色潜在客户清单</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../i18n.js"></script>
     <style>
         :root {
             --brand-50: #E8F0FB;
@@ -379,56 +380,56 @@
                 <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);flex-shrink:0;">
                     <div class="flex flex-wrap items-end gap-4">
                         <div class="flex-1 min-w-[200px]">
-                            <label class="text-xs text-slate-500 font-medium block mb-1">企业信息</label>
-                            <input type="text" placeholder="请输入企业名称/编号/统一社会信用代码" class="w-full px-3 py-1.5 border border-slate-200 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-brand-500">
+                            <label class="text-xs text-slate-500 font-medium block mb-1" data-i18n="filter_enterprise">企业信息</label>
+                            <input type="text" id="filterInput" data-i18n-placeholder="filter_placeholder" placeholder="请输入企业名称/编号/统一社会信用代码" class="w-full px-3 py-1.5 border border-slate-200 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-brand-500">
                         </div>
                         <div class="flex-1 min-w-[140px]">
-                            <label class="text-xs text-slate-500 font-medium block mb-1">绿色等级</label>
+                            <label class="text-xs text-slate-500 font-medium block mb-1" data-i18n="filter_green_level">绿色等级</label>
                             <select class="w-full px-3 py-1.5 border border-slate-200 rounded-md text-sm bg-white">
-                                <option>全部等级</option>
-                                <option>深绿</option>
-                                <option>中绿</option>
-                                <option>浅绿</option>
-                                <option>非绿</option>
+                                <option data-i18n="all_levels">全部等级</option>
+                                <option data-i18n="deep_green">深绿</option>
+                                <option data-i18n="mid_green">中绿</option>
+                                <option data-i18n="light_green">浅绿</option>
+                                <option data-i18n="non_green">非绿</option>
                             </select>
                         </div>
                         <div class="flex-1 min-w-[140px]">
-                            <label class="text-xs text-slate-500 font-medium block mb-1">关注状态</label>
+                            <label class="text-xs text-slate-500 font-medium block mb-1" data-i18n="filter_attention">关注状态</label>
                             <select class="w-full px-3 py-1.5 border border-slate-200 rounded-md text-sm bg-white">
-                                <option>全部状态</option>
-                                <option>已关注</option>
-                                <option>未关注</option>
+                                <option data-i18n="all_status">全部状态</option>
+                                <option data-i18n="followed">已关注</option>
+                                <option data-i18n="not_followed">未关注</option>
                             </select>
                         </div>
                         <div class="flex-1 min-w-[140px]">
-                            <label class="text-xs text-slate-500 font-medium block mb-1">企业所属地区</label>
+                            <label class="text-xs text-slate-500 font-medium block mb-1" data-i18n="filter_region">企业所属地区</label>
                             <select class="w-full px-3 py-1.5 border border-slate-200 rounded-md text-sm bg-white">
-                                <option>全部地区</option>
-                                <option>浙江省</option>
-                                <option>江苏省</option>
-                                <option>上海市</option>
-                                <option>北京市</option>
-                                <option>河北省</option>
-                                <option>福建省</option>
-                                <option>重庆市</option>
+                                <option data-i18n="all_regions">全部地区</option>
+                                <option data-i18n="region_zhejiang">浙江省</option>
+                                <option data-i18n="region_jiangsu">江苏省</option>
+                                <option data-i18n="region_shanghai">上海市</option>
+                                <option data-i18n="region_beijing">北京市</option>
+                                <option data-i18n="region_hebei">河北省</option>
+                                <option data-i18n="region_fujian">福建省</option>
+                                <option data-i18n="region_chongqing">重庆市</option>
                             </select>
                         </div>
                         <div class="flex-1 min-w-[160px]">
-                            <label class="text-xs text-slate-500 font-medium block mb-1">国民经济行业分类</label>
+                            <label class="text-xs text-slate-500 font-medium block mb-1" data-i18n="filter_industry">国民经济行业分类</label>
                             <select class="w-full px-3 py-1.5 border border-slate-200 rounded-md text-sm bg-white">
-                                <option>请选择国民经济行业分类</option>
-                                <option>化学原料和化学制品制造业</option>
-                                <option>合成纤维制造</option>
-                                <option>太阳能发电</option>
-                                <option>热电联产</option>
-                                <option>新能源</option>
-                                <option>钢压延加工</option>
-                                <option>钢铁冶炼</option>
+                                <option data-i18n="select_industry">请选择国民经济行业分类</option>
+                                <option data-i18n="industry_chem_mfg">化学原料和化学制品制造业</option>
+                                <option data-i18n="industry_syn_fiber">合成纤维制造</option>
+                                <option data-i18n="industry_solar">太阳能发电</option>
+                                <option data-i18n="industry_cogen">热电联产</option>
+                                <option data-i18n="industry_new_energy">新能源</option>
+                                <option data-i18n="industry_steel_rolling">钢压延加工</option>
+                                <option data-i18n="industry_steel_smelt">钢铁冶炼</option>
                             </select>
                         </div>
                         <div class="flex items-center gap-2">
-                            <button class="btn btn-primary btn-sm">查询</button>
-                            <button class="btn btn-secondary btn-sm">重置</button>
+                            <button class="btn btn-primary btn-sm" data-i18n="search">查询</button>
+                            <button class="btn btn-secondary btn-sm" data-i18n="reset">重置</button>
                         </div>
                     </div>
                 </div>
@@ -438,10 +439,10 @@
                     <div class="flex gap-2 flex-wrap">
                         <button class="btn btn-secondary btn-sm" onclick="exportData()">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                            导出数据
+                            <span data-i18n="export_data">导出数据</span>
                         </button>
                     </div>
-                    <span class="text-sm text-slate-400">共 1,284 条</span>
+                    <span class="text-sm text-slate-400" id="totalRecordsTop">共 1,284 条</span>
                 </div>
 
                 <!-- 表格 - 操作列冻结 -->
@@ -449,229 +450,29 @@
                     <table>
                         <thead>
                             <tr>
-                                <th class="col-seq">序号</th>
-                                <th>企业名称</th>
-                                <th>所属产业</th>
-                                <th>统一社会信用代码</th>
-                                <th>所属地区</th>
-                                <th>经营状态</th>
-                                <th>注册资本</th>
-                                <th>注册资本币种</th>
-                                <th>绿色等级</th>
-                                <th>主营业务</th>
-                                <th>国民经济行业大类</th>
-                                <th>国民经济行业小类</th>
-                                <th class="col-actions">操作</th>
+                                <th class="col-seq" data-i18n="th_seq">序号</th>
+                                <th data-i18n="th_enterprise">企业名称</th>
+                                <th data-i18n="th_sector">所属产业</th>
+                                <th data-i18n="th_credit_code">统一社会信用代码</th>
+                                <th data-i18n="th_region">所属地区</th>
+                                <th data-i18n="th_status">经营状态</th>
+                                <th data-i18n="th_capital">注册资本</th>
+                                <th data-i18n="th_currency">注册资本币种</th>
+                                <th data-i18n="th_green_level">绿色等级</th>
+                                <th data-i18n="th_main_biz">主营业务</th>
+                                <th data-i18n="th_industry_cat">国民经济行业大类</th>
+                                <th data-i18n="th_industry_sub">国民经济行业小类</th>
+                                <th class="col-actions" data-i18n="th_actions">操作</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td class="col-seq">1</td>
-                                <td style="font-weight:500;color:var(--ink-900);">浙江嘉化能源化工股份有限公司</td>
-                                <td>清洁能源</td>
-                                <td style="font-family:monospace;font-size:12px;">913300007463411432</td>
-                                <td>浙江省嘉兴市</td>
-                                <td><span class="tag tag-success">存续</span></td>
-                                <td>1356879522</td>
-                                <td>人民币元</td>
-                                <td><span class="green-level dark">深绿</span></td>
-                                <td>许可项目：危险化学品</td>
-                                <td>化学原料和化学制品制造业</td>
-                                <td>有机化学原料制造</td>
-                                <td class="col-actions">
-                                    <div class="action-btns">
-                                        <button class="btn btn-deep-blue btn-sm" onclick="openReport('企业评价报告.html')">企业评价报告</button>
-                                        <button class="btn btn-light-blue btn-sm" onclick="openReport('绿色业务营销报告.html')">绿色业务营销报告</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-seq">2</td>
-                                <td style="font-weight:500;color:var(--ink-900);">桐昆集团浙江恒越化纤有限公司</td>
-                                <td>绿色制造</td>
-                                <td style="font-family:monospace;font-size:12px;">91330400MA2B85HP0Y</td>
-                                <td>浙江省嘉兴市</td>
-                                <td><span class="tag tag-success">存续</span></td>
-                                <td>2233282743</td>
-                                <td>人民币元</td>
-                                <td><span class="green-level dark">深绿</span></td>
-                                <td>一般项目：合成纤维销售：新</td>
-                                <td>合成纤维制造</td>
-                                <td>涤纶纤维制造</td>
-                                <td class="col-actions">
-                                    <div class="action-btns">
-                                        <button class="btn btn-deep-blue btn-sm" onclick="openReport('企业评价报告.html')">企业评价报告</button>
-                                        <button class="btn btn-light-blue btn-sm" onclick="openReport('绿色业务营销报告.html')">绿色业务营销报告</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-seq">3</td>
-                                <td style="font-weight:500;color:var(--ink-900);">杭州萧山环保科技有限公司</td>
-                                <td>环保产业</td>
-                                <td style="font-family:monospace;font-size:12px;">91330109MA27WQ4K8T</td>
-                                <td>浙江省杭州市萧山区</td>
-                                <td><span class="tag tag-success">存续</span></td>
-                                <td>100000</td>
-                                <td>人民币元</td>
-                                <td><span class="green-level medium">中绿</span></td>
-                                <td>环保技术开发、技术服务</td>
-                                <td>专业技术服务业</td>
-                                <td>环境保护监测</td>
-                                <td class="col-actions">
-                                    <div class="action-btns">
-                                        <button class="btn btn-deep-blue btn-sm" onclick="openReport('企业评价报告.html')">企业评价报告</button>
-                                        <button class="btn btn-light-blue btn-sm" onclick="openReport('绿色业务营销报告.html')">绿色业务营销报告</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-seq">4</td>
-                                <td style="font-weight:500;color:var(--ink-900);">湖州南太湖绿色能源有限公司</td>
-                                <td>清洁能源</td>
-                                <td style="font-family:monospace;font-size:12px;">91330502MA28C6K2XJ</td>
-                                <td>浙江省湖州市吴兴区</td>
-                                <td><span class="tag tag-success">存续</span></td>
-                                <td>5666</td>
-                                <td>人民币元</td>
-                                <td><span class="green-level medium">中绿</span></td>
-                                <td>新能源技术研发</td>
-                                <td>电力、热力生产和供应业</td>
-                                <td>太阳能发电</td>
-                                <td class="col-actions">
-                                    <div class="action-btns">
-                                        <button class="btn btn-deep-blue btn-sm" onclick="openReport('企业评价报告.html')">企业评价报告</button>
-                                        <button class="btn btn-light-blue btn-sm" onclick="openReport('绿色业务营销报告.html')">绿色业务营销报告</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-seq">5</td>
-                                <td style="font-weight:500;color:var(--ink-900);">北京绿色科技发展有限公司</td>
-                                <td>绿色服务</td>
-                                <td style="font-family:monospace;font-size:12px;">91110108MA01WQ4K8T</td>
-                                <td>北京市</td>
-                                <td><span class="tag tag-success">存续</span></td>
-                                <td>10000</td>
-                                <td>人民币元</td>
-                                <td><span class="green-level dark">深绿</span></td>
-                                <td>绿色技术推广、咨询服务</td>
-                                <td>科技推广和应用服务业</td>
-                                <td>其他科技推广服务业</td>
-                                <td class="col-actions">
-                                    <div class="action-btns">
-                                        <button class="btn btn-deep-blue btn-sm" onclick="openReport('企业评价报告.html')">企业评价报告</button>
-                                        <button class="btn btn-light-blue btn-sm" onclick="openReport('绿色业务营销报告.html')">绿色业务营销报告</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-seq">6</td>
-                                <td style="font-weight:500;color:var(--ink-900);">厦门绿色能源投资有限公司</td>
-                                <td>清洁能源</td>
-                                <td style="font-family:monospace;font-size:12px;">91350203MA2YQ4K8T9</td>
-                                <td>福建省厦门市思明区</td>
-                                <td><span class="tag tag-success">存续</span></td>
-                                <td>100000</td>
-                                <td>人民币元</td>
-                                <td><span class="green-level light">浅绿</span></td>
-                                <td>新能源项目投资</td>
-                                <td>商务服务业</td>
-                                <td>投资与资产管理</td>
-                                <td class="col-actions">
-                                    <div class="action-btns">
-                                        <button class="btn btn-deep-blue btn-sm" onclick="openReport('企业评价报告.html')">企业评价报告</button>
-                                        <button class="btn btn-light-blue btn-sm" onclick="openReport('绿色业务营销报告.html')">绿色业务营销报告</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-seq">7</td>
-                                <td style="font-weight:500;color:var(--ink-900);">无锡绿色环保科技有限公司</td>
-                                <td>环保产业</td>
-                                <td style="font-family:monospace;font-size:12px;">91320214MA1W3L8K9M</td>
-                                <td>江苏省无锡市xx区</td>
-                                <td><span class="tag tag-success">存续</span></td>
-                                <td>100000</td>
-                                <td>人民币元</td>
-                                <td><span class="green-level light">浅绿</span></td>
-                                <td>环保设备研发、销售</td>
-                                <td>专用设备制造业</td>
-                                <td>环境保护专用设备制造</td>
-                                <td class="col-actions">
-                                    <div class="action-btns">
-                                        <button class="btn btn-deep-blue btn-sm" onclick="openReport('企业评价报告.html')">企业评价报告</button>
-                                        <button class="btn btn-light-blue btn-sm" onclick="openReport('绿色业务营销报告.html')">绿色业务营销报告</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-seq">8</td>
-                                <td style="font-weight:500;color:var(--ink-900);">杭州萧山绿色建筑科技有限公司</td>
-                                <td>绿色制造</td>
-                                <td style="font-family:monospace;font-size:12px;">91330109MA2YQ4K8T0</td>
-                                <td>浙江省杭州市萧山区</td>
-                                <td><span class="tag tag-success">存续</span></td>
-                                <td>5666</td>
-                                <td>人民币元</td>
-                                <td><span class="green-level dark">深绿</span></td>
-                                <td>绿色建筑技术研发</td>
-                                <td>专业技术服务业</td>
-                                <td>其他专业技术服务业</td>
-                                <td class="col-actions">
-                                    <div class="action-btns">
-                                        <button class="btn btn-deep-blue btn-sm" onclick="openReport('企业评价报告.html')">企业评价报告</button>
-                                        <button class="btn btn-light-blue btn-sm" onclick="openReport('绿色业务营销报告.html')">绿色业务营销报告</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-seq">9</td>
-                                <td style="font-weight:500;color:var(--ink-900);">杭州萧山新能源材料有限公司</td>
-                                <td>清洁能源</td>
-                                <td style="font-family:monospace;font-size:12px;">91330109MA2YQ4K8T1</td>
-                                <td>浙江省杭州市萧山区</td>
-                                <td><span class="tag tag-success">存续</span></td>
-                                <td>10000</td>
-                                <td>人民币元</td>
-                                <td><span class="green-level medium">中绿</span></td>
-                                <td>新能源材料研发</td>
-                                <td>化学原料和化学制品制造业</td>
-                                <td>其他专用化学产品制造</td>
-                                <td class="col-actions">
-                                    <div class="action-btns">
-                                        <button class="btn btn-deep-blue btn-sm" onclick="openReport('企业评价报告.html')">企业评价报告</button>
-                                        <button class="btn btn-light-blue btn-sm" onclick="openReport('绿色业务营销报告.html')">绿色业务营销报告</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-seq">10</td>
-                                <td style="font-weight:500;color:var(--ink-900);">浙江绿色能源投资有限公司</td>
-                                <td>清洁能源</td>
-                                <td style="font-family:monospace;font-size:12px;">91330000MA27WQ4K8T</td>
-                                <td>浙江省杭州市</td>
-                                <td><span class="tag tag-success">存续</span></td>
-                                <td>50000</td>
-                                <td>人民币元</td>
-                                <td><span class="green-level dark">深绿</span></td>
-                                <td>新能源项目投资、开发</td>
-                                <td>商务服务业</td>
-                                <td>投资与资产管理</td>
-                                <td class="col-actions">
-                                    <div class="action-btns">
-                                        <button class="btn btn-deep-blue btn-sm" onclick="openReport('企业评价报告.html')">企业评价报告</button>
-                                        <button class="btn btn-light-blue btn-sm" onclick="openReport('绿色业务营销报告.html')">绿色业务营销报告</button>
-                                    </div>
-                                </td>
-                            </tr>
+                        <tbody id="tableBody">
                         </tbody>
                     </table>
                 </div>
 
                 <!-- 分页 -->
                 <div class="flex items-center justify-between px-6 py-3 border-t border-slate-100 flex-shrink-0">
-                    <span class="text-sm text-slate-400">共 1,284 条</span>
+                    <span class="text-sm text-slate-400" id="totalRecordsBottom">共 1,284 条</span>
                     <div class="flex items-center gap-2">
                         <button class="btn btn-secondary btn-sm">‹</button>
                         <span class="px-2 py-1 text-sm bg-brand-500 text-white rounded">1</span>
@@ -680,7 +481,7 @@
                         <span class="text-sm text-slate-400">…</span>
                         <button class="btn btn-secondary btn-sm">50</button>
                         <button class="btn btn-secondary btn-sm">›</button>
-                        <span class="text-sm text-slate-500 ml-2">跳至 <input type="number" class="w-12 px-1 py-0.5 border border-slate-300 rounded text-center text-sm" value="1"> /50页</span>
+                        <span class="text-sm text-slate-500 ml-2"><span data-i18n="jump_to">跳至</span> <input type="number" class="w-12 px-1 py-0.5 border border-slate-300 rounded text-center text-sm" value="1"> /50<span data-i18n="page">页</span></span>
                     </div>
                 </div>
             </div>
@@ -691,7 +492,7 @@
     <div class="modal-mask" id="exportModal">
         <div class="modal modal-sm modal-form">
             <div class="modal-head">
-                <div class="modal-title">导出成功</div>
+                <div class="modal-title" data-i18n="export_success">导出成功</div>
                 <button class="modal-close" onclick="closeModal('exportModal')">
                     <svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
                 </button>
@@ -699,17 +500,359 @@
             <div class="modal-body" style="text-align:center;padding:32px 24px;">
                 <div class="export-success">
                     <span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><circle cx="8" cy="8" r="7" stroke="currentColor" fill="none" stroke-width="1.3"/><polyline points="5 8 7 11 11 6" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></span>
-                    <div style="font-weight:600;font-size:16px;margin-bottom:4px;">数据已导出</div>
+                    <div style="font-weight:600;font-size:16px;margin-bottom:4px;" data-i18n="export_msg">数据已导出</div>
                     <div style="font-size:13px;color:var(--ink-500);margin-top:4px;" id="exportCount">共导出 10 条记录</div>
                 </div>
             </div>
             <div class="modal-foot" style="justify-content:center;">
-                <button class="btn btn-md btn-primary" onclick="closeModal('exportModal')">我知道了</button>
+                <button class="btn btn-md btn-primary" onclick="closeModal('exportModal')" data-i18n="ok">我知道了</button>
             </div>
         </div>
     </div>
 
     <script>
+        // ==================== i18n 字典 ====================
+        I18N.setDict({
+            pageTitle:               { zh: '绿色潜在客户清单',                 en: 'Green Potential Client List' },
+            filter_enterprise:       { zh: '企业信息',                         en: 'Enterprise Info' },
+            filter_green_level:      { zh: '绿色等级',                         en: 'Green Level' },
+            filter_attention:        { zh: '关注状态',                         en: 'Attention Status' },
+            filter_region:           { zh: '企业所属地区',                     en: 'Region' },
+            filter_industry:         { zh: '国民经济行业分类',                 en: 'Industry Classification' },
+            filter_placeholder:      { zh: '请输入企业名称/编号/统一社会信用代码', en: 'Enter enterprise name / code / credit number' },
+            all_levels:              { zh: '全部等级',                         en: 'All Levels' },
+            deep_green:              { zh: '深绿',                             en: 'Dark Green' },
+            mid_green:               { zh: '中绿',                             en: 'Medium Green' },
+            light_green:             { zh: '浅绿',                             en: 'Light Green' },
+            non_green:               { zh: '非绿',                             en: 'Non-Green' },
+            all_status:              { zh: '全部状态',                         en: 'All Status' },
+            followed:                { zh: '已关注',                           en: 'Followed' },
+            not_followed:            { zh: '未关注',                           en: 'Not Followed' },
+            all_regions:             { zh: '全部地区',                         en: 'All Regions' },
+            select_industry:         { zh: '请选择国民经济行业分类',           en: 'Select Industry Classification' },
+            search:                  { zh: '查询',                             en: 'Search' },
+            reset:                   { zh: '重置',                             en: 'Reset' },
+            export_data:             { zh: '导出数据',                         en: 'Export Data' },
+            total_records:           { zh: '共 1,284 条',                      en: 'Total 1,284 records' },
+            th_seq:                  { zh: '序号',                             en: '#' },
+            th_enterprise:           { zh: '企业名称',                         en: 'Enterprise Name' },
+            th_sector:               { zh: '所属产业',                         en: 'Industry Sector' },
+            th_credit_code:          { zh: '统一社会信用代码',                 en: 'Credit Code' },
+            th_region:               { zh: '所属地区',                         en: 'Region' },
+            th_status:               { zh: '经营状态',                         en: 'Status' },
+            th_capital:              { zh: '注册资本',                         en: 'Registered Capital' },
+            th_currency:             { zh: '注册资本币种',                     en: 'Currency' },
+            th_green_level:          { zh: '绿色等级',                         en: 'Green Level' },
+            th_main_biz:             { zh: '主营业务',                         en: 'Main Business' },
+            th_industry_cat:         { zh: '国民经济行业大类',                 en: 'Industry Category' },
+            th_industry_sub:         { zh: '国民经济行业小类',                 en: 'Industry Subcategory' },
+            th_actions:              { zh: '操作',                             en: 'Actions' },
+            status_active:           { zh: '存续',                             en: 'Active' },
+            currency_rmb:            { zh: '人民币元',                         en: 'RMB' },
+            action_eval_report:      { zh: '企业评价报告',                     en: 'Enterprise Report' },
+            action_mkt_report:       { zh: '绿色业务营销报告',                 en: 'Green Marketing Report' },
+            clean_energy:            { zh: '清洁能源',                         en: 'Clean Energy' },
+            green_mfg:               { zh: '绿色制造',                         en: 'Green Manufacturing' },
+            env_protection:          { zh: '环保产业',                         en: 'Environmental Protection' },
+            green_service:           { zh: '绿色服务',                         en: 'Green Services' },
+            export_success:          { zh: '导出成功',                         en: 'Export Successful' },
+            export_msg:              { zh: '数据已导出',                       en: 'Data Exported' },
+            export_count:            { zh: '共导出',                           en: 'Total exported' },
+            export_records:          { zh: '条记录',                           en: 'records' },
+            ok:                      { zh: '我知道了',                         en: 'OK' },
+            jump_to:                 { zh: '跳至',                             en: 'Jump to' },
+            page:                    { zh: '页',                               en: 'Page' },
+            region_zhejiang:         { zh: '浙江省',                           en: 'Zhejiang Province' },
+            region_jiangsu:          { zh: '江苏省',                           en: 'Jiangsu Province' },
+            region_shanghai:         { zh: '上海市',                           en: 'Shanghai' },
+            region_beijing:          { zh: '北京市',                           en: 'Beijing' },
+            region_hebei:            { zh: '河北省',                           en: 'Hebei Province' },
+            region_fujian:           { zh: '福建省',                           en: 'Fujian Province' },
+            region_chongqing:        { zh: '重庆市',                           en: 'Chongqing' },
+            industry_chem_mfg:       { zh: '化学原料和化学制品制造业',         en: 'Chemical Raw Materials & Products Mfg' },
+            industry_syn_fiber:      { zh: '合成纤维制造',                     en: 'Synthetic Fiber Manufacturing' },
+            industry_solar:          { zh: '太阳能发电',                       en: 'Solar Power Generation' },
+            industry_cogen:          { zh: '热电联产',                         en: 'Cogeneration' },
+            industry_new_energy:     { zh: '新能源',                           en: 'New Energy' },
+            industry_steel_rolling:  { zh: '钢压延加工',                       en: 'Steel Rolling Processing' },
+            industry_steel_smelt:    { zh: '钢铁冶炼',                         en: 'Iron & Steel Smelting' },
+
+            // ============ 企业名称翻译 ============
+            '宁德时代新能源科技股份有限公司': { zh: '宁德时代新能源科技股份有限公司', en: 'CATL (Contemporary Amperex Technology Co., Ltd.)' },
+            '隆基绿能科技股份有限公司':     { zh: '隆基绿能科技股份有限公司',     en: 'LONGi Green Energy Technology Co., Ltd.' },
+            '金风科技股份有限公司':         { zh: '金风科技股份有限公司',         en: 'Goldwind Science & Technology Co., Ltd.' },
+            '浙江嘉化能源化工股份有限公司': { zh: '浙江嘉化能源化工股份有限公司', en: 'Zhejiang Jiahua Energy Chemical Co., Ltd.' },
+            '北京碧水源科技股份有限公司':   { zh: '北京碧水源科技股份有限公司',   en: 'Beijing OriginWater Technology Co., Ltd.' },
+            '华能国际电力股份有限公司':     { zh: '华能国际电力股份有限公司',     en: 'Huaneng Power International, Inc.' },
+            '中国广核电力股份有限公司':     { zh: '中国广核电力股份有限公司',     en: 'CGN Power Co., Ltd.' },
+            '北控水务集团有限公司':         { zh: '北控水务集团有限公司',         en: 'BEWG (Beijing Enterprises Water Group) Ltd.' },
+            '光大环境(集团)有限公司':       { zh: '光大环境(集团)有限公司',       en: 'Everbright Environment Group Ltd.' },
+            '中国核能电力股份有限公司':     { zh: '中国核能电力股份有限公司',     en: 'China National Nuclear Power Co., Ltd.' },
+            '桐昆集团浙江恒越化纤有限公司': { zh: '桐昆集团浙江恒越化纤有限公司', en: 'Tongkun Group Zhejiang Hengyue Chemical Fiber Co., Ltd.' },
+            '杭州萧山环保科技有限公司':     { zh: '杭州萧山环保科技有限公司',     en: 'Hangzhou Xiaoshan Environmental Technology Co., Ltd.' },
+            '湖州南太湖绿色能源有限公司':   { zh: '湖州南太湖绿色能源有限公司',   en: 'Huzhou Nantaihu Green Energy Co., Ltd.' },
+            '北京绿色科技发展有限公司':     { zh: '北京绿色科技发展有限公司',     en: 'Beijing Green Technology Development Co., Ltd.' },
+            '厦门绿色能源投资有限公司':     { zh: '厦门绿色能源投资有限公司',     en: 'Xiamen Green Energy Investment Co., Ltd.' },
+            '无锡绿色环保科技有限公司':     { zh: '无锡绿色环保科技有限公司',     en: 'Wuxi Green Environmental Technology Co., Ltd.' },
+            '杭州萧山绿色建筑科技有限公司': { zh: '杭州萧山绿色建筑科技有限公司', en: 'Hangzhou Xiaoshan Green Building Technology Co., Ltd.' },
+            '杭州萧山新能源材料有限公司':   { zh: '杭州萧山新能源材料有限公司',   en: 'Hangzhou Xiaoshan New Energy Materials Co., Ltd.' },
+            '浙江绿色能源投资有限公司':     { zh: '浙江绿色能源投资有限公司',     en: 'Zhejiang Green Energy Investment Co., Ltd.' },
+
+            // ============ 主营业务翻译 ============
+            '许可项目：危险化学品':         { zh: '许可项目：危险化学品',         en: 'Licensed: Hazardous chemicals' },
+            '一般项目：合成纤维销售：新':   { zh: '一般项目：合成纤维销售：新',   en: 'General: Synthetic fiber sales' },
+            '环保技术开发、技术服务':       { zh: '环保技术开发、技术服务',       en: 'Environmental tech R&D and services' },
+            '新能源技术研发':               { zh: '新能源技术研发',               en: 'New energy technology R&D' },
+            '绿色技术推广、咨询服务':       { zh: '绿色技术推广、咨询服务',       en: 'Green tech promotion and consulting' },
+            '新能源项目投资':               { zh: '新能源项目投资',               en: 'New energy project investment' },
+            '环保设备研发、销售':           { zh: '环保设备研发、销售',           en: 'Environmental equipment R&D and sales' },
+            '绿色建筑技术研发':             { zh: '绿色建筑技术研发',             en: 'Green building technology R&D' },
+            '新能源材料研发':               { zh: '新能源材料研发',               en: 'New energy materials R&D' },
+            '新能源项目投资、开发':         { zh: '新能源项目投资、开发',         en: 'New energy project investment & development' },
+
+            // ============ 区域翻译 ============
+            '浙江省嘉兴市':                 { zh: '浙江省嘉兴市',                 en: 'Jiaxing, Zhejiang' },
+            '浙江省杭州市萧山区':           { zh: '浙江省杭州市萧山区',           en: 'Xiaoshan District, Hangzhou, Zhejiang' },
+            '浙江省湖州市吴兴区':           { zh: '浙江省湖州市吴兴区',           en: 'Wuxing District, Huzhou, Zhejiang' },
+            '浙江省杭州市':                 { zh: '浙江省杭州市',                 en: 'Hangzhou, Zhejiang' },
+            '福建省厦门市思明区':           { zh: '福建省厦门市思明区',           en: 'Siming District, Xiamen, Fujian' },
+            '江苏省无锡市xx区':             { zh: '江苏省无锡市xx区',             en: 'X District, Wuxi, Jiangsu' },
+
+            // ============ 国民经济行业大类/小类翻译 ============
+            '电力、热力生产和供应业':       { zh: '电力、热力生产和供应业',       en: 'Electricity & Heat Production and Supply' },
+            '科技推广和应用服务业':         { zh: '科技推广和应用服务业',         en: 'Technology Promotion and Application Services' },
+            '商务服务业':                   { zh: '商务服务业',                   en: 'Business Services' },
+            '专用设备制造业':               { zh: '专用设备制造业',               en: 'Special Equipment Manufacturing' },
+            '专业技术服务业':               { zh: '专业技术服务业',               en: 'Professional Technical Services' },
+            '有机化学原料制造':             { zh: '有机化学原料制造',             en: 'Organic Chemical Raw Material Mfg' },
+            '涤纶纤维制造':                 { zh: '涤纶纤维制造',                 en: 'Polyester Fiber Manufacturing' },
+            '环境保护监测':                 { zh: '环境保护监测',                 en: 'Environmental Monitoring' },
+            '投资与资产管理':               { zh: '投资与资产管理',               en: 'Investment & Asset Management' },
+            '环境保护专用设备制造':         { zh: '环境保护专用设备制造',         en: 'Environmental Protection Equipment Mfg' },
+            '其他科技推广服务业':           { zh: '其他科技推广服务业',           en: 'Other Technology Promotion Services' },
+            '其他专业技术服务业':           { zh: '其他专业技术服务业',           en: 'Other Professional Technical Services' },
+            '其他专用化学产品制造':         { zh: '其他专用化学产品制造',         en: 'Other Specialty Chemical Mfg' },
+
+            // ============ 别名：行业分类中文 -> 英文（供表格 I18N.t() 直接查找） ============
+            '化学原料和化学制品制造业':     { zh: '化学原料和化学制品制造业',     en: 'Chemical Raw Materials & Products Mfg' },
+            '合成纤维制造':                 { zh: '合成纤维制造',                 en: 'Synthetic Fiber Manufacturing' },
+            '太阳能发电':                   { zh: '太阳能发电',                   en: 'Solar Power Generation' },
+            '北京市':                       { zh: '北京市',                       en: 'Beijing' }
+        });
+
+        // ==================== 表格数据 ====================
+        var tableData = [
+            {
+                name: '浙江嘉化能源化工股份有限公司',
+                sectorKey: 'clean_energy',
+                creditCode: '913300007463411432',
+                region: '浙江省嘉兴市',
+                statusKey: 'status_active',
+                statusClass: 'tag tag-success',
+                capital: '1356879522',
+                currencyKey: 'currency_rmb',
+                greenLevelClass: 'dark',
+                greenLevelKey: 'deep_green',
+                mainBiz: '许可项目：危险化学品',
+                industryCat: '化学原料和化学制品制造业',
+                industrySub: '有机化学原料制造'
+            },
+            {
+                name: '桐昆集团浙江恒越化纤有限公司',
+                sectorKey: 'green_mfg',
+                creditCode: '91330400MA2B85HP0Y',
+                region: '浙江省嘉兴市',
+                statusKey: 'status_active',
+                statusClass: 'tag tag-success',
+                capital: '2233282743',
+                currencyKey: 'currency_rmb',
+                greenLevelClass: 'dark',
+                greenLevelKey: 'deep_green',
+                mainBiz: '一般项目：合成纤维销售：新',
+                industryCat: '合成纤维制造',
+                industrySub: '涤纶纤维制造'
+            },
+            {
+                name: '杭州萧山环保科技有限公司',
+                sectorKey: 'env_protection',
+                creditCode: '91330109MA27WQ4K8T',
+                region: '浙江省杭州市萧山区',
+                statusKey: 'status_active',
+                statusClass: 'tag tag-success',
+                capital: '100000',
+                currencyKey: 'currency_rmb',
+                greenLevelClass: 'medium',
+                greenLevelKey: 'mid_green',
+                mainBiz: '环保技术开发、技术服务',
+                industryCat: '专业技术服务业',
+                industrySub: '环境保护监测'
+            },
+            {
+                name: '湖州南太湖绿色能源有限公司',
+                sectorKey: 'clean_energy',
+                creditCode: '91330502MA28C6K2XJ',
+                region: '浙江省湖州市吴兴区',
+                statusKey: 'status_active',
+                statusClass: 'tag tag-success',
+                capital: '5666',
+                currencyKey: 'currency_rmb',
+                greenLevelClass: 'medium',
+                greenLevelKey: 'mid_green',
+                mainBiz: '新能源技术研发',
+                industryCat: '电力、热力生产和供应业',
+                industrySub: '太阳能发电'
+            },
+            {
+                name: '北京绿色科技发展有限公司',
+                sectorKey: 'green_service',
+                creditCode: '91110108MA01WQ4K8T',
+                region: '北京市',
+                statusKey: 'status_active',
+                statusClass: 'tag tag-success',
+                capital: '10000',
+                currencyKey: 'currency_rmb',
+                greenLevelClass: 'dark',
+                greenLevelKey: 'deep_green',
+                mainBiz: '绿色技术推广、咨询服务',
+                industryCat: '科技推广和应用服务业',
+                industrySub: '其他科技推广服务业'
+            },
+            {
+                name: '厦门绿色能源投资有限公司',
+                sectorKey: 'clean_energy',
+                creditCode: '91350203MA2YQ4K8T9',
+                region: '福建省厦门市思明区',
+                statusKey: 'status_active',
+                statusClass: 'tag tag-success',
+                capital: '100000',
+                currencyKey: 'currency_rmb',
+                greenLevelClass: 'light',
+                greenLevelKey: 'light_green',
+                mainBiz: '新能源项目投资',
+                industryCat: '商务服务业',
+                industrySub: '投资与资产管理'
+            },
+            {
+                name: '无锡绿色环保科技有限公司',
+                sectorKey: 'env_protection',
+                creditCode: '91320214MA1W3L8K9M',
+                region: '江苏省无锡市xx区',
+                statusKey: 'status_active',
+                statusClass: 'tag tag-success',
+                capital: '100000',
+                currencyKey: 'currency_rmb',
+                greenLevelClass: 'light',
+                greenLevelKey: 'light_green',
+                mainBiz: '环保设备研发、销售',
+                industryCat: '专用设备制造业',
+                industrySub: '环境保护专用设备制造'
+            },
+            {
+                name: '杭州萧山绿色建筑科技有限公司',
+                sectorKey: 'green_mfg',
+                creditCode: '91330109MA2YQ4K8T0',
+                region: '浙江省杭州市萧山区',
+                statusKey: 'status_active',
+                statusClass: 'tag tag-success',
+                capital: '5666',
+                currencyKey: 'currency_rmb',
+                greenLevelClass: 'dark',
+                greenLevelKey: 'deep_green',
+                mainBiz: '绿色建筑技术研发',
+                industryCat: '专业技术服务业',
+                industrySub: '其他专业技术服务业'
+            },
+            {
+                name: '杭州萧山新能源材料有限公司',
+                sectorKey: 'clean_energy',
+                creditCode: '91330109MA2YQ4K8T1',
+                region: '浙江省杭州市萧山区',
+                statusKey: 'status_active',
+                statusClass: 'tag tag-success',
+                capital: '10000',
+                currencyKey: 'currency_rmb',
+                greenLevelClass: 'medium',
+                greenLevelKey: 'mid_green',
+                mainBiz: '新能源材料研发',
+                industryCat: '化学原料和化学制品制造业',
+                industrySub: '其他专用化学产品制造'
+            },
+            {
+                name: '浙江绿色能源投资有限公司',
+                sectorKey: 'clean_energy',
+                creditCode: '91330000MA27WQ4K8T',
+                region: '浙江省杭州市',
+                statusKey: 'status_active',
+                statusClass: 'tag tag-success',
+                capital: '50000',
+                currencyKey: 'currency_rmb',
+                greenLevelClass: 'dark',
+                greenLevelKey: 'deep_green',
+                mainBiz: '新能源项目投资、开发',
+                industryCat: '商务服务业',
+                industrySub: '投资与资产管理'
+            }
+        ];
+
+        // ==================== 渲染表格 ====================
+        function renderTable() {
+            var tbody = document.getElementById('tableBody');
+            var html = '';
+            for (var i = 0; i < tableData.length; i++) {
+                var r = tableData[i];
+                html += '<tr>' +
+                    '<td class="col-seq">' + (i + 1) + '</td>' +
+                    '<td style="font-weight:500;color:var(--ink-900);">' + I18N.t(r.name) + '</td>' +
+                    '<td>' + I18N.t(r.sectorKey) + '</td>' +
+                    '<td style="font-family:monospace;font-size:12px;">' + r.creditCode + '</td>' +
+                    '<td>' + I18N.t(r.region) + '</td>' +
+                    '<td><span class="' + r.statusClass + '">' + I18N.t(r.statusKey) + '</span></td>' +
+                    '<td>' + r.capital + '</td>' +
+                    '<td>' + I18N.t(r.currencyKey) + '</td>' +
+                    '<td><span class="green-level ' + r.greenLevelClass + '">' + I18N.t(r.greenLevelKey) + '</span></td>' +
+                    '<td>' + I18N.t(r.mainBiz) + '</td>' +
+                    '<td>' + I18N.t(r.industryCat) + '</td>' +
+                    '<td>' + I18N.t(r.industrySub) + '</td>' +
+                    '<td class="col-actions">' +
+                        '<div class="action-btns">' +
+                            '<button class="btn btn-deep-blue btn-sm" onclick="openReport(\'企业评价报告.html\')">' + I18N.t('action_eval_report') + '</button>' +
+                            '<button class="btn btn-light-blue btn-sm" onclick="openReport(\'绿色业务营销报告.html\')">' + I18N.t('action_mkt_report') + '</button>' +
+                        '</div>' +
+                    '</td>' +
+                    '</tr>';
+            }
+            tbody.innerHTML = html;
+        }
+
+        // ==================== 更新动态文本 ====================
+        function updateDynamicText() {
+            // 更新总记录数
+            var totalText = I18N.t('total_records');
+            document.getElementById('totalRecordsTop').textContent = totalText;
+            document.getElementById('totalRecordsBottom').textContent = totalText;
+
+            // 更新筛选输入框 placeholder
+            document.getElementById('filterInput').placeholder = I18N.t('filter_placeholder');
+
+            // 更新导出弹窗中的动态文本
+            updateExportCount();
+        }
+
+        function updateExportCount() {
+            var count = 1284;
+            document.getElementById('exportCount').textContent = I18N.t('export_count') + ' ' + count + ' ' + I18N.t('export_records');
+        }
+
+        // ==================== 语言切换回调 ====================
+        window.onLangChange = function(lang) {
+            // 更新 data-i18n 元素
+            I18N.applyToDOM();
+            // 重新渲染表格
+            renderTable();
+            // 更新动态文本（总记录数、placeholder 等）
+            updateDynamicText();
+        };
+
         // ==================== 通过 postMessage 通知父框架打开页面 ====================
         function openReport(filename) {
             var currentPath = window.location.pathname;
@@ -736,8 +879,7 @@
 
         // ==================== 导出数据 ====================
         function exportData() {
-            var count = 1284;
-            document.getElementById('exportCount').textContent = '共导出 ' + count + ' 条记录';
+            updateExportCount();
             document.getElementById('exportModal').classList.add('open');
         }
 
@@ -759,6 +901,16 @@
                 closeModal('exportModal');
             }
         });
+
+        // ==================== 初始化 ====================
+        (function init() {
+            // 首次渲染表格
+            renderTable();
+            // 应用 i18n 到 DOM
+            I18N.applyToDOM();
+            // 更新动态文本
+            updateDynamicText();
+        })();
     </script>
 
 </body>

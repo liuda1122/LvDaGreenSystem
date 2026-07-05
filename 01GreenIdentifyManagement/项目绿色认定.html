@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>项目绿色认定 · 可持续金融管理系统</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../i18n.js"></script>
     <style>
         :root {
             --brand-50: #E8F0FB;
@@ -333,17 +334,17 @@
                 <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);flex-shrink:0;">
                     <div class="filter-row">
                         <div class="filter-group" style="min-width:200px;flex:2;">
-                            <label>项目信息</label>
-                            <input type="text" placeholder="请输入项目名称/代码/编号">
+                            <label data-i18n="filter_project_info">项目信息</label>
+                            <input type="text" data-i18n-placeholder="ph_project_info" placeholder="请输入项目名称/代码/编号">
                         </div>
                         <div class="filter-group" style="min-width:200px;flex:2;">
-                            <label>客户信息</label>
-                            <input type="text" placeholder="客户名称/编号/统一社会信用代码">
+                            <label data-i18n="filter_client_info">客户信息</label>
+                            <input type="text" data-i18n-placeholder="ph_client_info" placeholder="客户名称/编号/统一社会信用代码">
                         </div>
                         <div class="filter-group" style="min-width:160px;flex:1;">
-                            <label>国民经济行业分类</label>
+                            <label data-i18n="filter_industry_class">国民经济行业分类</label>
                             <select>
-                                <option>请选择国民经济行业分类</option>
+                                <option data-i18n="ph_select_industry">请选择国民经济行业分类</option>
                                 <option>水电开发</option>
                                 <option>土木工程建筑业</option>
                                 <option>电气机械及器材制造业</option>
@@ -353,9 +354,9 @@
                             </select>
                         </div>
                         <div class="filter-group" style="min-width:150px;flex:1;">
-                            <label>所属分支机构</label>
+                            <label data-i18n="filter_branch">所属分支机构</label>
                             <select>
-                                <option>请选择机构</option>
+                                <option data-i18n="ph_select_branch">请选择机构</option>
                                 <option>北京分行</option>
                                 <option>上海分行</option>
                                 <option>重庆银行渝北支行</option>
@@ -364,9 +365,9 @@
                     </div>
                     <div class="filter-row" style="margin-top:12px;">
                         <div class="filter-group" style="min-width:160px;flex:1;">
-                            <label>绿色金融分类(2025)</label>
+                            <label data-i18n="filter_gf_category">绿色金融分类(2025)</label>
                             <select>
-                                <option>请选择绿色金融分类</option>
+                                <option data-i18n="ph_select_gf">请选择绿色金融分类</option>
                                 <option>4.2.4 大型水利发电设施</option>
                                 <option>6.5.3 城镇集中供热系统</option>
                                 <option>1.2.1 新能源汽车关键零部件</option>
@@ -376,19 +377,19 @@
                             </select>
                         </div>
                         <div class="filter-group" style="min-width:140px;flex:0.8;">
-                            <label>管户人</label>
-                            <input type="text" placeholder="请输入姓名/工号">
+                            <label data-i18n="filter_manager">管户人</label>
+                            <input type="text" data-i18n-placeholder="ph_manager" placeholder="请输入姓名/工号">
                         </div>
                         <div class="filter-group" style="min-width:140px;flex:0.8;">
-                            <label>识别状态</label>
+                            <label data-i18n="filter_status">识别状态</label>
                             <select>
-                                <option>全部</option>
-                                <option>已识别</option>
-                                <option>未识别</option>
+                                <option data-i18n="opt_all">全部</option>
+                                <option data-i18n="opt_identified">已识别</option>
+                                <option data-i18n="opt_unidentified">未识别</option>
                             </select>
                         </div>
                         <div class="filter-group" style="min-width:220px;flex:1.2;">
-                            <label>最近操作时间</label>
+                            <label data-i18n="filter_last_op_time">最近操作时间</label>
                             <div class="date-range">
                                 <input type="date" value="2015-10-02">
                                 <span style="color:var(--ink-400);font-size:13px;">~</span>
@@ -396,7 +397,7 @@
                             </div>
                         </div>
                         <div class="filter-group" style="min-width:220px;flex:1.2;">
-                            <label>认定日期</label>
+                            <label data-i18n="filter_id_date">认定日期</label>
                             <div class="date-range">
                                 <input type="date" value="2015-10-02">
                                 <span style="color:var(--ink-400);font-size:13px;">~</span>
@@ -404,8 +405,8 @@
                             </div>
                         </div>
                         <div class="filter-actions" style="flex:0 0 auto;">
-                            <button class="btn btn-primary btn-sm">查询</button>
-                            <button class="btn btn-secondary btn-sm">重置</button>
+                            <button class="btn btn-primary btn-sm" data-i18n="btn_search">查询</button>
+                            <button class="btn btn-secondary btn-sm" data-i18n="btn_reset">重置</button>
                         </div>
                     </div>
                 </div>
@@ -413,9 +414,9 @@
                 <!-- 操作栏 -->
                 <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100 flex-shrink-0">
                     <div class="flex gap-2 flex-wrap">
-                        <button class="btn btn-secondary btn-sm">导出数据</button>
+                        <button class="btn btn-secondary btn-sm" data-i18n="btn_export">导出数据</button>
                     </div>
-                    <span class="text-sm text-slate-400">共 8 条</span>
+                    <span class="text-sm text-slate-400"><span data-i18n="lbl_total_prefix">共</span> 8 <span data-i18n="lbl_records">条</span></span>
                 </div>
 
                 <!-- 表格 -->
@@ -423,29 +424,29 @@
                     <table>
                         <thead>
                             <tr>
-                                <th class="col-seq">序号</th>
-                                <th>项目代码</th>
-                                <th>项目名称</th>
-                                <th>项目所属行业</th>
-                                <th>总投资额（万元）</th>
-                                <th>项目所在地</th>
-                                <th>客户编号</th>
-                                <th>客户名称</th>
-                                <th>统一社会信用代码</th>
-                                <th>客户国民经济行业</th>
-                                <th>项目运营状态</th>
-                                <th>2025绿色金融分类1</th>
-                                <th>2025绿色金融分类2</th>
-                                <th>2025绿色金融分类3</th>
-                                <th>信贷系统2025绿色认定分类</th>
-                                <th>所属分支机构</th>
-                                <th>管户人</th>
-                                <th>操作人</th>
-                                <th>最近更新时间</th>
-                                <th>认定日期</th>
-                                <th>创建时间</th>
-                                <th class="col-status">识别状态</th>
-                                <th class="col-actions">操作</th>
+                                <th class="col-seq" data-i18n="th_seq">序号</th>
+                                <th data-i18n="th_code">项目代码</th>
+                                <th data-i18n="th_name">项目名称</th>
+                                <th data-i18n="th_industry">项目所属行业</th>
+                                <th data-i18n="th_investment">总投资额（万元）</th>
+                                <th data-i18n="th_location">项目所在地</th>
+                                <th data-i18n="th_client_code">客户编号</th>
+                                <th data-i18n="th_client_name">客户名称</th>
+                                <th data-i18n="th_credit_code">统一社会信用代码</th>
+                                <th data-i18n="th_client_industry">客户国民经济行业</th>
+                                <th data-i18n="th_op_status">项目运营状态</th>
+                                <th data-i18n="th_gf1">2025绿色金融分类1</th>
+                                <th data-i18n="th_gf2">2025绿色金融分类2</th>
+                                <th data-i18n="th_gf3">2025绿色金融分类3</th>
+                                <th data-i18n="th_credit_gf">信贷系统2025绿色认定分类</th>
+                                <th data-i18n="th_branch">所属分支机构</th>
+                                <th data-i18n="th_manager">管户人</th>
+                                <th data-i18n="th_operator">操作人</th>
+                                <th data-i18n="th_last_updated">最近更新时间</th>
+                                <th data-i18n="th_id_date">认定日期</th>
+                                <th data-i18n="th_created">创建时间</th>
+                                <th class="col-status" data-i18n="th_status">识别状态</th>
+                                <th class="col-actions" data-i18n="th_actions">操作</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -453,15 +454,15 @@
                             <tr>
                                 <td class="col-seq">1</td>
                                 <td style="font-family:monospace;font-size:12px;color:var(--brand-600);">PRJ-2026-001</td>
-                                <td style="font-weight:500;color:var(--ink-900);">构皮滩水电站项目</td>
+                                <td style="font-weight:500;color:var(--ink-900);" data-i18n="project_goupitan">构皮滩水电站项目</td>
                                 <td>水电开发</td>
                                 <td style="font-family:var(--font-num);">1,200,000.00</td>
                                 <td>贵州省 遵义市</td>
                                 <td style="font-family:monospace;font-size:12px;">CUST-001</td>
-                                <td>贵州乌江水电开发有限责任公司</td>
+                                <td data-i18n="company_wujiang">贵州乌江水电开发有限责任公司</td>
                                 <td style="font-family:monospace;font-size:12px;">91520000714735261Y</td>
                                 <td>水电开发</td>
-                                <td><span class="tag tag-warning">建设中</span></td>
+                                <td><span class="tag tag-warning" data-i18n="tag_constructing">建设中</span></td>
                                 <!-- 未识别：绿色分类列全部显示为 "—" -->
                                 <td><span class="tag tag-default">—</span></td>
                                 <td><span class="tag tag-default">—</span></td>
@@ -473,11 +474,11 @@
                                 <td>2026/07/01 14:23:10</td>
                                 <td>2026/07/01</td>
                                 <td>2026/07/01 10:00:00</td>
-                                <td class="col-status"><span class="tag tag-unidentified">未识别</span></td>
+                                <td class="col-status"><span class="tag tag-unidentified" data-i18n="tag_unidentified">未识别</span></td>
                                 <td class="col-actions">
                                     <div class="action-btns">
-                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-001')">查看</button>
-                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-001')">开始识别</button>
+                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-001')" data-i18n="btn_view">查看</button>
+                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-001')" data-i18n="btn_start_id">开始识别</button>
                                     </div>
                                 </td>
                             </tr>
@@ -485,15 +486,15 @@
                             <tr>
                                 <td class="col-seq">2</td>
                                 <td style="font-family:monospace;font-size:12px;color:var(--brand-600);">PRJ-2026-002</td>
-                                <td style="font-weight:500;color:var(--ink-900);">吕梁市区长输集中供热工程</td>
+                                <td style="font-weight:500;color:var(--ink-900);" data-i18n="project_lvliang">吕梁市区长输集中供热工程</td>
                                 <td>土木工程建筑业</td>
                                 <td style="font-family:var(--font-num);">380,000.00</td>
                                 <td>山西省 吕梁市</td>
                                 <td style="font-family:monospace;font-size:12px;">CUST-002</td>
-                                <td>中交一公局集团有限公司</td>
+                                <td data-i18n="company_cccc">中交一公局集团有限公司</td>
                                 <td style="font-family:monospace;font-size:12px;">91110000100088498T</td>
                                 <td>土木工程建筑业</td>
-                                <td><span class="tag tag-warning">建设中</span></td>
+                                <td><span class="tag tag-warning" data-i18n="tag_constructing">建设中</span></td>
                                 <!-- 未识别：绿色分类列全部显示为 "—" -->
                                 <td><span class="tag tag-default">—</span></td>
                                 <td><span class="tag tag-default">—</span></td>
@@ -505,11 +506,11 @@
                                 <td>2026/07/01 15:10:22</td>
                                 <td>2026/07/01</td>
                                 <td>2026/07/01 11:20:00</td>
-                                <td class="col-status"><span class="tag tag-unidentified">未识别</span></td>
+                                <td class="col-status"><span class="tag tag-unidentified" data-i18n="tag_unidentified">未识别</span></td>
                                 <td class="col-actions">
                                     <div class="action-btns">
-                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-002')">查看</button>
-                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-002')">开始识别</button>
+                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-002')" data-i18n="btn_view">查看</button>
+                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-002')" data-i18n="btn_start_id">开始识别</button>
                                     </div>
                                 </td>
                             </tr>
@@ -517,30 +518,30 @@
                             <tr>
                                 <td class="col-seq">3</td>
                                 <td style="font-family:monospace;font-size:12px;color:var(--brand-600);">PRJ-2026-003</td>
-                                <td style="font-weight:500;color:var(--ink-900);">动力及储能锂离子电池研发生产</td>
+                                <td style="font-weight:500;color:var(--ink-900);" data-i18n="project_catl_battery">动力及储能锂离子电池研发生产</td>
                                 <td>电气机械及器材制造业</td>
                                 <td style="font-family:var(--font-num);">2,500,000.00</td>
                                 <td>福建省 宁德市</td>
                                 <td style="font-family:monospace;font-size:12px;">CUST-003</td>
-                                <td>宁德时代新能源科技股份有限公司</td>
+                                <td data-i18n="company_catl">宁德时代新能源科技股份有限公司</td>
                                 <td style="font-family:monospace;font-size:12px;">91350900587627358C</td>
                                 <td>锂离子电池制造</td>
-                                <td><span class="tag tag-success">运营不足30天</span></td>
-                                <td><span class="tag tag-info">1.2.1 新能源汽车关键零部件</span></td>
-                                <td><span class="tag tag-info">4.1.8 新型储能产品制造</span></td>
+                                <td><span class="tag tag-success" data-i18n="tag_op_under_30">运营不足30天</span></td>
+                                <td><span class="tag tag-info" data-i18n="gf_val_1_2_1">1.2.1 新能源汽车关键零部件</span></td>
+                                <td><span class="tag tag-info" data-i18n="gf_val_4_1_8">4.1.8 新型储能产品制造</span></td>
                                 <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-success">1.2.1 新能源汽车关键零部件</span></td>
+                                <td><span class="tag tag-success" data-i18n="gf_val_1_2_1">1.2.1 新能源汽车关键零部件</span></td>
                                 <td>上海分行</td>
                                 <td>赵经理/003</td>
                                 <td>王审核/009</td>
                                 <td>2026/07/02 09:30:15</td>
                                 <td>2026/07/02</td>
                                 <td>2026/07/02 08:00:00</td>
-                                <td class="col-status"><span class="tag tag-identified">已识别</span></td>
+                                <td class="col-status"><span class="tag tag-identified" data-i18n="tag_identified">已识别</span></td>
                                 <td class="col-actions">
                                     <div class="action-btns">
-                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-003')">查看</button>
-                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-003')">开始识别</button>
+                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-003')" data-i18n="btn_view">查看</button>
+                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-003')" data-i18n="btn_start_id">开始识别</button>
                                     </div>
                                 </td>
                             </tr>
@@ -548,30 +549,30 @@
                             <tr>
                                 <td class="col-seq">4</td>
                                 <td style="font-family:monospace;font-size:12px;color:var(--brand-600);">PRJ-2026-004</td>
-                                <td style="font-weight:500;color:var(--ink-900);">城市污水处理厂新建与改造</td>
+                                <td style="font-weight:500;color:var(--ink-900);" data-i18n="project_sewage">城市污水处理厂新建与改造</td>
                                 <td>水利、环境和公共设施管理业</td>
                                 <td style="font-family:var(--font-num);">180,000.00</td>
                                 <td>广东省 广州市</td>
                                 <td style="font-family:monospace;font-size:12px;">CUST-004</td>
-                                <td>广东省环保集团有限公司</td>
+                                <td data-i18n="company_gdep">广东省环保集团有限公司</td>
                                 <td style="font-family:monospace;font-size:12px;">91440000100034167A</td>
                                 <td>水污染治理</td>
-                                <td><span class="tag tag-warning">建设中</span></td>
-                                <td><span class="tag tag-info">5.3.1.1 污水处理设施建设</span></td>
-                                <td><span class="tag tag-info">2.1.2.1 重点行业水污染治理</span></td>
+                                <td><span class="tag tag-warning" data-i18n="tag_constructing">建设中</span></td>
+                                <td><span class="tag tag-info" data-i18n="gf_val_5_3_1_1a">5.3.1.1 污水处理设施建设</span></td>
+                                <td><span class="tag tag-info" data-i18n="gf_val_2_1_2_1">2.1.2.1 重点行业水污染治理</span></td>
                                 <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-success">5.3.1.1 污水处理设施</span></td>
+                                <td><span class="tag tag-success" data-i18n="gf_val_5_3_1_1b">5.3.1.1 污水处理设施</span></td>
                                 <td>上海分行</td>
                                 <td>陈经理/004</td>
                                 <td>刘审核/010</td>
                                 <td>2026/07/01 16:45:30</td>
                                 <td>2026/07/01</td>
                                 <td>2026/07/01 14:00:00</td>
-                                <td class="col-status"><span class="tag tag-identified">已识别</span></td>
+                                <td class="col-status"><span class="tag tag-identified" data-i18n="tag_identified">已识别</span></td>
                                 <td class="col-actions">
                                     <div class="action-btns">
-                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-004')">查看</button>
-                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-004')">开始识别</button>
+                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-004')" data-i18n="btn_view">查看</button>
+                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-004')" data-i18n="btn_start_id">开始识别</button>
                                     </div>
                                 </td>
                             </tr>
@@ -579,30 +580,30 @@
                             <tr>
                                 <td class="col-seq">5</td>
                                 <td style="font-family:monospace;font-size:12px;color:var(--brand-600);">PRJ-2026-005</td>
-                                <td style="font-weight:500;color:var(--ink-900);">城市轨道交通建设工程</td>
+                                <td style="font-weight:500;color:var(--ink-900);" data-i18n="project_metro">城市轨道交通建设工程</td>
                                 <td>土木工程建筑业</td>
                                 <td style="font-family:var(--font-num);">4,200,000.00</td>
                                 <td>广东省 广州市</td>
                                 <td style="font-family:monospace;font-size:12px;">CUST-005</td>
-                                <td>广州地铁集团有限公司</td>
+                                <td data-i18n="company_gzmetro">广州地铁集团有限公司</td>
                                 <td style="font-family:monospace;font-size:12px;">91440101687183456Y</td>
                                 <td>城市轨道交通</td>
-                                <td><span class="tag tag-warning">建设中</span></td>
-                                <td><span class="tag tag-info">5.5.1.5 城乡公共交通系统</span></td>
+                                <td><span class="tag tag-warning" data-i18n="tag_constructing">建设中</span></td>
+                                <td><span class="tag tag-info" data-i18n="gf_val_5_5_1_5">5.5.1.5 城乡公共交通系统</span></td>
                                 <td><span class="tag tag-default">—</span></td>
                                 <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-success">5.5.1.5 城乡公共交通系统</span></td>
+                                <td><span class="tag tag-success" data-i18n="gf_val_5_5_1_5">5.5.1.5 城乡公共交通系统</span></td>
                                 <td>北京分行</td>
                                 <td>刘经理/005</td>
                                 <td>张审核/011</td>
                                 <td>2026/07/02 10:15:40</td>
                                 <td>2026/07/02</td>
                                 <td>2026/07/02 09:00:00</td>
-                                <td class="col-status"><span class="tag tag-identified">已识别</span></td>
+                                <td class="col-status"><span class="tag tag-identified" data-i18n="tag_identified">已识别</span></td>
                                 <td class="col-actions">
                                     <div class="action-btns">
-                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-005')">查看</button>
-                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-005')">开始识别</button>
+                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-005')" data-i18n="btn_view">查看</button>
+                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-005')" data-i18n="btn_start_id">开始识别</button>
                                     </div>
                                 </td>
                             </tr>
@@ -610,30 +611,30 @@
                             <tr>
                                 <td class="col-seq">6</td>
                                 <td style="font-family:monospace;font-size:12px;color:var(--brand-600);">PRJ-2026-006</td>
-                                <td style="font-weight:500;color:var(--ink-900);">电解槽节能技改及环保升级</td>
+                                <td style="font-weight:500;color:var(--ink-900);" data-i18n="project_electrolytic">电解槽节能技改及环保升级</td>
                                 <td>有色金属行业</td>
                                 <td style="font-family:var(--font-num);">95,000.00</td>
                                 <td>北京市 海淀区</td>
                                 <td style="font-family:monospace;font-size:12px;">CUST-006</td>
-                                <td>中国铝业股份有限公司</td>
+                                <td data-i18n="company_chalco">中国铝业股份有限公司</td>
                                 <td style="font-family:monospace;font-size:12px;">91110000100003231E</td>
                                 <td>铝冶炼</td>
-                                <td><span class="tag tag-info">运营30天及以上</span></td>
-                                <td><span class="tag tag-danger">非绿</span></td>
+                                <td><span class="tag tag-info" data-i18n="tag_op_over_30">运营30天及以上</span></td>
+                                <td><span class="tag tag-danger" data-i18n="tag_non_green">非绿</span></td>
                                 <td><span class="tag tag-default">—</span></td>
                                 <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-danger">非绿</span></td>
+                                <td><span class="tag tag-danger" data-i18n="tag_non_green">非绿</span></td>
                                 <td>重庆银行渝北支行</td>
                                 <td>周经理/006</td>
                                 <td>李审核/012</td>
                                 <td>2026/07/01 12:00:00</td>
                                 <td>2026/07/01</td>
                                 <td>2026/07/01 11:30:00</td>
-                                <td class="col-status"><span class="tag tag-identified">已识别</span></td>
+                                <td class="col-status"><span class="tag tag-identified" data-i18n="tag_identified">已识别</span></td>
                                 <td class="col-actions">
                                     <div class="action-btns">
-                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-006')">查看</button>
-                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-006')">开始识别</button>
+                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-006')" data-i18n="btn_view">查看</button>
+                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-006')" data-i18n="btn_start_id">开始识别</button>
                                     </div>
                                 </td>
                             </tr>
@@ -641,30 +642,30 @@
                             <tr>
                                 <td class="col-seq">7</td>
                                 <td style="font-family:monospace;font-size:12px;color:var(--brand-600);">PRJ-2026-007</td>
-                                <td style="font-weight:500;color:var(--ink-900);">标准化示范牧场建设项目</td>
+                                <td style="font-weight:500;color:var(--ink-900);" data-i18n="project_ranch">标准化示范牧场建设项目</td>
                                 <td>食物饮品 - 乳制品</td>
                                 <td style="font-family:var(--font-num);">150,000.00</td>
                                 <td>安徽省 马鞍山市</td>
                                 <td style="font-family:monospace;font-size:12px;">CUST-007</td>
-                                <td>现代牧业集团有限公司</td>
+                                <td data-i18n="company_modern_dairy">现代牧业集团有限公司</td>
                                 <td style="font-family:monospace;font-size:12px;">91340500705893214P</td>
                                 <td>畜牧业</td>
-                                <td><span class="tag tag-warning">建设中</span></td>
-                                <td><span class="tag tag-info">5.1.14 绿色畜牧业</span></td>
-                                <td><span class="tag tag-info">2.5.10 畜禽养殖废弃物治理</span></td>
-                                <td><span class="tag tag-info">2.4.3 农林草业面源污染防治</span></td>
-                                <td><span class="tag tag-success">5.1.14 绿色畜牧业</span></td>
+                                <td><span class="tag tag-warning" data-i18n="tag_constructing">建设中</span></td>
+                                <td><span class="tag tag-info" data-i18n="gf_val_5_1_14">5.1.14 绿色畜牧业</span></td>
+                                <td><span class="tag tag-info" data-i18n="gf_val_2_5_10">2.5.10 畜禽养殖废弃物治理</span></td>
+                                <td><span class="tag tag-info" data-i18n="gf_val_2_4_3">2.4.3 农林草业面源污染防治</span></td>
+                                <td><span class="tag tag-success" data-i18n="gf_val_5_1_14">5.1.14 绿色畜牧业</span></td>
                                 <td>上海分行</td>
                                 <td>吴经理/007</td>
                                 <td>王审核/013</td>
                                 <td>2026/07/02 11:20:50</td>
                                 <td>2026/07/02</td>
                                 <td>2026/07/02 10:00:00</td>
-                                <td class="col-status"><span class="tag tag-identified">已识别</span></td>
+                                <td class="col-status"><span class="tag tag-identified" data-i18n="tag_identified">已识别</span></td>
                                 <td class="col-actions">
                                     <div class="action-btns">
-                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-007')">查看</button>
-                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-007')">开始识别</button>
+                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-007')" data-i18n="btn_view">查看</button>
+                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-007')" data-i18n="btn_start_id">开始识别</button>
                                     </div>
                                 </td>
                             </tr>
@@ -672,30 +673,30 @@
                             <tr>
                                 <td class="col-seq">8</td>
                                 <td style="font-family:monospace;font-size:12px;color:var(--brand-600);">PRJ-2026-008</td>
-                                <td style="font-weight:500;color:var(--ink-900);">新型储能电池生产基地</td>
+                                <td style="font-weight:500;color:var(--ink-900);" data-i18n="project_energy_storage">新型储能电池生产基地</td>
                                 <td>电气机械及器材制造业</td>
                                 <td style="font-family:var(--font-num);">1,800,000.00</td>
                                 <td>江苏省 常州市</td>
                                 <td style="font-family:monospace;font-size:12px;">CUST-008</td>
-                                <td>中创新航科技集团</td>
+                                <td data-i18n="company_calb">中创新航科技集团</td>
                                 <td style="font-family:monospace;font-size:12px;">91320400MA1XW8LQ5C</td>
                                 <td>锂离子电池制造</td>
-                                <td><span class="tag tag-success">运营不足30天</span></td>
-                                <td><span class="tag tag-info">4.1.8 新型储能产品制造</span></td>
+                                <td><span class="tag tag-success" data-i18n="tag_op_under_30">运营不足30天</span></td>
+                                <td><span class="tag tag-info" data-i18n="gf_val_4_1_8">4.1.8 新型储能产品制造</span></td>
                                 <td><span class="tag tag-default">—</span></td>
                                 <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-success">4.1.8 新型储能产品制造</span></td>
+                                <td><span class="tag tag-success" data-i18n="gf_val_4_1_8">4.1.8 新型储能产品制造</span></td>
                                 <td>上海分行</td>
                                 <td>郑经理/008</td>
                                 <td>赵审核/014</td>
                                 <td>2026/07/02 13:45:10</td>
                                 <td>2026/07/02</td>
                                 <td>2026/07/02 12:00:00</td>
-                                <td class="col-status"><span class="tag tag-identified">已识别</span></td>
+                                <td class="col-status"><span class="tag tag-identified" data-i18n="tag_identified">已识别</span></td>
                                 <td class="col-actions">
                                     <div class="action-btns">
-                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-008')">查看</button>
-                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-008')">开始识别</button>
+                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-008')" data-i18n="btn_view">查看</button>
+                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-008')" data-i18n="btn_start_id">开始识别</button>
                                     </div>
                                 </td>
                             </tr>
@@ -705,16 +706,16 @@
 
                 <!-- 分页 -->
                 <div class="flex items-center justify-between px-6 py-3 border-t border-slate-100 flex-shrink-0">
-                    <span class="text-sm text-slate-400">共 8 条</span>
+                    <span class="text-sm text-slate-400"><span data-i18n="lbl_total_prefix">共</span> 8 <span data-i18n="lbl_records">条</span></span>
                     <div class="flex items-center gap-2">
-                        <button class="btn btn-secondary btn-sm">‹</button>
+                        <button class="btn btn-secondary btn-sm">&#8249;</button>
                         <span class="px-2 py-1 text-sm bg-brand-500 text-white rounded">1</span>
                         <button class="btn btn-secondary btn-sm">2</button>
                         <button class="btn btn-secondary btn-sm">3</button>
-                        <span class="text-sm text-slate-400">…</span>
+                        <span class="text-sm text-slate-400">&hellip;</span>
                         <button class="btn btn-secondary btn-sm">50</button>
-                        <button class="btn btn-secondary btn-sm">›</button>
-                        <span class="text-sm text-slate-500 ml-2">跳至 <input type="number" class="w-12 px-1 py-0.5 border border-slate-300 rounded text-center text-sm" value="1"> /50页</span>
+                        <button class="btn btn-secondary btn-sm">&#8250;</button>
+                        <span class="text-sm text-slate-500 ml-2"><span data-i18n="lbl_jump_to">跳至</span> <input type="number" class="w-12 px-1 py-0.5 border border-slate-300 rounded text-center text-sm" value="1"> /50<span data-i18n="lbl_page">页</span></span>
                     </div>
                 </div>
             </div>
@@ -722,19 +723,161 @@
     </div>
 
     <script>
+        // ==================== i18n 字典 ====================
+        I18N.setDict({
+            // Title
+            page_title: {zh:'项目绿色认定 · 可持续金融管理系统', en:'Project Green ID · Sustainable Finance System'},
+            // Filter labels
+            filter_project_info: {zh:'项目信息', en:'Project Info'},
+            filter_client_info: {zh:'客户信息', en:'Client Info'},
+            filter_industry_class: {zh:'国民经济行业分类', en:'Industry Classification'},
+            filter_branch: {zh:'所属分支机构', en:'Branch'},
+            filter_gf_category: {zh:'绿色金融分类(2025)', en:'Green Finance Category(2025)'},
+            filter_manager: {zh:'管户人', en:'Manager'},
+            filter_status: {zh:'识别状态', en:'ID Status'},
+            filter_last_op_time: {zh:'最近操作时间', en:'Last Operation'},
+            filter_id_date: {zh:'认定日期', en:'ID Date'},
+            // Placeholders
+            ph_project_info: {zh:'请输入项目名称/代码/编号', en:'Project name / code / number'},
+            ph_client_info: {zh:'客户名称/编号/统一社会信用代码', en:'Client name / code / credit code'},
+            ph_select_industry: {zh:'请选择国民经济行业分类', en:'Select industry classification'},
+            ph_select_branch: {zh:'请选择机构', en:'Select branch'},
+            ph_select_gf: {zh:'请选择绿色金融分类', en:'Select green finance category'},
+            ph_manager: {zh:'请输入姓名/工号', en:'Name / employee ID'},
+            // Options
+            opt_all: {zh:'全部', en:'All'},
+            opt_identified: {zh:'已识别', en:'Identified'},
+            opt_unidentified: {zh:'未识别', en:'Unidentified'},
+            // Buttons
+            btn_search: {zh:'查询', en:'Search'},
+            btn_reset: {zh:'重置', en:'Reset'},
+            btn_export: {zh:'导出数据', en:'Export'},
+            btn_view: {zh:'查看', en:'View'},
+            btn_start_id: {zh:'开始识别', en:'Start ID'},
+            // Table headers
+            th_seq: {zh:'序号', en:'#'},
+            th_code: {zh:'项目代码', en:'Code'},
+            th_name: {zh:'项目名称', en:'Project Name'},
+            th_industry: {zh:'项目所属行业', en:'Industry'},
+            th_investment: {zh:'总投资额（万元）', en:'Total Investment (10k CNY)'},
+            th_location: {zh:'项目所在地', en:'Location'},
+            th_client_code: {zh:'客户编号', en:'Client Code'},
+            th_client_name: {zh:'客户名称', en:'Client Name'},
+            th_credit_code: {zh:'统一社会信用代码', en:'Credit Code'},
+            th_client_industry: {zh:'客户国民经济行业', en:'Client Industry'},
+            th_op_status: {zh:'项目运营状态', en:'Operation Status'},
+            th_gf1: {zh:'2025绿色金融分类1', en:'2025 GF Category 1'},
+            th_gf2: {zh:'2025绿色金融分类2', en:'2025 GF Category 2'},
+            th_gf3: {zh:'2025绿色金融分类3', en:'2025 GF Category 3'},
+            th_credit_gf: {zh:'信贷系统2025绿色认定分类', en:'Credit Sys 2025 GF Category'},
+            th_branch: {zh:'所属分支机构', en:'Branch'},
+            th_manager: {zh:'管户人', en:'Manager'},
+            th_operator: {zh:'操作人', en:'Operator'},
+            th_last_updated: {zh:'最近更新时间', en:'Last Updated'},
+            th_id_date: {zh:'认定日期', en:'ID Date'},
+            th_created: {zh:'创建时间', en:'Created'},
+            th_status: {zh:'识别状态', en:'Status'},
+            th_actions: {zh:'操作', en:'Actions'},
+            // Status tags
+            tag_constructing: {zh:'建设中', en:'Under Construction'},
+            tag_op_under_30: {zh:'运营不足30天', en:'Operating <30 days'},
+            tag_op_over_30: {zh:'运营30天及以上', en:'Operating >=30 days'},
+            tag_non_green: {zh:'非绿', en:'Non-Green'},
+            tag_identified: {zh:'已识别', en:'Identified'},
+            tag_unidentified: {zh:'未识别', en:'Unidentified'},
+            // Pagination
+            lbl_total_prefix: {zh:'共', en:'Total'},
+            lbl_records: {zh:'条', en:'records'},
+            lbl_jump_to: {zh:'跳至', en:'Jump to'},
+            lbl_page: {zh:'页', en:'Page'},
+            // === 2025 Green Finance Categories - Complete Translations ===
+            // Level 1
+            '1.节能降碳产业': {zh:'1.节能降碳产业', en:'1. Energy Conservation & Carbon Reduction'},
+            '2.清洁生产产业': {zh:'2.清洁生产产业', en:'2. Cleaner Production'},
+            '3.清洁能源产业': {zh:'3.清洁能源产业', en:'3. Clean Energy Industry'},
+            '4.能源绿色低碳转型': {zh:'4.能源绿色低碳转型', en:'4. Green & Low-Carbon Energy Transition'},
+            '5.生态保护修复和利用': {zh:'5.生态保护修复和利用', en:'5. Ecological Protection & Restoration'},
+            '6.基础设施绿色升级': {zh:'6.基础设施绿色升级', en:'6. Green Infrastructure Upgrading'},
+            // Level 2
+            '1.1 能效提升': {zh:'1.1 能效提升', en:'1.1 Energy Efficiency Improvement'},
+            '1.2 先进交通装备制造': {zh:'1.2 先进交通装备制造', en:'1.2 Advanced Transportation Equipment Mfg'},
+            '2.1 污染防治': {zh:'2.1 污染防治', en:'2.1 Pollution Prevention & Control'},
+            '3.4 能源系统改造': {zh:'3.4 能源系统改造', en:'3.4 Energy System Renovation'},
+            '4.1 新能源与清洁能源装备制造': {zh:'4.1 新能源与清洁能源装备制造', en:'4.1 New & Clean Energy Equipment Mfg'},
+            '4.2 清洁能源设施建设和运营': {zh:'4.2 清洁能源设施建设和运营', en:'4.2 Clean Energy Facility Construction & Operation'},
+            '5.2 生态保护修复': {zh:'5.2 生态保护修复', en:'5.2 Ecological Protection & Restoration'},
+            '5.3 污染防治': {zh:'5.3 污染防治', en:'5.3 Pollution Prevention & Control'},
+            '6.5 城乡能源基础设施': {zh:'6.5 城乡能源基础设施', en:'6.5 Urban-Rural Energy Infrastructure'},
+            // Level 3
+            '1.2.1 新能源汽车及关键零部件制造': {zh:'1.2.1 新能源汽车及关键零部件制造', en:'1.2.1 NEV & Key Component Manufacturing'},
+            '2.1.2.1 重点行业水污染治理': {zh:'2.1.2.1 重点行业水污染治理', en:'2.1.2.1 Key Industry Water Pollution Control'},
+            '2.1.3 节能锅炉制造': {zh:'2.1.3 节能锅炉制造', en:'2.1.3 Energy-Efficient Boiler Manufacturing'},
+            '3.4.8 电网节能改造项目': {zh:'3.4.8 电网节能改造项目', en:'3.4.8 Grid Energy-Saving Renovation'},
+            '4.1.8 新型储能产品制造': {zh:'4.1.8 新型储能产品制造', en:'4.1.8 New Energy Storage Product Mfg'},
+            '4.2.4 大型水利发电设施建设和运营': {zh:'4.2.4 大型水利发电设施建设和运营', en:'4.2.4 Large Hydropower Facility Construction & Operation'},
+            '5.2.6 充电基础设施': {zh:'5.2.6 充电基础设施', en:'5.2.6 Charging Infrastructure'},
+            '5.2.11 水生态系统旱涝灾害防控及应对': {zh:'5.2.11 水生态系统旱涝灾害防控及应对', en:'5.2.11 Flood & Drought Prevention for Aquatic Ecosystems'},
+            '5.3.1.1 污水处理、再生利用及污泥处理处置设施建设运营': {zh:'5.3.1.1 污水处理、再生利用及污泥处理处置设施建设运营', en:'5.3.1.1 Sewage Treatment, Recycling & Sludge Disposal'},
+            '6.5.3 城镇集中供热系统清洁化、低碳化建设运营和改造': {zh:'6.5.3 城镇集中供热系统清洁化、低碳化建设运营和改造', en:'6.5.3 Clean District Heating Construction & Renovation'},
+            // Additional
+            '2.5 其他污染治理和环境综合整治': {zh:'2.5 其他污染治理和环境综合整治', en:'2.5 Other Pollution Control & Environmental Remediation'},
+            '2.5.2 危险废物处理处置': {zh:'2.5.2 危险废物处理处置', en:'2.5.2 Hazardous Waste Treatment & Disposal'},
+            '3.2 资源循环利用': {zh:'3.2 资源循环利用', en:'3.2 Resource Recycling & Utilization'},
+            '3.2.7 废气回收利用': {zh:'3.2.7 废气回收利用', en:'3.2.7 Waste Gas Recovery & Utilization'},
+            '绿色金融分类(2025)': {zh:'绿色金融分类(2025)', en:'Green Finance Category (2025)'},
+            '信贷系统2025绿色认定分类': {zh:'信贷系统2025绿色认定分类', en:'Credit System 2025 GF Category'},
+            '绿色金融标准：《绿色金融支持项目目录（2025年版）》': {zh:'绿色金融标准：《绿色金融支持项目目录（2025年版）》', en:'Green Finance Standard: Green Finance Project Catalogue (2025)'},
+            '绿色债券支持项目目录(2021)': {zh:'绿色债券支持项目目录(2021)', en:'Green Bond Project Catalogue (2021)'},
+            '碳减排支持工具范围': {zh:'碳减排支持工具范围', en:'Carbon Reduction Support Tools'},
+            '绿色低碳转型产业指导目录(2024)': {zh:'绿色低碳转型产业指导目录(2024)', en:'Green Low-Carbon Transition Industry Catalogue (2024)'},
+            // Table GF category values (shortened UI display versions)
+            gf_val_1_2_1: {zh:'1.2.1 新能源汽车关键零部件', en:'1.2.1 NEV & Key Components'},
+            gf_val_4_1_8: {zh:'4.1.8 新型储能产品制造', en:'4.1.8 New Energy Storage Product Mfg'},
+            gf_val_5_3_1_1a: {zh:'5.3.1.1 污水处理设施建设', en:'5.3.1.1 Sewage Treatment Facility Construction'},
+            gf_val_2_1_2_1: {zh:'2.1.2.1 重点行业水污染治理', en:'2.1.2.1 Key Industry Water Pollution Control'},
+            gf_val_5_3_1_1b: {zh:'5.3.1.1 污水处理设施', en:'5.3.1.1 Sewage Treatment Facility'},
+            gf_val_5_5_1_5: {zh:'5.5.1.5 城乡公共交通系统', en:'5.5.1.5 Urban-Rural Public Transit'},
+            gf_val_5_1_14: {zh:'5.1.14 绿色畜牧业', en:'5.1.14 Green Animal Husbandry'},
+            gf_val_2_5_10: {zh:'2.5.10 畜禽养殖废弃物治理', en:'2.5.10 Livestock Waste Treatment'},
+            gf_val_2_4_3: {zh:'2.4.3 农林草业面源污染防治', en:'2.4.3 Agri Non-Point Source Pollution Control'},
+            // Company names
+            company_wujiang: {zh:'贵州乌江水电开发有限责任公司', en:'Guizhou Wujiang Hydropower Development Co., Ltd.'},
+            company_cccc: {zh:'中交一公局集团有限公司', en:'CCCC First Highway Engineering Group Co., Ltd.'},
+            company_catl: {zh:'宁德时代新能源科技股份有限公司', en:'CATL (Contemporary Amperex Technology Co., Ltd.)'},
+            company_gdep: {zh:'广东省环保集团有限公司', en:'Guangdong Environmental Protection Group Co., Ltd.'},
+            company_gzmetro: {zh:'广州地铁集团有限公司', en:'Guangzhou Metro Group Co., Ltd.'},
+            company_chalco: {zh:'中国铝业股份有限公司', en:'Aluminum Corporation of China (Chalco)'},
+            company_modern_dairy: {zh:'现代牧业集团有限公司', en:'Modern Dairy Group Co., Ltd.'},
+            company_calb: {zh:'中创新航科技集团', en:'CALB (China Aviation Lithium Battery) Group'},
+            // Project names
+            project_goupitan: {zh:'构皮滩水电站项目', en:'Goupitan Hydropower Station Project'},
+            project_lvliang: {zh:'吕梁市区长输集中供热工程', en:'Lvliang District Central Heating Pipeline Project'},
+            project_catl_battery: {zh:'动力及储能锂离子电池研发生产', en:'Power & Energy Storage Li-ion Battery R&D and Production'},
+            project_sewage: {zh:'城市污水处理厂新建与改造', en:'Urban Sewage Treatment Plant Construction & Renovation'},
+            project_metro: {zh:'城市轨道交通建设工程', en:'Urban Rail Transit Construction Project'},
+            project_electrolytic: {zh:'电解槽节能技改及环保升级', en:'Electrolytic Cell Energy-Saving & Environmental Upgrade'},
+            project_ranch: {zh:'标准化示范牧场建设项目', en:'Standardized Demonstration Ranch Construction'},
+            project_energy_storage: {zh:'新型储能电池生产基地', en:'New Energy Storage Battery Production Base'}
+        });
+
+        // ==================== 语言切换时更新标题 ====================
+        window.onLangChange = function(lang) {
+            document.title = I18N.t('page_title');
+        };
+        // 初始化标题
+        document.title = I18N.t('page_title');
+
         function getCurrentDir() {
             var path = window.location.pathname;
             return path.substring(0, path.lastIndexOf('/') + 1);
         }
 
-        // 修改：增加 projectId 参数
         function goToDetail(mode, projectId) {
             var dir = getCurrentDir();
-            // 拼接 projectId 参数
             var targetUrl = dir + '项目绿色认定开始认定页1.html?projectId=' + projectId;
             if (window.parent !== window) {
                 var pageId = 'project-identify-detail-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
-                var label = mode === 'view' ? '项目绿色认定详情' : '项目绿色认定操作';
+                var label = mode === 'view' ? I18N.t('page_label_view', '项目绿色认定详情') : I18N.t('page_label_edit', '项目绿色认定操作');
                 window.parent.postMessage({
                     type: 'openPage',
                     pageId: pageId,
@@ -745,6 +888,12 @@
                 window.location.href = targetUrl;
             }
         }
+
+        // 追加 goToDetail 用到的字典
+        I18N.addDict({
+            page_label_view: {zh:'项目绿色认定详情', en:'Project Green ID Detail'},
+            page_label_edit: {zh:'项目绿色认定操作', en:'Project Green ID Operation'}
+        });
     </script>
 
 </body>

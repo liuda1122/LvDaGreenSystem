@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>潜在项目业务营销 · 零碳园区项目库</title>
+    <title data-i18n="pageTitle">潜在项目业务营销 · 零碳园区项目库</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../i18n.js"></script>
     <style>
         :root {
             --brand-50: #E8F0FB; --brand-100: #D1DFF4; --brand-300: #6E97D6;
@@ -139,408 +140,600 @@
         .suggest-item .text { color: var(--ink-700); line-height: 1.6; }
         .suggest-item .text strong { color: var(--ink-900); }
         .priority-high { background: #FEF2F2; color: #DC2626; border-color: #FECACA; }
+        .priority-mid { background: #FFFBEB; color: #D97706; border-color: #FDE68A; }
+        .priority-low { background: #ECFDF5; color: #047857; border-color: #A7F3D0; }
     </style>
 </head>
 <body>
 <div class="flex flex-col" style="height:100vh;background:var(--bg-subtle);">
     <div style="padding:16px 24px 0 24px;flex-shrink:0;">
-        <h1 style="font-size:20px;font-weight:700;color:var(--ink-900);">潜在项目业务营销</h1>
-        <p style="font-size:13px;color:var(--ink-500);margin-top:2px;">潜在项目库 · 公开潜在项目信息浏览与营销引入</p>
+        <h1 style="font-size:18px;font-weight:700;color:var(--ink-900);" data-i18n="pageTitleH1">潜在项目业务营销</h1>
     </div>
     <div class="flex-1 overflow-hidden" style="padding:16px 24px 24px 24px;">
         <div class="section-card" style="height:100%;">
-            <!-- 筛选栏 -->
+            <!-- Filter bar -->
             <div style="padding:14px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);flex-shrink:0;">
                 <div class="filter-row">
                     <div class="filter-group" style="min-width:200px;flex:1.5;">
-                        <label>项目名称/关键词</label>
-                        <input type="text" placeholder="请输入项目名称或关键词">
+                        <label data-i18n="filterName">项目名称/关键词</label>
+                        <input type="text" data-i18n-placeholder="filterNamePlaceholder" placeholder="请输入项目名称或关键词">
                     </div>
                     <div class="filter-group" style="min-width:150px;flex:1;">
-                        <label>所属试验区</label>
-                        <select><option>全部试验区</option><option>兰州新区</option><option>湖州市</option><option>衢州市</option><option>广州市</option><option>赣江新区</option><option>重庆市</option><option>其他</option></select>
+                        <label data-i18n="filterZone">所属试验区</label>
+                        <select>
+                            <option value="全部试验区" data-i18n="allZones">全部试验区</option>
+                            <option value="兰州新区">兰州新区</option>
+                            <option value="湖州市">湖州市</option>
+                            <option value="衢州市">衢州市</option>
+                            <option value="广州市">广州市</option>
+                            <option value="赣江新区">赣江新区</option>
+                            <option value="重庆市">重庆市</option>
+                            <option value="其他">其他</option>
+                        </select>
                     </div>
                     <div class="filter-group" style="min-width:180px;flex:1.2;">
-                        <label>园区类型</label>
-                        <select><option>全部类型</option><option>T1能源转型型</option><option>T2节能降碳型</option><option>T3产业升级型</option><option>T4资源循环型</option><option>T5基础设施型</option><option>T6生态修复型</option><option>综合型</option></select>
+                        <label data-i18n="filterType">园区类型</label>
+                        <select>
+                            <option value="全部类型" data-i18n="allTypes">全部类型</option>
+                            <option value="T1能源转型型">T1能源转型型</option>
+                            <option value="T2节能降碳型">T2节能降碳型</option>
+                            <option value="T3产业升级型">T3产业升级型</option>
+                            <option value="T4资源循环型">T4资源循环型</option>
+                            <option value="T5基础设施型">T5基础设施型</option>
+                            <option value="T6生态修复型">T6生态修复型</option>
+                            <option value="综合型">综合型</option>
+                        </select>
                     </div>
                     <div class="filter-group" style="min-width:150px;flex:1;">
-                        <label>园区专题</label>
-                        <select><option>全部专题</option><option>零碳园区</option><option>低碳园区</option><option>碳排放双控项目</option><option>循环经济</option></select>
+                        <label data-i18n="filterTopic">园区专题</label>
+                        <select>
+                            <option value="全部专题" data-i18n="allTopics">全部专题</option>
+                            <option value="零碳园区" data-i18n="topicZC">零碳园区</option>
+                            <option value="低碳园区" data-i18n="topicLC">低碳园区</option>
+                            <option value="碳排放双控项目" data-i18n="topicDual">碳排放双控项目</option>
+                            <option value="循环经济" data-i18n="topicCircular">循环经济</option>
+                        </select>
                     </div>
                     <div class="filter-group" style="min-width:150px;flex:1;">
-                        <label>投资额区间</label>
-                        <select><option>全部区间</option><option>＜1000万</option><option>1000万-1亿</option><option>1亿-5亿</option><option>5亿-10亿</option><option>＞10亿</option></select>
+                        <label data-i18n="filterInvest">投资额区间</label>
+                        <select>
+                            <option value="全部区间" data-i18n="allRanges">全部区间</option>
+                            <option value="＜1000万">＜1000万</option>
+                            <option value="1000万-1亿">1000万-1亿</option>
+                            <option value="1亿-5亿">1亿-5亿</option>
+                            <option value="5亿-10亿">5亿-10亿</option>
+                            <option value="＞10亿">＞10亿</option>
+                        </select>
                     </div>
                     <div class="filter-group" style="min-width:180px;flex:1.2;">
-                        <label>对应绿色目录</label>
-                        <select><option>全部目录</option><option>绿色低碳转型产业指导目录(2024)</option><option>绿色债券支持项目目录(2021)</option><option>碳减排支持工具范围</option></select>
+                        <label data-i18n="filterDirectory">对应绿色目录</label>
+                        <select>
+                            <option value="全部目录" data-i18n="allDirectories">全部目录</option>
+                            <option value="绿色低碳转型产业指导目录(2024)" data-i18n="绿色低碳转型产业指导目录(2024)">绿色低碳转型产业指导目录(2024)</option>
+                            <option value="绿色债券支持项目目录(2021)" data-i18n="绿色债券支持项目目录(2021)">绿色债券支持项目目录(2021)</option>
+                            <option value="碳减排支持工具范围" data-i18n="碳减排支持工具范围">碳减排支持工具范围</option>
+                        </select>
                     </div>
                     <div class="filter-group" style="flex:0 0 auto;flex-direction:row;align-items:flex-end;gap:8px;padding-bottom:1px;">
-                        <button class="btn btn-primary btn-sm">查询</button>
-                        <button class="btn btn-secondary btn-sm">重置</button>
+                        <button class="btn btn-primary btn-sm" data-i18n="btnSearch">查询</button>
+                        <button class="btn btn-secondary btn-sm" data-i18n="btnReset">重置</button>
                     </div>
                 </div>
             </div>
-            <!-- 操作栏 -->
+            <!-- Action bar -->
             <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100 flex-shrink-0">
                 <div class="flex gap-2">
-                    <button class="btn btn-secondary btn-sm" onclick="alert('数据导出成功！共导出32条记录。')">
+                    <button class="btn btn-secondary btn-sm" onclick="alert(I18N.t('alertExport'))">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                        导出数据
+                        <span data-i18n="btnExport">导出数据</span>
                     </button>
                 </div>
-                <span class="text-sm text-slate-400">共 32 条</span>
+                <span class="text-sm text-slate-400" data-i18n="totalRecords">共 32 条</span>
             </div>
-            <!-- 表格 -->
+            <!-- Table -->
             <div class="table-wrap custom-scroll">
                 <table>
                     <thead>
                         <tr>
-                            <th class="col-seq">序号</th>
-                            <th>项目名称</th>
-                            <th>项目代码</th>
-                            <th>所属试验区</th>
-                            <th>园区类型</th>
-                            <th>园区专题</th>
-                            <th>投资总额（万元）</th>
-                            <th>对应绿色目录</th>
-                            <th>项目状态</th>
-                            <th class="col-actions">操作</th>
+                            <th class="col-seq" data-i18n="thSeq">序号</th>
+                            <th data-i18n="thName">项目名称</th>
+                            <th data-i18n="thCode">项目代码</th>
+                            <th data-i18n="thZone">所属试验区</th>
+                            <th data-i18n="thType">园区类型</th>
+                            <th data-i18n="thTopic">园区专题</th>
+                            <th data-i18n="thInvest">投资总额（万元）</th>
+                            <th data-i18n="thDirectory">对应绿色目录</th>
+                            <th data-i18n="thStatus">项目状态</th>
+                            <th class="col-actions" data-i18n="thActions">操作</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td class="col-seq">1</td>
-                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;">兰州新区城市智慧能源岛协同耦合项目（段家川地区农光互补光伏发电示范工程）</td>
+                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;" class="proj-name-cell" data-proj-key="projName1"></td>
                             <td style="font-family:monospace;font-size:12px;">PNO202403270002</td>
                             <td>兰州新区</td>
                             <td><span class="tag tag-info">T1能源转型型</span></td>
-                            <td><span class="tag tag-success">零碳园区</span></td>
+                            <td><span class="tag tag-success" data-i18n="topicZC">零碳园区</span></td>
                             <td style="font-family:var(--font-num);text-align:right;">100,000.00</td>
                             <td><span class="tag tag-success">绿色低碳转型(2024)</span></td>
-                            <td><span class="stage-tag stage-stored">已入库</span></td>
+                            <td><span class="stage-tag stage-stored" data-i18n="statusRegistered">已入库</span></td>
                             <td class="col-actions">
                                 <div class="action-btns">
-                                    <button class="btn btn-deep-blue btn-sm" onclick="goToMarketingPlan()">营销方案</button>
-                                    <button class="btn btn-success btn-sm" onclick="openMarketingPlan('兰州新区城市智慧能源岛协同耦合项目（段家川地区农光互补光伏发电示范工程）','PNO202403270002','兰州新区','T1能源转型型','100,000','绿色低碳转型产业指导目录(2024)','使用单晶太阳能板，总装机容量200兆瓦，利用秦川园区段家川以北4000亩土地。预计年发电量26132.4万千瓦时，年发电时长1450小时，采用全额上网集中式光伏方式。','甘肃兰州新区秦川园区段家川以北','《2022年兰州新区建设绿色金融改革创新试验区工作方案》、《兰州新区绿色项目认证及评级办法(修订)》','兰州新区绿金通综合服务平台，支持绿色项目认证、融资对接及动态管理')">开始营销</button>
+                                    <button class="btn btn-deep-blue btn-sm" onclick="goToMarketingPlan()" data-i18n="btnMarketingPlan">营销方案</button>
+                                    <button class="btn btn-success btn-sm" onclick="openMarketingPlan(I18N.t('projName1'),'PNO202403270002','兰州新区','T1能源转型型','100,000','绿色低碳转型产业指导目录(2024)','使用单晶太阳能板，总装机容量200兆瓦，利用秦川园区段家川以北4000亩土地。预计年发电量26132.4万千瓦时，年发电时长1450小时，采用全额上网集中式光伏方式。','甘肃兰州新区秦川园区段家川以北','《2022年兰州新区建设绿色金融改革创新试验区工作方案》、《兰州新区绿色项目认证及评级办法(修订)》','兰州新区绿金通综合服务平台，支持绿色项目认证、融资对接及动态管理')" data-i18n="btnStartMarketing">开始营销</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="col-seq">2</td>
-                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;">湖州南浔经开区综合能源改造项目</td>
+                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;" class="proj-name-cell" data-proj-key="projName2"></td>
                             <td style="font-family:monospace;font-size:12px;">HZNX-ZH-2025-002</td>
                             <td>湖州市</td>
                             <td><span class="tag tag-info">T2节能降碳型</span></td>
-                            <td><span class="tag tag-warning">低碳园区</span></td>
+                            <td><span class="tag tag-warning" data-i18n="topicLC">低碳园区</span></td>
                             <td style="font-family:var(--font-num);text-align:right;">28,000.00</td>
                             <td><span class="tag tag-info">碳减排支持工具</span></td>
-                            <td><span class="stage-tag stage-stored">已入库</span></td>
+                            <td><span class="stage-tag stage-stored" data-i18n="statusRegistered">已入库</span></td>
                             <td class="col-actions">
                                 <div class="action-btns">
-                                    <button class="btn btn-deep-blue btn-sm" onclick="goToMarketingPlan()">营销方案</button>
-                                    <button class="btn btn-success btn-sm" onclick="openMarketingPlan('湖州南浔经开区综合能源改造项目','HZNX-ZH-2025-002','湖州市','T2节能降碳型','28,000','碳减排支持工具范围','对南浔经开区现有能源系统进行综合改造，包括余热回收利用、蒸汽管网优化、分布式光伏等','浙江省湖州市南浔区','湖州市绿色金融改革创新试验区工作方案','湖州绿色金融综合服务平台已上线')">开始营销</button>
+                                    <button class="btn btn-deep-blue btn-sm" onclick="goToMarketingPlan()" data-i18n="btnMarketingPlan">营销方案</button>
+                                    <button class="btn btn-success btn-sm" onclick="openMarketingPlan(I18N.t('projName2'),'HZNX-ZH-2025-002','湖州市','T2节能降碳型','28,000','碳减排支持工具范围','对南浔经开区现有能源系统进行综合改造，包括余热回收利用、蒸汽管网优化、分布式光伏等','浙江省湖州市南浔区','湖州市绿色金融改革创新试验区工作方案','湖州绿色金融综合服务平台已上线')" data-i18n="btnStartMarketing">开始营销</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="col-seq">3</td>
-                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;">衢州绿色产业集聚区循环化改造项目</td>
+                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;" class="proj-name-cell" data-proj-key="projName3"></td>
                             <td style="font-family:monospace;font-size:12px;">QZLS-XH-2025-003</td>
                             <td>衢州市</td>
-                            <td><span class="tag tag-info">T4资源循环型</span></td>
-                            <td><span class="tag tag-info">循环经济</span></td>
+                            <td><span class="tag tag-info">T3产业升级型</span></td>
+                            <td><span class="tag tag-info" data-i18n="topicDual">碳排放双控项目</span></td>
                             <td style="font-family:var(--font-num);text-align:right;">45,600.00</td>
-                            <td><span class="tag tag-info">绿色债券目录(2021)</span></td>
-                            <td><span class="stage-tag stage-stored">已入库</span></td>
+                            <td><span class="tag tag-success">绿色低碳转型(2024)</span></td>
+                            <td><span class="stage-tag stage-stored" data-i18n="statusRegistered">已入库</span></td>
                             <td class="col-actions">
                                 <div class="action-btns">
-                                    <button class="btn btn-deep-blue btn-sm" onclick="goToMarketingPlan()">营销方案</button>
-                                    <button class="btn btn-success btn-sm" onclick="openMarketingPlan('衢州绿色产业集聚区循环化改造项目','QZLS-XH-2025-003','衢州市','T4资源循环型','45,600','绿色债券支持项目目录(2021)','建设园区循环化改造基础设施，包括中水回用系统、工业固废集中处置中心、再生资源分拣中心等','浙江省衢州市','衢州市绿色金融改革创新试验区实施方案','衢州市绿色金融服务信用信息平台')">开始营销</button>
+                                    <button class="btn btn-deep-blue btn-sm" onclick="goToMarketingPlan()" data-i18n="btnMarketingPlan">营销方案</button>
+                                    <button class="btn btn-success btn-sm" onclick="openMarketingPlan(I18N.t('projName3'),'QZLS-XH-2025-003','衢州市','T3产业升级型','45,600','绿色低碳转型产业指导目录(2024)','打造零碳工厂示范标杆，集成屋顶光伏、储能系统、智慧能源管理平台，实现工厂能源消费全绿电化','浙江省衢州市','衢州市绿色金融改革创新试验区实施方案','衢州市绿色金融服务信用信息平台')" data-i18n="btnStartMarketing">开始营销</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="col-seq">4</td>
-                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;">广州花都新能源汽车充电基础设施网络项目</td>
+                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;" class="proj-name-cell" data-proj-key="projName4"></td>
                             <td style="font-family:monospace;font-size:12px;">GZHD-CD-2025-004</td>
                             <td>广州市</td>
                             <td><span class="tag tag-info">T5基础设施型</span></td>
-                            <td><span class="tag tag-warning">低碳园区</span></td>
+                            <td><span class="tag tag-warning" data-i18n="topicLC">低碳园区</span></td>
                             <td style="font-family:var(--font-num);text-align:right;">18,200.00</td>
                             <td><span class="tag tag-success">绿色低碳转型(2024)</span></td>
-                            <td><span class="stage-tag stage-stored">已入库</span></td>
+                            <td><span class="stage-tag stage-stored" data-i18n="statusRegistered">已入库</span></td>
                             <td class="col-actions">
                                 <div class="action-btns">
-                                    <button class="btn btn-deep-blue btn-sm" onclick="goToMarketingPlan()">营销方案</button>
-                                    <button class="btn btn-success btn-sm" onclick="openMarketingPlan('广州花都新能源汽车充电基础设施网络项目','GZHD-CD-2025-004','广州市','T5基础设施型','18,200','绿色低碳转型产业指导目录(2024)','新建充电站120座，充电桩3000个，覆盖花都区主要商业区、居民区及交通枢纽','广东省广州市花都区','广州市绿色金融改革创新试验区总体方案','广州市绿色金融服务平台')">开始营销</button>
+                                    <button class="btn btn-deep-blue btn-sm" onclick="goToMarketingPlan()" data-i18n="btnMarketingPlan">营销方案</button>
+                                    <button class="btn btn-success btn-sm" onclick="openMarketingPlan(I18N.t('projName4'),'GZHD-CD-2025-004','广州市','T5基础设施型','18,200','绿色低碳转型产业指导目录(2024)','新建碳中和建筑集群，集成被动式超低能耗建筑设计、光伏建筑一体化(BIPV)、地源热泵系统','广东省广州市南沙区','广州市绿色金融改革创新试验区总体方案','广州市绿色金融服务平台')" data-i18n="btnStartMarketing">开始营销</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="col-seq">5</td>
-                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;">赣江新区中医药科创城低碳园区项目</td>
+                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;" class="proj-name-cell" data-proj-key="projName5"></td>
                             <td style="font-family:monospace;font-size:12px;">GJXQ-ZY-2025-005</td>
                             <td>赣江新区</td>
                             <td><span class="tag tag-info">T3产业升级型</span></td>
-                            <td><span class="tag tag-info">碳排放双控项目</span></td>
+                            <td><span class="tag tag-info" data-i18n="topicDual">碳排放双控项目</span></td>
                             <td style="font-family:var(--font-num);text-align:right;">35,000.00</td>
                             <td><span class="tag tag-info">碳减排支持工具</span></td>
-                            <td><span class="stage-tag stage-stored">已入库</span></td>
+                            <td><span class="stage-tag stage-stored" data-i18n="statusRegistered">已入库</span></td>
                             <td class="col-actions">
                                 <div class="action-btns">
-                                    <button class="btn btn-deep-blue btn-sm" onclick="goToMarketingPlan()">营销方案</button>
-                                    <button class="btn btn-success btn-sm" onclick="openMarketingPlan('赣江新区中医药科创城低碳园区项目','GJXQ-ZY-2025-005','赣江新区','T3产业升级型','35,000','碳减排支持工具范围','打造中医药绿色智能制造基地，建设分布式能源站、智慧能源管理系统、绿色建筑群','江西省赣江新区','赣江新区绿色金融改革创新试验区方案','赣江新区绿色金融服务平台')">开始营销</button>
+                                    <button class="btn btn-deep-blue btn-sm" onclick="goToMarketingPlan()" data-i18n="btnMarketingPlan">营销方案</button>
+                                    <button class="btn btn-success btn-sm" onclick="openMarketingPlan(I18N.t('projName5'),'GJXQ-ZY-2025-005','赣江新区','T3产业升级型','35,000','碳减排支持工具范围','打造中医药绿色智能制造基地，建设近零碳排放示范区，部署分布式能源站、智慧能源管理系统、绿色建筑群','江西省赣江新区','赣江新区绿色金融改革创新试验区方案','赣江新区绿色金融服务平台')" data-i18n="btnStartMarketing">开始营销</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="col-seq">6</td>
-                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;">重庆两江新区生态修复与碳汇林建设项目</td>
+                            <td style="font-weight:500;color:var(--brand-700);cursor:pointer;" class="proj-name-cell" data-proj-key="projName6"></td>
                             <td style="font-family:monospace;font-size:12px;">CQLJ-ST-2025-006</td>
                             <td>重庆市</td>
-                            <td><span class="tag tag-info">T6生态修复型</span></td>
-                            <td><span class="tag tag-warning">低碳园区</span></td>
+                            <td><span class="tag tag-info">T1能源转型型</span></td>
+                            <td><span class="tag tag-success" data-i18n="topicZC">零碳园区</span></td>
                             <td style="font-family:var(--font-num);text-align:right;">22,800.00</td>
-                            <td><span class="tag tag-info">绿色债券目录(2021)</span></td>
-                            <td><span class="stage-tag stage-reserve">储备中</span></td>
+                            <td><span class="tag tag-info">碳减排支持工具</span></td>
+                            <td><span class="stage-tag stage-reserve" data-i18n="statusReserved">储备中</span></td>
                             <td class="col-actions">
                                 <div class="action-btns">
-                                    <button class="btn btn-deep-blue btn-sm" onclick="goToMarketingPlan()">营销方案</button>
-                                    <button class="btn btn-success btn-sm" onclick="openMarketingPlan('重庆两江新区生态修复与碳汇林建设项目','CQLJ-ST-2025-006','重庆市','T6生态修复型','22,800','绿色债券支持项目目录(2021)','开展两江新区长江岸线生态修复，建设碳汇林2000亩，湿地保护与修复500亩','重庆市两江新区','重庆市绿色金融改革创新试验区方案','重庆绿色金融综合服务平台')">开始营销</button>
+                                    <button class="btn btn-deep-blue btn-sm" onclick="goToMarketingPlan()" data-i18n="btnMarketingPlan">营销方案</button>
+                                    <button class="btn btn-success btn-sm" onclick="openMarketingPlan(I18N.t('projName6'),'CQLJ-ST-2025-006','重庆市','T1能源转型型','22,800','碳减排支持工具范围','建设智能微电网系统，集成分布式光伏、储能、智能配电及碳排放监测管理平台，实现园区能源智慧调度与碳排放实时管控','重庆市两江新区','重庆市绿色金融改革创新试验区方案','重庆绿色金融综合服务平台')" data-i18n="btnStartMarketing">开始营销</button>
                                 </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <!-- 分页 -->
+            <!-- Pagination -->
             <div class="flex items-center justify-between px-6 py-3 border-t border-slate-100 flex-shrink-0">
-                <span class="text-sm text-slate-400">共 32 条</span>
+                <span class="text-sm text-slate-400" data-i18n="totalRecords">共 32 条</span>
                 <div class="flex items-center gap-2">
-                    <button class="btn btn-secondary btn-sm">‹</button>
+                    <button class="btn btn-secondary btn-sm">&#x2039;</button>
                     <span class="px-2 py-1 text-sm bg-brand-500 text-white rounded">1</span>
                     <button class="btn btn-secondary btn-sm">2</button>
                     <button class="btn btn-secondary btn-sm">3</button>
                     <button class="btn btn-secondary btn-sm">4</button>
-                    <button class="btn btn-secondary btn-sm">›</button>
+                    <button class="btn btn-secondary btn-sm">&#x203A;</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- 业务营销方案浮窗 -->
+<!-- Business Marketing Plan Modal -->
 <div class="modal-mask" id="marketingPlanModal">
     <div class="modal-xl">
         <div class="modal-head">
-            <span class="modal-title">业务营销方案</span>
+            <span class="modal-title" data-i18n="modalTitle">业务营销方案</span>
             <button class="modal-close" onclick="closeMarketingPlan()">
                 <svg style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
             </button>
         </div>
         <div class="modal-body">
-            <!-- 项目基本信息 -->
+            <!-- Project Basic Info -->
             <div class="info-block">
-                <div class="info-block-title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="11" y2="9" stroke="currentColor" stroke-width="1.3"/></svg> 项目基本信息</div>
+                <div class="info-block-title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="11" y2="9" stroke="currentColor" stroke-width="1.3"/></svg> <span data-i18n="basicInfo">项目基本信息</span></div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-3">
-                    <div class="info-grid"><span class="info-label">项目名称</span><span class="info-value" id="planProjName" style="font-weight:500;">—</span></div>
-                    <div class="info-grid"><span class="info-label">项目代码</span><span class="info-value" id="planProjCode" style="font-family:monospace;">—</span></div>
-                    <div class="info-grid"><span class="info-label">所属试验区</span><span class="info-value" id="planProjZone">—</span></div>
-                    <div class="info-grid"><span class="info-label">园区类型</span><span class="info-value" id="planProjType">—</span></div>
-                    <div class="info-grid"><span class="info-label">投资总额</span><span class="info-value" id="planProjAmt" style="font-family:var(--font-num);">—</span></div>
-                    <div class="info-grid"><span class="info-label">项目地点</span><span class="info-value" id="planProjLoc">—</span></div>
-                    <div class="info-grid" style="grid-column:1/-1;"><span class="info-label">建设规模及内容</span><span class="info-value" id="planProjContent">—</span></div>
-                    <div class="info-grid" style="grid-column:1/-1;"><span class="info-label">项目库依据政策</span><span class="info-value" id="planProjPolicy">—</span></div>
-                    <div class="info-grid" style="grid-column:1/-1;"><span class="info-label">平台建设情况</span><span class="info-value" id="planProjPlatform">—</span></div>
+                    <div class="info-grid"><span class="info-label" data-i18n="labelProjectName">项目名称</span><span class="info-value" id="planProjName" style="font-weight:500;">—</span></div>
+                    <div class="info-grid"><span class="info-label" data-i18n="labelProjectCode">项目代码</span><span class="info-value" id="planProjCode" style="font-family:monospace;">—</span></div>
+                    <div class="info-grid"><span class="info-label" data-i18n="labelZone">所属试验区</span><span class="info-value" id="planProjZone">—</span></div>
+                    <div class="info-grid"><span class="info-label" data-i18n="labelType">园区类型</span><span class="info-value" id="planProjType">—</span></div>
+                    <div class="info-grid"><span class="info-label" data-i18n="labelInvestTotal">投资总额</span><span class="info-value" id="planProjAmt" style="font-family:var(--font-num);">—</span></div>
+                    <div class="info-grid"><span class="info-label" data-i18n="labelLocation">项目地点</span><span class="info-value" id="planProjLoc">—</span></div>
+                    <div class="info-grid" style="grid-column:1/-1;"><span class="info-label" data-i18n="labelContent">建设规模及内容</span><span class="info-value" id="planProjContent">—</span></div>
+                    <div class="info-grid" style="grid-column:1/-1;"><span class="info-label" data-i18n="labelPolicy">项目库依据政策</span><span class="info-value" id="planProjPolicy">—</span></div>
+                    <div class="info-grid" style="grid-column:1/-1;"><span class="info-label" data-i18n="labelPlatform">平台建设情况</span><span class="info-value" id="planProjPlatform">—</span></div>
                 </div>
             </div>
-            <!-- 营销建议 -->
+            <!-- Marketing Suggestions -->
             <div class="info-block" style="border:1px solid var(--brand-100);background:var(--brand-50);">
-                <div class="info-block-title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><path d="M6 13a2 2 0 004 0M8 1a6 6 0 00-4.5 10H5a1 1 0 001 1h4a1 1 0 001-1h1.5A6 6 0 008 1z" stroke="currentColor" fill="none" stroke-width="1.3"/></svg> 营销建议</div>
-                <div class="suggest-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><circle cx="8" cy="8" r="6" stroke="currentColor" fill="none" stroke-width="1.3"/><circle cx="8" cy="8" r="3" stroke="currentColor" fill="none" stroke-width="1.3"/><circle cx="8" cy="8" r="1" fill="currentColor"/></svg></span><span class="text"><strong>推荐金融产品：</strong><span id="planProduct">—</span></span></div>
-                <div class="suggest-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="1" y="5" width="3" height="8" rx="0.5" fill="currentColor" opacity=".6"/><rect x="6.5" y="2" width="3" height="11" rx="0.5" fill="currentColor"/><rect x="12" y="7" width="3" height="6" rx="0.5" fill="currentColor" opacity=".4"/></svg></span><span class="text"><strong>营销优先级：</strong><span id="planPriority">—</span></span></div>
-                <div class="suggest-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><circle cx="8" cy="8" r="6" stroke="currentColor" fill="none" stroke-width="1.3"/><text x="8" y="11" text-anchor="middle" font-size="9" font-weight="bold" fill="currentColor">¥</text></svg></span><span class="text"><strong>政策红利提示：</strong><span id="planBonus">—</span></span></div>
-                <div class="suggest-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="11" y2="9" stroke="currentColor" stroke-width="1.3"/></svg></span><span class="text"><strong>营销策略要点：</strong><span id="planStrategy">—</span></span></div>
-                <div class="suggest-item"><span class="icon">👥</span><span class="text"><strong>目标客群画像：</strong><span id="planTarget">—</span></span></div>
-                <div class="suggest-item"><span class="icon">⏰</span><span class="text"><strong>建议营销时间节点：</strong><span id="planTiming">—</span></span></div>
+                <div class="info-block-title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><path d="M6 13a2 2 0 004 0M8 1a6 6 0 00-4.5 10H5a1 1 0 001 1h4a1 1 0 001-1h1.5A6 6 0 008 1z" stroke="currentColor" fill="none" stroke-width="1.3"/></svg> <span data-i18n="marketingSuggest">营销建议</span></div>
+                <div class="suggest-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><circle cx="8" cy="8" r="6" stroke="currentColor" fill="none" stroke-width="1.3"/><circle cx="8" cy="8" r="3" stroke="currentColor" fill="none" stroke-width="1.3"/><circle cx="8" cy="8" r="1" fill="currentColor"/></svg></span><span class="text"><strong data-i18n="labelProduct">推荐金融产品：</strong><span id="planProduct">—</span></span></div>
+                <div class="suggest-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="1" y="5" width="3" height="8" rx="0.5" fill="currentColor" opacity=".6"/><rect x="6.5" y="2" width="3" height="11" rx="0.5" fill="currentColor"/><rect x="12" y="7" width="3" height="6" rx="0.5" fill="currentColor" opacity=".4"/></svg></span><span class="text"><strong data-i18n="labelPriority">营销优先级：</strong><span id="planPriority">—</span></span></div>
+                <div class="suggest-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><circle cx="8" cy="8" r="6" stroke="currentColor" fill="none" stroke-width="1.3"/><text x="8" y="11" text-anchor="middle" font-size="9" font-weight="bold" fill="currentColor">&#xA5;</text></svg></span><span class="text"><strong data-i18n="labelBonus">政策红利提示：</strong><span id="planBonus">—</span></span></div>
+                <div class="suggest-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="11" y2="9" stroke="currentColor" stroke-width="1.3"/></svg></span><span class="text"><strong data-i18n="labelStrategy">营销策略要点：</strong><span id="planStrategy">—</span></span></div>
+                <div class="suggest-item"><span class="icon">&#x1F465;</span><span class="text"><strong data-i18n="labelTarget">目标客群画像：</strong><span id="planTarget">—</span></span></div>
+                <div class="suggest-item"><span class="icon">&#x23F0;</span><span class="text"><strong data-i18n="labelTiming">建议营销时间节点：</strong><span id="planTiming">—</span></span></div>
             </div>
         </div>
         <div class="modal-foot">
-            <button class="btn btn-success btn-md" onclick="confirmStartMarketing()"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><circle cx="8" cy="8" r="7" stroke="currentColor" fill="none" stroke-width="1.3"/><polyline points="5 8 7 11 11 6" stroke="currentColor" fill="none" stroke-width="1.5"/></svg> 确认开始营销</button>
-            <button class="btn btn-secondary btn-md" onclick="closeMarketingPlan()">取消</button>
+            <button class="btn btn-success btn-md" onclick="confirmStartMarketing()"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><circle cx="8" cy="8" r="7" stroke="currentColor" fill="none" stroke-width="1.3"/><polyline points="5 8 7 11 11 6" stroke="currentColor" fill="none" stroke-width="1.5"/></svg> <span data-i18n="btnConfirm">确认开始营销</span></button>
+            <button class="btn btn-secondary btn-md" onclick="closeMarketingPlan()" data-i18n="btnCancel">取消</button>
         </div>
     </div>
 </div>
 
 <script>
-    var currentMarketingProject = null;
-    var marketingProjects = [];
+// ==================== I18N Dictionary ====================
+I18N.setDict({
+    pageTitle:       { zh:'潜在项目业务营销 · 零碳园区项目库', en:'Potential Project Marketing · Zero-Carbon Park Library' },
+    pageTitleH1:     { zh:'潜在项目业务营销', en:'Potential Project Marketing' },
+    filterName:      { zh:'项目名称/关键词', en:'Project Name/Keyword' },
+    filterNamePlaceholder:{ zh:'请输入项目名称或关键词', en:'Enter project name or keyword' },
+    filterZone:      { zh:'所属试验区', en:'Pilot Zone' },
+    filterType:      { zh:'园区类型', en:'Park Type' },
+    filterTopic:     { zh:'园区专题', en:'Park Topic' },
+    filterInvest:    { zh:'投资额区间', en:'Investment Range' },
+    filterDirectory: { zh:'对应绿色目录', en:'Green Directory' },
+    allZones:        { zh:'全部试验区', en:'All Zones' },
+    allTypes:        { zh:'全部类型', en:'All Types' },
+    allTopics:       { zh:'全部专题', en:'All Topics' },
+    allRanges:       { zh:'全部区间', en:'All Ranges' },
+    allDirectories:  { zh:'全部目录', en:'All Directories' },
+    btnSearch:       { zh:'查询', en:'Search' },
+    btnReset:        { zh:'重置', en:'Reset' },
+    btnExport:       { zh:'导出数据', en:'Export Data' },
+    totalRecords:    { zh:'共 32 条', en:'Total 32 records' },
+    thSeq:           { zh:'序号', en:'#' },
+    thName:          { zh:'项目名称', en:'Project Name' },
+    thCode:          { zh:'项目代码', en:'Code' },
+    thZone:          { zh:'所属试验区', en:'Pilot Zone' },
+    thType:          { zh:'园区类型', en:'Park Type' },
+    thTopic:         { zh:'园区专题', en:'Topic' },
+    thInvest:        { zh:'投资总额（万元）', en:'Total Investment (10k CNY)' },
+    thDirectory:     { zh:'对应绿色目录', en:'Green Directory' },
+    thStatus:        { zh:'项目状态', en:'Status' },
+    thActions:       { zh:'操作', en:'Actions' },
+    statusRegistered:{ zh:'已入库', en:'Registered' },
+    statusReserved:  { zh:'储备中', en:'Reserved' },
+    btnMarketingPlan:{ zh:'营销方案', en:'Marketing Plan' },
+    btnStartMarketing:{ zh:'开始营销', en:'Start Marketing' },
+    modalTitle:      { zh:'业务营销方案', en:'Business Marketing Plan' },
+    basicInfo:       { zh:'项目基本信息', en:'Project Basic Info' },
+    marketingSuggest:{ zh:'营销建议', en:'Marketing Suggestions' },
+    labelProjectName:{ zh:'项目名称', en:'Project Name' },
+    labelProjectCode:{ zh:'项目代码', en:'Code' },
+    labelZone:       { zh:'所属试验区', en:'Pilot Zone' },
+    labelType:       { zh:'园区类型', en:'Park Type' },
+    labelInvestTotal:{ zh:'投资总额', en:'Total Investment' },
+    labelLocation:   { zh:'项目地点', en:'Project Location' },
+    labelContent:    { zh:'建设规模及内容', en:'Construction Scale & Content' },
+    labelPolicy:     { zh:'项目库依据政策', en:'Policy Basis' },
+    labelPlatform:   { zh:'平台建设情况', en:'Platform Status' },
+    labelProduct:    { zh:'推荐金融产品：', en:'Recommended Products:' },
+    labelPriority:   { zh:'营销优先级：', en:'Priority:' },
+    labelBonus:      { zh:'政策红利提示：', en:'Policy Benefits:' },
+    labelStrategy:   { zh:'营销策略要点：', en:'Strategy Points:' },
+    labelTarget:     { zh:'目标客群画像：', en:'Target Customers:' },
+    labelTiming:     { zh:'建议营销时间节点：', en:'Suggested Timeline:' },
+    btnConfirm:      { zh:'确认开始营销', en:'Confirm Start' },
+    btnCancel:       { zh:'取消', en:'Cancel' },
+    priorityHigh:    { zh:'高', en:'High' },
+    priorityMedium:  { zh:'中', en:'Medium' },
+    priorityLow:     { zh:'低', en:'Low' },
+    unitWanYuan:     { zh:'万元', en:'10k CNY' },
+    topicZC:         { zh:'零碳园区', en:'Zero-Carbon Park' },
+    topicLC:         { zh:'低碳园区', en:'Low-Carbon Park' },
+    topicDual:       { zh:'碳排放双控项目', en:'Carbon Dual-Control' },
+    topicCircular:   { zh:'循环经济', en:'Circular Economy' },
+    alertExport:     { zh:'数据导出成功！共导出32条记录。', en:'Data export successful! 32 records exported.' },
+    alertImportMsg:  { zh:'营销项目导入成功！\n\n项目"{name}"已同步至"项目营销过程管理"页面，当前营销阶段：初步对接。', en:'Marketing project imported!\n\nProject "{name}" synced to "Project Marketing Process Mgmt". Current stage: Initial Contact.' },
+    labelMarketingPlan: { zh:'业务营销方案', en:'Business Marketing Plan' },
+    // Project name translations for mock data
+    projName1:       { zh:'兰州新区城市智慧能源岛协同耦合项目（段家川地区农光互补光伏发电示范工程）', en:'Lanzhou New Area Smart Energy Island Project (Duanjiachuan Agri-PV Demo)' },
+    projName2:       { zh:'湖州南太湖新区分布式光伏及储能一体化项目', en:'Huzhou Nantaihu Distributed PV & Storage Project' },
+    projName3:       { zh:'衢州绿色产业集聚区零碳工厂示范项目', en:'Quzhou Green Industry Zone Zero-Carbon Factory Demo' },
+    projName4:       { zh:'广州南沙新区碳中和建筑集群项目', en:'Guangzhou Nansha Carbon-Neutral Building Cluster' },
+    projName5:       { zh:'赣江新区中医药科创城近零碳排放区试点工程', en:'Ganjiang TCM Sci-Tech City Near-Zero Carbon Pilot' },
+    projName6:       { zh:'重庆两江新区智能微电网及碳排放管理平台项目', en:'Chongqing Liangjiang Smart Microgrid & Carbon Mgmt Platform' },
+    // === 2025 Green Finance Categories - Complete Translations ===
+    // Level 1
+    '1.节能降碳产业': {zh:'1.节能降碳产业', en:'1. Energy Conservation & Carbon Reduction'},
+    '2.清洁生产产业': {zh:'2.清洁生产产业', en:'2. Cleaner Production'},
+    '3.清洁能源产业': {zh:'3.清洁能源产业', en:'3. Clean Energy Industry'},
+    '4.能源绿色低碳转型': {zh:'4.能源绿色低碳转型', en:'4. Green & Low-Carbon Energy Transition'},
+    '5.生态保护修复和利用': {zh:'5.生态保护修复和利用', en:'5. Ecological Protection & Restoration'},
+    '6.基础设施绿色升级': {zh:'6.基础设施绿色升级', en:'6. Green Infrastructure Upgrading'},
+    // Level 2
+    '1.1 能效提升': {zh:'1.1 能效提升', en:'1.1 Energy Efficiency Improvement'},
+    '1.2 先进交通装备制造': {zh:'1.2 先进交通装备制造', en:'1.2 Advanced Transportation Equipment Mfg'},
+    '2.1 污染防治': {zh:'2.1 污染防治', en:'2.1 Pollution Prevention & Control'},
+    '3.4 能源系统改造': {zh:'3.4 能源系统改造', en:'3.4 Energy System Renovation'},
+    '4.1 新能源与清洁能源装备制造': {zh:'4.1 新能源与清洁能源装备制造', en:'4.1 New & Clean Energy Equipment Mfg'},
+    '4.2 清洁能源设施建设和运营': {zh:'4.2 清洁能源设施建设和运营', en:'4.2 Clean Energy Facility Construction & Operation'},
+    '5.2 生态保护修复': {zh:'5.2 生态保护修复', en:'5.2 Ecological Protection & Restoration'},
+    '5.3 污染防治': {zh:'5.3 污染防治', en:'5.3 Pollution Prevention & Control'},
+    '6.5 城乡能源基础设施': {zh:'6.5 城乡能源基础设施', en:'6.5 Urban-Rural Energy Infrastructure'},
+    // Level 3
+    '1.2.1 新能源汽车及关键零部件制造': {zh:'1.2.1 新能源汽车及关键零部件制造', en:'1.2.1 NEV & Key Component Manufacturing'},
+    '2.1.2.1 重点行业水污染治理': {zh:'2.1.2.1 重点行业水污染治理', en:'2.1.2.1 Key Industry Water Pollution Control'},
+    '2.1.3 节能锅炉制造': {zh:'2.1.3 节能锅炉制造', en:'2.1.3 Energy-Efficient Boiler Manufacturing'},
+    '3.4.8 电网节能改造项目': {zh:'3.4.8 电网节能改造项目', en:'3.4.8 Grid Energy-Saving Renovation'},
+    '4.1.8 新型储能产品制造': {zh:'4.1.8 新型储能产品制造', en:'4.1.8 New Energy Storage Product Mfg'},
+    '4.2.4 大型水利发电设施建设和运营': {zh:'4.2.4 大型水利发电设施建设和运营', en:'4.2.4 Large Hydropower Facility Construction & Operation'},
+    '5.2.6 充电基础设施': {zh:'5.2.6 充电基础设施', en:'5.2.6 Charging Infrastructure'},
+    '5.2.11 水生态系统旱涝灾害防控及应对': {zh:'5.2.11 水生态系统旱涝灾害防控及应对', en:'5.2.11 Flood & Drought Prevention for Aquatic Ecosystems'},
+    '5.3.1.1 污水处理、再生利用及污泥处理处置设施建设运营': {zh:'5.3.1.1 污水处理、再生利用及污泥处理处置设施建设运营', en:'5.3.1.1 Sewage Treatment, Recycling & Sludge Disposal'},
+    '6.5.3 城镇集中供热系统清洁化、低碳化建设运营和改造': {zh:'6.5.3 城镇集中供热系统清洁化、低碳化建设运营和改造', en:'6.5.3 Clean District Heating Construction & Renovation'},
+    // Additional
+    '2.5 其他污染治理和环境综合整治': {zh:'2.5 其他污染治理和环境综合整治', en:'2.5 Other Pollution Control & Environmental Remediation'},
+    '2.5.2 危险废物处理处置': {zh:'2.5.2 危险废物处理处置', en:'2.5.2 Hazardous Waste Treatment & Disposal'},
+    '3.2 资源循环利用': {zh:'3.2 资源循环利用', en:'3.2 Resource Recycling & Utilization'},
+    '3.2.7 废气回收利用': {zh:'3.2.7 废气回收利用', en:'3.2.7 Waste Gas Recovery & Utilization'},
+    '绿色金融分类(2025)': {zh:'绿色金融分类(2025)', en:'Green Finance Category (2025)'},
+    '信贷系统2025绿色认定分类': {zh:'信贷系统2025绿色认定分类', en:'Credit System 2025 GF Category'},
+    '绿色金融标准：《绿色金融支持项目目录（2025年版）》': {zh:'绿色金融标准：《绿色金融支持项目目录（2025年版）》', en:'Green Finance Standard: Green Finance Project Catalogue (2025)'},
+    '绿色债券支持项目目录(2021)': {zh:'绿色债券支持项目目录(2021)', en:'Green Bond Project Catalogue (2021)'},
+    '碳减排支持工具范围': {zh:'碳减排支持工具范围', en:'Carbon Reduction Support Tools'},
+    '绿色低碳转型产业指导目录(2024)': {zh:'绿色低碳转型产业指导目录(2024)', en:'Green Low-Carbon Transition Industry Catalogue (2024)'}
+});
 
-    function getCurrentDir() {
-        var path = window.location.pathname;
-        return path.substring(0, path.lastIndexOf('/') + 1);
-    }
+// ==================== Main Logic ====================
+var currentMarketingProject = null;
+var marketingProjects = [];
 
-    // 跳转到独立营销方案页面
-    function goToMarketingPlan() {
-        var dir = getCurrentDir();
-        var targetUrl = dir + '业务营销方案.html';
-        if (window.parent !== window) {
-            var pageId = 'mkt-plan-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
-            window.parent.postMessage({ type: 'openPage', pageId: pageId, file: targetUrl, label: '业务营销方案' }, '*');
-        } else {
-            window.location.href = targetUrl;
+// Populate project name cells using I18N
+(function initProjNameCells() {
+    var cells = document.querySelectorAll('.proj-name-cell');
+    for (var i = 0; i < cells.length; i++) {
+        var key = cells[i].getAttribute('data-proj-key');
+        if (key) {
+            cells[i].textContent = I18N.t(key);
         }
     }
+})();
 
-    // 预定义营销方案数据（按园区类型 + 试验区匹配）
-    var marketingTemplates = {
-        'T1能源转型型': {
-            product: '碳减排支持工具贷款 + 绿色项目贷款',
-            priority: '<span class="tag priority-high">🔴 高</span>',
-            bonus: '碳减排支持工具优惠利率；兰州新区深绿项目认定后可享10%财政贴息',
-            strategy: '1. 项目属于清洁能源领域，优先对接央行碳减排支持工具<br>2. 投资规模较大，建议联合政策性银行组建银团贷款<br>3. 同步申请所在试验区绿色项目认定，争取最大化政策红利',
-            target: '对公客户部、机构业务部、绿色金融专营团队',
-            timing: '项目已入库，建议1个月内完成首次对接，3个月内形成融资方案'
-        },
-        'T2节能降碳型': {
-            product: '能效贷款 + 碳排放权质押贷款 + 节能改造专项贷',
-            priority: '<span class="tag priority-high">🔴 高</span>',
-            bonus: '绿色信贷专项规模保障；碳减排支持工具；部分试验区提供节能改造补贴',
-            strategy: '1. 引入ESCO合同能源管理模式，降低客户前期投入压力<br>2. 测算节能收益，以节能效益作为还款来源设计贷款方案<br>3. 对接当地经信部门，争取节能改造专项资金支持',
-            target: '对公客户部、能源管理部、ESCO服务商',
-            timing: '建议2个月内完成能效诊断和融资方案设计'
-        },
-        'T3产业升级型': {
-            product: '产业转型升级贷款 + 绿色债券承销 + 产业基金配资',
-            priority: '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;background:#FFFBEB;color:#D97706;border:1px solid #FDE68A;">🟡 中</span>',
-            bonus: '产业转型升级专项资金；先进制造业优惠贷款；部分园区税收减免',
-            strategy: '1. 项目兼具产业属性与绿色属性，可双重申报产业+绿色政策<br>2. 建议与政府产业引导基金联动，放大杠杆效应<br>3. 关注产业政策窗口期，及时把握申报节点',
-            target: '对公客户部、投资银行部、产业基金管理公司',
-            timing: '建议3个月内完成产业论证和融资结构设计'
-        },
-        'T4资源循环型': {
-            product: '循环经济专项贷款 + 绿色债券 + 资源综合利用增值税即征即退',
-            priority: '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;background:#FFFBEB;color:#D97706;border:1px solid #FDE68A;">🟡 中</span>',
-            bonus: '循环经济试点专项资金；资源综合利用税收优惠；绿色债券发行绿色通道',
-            strategy: '1. 优先推荐发行绿色债券，循环经济项目符合绿债目录要求<br>2. 测算资源化利用收益，以资源化产品收入增强还款保障<br>3. 争取纳入国家循环经济试点示范，获取中央预算内投资支持',
-            target: '对公客户部、债券承销团队、环保产业基金',
-            timing: '建议3个月内启动绿色债券发行准备工作'
-        },
-        'T5基础设施型': {
-            product: '绿色项目贷款 + 特许经营权质押融资 + 基础设施REITs',
-            priority: '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;background:#FFFBEB;color:#D97706;border:1px solid #FDE68A;">🟡 中</span>',
-            bonus: '基础设施专项贷款额度；地方政府专项债配套；绿色PPP项目库优先入库',
-            strategy: '1. 评估项目现金流特征，设计匹配的还款计划<br>2. 探索特许经营权质押+财政补贴应收账款质押组合担保<br>3. 关注基础设施REITs政策，为后续退出预留通道',
-            target: '对公客户部、基础设施融资部、PPP项目管理中心',
-            timing: '建议2个月内完成项目尽调和融资方案'
-        },
-        'T6生态修复型': {
-            product: '生态补偿贷款 + GEP质押融资 + 碳汇交易收益权质押',
-            priority: '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;background:#ECFDF5;color:#047857;border:1px solid #A7F3D0;">🟢 低</span>',
-            bonus: '生态保护补偿资金；碳汇交易收益；GEP核算试点地区创新金融产品',
-            strategy: '1. 测算生态服务价值（GEP），探索生态产品价值实现路径<br>2. 对接碳汇交易市场，以未来碳汇收益增强项目还款能力<br>3. 争取纳入国家生态产品价值实现机制试点',
-            target: '对公客户部、绿色金融创新团队、碳资产管理部门',
-            timing: '建议4个月内完成生态价值评估和融资方案'
-        },
-        '综合型': {
-            product: '组合融资方案（绿色贷款+绿色债券+产业基金）',
-            priority: '<span class="tag priority-high">🔴 高</span>',
-            bonus: '多重政策叠加；可同时适用多项绿色金融支持工具',
-            strategy: '1. 根据项目具体内容拆分融资需求，匹配不同金融产品<br>2. 优先申请央行碳减排支持工具，降低整体融资成本<br>3. 同步推进绿色项目认定，获取财政贴息支持',
-            target: '对公客户部、投资银行部、绿色金融专营团队',
-            timing: '建议1个月内完成首次对接，分阶段推进融资'
+// Apply I18N translations to all elements with data-i18n attributes
+(function initI18NElements() {
+    // Translate text content for elements with data-i18n
+    var i18nEls = document.querySelectorAll('[data-i18n]');
+    for (var i = 0; i < i18nEls.length; i++) {
+        var el = i18nEls[i];
+        var key = el.getAttribute('data-i18n');
+        if (key) {
+            el.textContent = I18N.t(key);
         }
-    };
-
-    // 根据试验区调整政策红利
-    var zoneBonus = {
-        '兰州新区': '兰州新区深绿项目认定后可享10%财政贴息；西部大开发税收优惠叠加',
-        '湖州市': '湖州市绿色金融改革试验区贴息政策；绿色企业评级挂钩优惠利率',
-        '衢州市': '衢州市绿色项目贷款贴息；绿色金融改革试验区创新产品优先试点',
-        '广州市': '广州市绿色金融改革试验区专项奖励；粤港澳大湾区跨境绿色金融便利',
-        '赣江新区': '赣江新区绿色项目财政奖补；中部地区绿色发展专项资金',
-        '重庆市': '重庆市绿色金融改革试验区贴息；长江经济带绿色发展专项支持',
-        '其他': '所在地区绿色金融政策支持；绿色信贷专项规模保障'
-    };
-
-    function getBonus(zone, type) {
-        if (zoneBonus[zone]) return zoneBonus[zone];
-        return '所在地区绿色金融政策支持；绿色信贷专项规模保障';
     }
-
-    function openMarketingPlan(name, code, zone, type, amount, directory, content, location, policy, platform) {
-        currentMarketingProject = { name:name, code:code, zone:zone, type:type, amount:amount, directory:directory, content:content, location:location, policy:policy, platform:platform };
-        var tpl = marketingTemplates[type] || marketingTemplates['综合型'];
-        document.getElementById('planProjName').textContent = name;
-        document.getElementById('planProjCode').textContent = code;
-        document.getElementById('planProjZone').textContent = zone;
-        document.getElementById('planProjType').innerHTML = '<span class="tag tag-info">'+type+'</span>';
-        document.getElementById('planProjAmt').textContent = amount + ' 万元';
-        document.getElementById('planProjLoc').textContent = location;
-        document.getElementById('planProjContent').textContent = content;
-        document.getElementById('planProjPolicy').textContent = policy;
-        document.getElementById('planProjPlatform').textContent = platform;
-        document.getElementById('planProduct').textContent = tpl.product;
-        document.getElementById('planPriority').innerHTML = tpl.priority;
-        document.getElementById('planBonus').textContent = getBonus(zone, type);
-        document.getElementById('planStrategy').innerHTML = tpl.strategy;
-        document.getElementById('planTarget').textContent = tpl.target;
-        document.getElementById('planTiming').textContent = tpl.timing;
-        document.getElementById('marketingPlanModal').classList.add('open');
-    }
-
-    function closeMarketingPlan() {
-        document.getElementById('marketingPlanModal').classList.remove('open');
-        currentMarketingProject = null;
-    }
-
-    function confirmStartMarketing() {
-        if (!currentMarketingProject) return;
-        // 将项目加入营销列表（存储在localStorage中供项目营销过程管理页面读取）
-        var stored = localStorage.getItem('zc_marketing_projects');
-        var list = stored ? JSON.parse(stored) : [];
-        // 检查是否已存在
-        var exists = list.some(function(p){ return p.code === currentMarketingProject.code; });
-        if (!exists) {
-            var tpl = marketingTemplates[currentMarketingProject.type] || marketingTemplates['综合型'];
-            list.push({
-                name: currentMarketingProject.name,
-                code: currentMarketingProject.code,
-                zone: currentMarketingProject.zone,
-                type: currentMarketingProject.type,
-                amount: currentMarketingProject.amount,
-                directory: currentMarketingProject.directory,
-                product: tpl.product,
-                priority: tpl.priority.replace(/<[^>]*>/g,''),
-                bonus: getBonus(currentMarketingProject.zone, currentMarketingProject.type),
-                strategy: tpl.strategy.replace(/<[^>]*>/g,''),
-                content: currentMarketingProject.content,
-                location: currentMarketingProject.location,
-                policy: currentMarketingProject.policy,
-                platform: currentMarketingProject.platform,
-                stage: '初步对接',
-                contactPerson: '',
-                contactOrg: '',
-                lastUpdate: new Date().toISOString().split('T')[0],
-                nextFollowUp: '',
-                records: []
-            });
-            localStorage.setItem('zc_marketing_projects', JSON.stringify(list));
+    // Translate placeholder attributes for elements with data-i18n-placeholder
+    var phEls = document.querySelectorAll('[data-i18n-placeholder]');
+    for (var j = 0; j < phEls.length; j++) {
+        var phEl = phEls[j];
+        var phKey = phEl.getAttribute('data-i18n-placeholder');
+        if (phKey) {
+            phEl.setAttribute('placeholder', I18N.t(phKey));
         }
-        closeMarketingPlan();
-        alert('营销项目导入成功！\n\n项目"' + currentMarketingProject.name + '"已同步至"项目营销过程管理"页面，当前营销阶段：初步对接。');
     }
+})();
 
-    // 点击遮罩关闭
-    document.getElementById('marketingPlanModal').addEventListener('click', function(e) {
-        if (e.target === this) closeMarketingPlan();
-    });
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') closeMarketingPlan();
-    });
+function getCurrentDir() {
+    var path = window.location.pathname;
+    return path.substring(0, path.lastIndexOf('/') + 1);
+}
+
+// Jump to independent marketing plan page
+function goToMarketingPlan() {
+    var dir = getCurrentDir();
+    var targetUrl = dir + '业务营销方案.html';
+    if (window.parent !== window) {
+        var pageId = 'mkt-plan-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
+        window.parent.postMessage({ type: 'openPage', pageId: pageId, file: targetUrl, label: I18N.t('labelMarketingPlan') }, '*');
+    } else {
+        window.location.href = targetUrl;
+    }
+}
+
+// Generate priority tag HTML using i18n
+function makePriorityHtml(level) {
+    if (level === '高') return '<span class="tag priority-high">&#x1F534; ' + I18N.t('priorityHigh') + '</span>';
+    if (level === '中') return '<span class="tag priority-mid">&#x1F7E1; ' + I18N.t('priorityMedium') + '</span>';
+    return '<span class="tag priority-low">&#x1F7E2; ' + I18N.t('priorityLow') + '</span>';
+}
+
+// Pre-defined marketing plan templates (content stays Chinese as business data)
+var marketingTemplates = {
+    'T1能源转型型': {
+        product: '碳减排支持工具贷款 + 绿色项目贷款',
+        priority: '高',
+        bonus: '碳减排支持工具优惠利率；兰州新区深绿项目认定后可享10%财政贴息',
+        strategy: '1. 项目属于清洁能源领域，优先对接央行碳减排支持工具<br>2. 投资规模较大，建议联合政策性银行组建银团贷款<br>3. 同步申请所在试验区绿色项目认定，争取最大化政策红利',
+        target: '对公客户部、机构业务部、绿色金融专营团队',
+        timing: '项目已入库，建议1个月内完成首次对接，3个月内形成融资方案'
+    },
+    'T2节能降碳型': {
+        product: '能效贷款 + 碳排放权质押贷款 + 节能改造专项贷',
+        priority: '高',
+        bonus: '绿色信贷专项规模保障；碳减排支持工具；部分试验区提供节能改造补贴',
+        strategy: '1. 引入ESCO合同能源管理模式，降低客户前期投入压力<br>2. 测算节能收益，以节能效益作为还款来源设计贷款方案<br>3. 对接当地经信部门，争取节能改造专项资金支持',
+        target: '对公客户部、能源管理部、ESCO服务商',
+        timing: '建议2个月内完成能效诊断和融资方案设计'
+    },
+    'T3产业升级型': {
+        product: '产业转型升级贷款 + 绿色债券承销 + 产业基金配资',
+        priority: '中',
+        bonus: '产业转型升级专项资金；先进制造业优惠贷款；部分园区税收减免',
+        strategy: '1. 项目兼具产业属性与绿色属性，可双重申报产业+绿色政策<br>2. 建议与政府产业引导基金联动，放大杠杆效应<br>3. 关注产业政策窗口期，及时把握申报节点',
+        target: '对公客户部、投资银行部、产业基金管理公司',
+        timing: '建议3个月内完成产业论证和融资结构设计'
+    },
+    'T4资源循环型': {
+        product: '循环经济专项贷款 + 绿色债券 + 资源综合利用增值税即征即退',
+        priority: '中',
+        bonus: '循环经济试点专项资金；资源综合利用税收优惠；绿色债券发行绿色通道',
+        strategy: '1. 优先推荐发行绿色债券，循环经济项目符合绿债目录要求<br>2. 测算资源化利用收益，以资源化产品收入增强还款保障<br>3. 争取纳入国家循环经济试点示范，获取中央预算内投资支持',
+        target: '对公客户部、债券承销团队、环保产业基金',
+        timing: '建议3个月内启动绿色债券发行准备工作'
+    },
+    'T5基础设施型': {
+        product: '绿色项目贷款 + 特许经营权质押融资 + 基础设施REITs',
+        priority: '中',
+        bonus: '基础设施专项贷款额度；地方政府专项债配套；绿色PPP项目库优先入库',
+        strategy: '1. 评估项目现金流特征，设计匹配的还款计划<br>2. 探索特许经营权质押+财政补贴应收账款质押组合担保<br>3. 关注基础设施REITs政策，为后续退出预留通道',
+        target: '对公客户部、基础设施融资部、PPP项目管理中心',
+        timing: '建议2个月内完成项目尽调和融资方案'
+    },
+    'T6生态修复型': {
+        product: '生态补偿贷款 + GEP质押融资 + 碳汇交易收益权质押',
+        priority: '低',
+        bonus: '生态保护补偿资金；碳汇交易收益；GEP核算试点地区创新金融产品',
+        strategy: '1. 测算生态服务价值（GEP），探索生态产品价值实现路径<br>2. 对接碳汇交易市场，以未来碳汇收益增强项目还款能力<br>3. 争取纳入国家生态产品价值实现机制试点',
+        target: '对公客户部、绿色金融创新团队、碳资产管理部门',
+        timing: '建议4个月内完成生态价值评估和融资方案'
+    },
+    '综合型': {
+        product: '组合融资方案（绿色贷款+绿色债券+产业基金）',
+        priority: '高',
+        bonus: '多重政策叠加；可同时适用多项绿色金融支持工具',
+        strategy: '1. 根据项目具体内容拆分融资需求，匹配不同金融产品<br>2. 优先申请央行碳减排支持工具，降低整体融资成本<br>3. 同步推进绿色项目认定，获取财政贴息支持',
+        target: '对公客户部、投资银行部、绿色金融专营团队',
+        timing: '建议1个月内完成首次对接，分阶段推进融资'
+    }
+};
+
+// Adjust bonus policy by zone
+var zoneBonus = {
+    '兰州新区': '兰州新区深绿项目认定后可享10%财政贴息；西部大开发税收优惠叠加',
+    '湖州市': '湖州市绿色金融改革试验区贴息政策；绿色企业评级挂钩优惠利率',
+    '衢州市': '衢州市绿色项目贷款贴息；绿色金融改革试验区创新产品优先试点',
+    '广州市': '广州市绿色金融改革试验区专项奖励；粤港澳大湾区跨境绿色金融便利',
+    '赣江新区': '赣江新区绿色项目财政奖补；中部地区绿色发展专项资金',
+    '重庆市': '重庆市绿色金融改革试验区贴息；长江经济带绿色发展专项支持',
+    '其他': '所在地区绿色金融政策支持；绿色信贷专项规模保障'
+};
+
+function getBonus(zone, type) {
+    if (zoneBonus[zone]) return zoneBonus[zone];
+    return '所在地区绿色金融政策支持；绿色信贷专项规模保障';
+}
+
+function openMarketingPlan(name, code, zone, type, amount, directory, content, location, policy, platform) {
+    currentMarketingProject = { name:name, code:code, zone:zone, type:type, amount:amount, directory:directory, content:content, location:location, policy:policy, platform:platform };
+    var tpl = marketingTemplates[type] || marketingTemplates['综合型'];
+    document.getElementById('planProjName').textContent = name;
+    document.getElementById('planProjCode').textContent = code;
+    document.getElementById('planProjZone').textContent = zone;
+    document.getElementById('planProjType').innerHTML = '<span class="tag tag-info">'+type+'</span>';
+    document.getElementById('planProjAmt').textContent = amount + ' ' + I18N.t('unitWanYuan');
+    document.getElementById('planProjLoc').textContent = location;
+    document.getElementById('planProjContent').textContent = content;
+    document.getElementById('planProjPolicy').textContent = policy;
+    document.getElementById('planProjPlatform').textContent = platform;
+    document.getElementById('planProduct').textContent = tpl.product;
+    document.getElementById('planPriority').innerHTML = makePriorityHtml(tpl.priority);
+    document.getElementById('planBonus').textContent = getBonus(zone, type);
+    document.getElementById('planStrategy').innerHTML = tpl.strategy;
+    document.getElementById('planTarget').textContent = tpl.target;
+    document.getElementById('planTiming').textContent = tpl.timing;
+    document.getElementById('marketingPlanModal').classList.add('open');
+}
+
+function closeMarketingPlan() {
+    document.getElementById('marketingPlanModal').classList.remove('open');
+    currentMarketingProject = null;
+}
+
+function confirmStartMarketing() {
+    if (!currentMarketingProject) return;
+    // Add project to marketing list (stored in localStorage for Process Mgmt page)
+    var stored = localStorage.getItem('zc_marketing_projects');
+    var list = stored ? JSON.parse(stored) : [];
+    // Check if already exists
+    var exists = list.some(function(p){ return p.code === currentMarketingProject.code; });
+    if (!exists) {
+        var tpl = marketingTemplates[currentMarketingProject.type] || marketingTemplates['综合型'];
+        list.push({
+            name: currentMarketingProject.name,
+            code: currentMarketingProject.code,
+            zone: currentMarketingProject.zone,
+            type: currentMarketingProject.type,
+            amount: currentMarketingProject.amount,
+            directory: currentMarketingProject.directory,
+            product: tpl.product,
+            priority: tpl.priority,
+            bonus: getBonus(currentMarketingProject.zone, currentMarketingProject.type),
+            strategy: tpl.strategy,
+            content: currentMarketingProject.content,
+            location: currentMarketingProject.location,
+            policy: currentMarketingProject.policy,
+            platform: currentMarketingProject.platform,
+            stage: '初步对接',
+            contactPerson: '',
+            contactOrg: '',
+            lastUpdate: new Date().toISOString().split('T')[0],
+            nextFollowUp: '',
+            records: []
+        });
+        localStorage.setItem('zc_marketing_projects', JSON.stringify(list));
+    }
+    closeMarketingPlan();
+    alert(I18N.t('alertImportMsg').replace('{name}', currentMarketingProject.name));
+}
+
+// Click mask to close
+document.getElementById('marketingPlanModal').addEventListener('click', function(e) {
+    if (e.target === this) closeMarketingPlan();
+});
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeMarketingPlan();
+});
 </script>
 </body>
 </html>

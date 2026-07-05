@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>用户管理 - 用户列表</title>
+  <title data-i18n="Page_Title">用户管理 - 用户列表</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root {
@@ -175,58 +175,57 @@
     /* 编辑状态标记 */
     .edit-badge{font-size:11px;color:var(--ink-400);background:var(--bg-muted);padding:2px 8px;border-radius:var(--radius-sm);margin-left:8px}
   </style>
+  <script src="../i18n.js"></script>
 </head>
 <body class="min-h-screen flex flex-col">
 
   <div class="flex flex-1 overflow-hidden">
     <!-- ============ Main Content ============ -->
     <main class="flex-1 flex flex-col overflow-hidden" style="background:var(--bg-subtle)">
-      <!-- 面包屑导航已删除 -->
-
       <!-- Content area -->
       <div class="flex-1 overflow-y-auto custom-scroll p-8">
         <!-- Filter area -->
         <div class="section-card mb-6">
           <div style="padding:var(--s-4)">
             <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-4);align-items:end">
-              <!-- 姓名 -->
+              <!-- Name filter -->
               <div>
-                <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block">姓名</label>
-                <input type="text" class="input" placeholder="请输入姓名" id="filterName">
+                <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block" data-i18n="Filter_Name">姓名</label>
+                <input type="text" class="input" data-i18n-placeholder="Filter_Name_Placeholder" placeholder="请输入姓名" id="filterName">
               </div>
-              <!-- 工号 -->
+              <!-- Emp No filter -->
               <div>
-                <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block">工号</label>
-                <input type="text" class="input" placeholder="请输入工号" id="filterEmpNo">
+                <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block" data-i18n="Filter_EmpNo">工号</label>
+                <input type="text" class="input" data-i18n-placeholder="Filter_EmpNo_Placeholder" placeholder="请输入工号" id="filterEmpNo">
               </div>
-              <!-- 所属机构 -->
+              <!-- Org filter -->
               <div style="position:relative">
-                <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block">所属机构</label>
+                <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block" data-i18n="Filter_Org">所属机构</label>
                 <div class="select-native" style="display:flex;align-items:center;justify-content:space-between;padding:5px 12px;height:32px;font-size:14px;color:var(--ink-400);background:var(--white);border:1px solid var(--ink-300);border-radius:var(--radius-md);cursor:pointer" id="orgSelectorBtn" onclick="toggleOrgTree()">
-                  <span id="orgSelectedText">请选择机构</span>
+                  <span id="orgSelectedText" data-i18n="Filter_Org_Placeholder">请选择机构</span>
                   <svg class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
                 </div>
                 <!-- Org tree dropdown -->
                 <div class="dropdown-panel" id="orgTreePanel" style="width:100%">
-                  <div class="tree-option" onclick="selectOrg(this, '总行')">总行</div>
-                  <div class="tree-option level-1" onclick="selectOrg(this, '北京分行')">北京分行</div>
-                  <div class="tree-option level-2" onclick="selectOrg(this, '北京分行-朝阳支行')">北京分行-朝阳支行</div>
-                  <div class="tree-option level-2" onclick="selectOrg(this, '北京分行-海淀支行')">北京分行-海淀支行</div>
-                  <div class="tree-option level-1" onclick="selectOrg(this, '上海分行')">上海分行</div>
-                  <div class="tree-option level-2" onclick="selectOrg(this, '上海分行-浦东支行')">上海分行-浦东支行</div>
-                  <div class="tree-option level-1" onclick="selectOrg(this, '广州分行')">广州分行</div>
+                  <div class="tree-option" data-i18n="Org_HeadOffice" onclick="selectOrg(this, '总行')">总行</div>
+                  <div class="tree-option level-1" data-i18n="Org_BeijingBranch" onclick="selectOrg(this, '北京分行')">北京分行</div>
+                  <div class="tree-option level-2" data-i18n="Org_BeijingChaoyang" onclick="selectOrg(this, '北京分行-朝阳支行')">北京分行-朝阳支行</div>
+                  <div class="tree-option level-2" data-i18n="Org_BeijingHaidian" onclick="selectOrg(this, '北京分行-海淀支行')">北京分行-海淀支行</div>
+                  <div class="tree-option level-1" data-i18n="Org_ShanghaiBranch" onclick="selectOrg(this, '上海分行')">上海分行</div>
+                  <div class="tree-option level-2" data-i18n="Org_ShanghaiPudong" onclick="selectOrg(this, '上海分行-浦东支行')">上海分行-浦东支行</div>
+                  <div class="tree-option level-1" data-i18n="Org_GuangzhouBranch" onclick="selectOrg(this, '广州分行')">广州分行</div>
                 </div>
               </div>
-              <!-- 角色 -->
+              <!-- Role filter -->
               <div>
-                <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block">角色</label>
+                <label style="font-size:14px;color:var(--ink-700);font-weight:500;margin-bottom:6px;display:block" data-i18n="Filter_Role">角色</label>
                 <select class="select-native" id="filterRole">
-                  <option value="">全部角色</option>
-                  <option value="系统管理员">系统管理员</option>
-                  <option value="总行管理员">总行管理员</option>
-                  <option value="机构管理员">机构管理员</option>
-                  <option value="绿色认定专员">绿色认定专员</option>
-                  <option value="审批人">审批人</option>
+                  <option value="" data-i18n="Filter_Role_All">全部角色</option>
+                  <option value="系统管理员" data-i18n="Role_SystemAdmin">系统管理员</option>
+                  <option value="总行管理员" data-i18n="Role_HeadAdmin">总行管理员</option>
+                  <option value="机构管理员" data-i18n="Role_OrgAdmin">机构管理员</option>
+                  <option value="绿色认定专员" data-i18n="Role_GreenSpecialist">绿色认定专员</option>
+                  <option value="审批人" data-i18n="Role_Approver">审批人</option>
                 </select>
               </div>
             </div>
@@ -234,34 +233,34 @@
             <div style="display:flex;gap:var(--s-3);margin-top:var(--s-4);justify-content:flex-end">
               <button class="btn btn-primary btn-md" onclick="handleSearch()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                查询
+                <span data-i18n="Btn_Search">查询</span>
               </button>
-              <button class="btn btn-secondary btn-md" onclick="handleReset()">重置</button>
+              <button class="btn btn-secondary btn-md" onclick="handleReset()"><span data-i18n="Btn_Reset">重置</span></button>
             </div>
           </div>
         </div>
 
         <!-- Table -->
         <div class="section-card">
-          <!-- 工具栏：仅保留批量导出按钮 -->
+          <!-- Toolbar -->
           <div style="display:flex;align-items:center;gap:var(--s-2);padding:var(--s-3) var(--s-4);border-bottom:1px solid var(--line-200)">
             <button class="btn btn-md btn-secondary" onclick="exportUserData()">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              批量导出
+              <span data-i18n="Btn_Export">批量导出</span>
             </button>
-            <span style="margin-left:auto;font-size:12px;color:var(--ink-500)">共 <strong id="totalCount" style="color:var(--brand-500);font-family:var(--font-num)">86</strong> 条</span>
+            <span style="margin-left:auto;font-size:12px;color:var(--ink-500)"><span data-i18n="Text_TotalRecords_Prefix">共 </span><strong id="totalCount" style="color:var(--brand-500);font-family:var(--font-num)">86</strong><span data-i18n="Text_Items"> 条</span></span>
           </div>
           <table>
             <thead>
               <tr>
-                <th style="width:50px">序号</th>
-                <th>姓名</th>
-                <th>工号</th>
-                <th>所属机构</th>
-                <th>岗位</th>
-                <th>角色</th>
-                <th style="width:80px">状态</th>
-                <th style="width:120px;text-align:right">操作</th>
+                <th style="width:50px" data-i18n="Th_Seq">序号</th>
+                <th data-i18n="Th_Name">姓名</th>
+                <th data-i18n="Th_EmpNo">工号</th>
+                <th data-i18n="Th_Org">所属机构</th>
+                <th data-i18n="Th_Position">岗位</th>
+                <th data-i18n="Th_Role">角色</th>
+                <th style="width:80px" data-i18n="Th_Status">状态</th>
+                <th style="width:120px;text-align:right" data-i18n="Th_Actions">操作</th>
               </tr>
             </thead>
             <tbody id="userTableBody">
@@ -269,7 +268,7 @@
           </table>
           <!-- Pagination -->
           <div class="pagination" id="paginationBar">
-            <span class="pagination-info">共 <strong id="pageTotal">86</strong> 条</span>
+            <span class="pagination-info"><span data-i18n="Text_TotalRecords_Prefix">共 </span><strong id="pageTotal">86</strong><span data-i18n="Text_Items"> 条</span></span>
             <div class="pagination-controls">
               <button class="page-btn" id="prevBtn" onclick="changePage(-1)" disabled>
                 <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
@@ -284,13 +283,13 @@
               </button>
             </div>
             <div style="display:flex;align-items:center;gap:6px;margin-left:16px">
-              <span style="font-size:13px;color:var(--ink-500)">每页</span>
+              <span style="font-size:13px;color:var(--ink-500)" data-i18n="Text_PerPage">每页</span>
               <select class="select-native" style="width:auto;height:32px;padding:0 28px 0 10px" id="pageSizeSelect" onchange="changePageSize(this.value)">
                 <option value="20" selected>20</option>
                 <option value="50">50</option>
                 <option value="100">100</option>
               </select>
-              <span style="font-size:13px;color:var(--ink-500)">条</span>
+              <span style="font-size:13px;color:var(--ink-500)" data-i18n="Text_Items">条</span>
             </div>
           </div>
         </div>
@@ -303,7 +302,7 @@
   <div class="drawer" id="userDrawer">
     <div class="drawer-head">
       <div>
-        <div class="drawer-title">用户详情</div>
+        <div class="drawer-title" data-i18n="Drawer_Title">用户详情</div>
         <div class="drawer-subtitle" id="drawerSubtitle">工号：EMP001</div>
       </div>
       <button class="drawer-close" onclick="closeDrawer()">
@@ -317,32 +316,32 @@
           <div class="section-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </div>
-          <span class="section-card-title">基础信息</span>
-          <span class="edit-badge">可编辑</span>
+          <span class="section-card-title" data-i18n="Section_BasicInfo">基础信息</span>
+          <span class="edit-badge" data-i18n="Label_Editable">可编辑</span>
         </div>
         <div style="padding:var(--s-6)">
           <div class="info-grid">
-            <span class="info-label">姓名</span>
+            <span class="info-label" data-i18n="Info_Name">姓名</span>
             <span class="info-value"><input type="text" class="input" id="editName" value=""></span>
           </div>
           <div class="info-grid">
-            <span class="info-label">工号</span>
+            <span class="info-label" data-i18n="Info_EmpNo">工号</span>
             <span class="info-value" id="detailEmpNo" style="font-family:var(--font-mono);color:var(--ink-600)">--</span>
           </div>
           <div class="info-grid">
-            <span class="info-label">所属机构</span>
+            <span class="info-label" data-i18n="Info_Org">所属机构</span>
             <span class="info-value"><input type="text" class="input" id="editOrg" value=""></span>
           </div>
           <div class="info-grid">
-            <span class="info-label">岗位</span>
+            <span class="info-label" data-i18n="Info_Position">岗位</span>
             <span class="info-value"><input type="text" class="input" id="editPosition" value=""></span>
           </div>
           <div class="info-grid">
-            <span class="info-label">业务条线</span>
+            <span class="info-label" data-i18n="Info_BusinessLine">业务条线</span>
             <span class="info-value"><input type="text" class="input" id="editBusinessLine" value=""></span>
           </div>
           <div class="info-grid">
-            <span class="info-label">状态</span>
+            <span class="info-label" data-i18n="Info_Status">状态</span>
             <span class="info-value" id="detailStatus">--</span>
           </div>
         </div>
@@ -354,10 +353,10 @@
           <div class="section-card-icon" style="background:var(--green-500)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
-          <span class="section-card-title">角色关联</span>
+          <span class="section-card-title" data-i18n="Section_RoleAssoc">角色关联</span>
           <button class="btn btn-sm btn-primary" style="margin-left:auto" onclick="openAddRoleModal()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            添加角色
+            <span data-i18n="Btn_AddRole">添加角色</span>
           </button>
         </div>
         <div style="padding:var(--s-6)">
@@ -368,16 +367,16 @@
       </div>
     </div>
     <div class="drawer-foot">
-      <button class="btn btn-secondary btn-md" onclick="closeDrawer()">取消</button>
-      <button class="btn btn-primary btn-md" onclick="saveUserDetail()">保存</button>
+      <button class="btn btn-secondary btn-md" onclick="closeDrawer()" data-i18n="Btn_Cancel">取消</button>
+      <button class="btn btn-primary btn-md" onclick="saveUserDetail()" data-i18n="Btn_Save">保存</button>
     </div>
   </div>
 
-  <!-- ============ Disable Confirm Modal ============ -->
+  <!-- ============ Disable/Enable Confirm Modal ============ -->
   <div class="modal-mask" id="disableModal">
     <div class="modal modal-sm">
       <div class="modal-head">
-        <span class="modal-title" id="modalTitle">确认停用</span>
+        <span class="modal-title" id="modalTitle" data-i18n="Modal_Title_Disable">确认停用</span>
         <button class="modal-close" onclick="closeModal('disableModal')">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
         </button>
@@ -388,39 +387,39 @@
             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="modalIconSvg"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
           </div>
           <div style="flex:1">
-            <div style="font-size:14px;font-weight:600;color:var(--ink-900);margin-bottom:4px" id="modalConfirmText">确认停用该用户？</div>
-            <div style="font-size:14px;color:var(--ink-600);line-height:1.5" id="modalDesc">停用后该用户将无法登录系统。</div>
+            <div style="font-size:14px;font-weight:600;color:var(--ink-900);margin-bottom:4px" id="modalConfirmText" data-i18n="Modal_Confirm_Disable_User">确认停用该用户？</div>
+            <div style="font-size:14px;color:var(--ink-600);line-height:1.5" id="modalDesc" data-i18n="Modal_Desc_Disable">停用后该用户将无法登录系统。</div>
           </div>
         </div>
       </div>
       <div class="modal-foot">
-        <button class="btn btn-secondary btn-md" onclick="closeModal('disableModal')">取消</button>
-        <button class="btn btn-primary btn-md" id="modalConfirmBtn" onclick="confirmStatusChange()">确认停用</button>
+        <button class="btn btn-secondary btn-md" onclick="closeModal('disableModal')" data-i18n="Btn_Cancel">取消</button>
+        <button class="btn btn-primary btn-md" id="modalConfirmBtn" onclick="confirmStatusChange()" data-i18n="Btn_ConfirmDisable">确认停用</button>
       </div>
     </div>
   </div>
 
-  <!-- ============ Add Role Modal (z-index高于drawer) ============ -->
+  <!-- ============ Add Role Modal ============ -->
   <div class="modal-mask" id="addRoleModal">
     <div class="modal">
       <div class="modal-head">
-        <span class="modal-title">添加角色</span>
+        <span class="modal-title" data-i18n="Modal_Title_AddRole">添加角色</span>
         <button class="modal-close" onclick="closeModal('addRoleModal')">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
         </button>
       </div>
       <div class="modal-body">
         <div style="margin-bottom:12px">
-          <input type="text" class="input" placeholder="搜索角色名称..." id="roleSearchInput" oninput="filterRoleList(this.value)">
+          <input type="text" class="input" data-i18n-placeholder="Placeholder_SearchRole" placeholder="搜索角色名称..." id="roleSearchInput" oninput="filterRoleList(this.value)">
         </div>
         <div style="max-height:240px;overflow-y:auto;border:1px solid var(--line-200);border-radius:var(--radius-md);padding:4px" id="availableRoleList">
           <!-- Available roles rendered here -->
         </div>
-        <div style="margin-top:12px;font-size:12px;color:var(--ink-500)">已选择 <strong id="selectedRoleCount" style="color:var(--brand-500)">0</strong> 个角色</div>
+        <div style="margin-top:12px;font-size:12px;color:var(--ink-500)" id="selectedRoleLabel"><span data-i18n="Text_SelectedRoles_Prefix">已选择 </span><strong id="selectedRoleCount" style="color:var(--brand-500)">0</strong><span data-i18n="Text_SelectedRoles_Suffix"> 个角色</span></div>
       </div>
       <div class="modal-foot">
-        <button class="btn btn-secondary btn-md" onclick="closeModal('addRoleModal')">取消</button>
-        <button class="btn btn-primary btn-md" onclick="confirmAddRoles()">确认添加</button>
+        <button class="btn btn-secondary btn-md" onclick="closeModal('addRoleModal')" data-i18n="Btn_Cancel">取消</button>
+        <button class="btn btn-primary btn-md" onclick="confirmAddRoles()" data-i18n="Btn_ConfirmAdd">确认添加</button>
       </div>
     </div>
   </div>
@@ -429,7 +428,7 @@
   <div class="modal-mask" id="saveConfirmModal">
     <div class="modal modal-sm">
       <div class="modal-head">
-        <span class="modal-title">确认保存</span>
+        <span class="modal-title" data-i18n="Modal_Title_SaveConfirm">确认保存</span>
         <button class="modal-close" onclick="closeModal('saveConfirmModal')">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
         </button>
@@ -440,14 +439,14 @@
             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
           </div>
           <div style="flex:1">
-            <div style="font-size:14px;font-weight:600;color:var(--ink-900);margin-bottom:4px">确认保存用户信息？</div>
-            <div style="font-size:14px;color:var(--ink-600);line-height:1.5" id="saveConfirmDesc">确定要保存当前用户信息的修改吗？</div>
+            <div style="font-size:14px;font-weight:600;color:var(--ink-900);margin-bottom:4px" data-i18n="Modal_Confirm_SaveUser">确认保存用户信息？</div>
+            <div style="font-size:14px;color:var(--ink-600);line-height:1.5" id="saveConfirmDesc" data-i18n="Modal_Desc_SaveConfirm">确定要保存当前用户信息的修改吗？</div>
           </div>
         </div>
       </div>
       <div class="modal-foot">
-        <button class="btn btn-secondary btn-md" onclick="closeModal('saveConfirmModal')">取消</button>
-        <button class="btn btn-primary btn-md" onclick="doSaveUser()">确认保存</button>
+        <button class="btn btn-secondary btn-md" onclick="closeModal('saveConfirmModal')" data-i18n="Btn_Cancel">取消</button>
+        <button class="btn btn-primary btn-md" onclick="doSaveUser()" data-i18n="Btn_ConfirmSave">确认保存</button>
       </div>
     </div>
   </div>
@@ -456,18 +455,18 @@
   <div class="modal-mask" id="exportModal">
     <div class="modal modal-sm modal-form">
       <div class="modal-head">
-        <div class="modal-title">导出成功</div>
+        <div class="modal-title" data-i18n="Modal_Title_Export">导出成功</div>
         <button class="modal-close" onclick="closeModal('exportModal')"><svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
       </div>
       <div class="modal-body" style="text-align:center;padding:32px 24px;">
         <div class="export-success">
           <span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><circle cx="8" cy="8" r="7" stroke="currentColor" fill="none" stroke-width="1.3"/><polyline points="5 8 7 11 11 6" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></span>
-          <div style="font-weight:600;font-size:16px;margin-bottom:4px;">用户数据已导出</div>
-          <div style="font-size:13px;color:var(--ink-500);margin-top:4px;" id="exportCount">共导出 0 条用户记录</div>
+          <div style="font-weight:600;font-size:16px;margin-bottom:4px;" data-i18n="Modal_Text_ExportSuccess">用户数据已导出</div>
+          <div style="font-size:13px;color:var(--ink-500);margin-top:4px;" id="exportCount" data-i18n="Text_ExportCount">共导出 0 条用户记录</div>
         </div>
       </div>
       <div class="modal-foot" style="justify-content:center;">
-        <button class="btn btn-md btn-primary" onclick="closeModal('exportModal')">我知道了</button>
+        <button class="btn btn-md btn-primary" onclick="closeModal('exportModal')" data-i18n="Btn_GotIt">我知道了</button>
       </div>
     </div>
   </div>
@@ -508,7 +507,7 @@
     var currentActionUser = null;
     var currentDrawerUser = null;
     var selectedAddRoles = [];
-    var originalUserData = {}; // 用于保存时比对修改
+    var originalUserData = {};
 
     // ============ Render Table ============
     function renderTable() {
@@ -517,10 +516,15 @@
       var end = Math.min(start + pageSize, allUsers.length);
       var pageUsers = allUsers.slice(start, end);
       var html = '';
+      var normalText = I18N.t('Status_Normal');
+      var disabledText = I18N.t('Status_Disabled');
+      var detailText = I18N.t('Btn_Detail');
+      var disableText = I18N.t('Btn_Disable');
+      var enableText = I18N.t('Btn_Enable');
       pageUsers.forEach(function(u, i) {
         var statusTag = u.status === '正常'
-          ? '<span class="status"><span class="status-dot s-success"></span>正常</span>'
-          : '<span class="status"><span class="status-dot s-danger"></span>停用</span>';
+          ? '<span class="status"><span class="status-dot s-success"></span>' + normalText + '</span>'
+          : '<span class="status"><span class="status-dot s-danger"></span>' + disabledText + '</span>';
         var rolesHtml = '';
         u.roles.forEach(function(r) {
           rolesHtml += '<span class="role-tag">' + r + '</span>';
@@ -529,8 +533,8 @@
           rolesHtml = u.roles.slice(0, 2).map(function(r){return '<span class="role-tag">'+r+'</span>';}).join('') + '<span class="role-tag" style="background:var(--bg-muted);color:var(--ink-500);border-color:var(--line-200)">+' + (u.roles.length - 2) + '</span>';
         }
         var actionBtn = u.status === '正常'
-          ? '<button class="btn-danger-ghost" onclick="handleDisable(\''+u.empNo+'\')">停用</button>'
-          : '<button class="btn-ghost" onclick="handleEnable(\''+u.empNo+'\')">启用</button>';
+          ? '<button class="btn-danger-ghost" onclick="handleDisable(\''+u.empNo+'\')">' + disableText + '</button>'
+          : '<button class="btn-ghost" onclick="handleEnable(\''+u.empNo+'\')">' + enableText + '</button>';
         html += '<tr>'
           + '<td class="num" style="color:var(--ink-500)">' + (start + i + 1) + '</td>'
           + '<td style="font-weight:500">' + u.name + '</td>'
@@ -540,7 +544,7 @@
           + '<td>' + rolesHtml + '</td>'
           + '<td>' + statusTag + '</td>'
           + '<td style="text-align:right;white-space:nowrap">'
-          + '<button class="btn-ghost" onclick="openDetail(\''+u.empNo+'\')">详情</button>'
+          + '<button class="btn-ghost" onclick="openDetail(\''+u.empNo+'\')">' + detailText + '</button>'
           + actionBtn
           + '</td>'
           + '</tr>';
@@ -598,7 +602,7 @@
       document.getElementById('filterName').value = '';
       document.getElementById('filterEmpNo').value = '';
       document.getElementById('filterRole').value = '';
-      document.getElementById('orgSelectedText').textContent = '请选择机构';
+      document.getElementById('orgSelectedText').textContent = I18N.t('Filter_Org_Placeholder');
       document.getElementById('orgSelectedText').style.color = '';
       currentPage = 1;
       renderTable();
@@ -611,7 +615,9 @@
     }
 
     function selectOrg(el, name) {
-      document.getElementById('orgSelectedText').textContent = name;
+      var i18nKey = el.getAttribute('data-i18n');
+      var displayText = i18nKey ? I18N.t(i18nKey) : name;
+      document.getElementById('orgSelectedText').textContent = displayText;
       document.getElementById('orgSelectedText').style.color = 'var(--ink-900)';
       document.getElementById('orgTreePanel').classList.remove('open');
       document.querySelectorAll('.tree-option').forEach(function(o){o.classList.remove('selected')});
@@ -632,7 +638,7 @@
       if (!user) return;
       currentDrawerUser = user;
 
-      // 保存原始数据用于比对
+      // Save original data for comparison
       originalUserData = {
         name: user.name,
         org: user.org,
@@ -640,15 +646,15 @@
         businessLine: user.businessLine
       };
 
-      document.getElementById('drawerSubtitle').textContent = '工号：' + user.empNo;
+      document.getElementById('drawerSubtitle').textContent = I18N.t('Drawer_Subtitle_Prefix', '工号：') + user.empNo;
       document.getElementById('detailEmpNo').textContent = user.empNo;
       document.getElementById('editName').value = user.name;
       document.getElementById('editOrg').value = user.org;
       document.getElementById('editPosition').value = user.position;
       document.getElementById('editBusinessLine').value = user.businessLine;
       document.getElementById('detailStatus').innerHTML = user.status === '正常'
-        ? '<span class="status"><span class="status-dot s-success"></span>正常</span>'
-        : '<span class="status"><span class="status-dot s-danger"></span>停用</span>';
+        ? '<span class="status"><span class="status-dot s-success"></span>' + I18N.t('Status_Normal') + '</span>'
+        : '<span class="status"><span class="status-dot s-danger"></span>' + I18N.t('Status_Disabled') + '</span>';
 
       renderUserRoles(user);
 
@@ -659,15 +665,17 @@
     function renderUserRoles(user) {
       var container = document.getElementById('roleListContainer');
       if (user.roles.length === 0) {
-        container.innerHTML = '<div style="text-align:center;padding:24px;color:var(--ink-400);font-size:14px">暂未关联角色，请点击"添加角色"</div>';
+        container.innerHTML = '<div style="text-align:center;padding:24px;color:var(--ink-400);font-size:14px">' + I18N.t('Text_NoRolesYet', '暂未关联角色，请点击"添加角色"') + '</div>';
         return;
       }
       var html = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">';
+      var removeTitle = I18N.t('Title_RemoveRole');
       user.roles.forEach(function(r) {
-        html += '<span class="role-chip">' + r + '<span class="remove-role" onclick="removeRole(\''+r+'\')" title="移除此角色">&times;</span></span>';
+        html += '<span class="role-chip">' + r + '<span class="remove-role" onclick="removeRole(\''+r+'\')" title="' + removeTitle + '">&times;</span></span>';
       });
       html += '</div>';
-      html += '<div style="font-size:12px;color:var(--ink-500)">已关联 ' + user.roles.length + ' 个角色。移除角色后对应用户权限立即失效。</div>';
+      var roleWarning = I18N.t('Text_RoleCount_Warning', '已关联 {0} 个角色。移除角色后对应用户权限立即失效。').replace('{0}', user.roles.length);
+      html += '<div style="font-size:12px;color:var(--ink-500)">' + roleWarning + '</div>';
       container.innerHTML = html;
     }
 
@@ -705,7 +713,7 @@
         return true;
       });
       if (filtered.length === 0) {
-        container.innerHTML = '<div style="padding:16px;text-align:center;color:var(--ink-400);font-size:13px">暂无可选角色</div>';
+        container.innerHTML = '<div style="padding:16px;text-align:center;color:var(--ink-400);font-size:13px">' + I18N.t('Text_NoAvailableRoles', '暂无可选角色') + '</div>';
         return;
       }
       var html = '';
@@ -739,7 +747,7 @@
 
     function confirmAddRoles() {
       if (selectedAddRoles.length === 0) {
-        alert('请至少选择一个角色');
+        alert(I18N.t('Alert_SelectRole'));
         return;
       }
       selectedAddRoles.forEach(function(r) {
@@ -759,34 +767,40 @@
       var newPosition = document.getElementById('editPosition').value.trim();
       var newBusinessLine = document.getElementById('editBusinessLine').value.trim();
 
-      // 检查是否有修改
+      // Check for changes
       var hasChanges = false;
       var changes = [];
 
+      var fieldNameLabel = I18N.t('Info_Name');
+      var fieldOrgLabel = I18N.t('Info_Org');
+      var fieldPositionLabel = I18N.t('Info_Position');
+      var fieldBizLabel = I18N.t('Info_BusinessLine');
+      var changeArrow = ' → ';
+
       if (newName !== originalUserData.name) {
         hasChanges = true;
-        changes.push('姓名: ' + originalUserData.name + ' → ' + newName);
+        changes.push(fieldNameLabel + ': ' + originalUserData.name + changeArrow + newName);
       }
       if (newOrg !== originalUserData.org) {
         hasChanges = true;
-        changes.push('所属机构: ' + originalUserData.org + ' → ' + newOrg);
+        changes.push(fieldOrgLabel + ': ' + originalUserData.org + changeArrow + newOrg);
       }
       if (newPosition !== originalUserData.position) {
         hasChanges = true;
-        changes.push('岗位: ' + originalUserData.position + ' → ' + newPosition);
+        changes.push(fieldPositionLabel + ': ' + originalUserData.position + changeArrow + newPosition);
       }
       if (newBusinessLine !== originalUserData.businessLine) {
         hasChanges = true;
-        changes.push('业务条线: ' + originalUserData.businessLine + ' → ' + newBusinessLine);
+        changes.push(fieldBizLabel + ': ' + originalUserData.businessLine + changeArrow + newBusinessLine);
       }
 
       if (!hasChanges) {
-        alert('未检测到任何修改');
+        alert(I18N.t('Alert_NoChanges'));
         return;
       }
 
-      // 显示确认弹窗
-      var desc = '确定要保存以下修改吗？<br><br>' + changes.join('<br>');
+      // Show confirm modal
+      var desc = I18N.t('Text_ConfirmChanges', '确定要保存以下修改吗？') + '<br><br>' + changes.join('<br>');
       document.getElementById('saveConfirmDesc').innerHTML = desc;
       document.getElementById('saveConfirmModal').classList.add('open');
     }
@@ -799,13 +813,13 @@
       var newPosition = document.getElementById('editPosition').value.trim();
       var newBusinessLine = document.getElementById('editBusinessLine').value.trim();
 
-      // 更新用户数据
+      // Update user data
       currentDrawerUser.name = newName || currentDrawerUser.name;
       currentDrawerUser.org = newOrg || currentDrawerUser.org;
       currentDrawerUser.position = newPosition || currentDrawerUser.position;
       currentDrawerUser.businessLine = newBusinessLine || currentDrawerUser.businessLine;
 
-      // 更新原始数据
+      // Update original data
       originalUserData = {
         name: currentDrawerUser.name,
         org: currentDrawerUser.org,
@@ -815,7 +829,7 @@
 
       closeModal('saveConfirmModal');
       renderTable();
-      alert('用户信息保存成功！');
+      alert(I18N.t('Alert_SaveSuccess'));
     }
 
     // ============ Disable / Enable ============
@@ -823,10 +837,10 @@
       var user = allUsers.find(function(u){return u.empNo === empNo});
       if (!user) return;
       currentActionUser = user;
-      document.getElementById('modalTitle').textContent = '确认停用';
-      document.getElementById('modalConfirmText').textContent = '确认停用用户「' + user.name + '」？';
-      document.getElementById('modalDesc').textContent = '停用后该用户将无法登录系统。';
-      document.getElementById('modalConfirmBtn').textContent = '确认停用';
+      document.getElementById('modalTitle').textContent = I18N.t('Modal_Title_Disable');
+      document.getElementById('modalConfirmText').textContent = I18N.t('Modal_Confirm_Disable_User_Fmt', '确认停用用户「{0}」？').replace('{0}', user.name);
+      document.getElementById('modalDesc').textContent = I18N.t('Modal_Desc_Disable');
+      document.getElementById('modalConfirmBtn').textContent = I18N.t('Btn_ConfirmDisable');
       document.getElementById('modalConfirmBtn').className = 'btn btn-primary btn-md';
       document.getElementById('disableModal').classList.add('open');
     }
@@ -835,10 +849,10 @@
       var user = allUsers.find(function(u){return u.empNo === empNo});
       if (!user) return;
       currentActionUser = user;
-      document.getElementById('modalTitle').textContent = '确认启用';
-      document.getElementById('modalConfirmText').textContent = '确认启用用户「' + user.name + '」？';
-      document.getElementById('modalDesc').textContent = '启用后该用户可恢复正常登录。';
-      document.getElementById('modalConfirmBtn').textContent = '确认启用';
+      document.getElementById('modalTitle').textContent = I18N.t('Modal_Title_Enable');
+      document.getElementById('modalConfirmText').textContent = I18N.t('Modal_Confirm_Enable_User_Fmt', '确认启用用户「{0}」？').replace('{0}', user.name);
+      document.getElementById('modalDesc').textContent = I18N.t('Modal_Desc_Enable');
+      document.getElementById('modalConfirmBtn').textContent = I18N.t('Btn_ConfirmEnable');
       document.getElementById('modalConfirmBtn').className = 'btn btn-primary btn-md';
       document.getElementById('disableModal').classList.add('open');
     }
@@ -850,10 +864,10 @@
       renderTable();
     }
 
-    // ============ 批量导出 ============
+    // ============ Export ============
     function exportUserData() {
       var count = allUsers.length;
-      document.getElementById('exportCount').textContent = '共导出 ' + count + ' 条用户记录';
+      document.getElementById('exportCount').textContent = I18N.t('Text_ExportCount', '共导出 {0} 条用户记录').replace('{0}', count);
       document.getElementById('exportModal').classList.add('open');
     }
 
@@ -876,7 +890,142 @@
       if (e.target === this) closeModal('saveConfirmModal');
     });
 
+    // ============ i18n Dictionary ============
+    I18N.setDict({
+      // Page
+      Page_Title: { zh:'用户管理 - 用户列表', en:'User Management - User List' },
+
+      // Filter
+      Filter_Name: { zh:'姓名', en:'Name' },
+      Filter_Name_Placeholder: { zh:'请输入姓名', en:'Enter name' },
+      Filter_EmpNo: { zh:'工号', en:'Emp No' },
+      Filter_EmpNo_Placeholder: { zh:'请输入工号', en:'Enter emp no' },
+      Filter_Org: { zh:'所属机构', en:'Organization' },
+      Filter_Org_Placeholder: { zh:'请选择机构', en:'Select organization' },
+      Filter_Role: { zh:'角色', en:'Role' },
+      Filter_Role_All: { zh:'全部角色', en:'All roles' },
+      Role_SystemAdmin: { zh:'系统管理员', en:'System Admin' },
+      Role_HeadAdmin: { zh:'总行管理员', en:'Head Office Admin' },
+      Role_OrgAdmin: { zh:'机构管理员', en:'Organization Admin' },
+      Role_GreenSpecialist: { zh:'绿色认定专员', en:'Green Certification Specialist' },
+      Role_Approver: { zh:'审批人', en:'Approver' },
+
+      // Buttons
+      Btn_Search: { zh:'查询', en:'Search' },
+      Btn_Reset: { zh:'重置', en:'Reset' },
+      Btn_Export: { zh:'批量导出', en:'Batch Export' },
+      Btn_Detail: { zh:'详情', en:'Details' },
+      Btn_Disable: { zh:'停用', en:'Disable' },
+      Btn_Enable: { zh:'启用', en:'Enable' },
+      Btn_AddRole: { zh:'添加角色', en:'Add Role' },
+      Btn_Cancel: { zh:'取消', en:'Cancel' },
+      Btn_Save: { zh:'保存', en:'Save' },
+      Btn_ConfirmDisable: { zh:'确认停用', en:'Confirm Disable' },
+      Btn_ConfirmEnable: { zh:'确认启用', en:'Confirm Enable' },
+      Btn_ConfirmAdd: { zh:'确认添加', en:'Confirm Add' },
+      Btn_ConfirmSave: { zh:'确认保存', en:'Confirm Save' },
+      Btn_GotIt: { zh:'我知道了', en:'Got it' },
+
+      // Table headers
+      Th_Seq: { zh:'序号', en:'#' },
+      Th_Name: { zh:'姓名', en:'Name' },
+      Th_EmpNo: { zh:'工号', en:'Emp No' },
+      Th_Org: { zh:'所属机构', en:'Organization' },
+      Th_Position: { zh:'岗位', en:'Position' },
+      Th_Role: { zh:'角色', en:'Role' },
+      Th_Status: { zh:'状态', en:'Status' },
+      Th_Actions: { zh:'操作', en:'Actions' },
+
+      // Drawer
+      Drawer_Title: { zh:'用户详情', en:'User Details' },
+      Drawer_Subtitle_Prefix: { zh:'工号：', en:'Emp No: ' },
+      Section_BasicInfo: { zh:'基础信息', en:'Basic Info' },
+      Label_Editable: { zh:'可编辑', en:'Editable' },
+      Section_RoleAssoc: { zh:'角色关联', en:'Role Association' },
+
+      // Drawer info labels
+      Info_Name: { zh:'姓名', en:'Name' },
+      Info_EmpNo: { zh:'工号', en:'Emp No' },
+      Info_Org: { zh:'所属机构', en:'Organization' },
+      Info_Position: { zh:'岗位', en:'Position' },
+      Info_BusinessLine: { zh:'业务条线', en:'Business Line' },
+      Info_Status: { zh:'状态', en:'Status' },
+
+      // Status
+      Status_Normal: { zh:'正常', en:'Normal' },
+      Status_Disabled: { zh:'停用', en:'Disabled' },
+
+      // Modal titles
+      Modal_Title_Disable: { zh:'确认停用', en:'Confirm Disable' },
+      Modal_Title_Enable: { zh:'确认启用', en:'Confirm Enable' },
+      Modal_Title_AddRole: { zh:'添加角色', en:'Add Role' },
+      Modal_Title_SaveConfirm: { zh:'确认保存', en:'Confirm Save' },
+      Modal_Title_Export: { zh:'导出成功', en:'Export Successful' },
+
+      // Modal content (static defaults)
+      Modal_Confirm_Disable_User: { zh:'确认停用该用户？', en:'Disable this user?' },
+      Modal_Confirm_Disable_User_Fmt: { zh:'确认停用用户「{0}」？', en:'Disable user "{0}"?' },
+      Modal_Desc_Disable: { zh:'停用后该用户将无法登录系统。', en:'After disabling, the user will not be able to log in.' },
+      Modal_Confirm_Enable_User: { zh:'确认启用该用户？', en:'Enable this user?' },
+      Modal_Confirm_Enable_User_Fmt: { zh:'确认启用用户「{0}」？', en:'Enable user "{0}"?' },
+      Modal_Desc_Enable: { zh:'启用后该用户可恢复正常登录。', en:'After enabling, the user can log in normally.' },
+      Modal_Confirm_SaveUser: { zh:'确认保存用户信息？', en:'Save user information?' },
+      Modal_Desc_SaveConfirm: { zh:'确定要保存当前用户信息的修改吗？', en:'Are you sure you want to save the changes?' },
+      Modal_Text_ExportSuccess: { zh:'用户数据已导出', en:'User data exported' },
+
+      // Add Role modal
+      Placeholder_SearchRole: { zh:'搜索角色名称...', en:'Search role name...' },
+      Text_SelectedRoles_Prefix: { zh:'已选择 ', en:'Selected ' },
+      Text_SelectedRoles_Suffix: { zh:' 个角色', en:' role(s)' },
+      Text_NoAvailableRoles: { zh:'暂无可选角色', en:'No available roles' },
+
+      // Role warning
+      Text_NoRolesYet: { zh:'暂未关联角色，请点击"添加角色"', en:'No roles associated yet. Click "Add Role"' },
+      Text_RoleCount_Warning: { zh:'已关联 {0} 个角色。移除角色后对应用户权限立即失效。', en:'{0} role(s) associated. Removing a role will immediately revoke user permissions.' },
+      Title_RemoveRole: { zh:'移除此角色', en:'Remove this role' },
+
+      // Alerts & Messages
+      Alert_SelectRole: { zh:'请至少选择一个角色', en:'Please select at least one role' },
+      Alert_SaveSuccess: { zh:'用户信息保存成功！', en:'User information saved successfully!' },
+      Alert_NoChanges: { zh:'未检测到任何修改', en:'No changes detected' },
+      Text_ConfirmChanges: { zh:'确定要保存以下修改吗？', en:'Confirm saving the following changes?' },
+
+      // Pagination
+      Text_PerPage: { zh:'每页', en:'per page' },
+      Text_Items: { zh:'条', en:'' },
+      Text_TotalRecords_Prefix: { zh:'共 ', en:'Total ' },
+      Text_ExportCount: { zh:'共导出 {0} 条用户记录', en:'Exported {0} user records' },
+
+      // Org tree
+      Org_HeadOffice: { zh:'总行', en:'Head Office' },
+      Org_BeijingBranch: { zh:'北京分行', en:'Beijing Branch' },
+      Org_BeijingChaoyang: { zh:'北京分行-朝阳支行', en:'Beijing-Chaoyang Sub-branch' },
+      Org_BeijingHaidian: { zh:'北京分行-海淀支行', en:'Beijing-Haidian Sub-branch' },
+      Org_ShanghaiBranch: { zh:'上海分行', en:'Shanghai Branch' },
+      Org_ShanghaiPudong: { zh:'上海分行-浦东支行', en:'Shanghai-Pudong Sub-branch' },
+      Org_GuangzhouBranch: { zh:'广州分行', en:'Guangzhou Branch' }
+    });
+
+    // ============ Language change handler ============
+    window.onLangChange = function(lang) {
+      I18N.applyToDOM();
+      renderTable();
+      // Re-render drawer if open
+      if (document.getElementById('userDrawer').classList.contains('open') && currentDrawerUser) {
+        document.getElementById('drawerSubtitle').textContent = I18N.t('Drawer_Subtitle_Prefix', '工号：') + currentDrawerUser.empNo;
+        document.getElementById('detailStatus').innerHTML = currentDrawerUser.status === '正常'
+          ? '<span class="status"><span class="status-dot s-success"></span>' + I18N.t('Status_Normal') + '</span>'
+          : '<span class="status"><span class="status-dot s-danger"></span>' + I18N.t('Status_Disabled') + '</span>';
+        renderUserRoles(currentDrawerUser);
+      }
+      // Re-render add role modal if open
+      if (document.getElementById('addRoleModal').classList.contains('open')) {
+        renderAvailableRoles();
+      }
+    };
+
     // ============ Init ============
+    I18N.applyToDOM();
     renderTable();
   </script>
 </body>

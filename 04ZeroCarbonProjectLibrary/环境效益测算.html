@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>环境效益测算 · 潜在项目库</title>
+    <title data-i18n="pageTitle">环境效益测算 · 潜在项目库</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
@@ -46,6 +46,7 @@
         .tag-info{background:var(--info-bg);color:var(--brand-700);border-color:var(--info-border)}
         .tag-warning{background:var(--warning-bg);color:var(--warning);border-color:var(--warning-border)}
         .tag-danger{background:var(--danger-bg);color:var(--danger);border-color:var(--danger-border)}
+        .tag-default{background:var(--bg-muted);color:var(--ink-500);border-color:var(--line-200)}
         .stat-card{background:var(--white);border-radius:var(--radius-md);border:1px solid var(--line-200);padding:6px 12px;display:flex;flex-direction:column;gap:1px;min-width:110px}
         .stat-card .stat-value{font-size:18px;font-weight:700;font-family:var(--font-num)}
         .stat-card .stat-label{font-size:11px;color:var(--ink-500)}
@@ -75,6 +76,7 @@
         .filter-group-inline .date-range{display:flex;align-items:center;gap:4px}
         .filter-group-inline .date-range input{width:120px}
     </style>
+    <script src="../i18n.js"></script>
 </head>
 <body>
 <div class="flex flex-col" style="height:100vh;background:var(--bg-subtle);">
@@ -83,19 +85,8 @@
         <!-- 统计卡片区 -->
         <div class="section-card" style="border:none;">
             <div class="card-body" style="padding:12px 16px;">
-                <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:6px;">绿色信贷环境效益统计</div>
-                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px;">
-                    <div class="stat-card"><div class="stat-value" style="color:#DC2626;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">二氧化碳当量</div></div>
-                    <div class="stat-card"><div class="stat-value" style="color:#EA580C;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">二氧化硫</div></div>
-                    <div class="stat-card"><div class="stat-value" style="color:#D97706;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">氮氧化物</div></div>
-                    <div class="stat-card"><div class="stat-value" style="color:#7C3AED;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">化学需氧量</div></div>
-                    <div class="stat-card"><div class="stat-value" style="color:#2563EB;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">氨氮</div></div>
-                    <div class="stat-card"><div class="stat-value" style="color:#0891B2;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">总氮</div></div>
-                    <div class="stat-card"><div class="stat-value" style="color:#059669;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">总磷</div></div>
-                    <div class="stat-card"><div class="stat-value" style="color:#4F46E5;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">细颗粒物（PM2.5）</div></div>
-                    <div class="stat-card"><div class="stat-value" style="color:#9333EA;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">挥发性有机物（VOCs）</div></div>
-                    <div class="stat-card"><div class="stat-value" style="color:#B45309;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">标准煤</div></div>
-                    <div class="stat-card"><div class="stat-value" style="color:#10B981;">123.22<span style="font-size:11px;"> 吨</span></div><div class="stat-label">节水量</div></div>
+                <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:6px;" data-i18n="stat_title">绿色信贷环境效益统计</div>
+                <div id="statCardsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px;">
                 </div>
             </div>
         </div>
@@ -106,34 +97,34 @@
             <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);flex-shrink:0;">
                 <!-- 第一行：始终显示 -->
                 <div class="filter-row" id="filterRow1">
-                    <div class="filter-group-inline"><label>客户信息：</label><input type="text" class="wide" placeholder="客户名称/编号/信用代码"></div>
-                    <div class="filter-group-inline"><label>国民经济行业分类：</label><select class="wide"><option>全部行业</option><option>火力发电</option><option>炼钢</option><option>太阳能发电</option><option>热电联产</option><option>大气污染治理</option></select></div>
-                    <div class="filter-group-inline"><label>所属支行机构：</label><select><option>全部机构</option><option>重庆银行渝北支行</option><option>重庆银行江北支行</option><option>重庆银行南岸支行</option></select></div>
-                    <div class="filter-group-inline"><label>审批状态：</label><select><option>全部状态</option><option>待审批</option><option>审批中</option><option>已审批</option><option>已驳回</option><option>未提交</option></select></div>
+                    <div class="filter-group-inline"><label data-i18n="filter_client">客户信息：</label><input type="text" class="wide" data-i18n-placeholder="placeholder_client"></div>
+                    <div class="filter-group-inline"><label data-i18n="filter_industry">国民经济行业分类：</label><select class="wide" id="selIndustry"><option data-i18n="all_industries">全部行业</option></select></div>
+                    <div class="filter-group-inline"><label data-i18n="filter_branch">所属支行机构：</label><select id="selBranch"><option data-i18n="all_branches">全部机构</option></select></div>
+                    <div class="filter-group-inline"><label data-i18n="filter_approval">审批状态：</label><select id="selApproval"><option data-i18n="all_status">全部状态</option></select></div>
                     <div class="filter-group-inline" style="margin-left:auto;gap:4px;">
-                        <span id="filterToggleBtn" style="cursor:pointer;color:var(--brand-500);font-size:12px;white-space:nowrap;" onclick="toggleFilter()">▼ 展开</span>
-                        <button class="btn btn-primary btn-sm">查询</button>
-                        <button class="btn btn-secondary btn-sm">重置</button>
+                        <span id="filterToggleBtn" style="cursor:pointer;color:var(--brand-500);font-size:12px;white-space:nowrap;" onclick="toggleFilter()"></span>
+                        <button class="btn btn-primary btn-sm" data-i18n="search">查询</button>
+                        <button class="btn btn-secondary btn-sm" data-i18n="reset">重置</button>
                     </div>
                 </div>
                 <!-- 展开行（默认隐藏） -->
                 <div id="filterExpandRows" style="display:none;">
                     <div class="filter-row" id="filterRow2" style="margin-top:12px;">
-                        <div class="filter-group-inline"><label>绿色金融分类(2025)：</label><select class="wide"><option>全部分类</option><option>1.1.1节能锅炉制造</option><option>3.2.1节能技术改造</option><option>5.1.1.1超低能耗建筑建设</option><option>5.1.1资源循环利用</option></select></div>
-                        <div class="filter-group-inline"><label>主办经理：</label><input type="text" placeholder="输入姓名/工号"></div>
-                        <div class="filter-group-inline"><label>项目信息：</label><input type="text" class="wide" placeholder="项目名称/代码/本行编号"></div>
+                        <div class="filter-group-inline"><label data-i18n="filter_gf_cat">绿色金融分类(2025)：</label><select class="wide" id="selGfCat"><option data-i18n="all_categories">全部分类</option></select></div>
+                        <div class="filter-group-inline"><label data-i18n="filter_manager">主办经理：</label><input type="text" data-i18n-placeholder="placeholder_manager"></div>
+                        <div class="filter-group-inline"><label data-i18n="filter_project">项目信息：</label><input type="text" class="wide" data-i18n-placeholder="placeholder_project"></div>
                     </div>
                     <div class="filter-row" id="filterRow3" style="margin-top:12px;">
-                        <div class="filter-group-inline"><label>数据日期：</label><div class="date-range"><input type="date" value="2015-10-02"><span>~</span><input type="date" value="2015-10-10"></div></div>
+                        <div class="filter-group-inline"><label data-i18n="filter_date">数据日期：</label><div class="date-range"><input type="date" value="2015-10-02"><span>~</span><input type="date" value="2015-10-10"></div></div>
                     </div>
                 </div>
             </div>
             <!-- 操作栏：导出数据在左 -->
             <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100 flex-shrink-0">
                 <div class="flex gap-2 flex-wrap">
-                    <button class="btn btn-secondary btn-sm" onclick="alert('统计数据已下载！')">
+                    <button class="btn btn-secondary btn-sm" onclick="alert(I18N.t('download_ok'))">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                        导出数据
+                        <span data-i18n="export">导出数据</span>
                     </button>
                 </div>
             </div>
@@ -146,126 +137,38 @@
                     <table>
                         <thead>
                             <tr>
-                                <th class="col-seq">序号</th>
-                                <th>项目代码</th>
-                                <th>本行项目编号</th>
-                                <th>项目名称</th>
-                                <th>项目所属行业</th>
-                                <th>项目总投资额（万元）</th>
-                                <th>项目所在地</th>
-                                <th>客户名称</th>
-                                <th>统一社会信用代码</th>
-                                <th>客户国民经济行业</th>
-                                <th>绿色金融分类(2025)</th>
-                                <th>主办机构</th>
-                                <th>管理辖区</th>
-                                <th>主办经理</th>
-                                <th>当前任务节点</th>
-                                <th>测算状态</th>
-                                <th class="col-approval">审批状态</th>
-                                <th>最近更新时间</th>
-                                <th>创建时间</th>
-                                <th class="col-actions">操作</th>
+                                <th class="col-seq" data-i18n="th_seq">序号</th>
+                                <th data-i18n="th_project_code">项目代码</th>
+                                <th data-i18n="th_bank_code">本行项目编号</th>
+                                <th data-i18n="th_project_name">项目名称</th>
+                                <th data-i18n="th_industry">项目所属行业</th>
+                                <th data-i18n="th_investment">项目总投资额（万元）</th>
+                                <th data-i18n="th_location">项目所在地</th>
+                                <th data-i18n="th_client_name">客户名称</th>
+                                <th data-i18n="th_credit_code">统一社会信用代码</th>
+                                <th data-i18n="th_client_industry">客户国民经济行业</th>
+                                <th data-i18n="th_gf_cat">绿色金融分类(2025)</th>
+                                <th data-i18n="th_host_branch">主办机构</th>
+                                <th data-i18n="th_region">管理辖区</th>
+                                <th data-i18n="th_manager">主办经理</th>
+                                <th data-i18n="th_task_node">当前任务节点</th>
+                                <th data-i18n="th_calc_status">测算状态</th>
+                                <th class="col-approval" data-i18n="th_approval">审批状态</th>
+                                <th data-i18n="th_update">最近更新时间</th>
+                                <th data-i18n="th_create">创建时间</th>
+                                <th class="col-actions" data-i18n="th_actions">操作</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td class="col-seq">1</td>
-                                <td style="font-family:monospace;font-size:12px;">test000001</td>
-                                <td style="font-family:monospace;font-size:12px;">02001071613</td>
-                                <td style="font-weight:500;color:var(--ink-900);">超低能耗建筑建设项目</td>
-                                <td>火力发电</td>
-                                <td style="font-family:var(--font-num);text-align:right;">21,232,323,123</td>
-                                <td>广州市</td>
-                                <td>广州XXXXXXX有限公司</td>
-                                <td style="font-family:monospace;font-size:12px;">02001071613</td>
-                                <td>火力发电</td>
-                                <td>5.1.1.1超低能耗建筑建设</td>
-                                <td>重庆银行渝北支行</td>
-                                <td>渝北区</td>
-                                <td>张三/0122323</td>
-                                <td><span class="tag tag-info">测算填报</span></td>
-                                <td><span class="tag tag-success">已测算</span></td>
-                                <td class="col-approval"><span class="tag tag-warning">待审批</span></td>
-                                <td>2025/05/31 10:59:59</td>
-                                <td>2025/05/15 09:00:00</td>
-                                <td class="col-actions"><button class="btn btn-deep-blue btn-sm" onclick="goToDetail('view')">查看详情</button></td>
-                            </tr>
-                            <tr>
-                                <td class="col-seq">2</td>
-                                <td style="font-family:monospace;font-size:12px;">test000002</td>
-                                <td style="font-family:monospace;font-size:12px;">02001071614</td>
-                                <td style="font-weight:500;color:var(--ink-900);">太阳能光伏发电项目</td>
-                                <td>太阳能发电</td>
-                                <td style="font-family:var(--font-num);text-align:right;">50,000</td>
-                                <td>浙江省湖州市</td>
-                                <td>浙江XXXX能源有限公司</td>
-                                <td style="font-family:monospace;font-size:12px;">91330502MA28C6K2XJ</td>
-                                <td>太阳能发电</td>
-                                <td>3.1.1太阳能发电设施建设</td>
-                                <td>重庆银行渝北支行</td>
-                                <td>渝北区</td>
-                                <td>李四/002</td>
-                                <td><span class="tag tag-warning">待填报</span></td>
-                                <td><span class="tag tag-danger">未测算</span></td>
-                                <td class="col-approval"><span class="tag tag-default">未提交</span></td>
-                                <td>2025/05/20 14:30:00</td>
-                                <td>2025/05/20 14:30:00</td>
-                                <td class="col-actions"><button class="btn btn-primary btn-sm" onclick="goToDetail('edit')">去处理</button></td>
-                            </tr>
-                            <tr>
-                                <td class="col-seq">3</td>
-                                <td style="font-family:monospace;font-size:12px;">test000003</td>
-                                <td style="font-family:monospace;font-size:12px;">02001071615</td>
-                                <td style="font-weight:500;color:var(--ink-900);">工业余热回收利用项目</td>
-                                <td>热电联产</td>
-                                <td style="font-family:var(--font-num);text-align:right;">100,030</td>
-                                <td>河北省唐山市</td>
-                                <td>迁安轧一钢铁集团有限公司</td>
-                                <td style="font-family:monospace;font-size:12px;">123456789123456789</td>
-                                <td>炼钢</td>
-                                <td>3.2.1节能技术改造</td>
-                                <td>重庆银行渝北支行</td>
-                                <td>渝北区</td>
-                                <td>王五/001</td>
-                                <td><span class="tag tag-success">已完成</span></td>
-                                <td><span class="tag tag-success">已测算</span></td>
-                                <td class="col-approval"><span class="tag tag-success">已审批</span></td>
-                                <td>2025/05/31 10:59:59</td>
-                                <td>2025/04/01 08:30:00</td>
-                                <td class="col-actions"><button class="btn btn-deep-blue btn-sm" onclick="goToDetail('view')">查看详情</button></td>
-                            </tr>
-                            <tr>
-                                <td class="col-seq">4</td>
-                                <td style="font-family:monospace;font-size:12px;">test000004</td>
-                                <td style="font-family:monospace;font-size:12px;">02001071616</td>
-                                <td style="font-weight:500;color:var(--ink-900);">污水处理升级改造项目</td>
-                                <td>大气污染治理</td>
-                                <td style="font-family:var(--font-num);text-align:right;">90,000</td>
-                                <td>重庆市渝北区</td>
-                                <td>重庆绿能新能源有限公司</td>
-                                <td style="font-family:monospace;font-size:12px;">123456789123456789</td>
-                                <td>太阳能发电</td>
-                                <td>4.2.1污水处理设施建设</td>
-                                <td>重庆银行渝北支行</td>
-                                <td>渝北区</td>
-                                <td>赵六/003</td>
-                                <td><span class="tag tag-ingo">测算填报</span></td>
-                                <td><span class="tag tag-success">已测算</span></td>
-                                <td class="col-approval"><span class="tag tag-danger">已驳回</span></td>
-                                <td>2025/06/15 16:00:00</td>
-                                <td>2025/06/10 10:00:00</td>
-                                <td class="col-actions"><button class="btn btn-primary btn-sm" onclick="goToDetail('edit')">去处理</button></td>
-                            </tr>
+                        <tbody id="projectTableBody">
                         </tbody>
                     </table>
                 </div>
             </div>
             <!-- 分页 -->
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-top:1px solid var(--line-200);">
-                <span style="font-size:13px;color:var(--ink-400);">共 1,126 条</span>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-top:1px solid var(--line-200);" id="paginationBar">
+                <span style="font-size:13px;color:var(--ink-400);" id="totalCount">共 1,126 条</span>
                 <div style="display:flex;align-items:center;gap:8px;">
-                    <span style="font-size:13px;color:var(--ink-500);">20条/页</span>
+                    <span style="font-size:13px;color:var(--ink-500);" data-i18n="per_page">20条/页</span>
                     <button class="btn btn-secondary btn-sm">‹</button>
                     <span style="padding:2px 8px;font-size:13px;background:var(--brand-500);color:white;border-radius:4px;">1</span>
                     <button class="btn btn-secondary btn-sm">2</button>
@@ -273,37 +176,332 @@
                     <span style="font-size:13px;color:var(--ink-400);">…</span>
                     <button class="btn btn-secondary btn-sm">50</button>
                     <button class="btn btn-secondary btn-sm">›</button>
-                    <span style="font-size:13px;color:var(--ink-500);">11/50页 跳至 <input type="number" style="width:48px;padding:2px 6px;border:1px solid var(--line-200);border-radius:4px;text-align:center;" value="1"> 页</span>
+                    <span style="font-size:13px;color:var(--ink-500);" id="pageJumper"><span id="pageJumperText">11/50<span data-i18n="page">页</span></span> <span data-i18n="jump_to">跳至</span> <input type="number" style="width:48px;padding:2px 6px;border:1px solid var(--line-200);border-radius:4px;text-align:center;" value="1"> <span data-i18n="page">页</span></span>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script>
+    // ==================== I18N 页级字典 ====================
+    I18N.setDict({
+        pageTitle: {zh:'环境效益测算 · 潜在项目库', en:'Environmental Benefit Calc · Project Library'},
+        stat_title: {zh:'绿色信贷环境效益统计', en:'Green Credit Environmental Benefit Statistics'},
+        stat_co2: {zh:'二氧化碳当量', en:'CO₂ Equivalent'},
+        stat_so2: {zh:'二氧化硫', en:'SO₂'},
+        stat_nox: {zh:'氮氧化物', en:'NOx'},
+        stat_cod: {zh:'化学需氧量', en:'COD'},
+        stat_nh3n: {zh:'氨氮', en:'NH₃-N'},
+        stat_tn: {zh:'总氮', en:'Total Nitrogen'},
+        stat_tp: {zh:'总磷', en:'Total Phosphorus'},
+        stat_pm25: {zh:'细颗粒物（PM2.5）', en:'PM2.5'},
+        stat_voc: {zh:'挥发性有机物（VOCs）', en:'VOCs'},
+        stat_coal: {zh:'标准煤', en:'Standard Coal'},
+        stat_water: {zh:'节水量', en:'Water Saved'},
+        unit_ton: {zh:'吨', en:'tons'},
+        // Filters
+        filter_client: {zh:'客户信息：', en:'Client Info'},
+        filter_industry: {zh:'国民经济行业分类：', en:'Industry Classification'},
+        filter_branch: {zh:'所属支行机构：', en:'Branch'},
+        filter_approval: {zh:'审批状态：', en:'Approval Status'},
+        filter_gf_cat: {zh:'绿色金融分类(2025)：', en:'Green Finance Category(2025)'},
+        filter_manager: {zh:'主办经理：', en:'Manager'},
+        filter_project: {zh:'项目信息：', en:'Project Info'},
+        filter_date: {zh:'数据日期：', en:'Data Date'},
+        placeholder_client: {zh:'客户名称/编号/信用代码', en:'Client name/code/credit code'},
+        placeholder_manager: {zh:'输入姓名/工号', en:'Enter name/employee ID'},
+        placeholder_project: {zh:'项目名称/代码/本行编号', en:'Project name/code/bank no.'},
+        all_industries: {zh:'全部行业', en:'All Industries'},
+        all_branches: {zh:'全部机构', en:'All Branches'},
+        all_status: {zh:'全部状态', en:'All Statuses'},
+        all_categories: {zh:'全部分类', en:'All Categories'},
+        expand: {zh:'▼ 展开', en:'▼ Expand'},
+        collapse: {zh:'▲ 收起', en:'▲ Collapse'},
+        search: {zh:'查询', en:'Search'},
+        reset: {zh:'重置', en:'Reset'},
+        export: {zh:'导出数据', en:'Export Data'},
+        download_ok: {zh:'统计数据已下载！', en:'Statistics data downloaded!'},
+        // Table headers
+        th_seq: {zh:'序号', en:'#'},
+        th_project_code: {zh:'项目代码', en:'Project Code'},
+        th_bank_code: {zh:'本行项目编号', en:'Bank Project No.'},
+        th_project_name: {zh:'项目名称', en:'Project Name'},
+        th_industry: {zh:'项目所属行业', en:'Industry'},
+        th_investment: {zh:'项目总投资额（万元）', en:'Total Investment (10k CNY)'},
+        th_location: {zh:'项目所在地', en:'Location'},
+        th_client_name: {zh:'客户名称', en:'Client Name'},
+        th_credit_code: {zh:'统一社会信用代码', en:'Credit Code'},
+        th_client_industry: {zh:'客户国民经济行业', en:'Client Industry'},
+        th_gf_cat: {zh:'绿色金融分类(2025)', en:'GF Category(2025)'},
+        th_host_branch: {zh:'主办机构', en:'Host Branch'},
+        th_region: {zh:'管理辖区', en:'Jurisdiction'},
+        th_manager: {zh:'主办经理', en:'Manager'},
+        th_task_node: {zh:'当前任务节点', en:'Current Task'},
+        th_calc_status: {zh:'测算状态', en:'Calc Status'},
+        th_approval: {zh:'审批状态', en:'Approval Status'},
+        th_update: {zh:'最近更新时间', en:'Last Updated'},
+        th_create: {zh:'创建时间', en:'Created'},
+        th_actions: {zh:'操作', en:'Actions'},
+        // Statuses
+        task_fill: {zh:'测算填报', en:'Calc Form'},
+        pending_fill: {zh:'待填报', en:'Pending'},
+        completed: {zh:'已完成', en:'Completed'},
+        calculated: {zh:'已测算', en:'Calculated'},
+        not_calculated: {zh:'未测算', en:'Not Calculated'},
+        pending_approval: {zh:'待审批', en:'Pending'},
+        not_submitted: {zh:'未提交', en:'Not Submitted'},
+        approved: {zh:'已审批', en:'Approved'},
+        rejected: {zh:'已驳回', en:'Rejected'},
+        // Actions
+        view_detail: {zh:'查看详情', en:'View Details'},
+        go_process: {zh:'去处理', en:'Process'},
+        // Pagination
+        total_count_tmpl: {zh:'共 {0} 条', en:'Total: {0} records'},
+        per_page: {zh:'20条/页', en:'20/page'},
+        jump_to: {zh:'跳至', en:'Jump to'},
+        page: {zh:'页', en:'Page'},
+        // === 2025 Green Finance Categories - Complete Translations ===
+        // Level 1
+        '1.节能降碳产业': {zh:'1.节能降碳产业', en:'1. Energy Conservation & Carbon Reduction'},
+        '2.清洁生产产业': {zh:'2.清洁生产产业', en:'2. Cleaner Production'},
+        '3.清洁能源产业': {zh:'3.清洁能源产业', en:'3. Clean Energy Industry'},
+        '4.能源绿色低碳转型': {zh:'4.能源绿色低碳转型', en:'4. Green & Low-Carbon Energy Transition'},
+        '5.生态保护修复和利用': {zh:'5.生态保护修复和利用', en:'5. Ecological Protection & Restoration'},
+        '6.基础设施绿色升级': {zh:'6.基础设施绿色升级', en:'6. Green Infrastructure Upgrading'},
+        // Level 2
+        '1.1 能效提升': {zh:'1.1 能效提升', en:'1.1 Energy Efficiency Improvement'},
+        '1.2 先进交通装备制造': {zh:'1.2 先进交通装备制造', en:'1.2 Advanced Transportation Equipment Mfg'},
+        '2.1 污染防治': {zh:'2.1 污染防治', en:'2.1 Pollution Prevention & Control'},
+        '3.4 能源系统改造': {zh:'3.4 能源系统改造', en:'3.4 Energy System Renovation'},
+        '4.1 新能源与清洁能源装备制造': {zh:'4.1 新能源与清洁能源装备制造', en:'4.1 New & Clean Energy Equipment Mfg'},
+        '4.2 清洁能源设施建设和运营': {zh:'4.2 清洁能源设施建设和运营', en:'4.2 Clean Energy Facility Construction & Operation'},
+        '5.2 生态保护修复': {zh:'5.2 生态保护修复', en:'5.2 Ecological Protection & Restoration'},
+        '5.3 污染防治': {zh:'5.3 污染防治', en:'5.3 Pollution Prevention & Control'},
+        '6.5 城乡能源基础设施': {zh:'6.5 城乡能源基础设施', en:'6.5 Urban-Rural Energy Infrastructure'},
+        // Level 3
+        '1.2.1 新能源汽车及关键零部件制造': {zh:'1.2.1 新能源汽车及关键零部件制造', en:'1.2.1 NEV & Key Component Manufacturing'},
+        '2.1.2.1 重点行业水污染治理': {zh:'2.1.2.1 重点行业水污染治理', en:'2.1.2.1 Key Industry Water Pollution Control'},
+        '2.1.3 节能锅炉制造': {zh:'2.1.3 节能锅炉制造', en:'2.1.3 Energy-Efficient Boiler Manufacturing'},
+        '3.4.8 电网节能改造项目': {zh:'3.4.8 电网节能改造项目', en:'3.4.8 Grid Energy-Saving Renovation'},
+        '4.1.8 新型储能产品制造': {zh:'4.1.8 新型储能产品制造', en:'4.1.8 New Energy Storage Product Mfg'},
+        '4.2.4 大型水利发电设施建设和运营': {zh:'4.2.4 大型水利发电设施建设和运营', en:'4.2.4 Large Hydropower Facility Construction & Operation'},
+        '5.2.6 充电基础设施': {zh:'5.2.6 充电基础设施', en:'5.2.6 Charging Infrastructure'},
+        '5.2.11 水生态系统旱涝灾害防控及应对': {zh:'5.2.11 水生态系统旱涝灾害防控及应对', en:'5.2.11 Flood & Drought Prevention for Aquatic Ecosystems'},
+        '5.3.1.1 污水处理、再生利用及污泥处理处置设施建设运营': {zh:'5.3.1.1 污水处理、再生利用及污泥处理处置设施建设运营', en:'5.3.1.1 Sewage Treatment, Recycling & Sludge Disposal'},
+        '6.5.3 城镇集中供热系统清洁化、低碳化建设运营和改造': {zh:'6.5.3 城镇集中供热系统清洁化、低碳化建设运营和改造', en:'6.5.3 Clean District Heating Construction & Renovation'},
+        // Additional
+        '2.5 其他污染治理和环境综合整治': {zh:'2.5 其他污染治理和环境综合整治', en:'2.5 Other Pollution Control & Environmental Remediation'},
+        '2.5.2 危险废物处理处置': {zh:'2.5.2 危险废物处理处置', en:'2.5.2 Hazardous Waste Treatment & Disposal'},
+        '3.2 资源循环利用': {zh:'3.2 资源循环利用', en:'3.2 Resource Recycling & Utilization'},
+        '3.2.7 废气回收利用': {zh:'3.2.7 废气回收利用', en:'3.2.7 Waste Gas Recovery & Utilization'},
+        '绿色金融分类(2025)': {zh:'绿色金融分类(2025)', en:'Green Finance Category (2025)'},
+        '信贷系统2025绿色认定分类': {zh:'信贷系统2025绿色认定分类', en:'Credit System 2025 GF Category'},
+        '绿色金融标准：《绿色金融支持项目目录（2025年版）》': {zh:'绿色金融标准：《绿色金融支持项目目录（2025年版）》', en:'Green Finance Standard: Green Finance Project Catalogue (2025)'},
+        '绿色债券支持项目目录(2021)': {zh:'绿色债券支持项目目录(2021)', en:'Green Bond Project Catalogue (2021)'},
+        '碳减排支持工具范围': {zh:'碳减排支持工具范围', en:'Carbon Reduction Support Tools'},
+        '绿色低碳转型产业指导目录(2024)': {zh:'绿色低碳转型产业指导目录(2024)', en:'Green Low-Carbon Transition Industry Catalogue (2024)'}
+    });
+
+    // ==================== 数据 ====================
+    var projectData = [
+        {seq:1, code:'test000001', bankCode:'02001071613', name:'超低能耗建筑建设项目', industry:'火力发电', investment:'21,232,323,123', location:'广州市', clientName:'广州XXXXXXX有限公司', creditCode:'02001071613', clientIndustry:'火力发电', gfCat:'5.1.1.1超低能耗建筑建设', hostBranch:'重庆银行渝北支行', region:'渝北区', manager:'张三/0122323', taskNode:'task_fill', calcStatus:'calculated', approval:'pending_approval', update:'2025/05/31 10:59:59', created:'2025/05/15 09:00:00', action:'view'},
+        {seq:2, code:'test000002', bankCode:'02001071614', name:'太阳能光伏发电项目', industry:'太阳能发电', investment:'50,000', location:'浙江省湖州市', clientName:'浙江XXXX能源有限公司', creditCode:'91330502MA28C6K2XJ', clientIndustry:'太阳能发电', gfCat:'3.1.1太阳能发电设施建设', hostBranch:'重庆银行渝北支行', region:'渝北区', manager:'李四/002', taskNode:'pending_fill', calcStatus:'not_calculated', approval:'not_submitted', update:'2025/05/20 14:30:00', created:'2025/05/20 14:30:00', action:'process'},
+        {seq:3, code:'test000003', bankCode:'02001071615', name:'工业余热回收利用项目', industry:'热电联产', investment:'100,030', location:'河北省唐山市', clientName:'迁安轧一钢铁集团有限公司', creditCode:'123456789123456789', clientIndustry:'炼钢', gfCat:'3.2.1节能技术改造', hostBranch:'重庆银行渝北支行', region:'渝北区', manager:'王五/001', taskNode:'completed', calcStatus:'calculated', approval:'approved', update:'2025/05/31 10:59:59', created:'2025/04/01 08:30:00', action:'view'},
+        {seq:4, code:'test000004', bankCode:'02001071616', name:'污水处理升级改造项目', industry:'大气污染治理', investment:'90,000', location:'重庆市渝北区', clientName:'重庆绿能新能源有限公司', creditCode:'123456789123456789', clientIndustry:'太阳能发电', gfCat:'4.2.1污水处理设施建设', hostBranch:'重庆银行渝北支行', region:'渝北区', manager:'赵六/003', taskNode:'task_fill', calcStatus:'calculated', approval:'rejected', update:'2025/06/15 16:00:00', created:'2025/06/10 10:00:00', action:'process'}
+    ];
+
+    // ==================== 统计卡片数据 ====================
+    var statCards = [
+        {key:'stat_co2', color:'#DC2626'},
+        {key:'stat_so2', color:'#EA580C'},
+        {key:'stat_nox', color:'#D97706'},
+        {key:'stat_cod', color:'#7C3AED'},
+        {key:'stat_nh3n', color:'#2563EB'},
+        {key:'stat_tn', color:'#0891B2'},
+        {key:'stat_tp', color:'#059669'},
+        {key:'stat_pm25', color:'#4F46E5'},
+        {key:'stat_voc', color:'#9333EA'},
+        {key:'stat_coal', color:'#B45309'},
+        {key:'stat_water', color:'#10B981'}
+    ];
+
+    function getTagClass(taskNode, calcStatus, approval){
+        var taskClass = ''; var calcClass = ''; var approvalClass = '';
+        if(taskNode==='task_fill') taskClass='tag-info';
+        else if(taskNode==='pending_fill') taskClass='tag-warning';
+        else if(taskNode==='completed') taskClass='tag-success';
+
+        if(calcStatus==='calculated') calcClass='tag-success';
+        else if(calcStatus==='not_calculated') calcClass='tag-danger';
+
+        if(approval==='pending_approval') approvalClass='tag-warning';
+        else if(approval==='not_submitted') approvalClass='tag-default';
+        else if(approval==='approved') approvalClass='tag-success';
+        else if(approval==='rejected') approvalClass='tag-danger';
+
+        return {taskClass:taskClass, calcClass:calcClass, approvalClass:approvalClass};
+    }
+
+    function formatT(key, replacements){
+        var result = I18N.t(key);
+        if(replacements){
+            for(var i=0; i<replacements.length; i++){
+                result = result.replace('{'+i+'}', replacements[i]);
+            }
+        }
+        return result;
+    }
+
+    function renderStatCards(){
+        var grid = document.getElementById('statCardsGrid');
+        var html = '';
+        for(var i=0; i<statCards.length; i++){
+            var s = statCards[i];
+            var unitSpan = '<span style="font-size:11px;"> ' + I18N.t('unit_ton') + '</span>';
+            html += '<div class="stat-card"><div class="stat-value" style="color:'+s.color+';">123.22'+unitSpan+'</div><div class="stat-label">'+I18N.t(s.key)+'</div></div>';
+        }
+        grid.innerHTML = html;
+    }
+
+    function renderTable(){
+        var tbody = document.getElementById('projectTableBody');
+        var html = '';
+        for(var i=0; i<projectData.length; i++){
+            var r = projectData[i];
+            var cls = getTagClass(r.taskNode, r.calcStatus, r.approval);
+            var actionBtn = r.action==='view'
+                ? '<button class="btn btn-deep-blue btn-sm" onclick="goToDetail(\'view\')">'+I18N.t('view_detail')+'</button>'
+                : '<button class="btn btn-primary btn-sm" onclick="goToDetail(\'edit\')">'+I18N.t('go_process')+'</button>';
+            html += '<tr>'+
+                '<td class="col-seq">'+r.seq+'</td>'+
+                '<td style="font-family:monospace;font-size:12px;">'+r.code+'</td>'+
+                '<td style="font-family:monospace;font-size:12px;">'+r.bankCode+'</td>'+
+                '<td style="font-weight:500;color:var(--ink-900);">'+r.name+'</td>'+
+                '<td>'+r.industry+'</td>'+
+                '<td style="font-family:var(--font-num);text-align:right;">'+r.investment+'</td>'+
+                '<td>'+r.location+'</td>'+
+                '<td>'+r.clientName+'</td>'+
+                '<td style="font-family:monospace;font-size:12px;">'+r.creditCode+'</td>'+
+                '<td>'+r.clientIndustry+'</td>'+
+                '<td>'+I18N.t(r.gfCat)+'</td>'+
+                '<td>'+r.hostBranch+'</td>'+
+                '<td>'+r.region+'</td>'+
+                '<td>'+r.manager+'</td>'+
+                '<td><span class="tag '+cls.taskClass+'">'+I18N.t(r.taskNode)+'</span></td>'+
+                '<td><span class="tag '+cls.calcClass+'">'+I18N.t(r.calcStatus)+'</span></td>'+
+                '<td class="col-approval"><span class="tag '+cls.approvalClass+'">'+I18N.t(r.approval)+'</span></td>'+
+                '<td>'+r.update+'</td>'+
+                '<td>'+r.created+'</td>'+
+                '<td class="col-actions">'+actionBtn+'</td>'+
+            '</tr>';
+        }
+        tbody.innerHTML = html;
+    }
+
+    function renderPagination(){
+        document.getElementById('totalCount').textContent = formatT('total_count_tmpl', ['1,126']);
+    }
+
+    function renderAll(){
+        renderStatCards();
+        renderTable();
+        renderPagination();
+        updateToggleBtn();
+    }
+
+    // ==================== 筛选下拉框 ====================
+    function populateFilters(){
+        var industryOptions = ['火力发电','炼钢','太阳能发电','热电联产','大气污染治理'];
+        var branchOptions = ['重庆银行渝北支行','重庆银行江北支行','重庆银行南岸支行'];
+        var gfCatOptions = ['1.1.1节能锅炉制造','3.2.1节能技术改造','5.1.1.1超低能耗建筑建设','5.1.1资源循环利用'];
+
+        // Industry select: first option is "all_industries", then data options (data is actual names, not i18n)
+        var selInd = document.getElementById('selIndustry');
+        for(var j=0; j<industryOptions.length; j++){
+            var opt = document.createElement('option');
+            opt.textContent = industryOptions[j];
+            selInd.appendChild(opt);
+        }
+        // Branch
+        var selBr = document.getElementById('selBranch');
+        for(var k=0; k<branchOptions.length; k++){
+            var opt2 = document.createElement('option');
+            opt2.textContent = branchOptions[k];
+            selBr.appendChild(opt2);
+        }
+        // Approval - i18n keys
+        var selApp = document.getElementById('selApproval');
+        var appKeys = ['pending_approval','approved','rejected','not_submitted'];
+        for(var a=0; a<appKeys.length; a++){
+            var opt3 = document.createElement('option');
+            opt3.textContent = I18N.t(appKeys[a]);
+            opt3.setAttribute('data-approval-key', appKeys[a]);
+            selApp.appendChild(opt3);
+        }
+        // GF cat
+        var selGf = document.getElementById('selGfCat');
+        for(var g=0; g<gfCatOptions.length; g++){
+            var opt4 = document.createElement('option');
+            opt4.textContent = I18N.t(gfCatOptions[g]);
+            selGf.appendChild(opt4);
+        }
+    }
+
+    function refreshApprovalOptions(){
+        var selApp = document.getElementById('selApproval');
+        var appKeys = ['pending_approval','approved','rejected','not_submitted'];
+        // Skip first option (全部状态)
+        var opts = selApp.querySelectorAll('option');
+        for(var i=1; i<opts.length; i++){
+            if(appKeys[i-1]) opts[i].textContent = I18N.t(appKeys[i-1]);
+        }
+    }
+
+    // ==================== 展开/收起 ====================
     var filterExpanded=false;
     function toggleFilter(){
         var rows=document.getElementById('filterExpandRows');
-        var btn=document.getElementById('filterToggleBtn');
         if(filterExpanded){
             rows.style.display='none';
-            btn.innerHTML='▼ 展开';
             filterExpanded=false;
         }else{
             rows.style.display='block';
-            btn.innerHTML='▲ 收起';
             filterExpanded=true;
         }
+        updateToggleBtn();
     }
+    function updateToggleBtn(){
+        var btn=document.getElementById('filterToggleBtn');
+        if(filterExpanded){
+            btn.innerHTML = I18N.t('collapse');
+        }else{
+            btn.innerHTML = I18N.t('expand');
+        }
+    }
+
+    // ==================== 语言切换回调 ====================
+    window.onLangChange = function(lang){
+        document.title = I18N.t('pageTitle');
+        renderAll();
+        refreshApprovalOptions();
+    };
+
+    // ==================== 业务函数 ====================
     function getCurrentDir(){var p=window.location.pathname;return p.substring(0,p.lastIndexOf('/')+1)}
     function goToDetail(mode){
         var dir=getCurrentDir();
         var targetUrl=dir+'环境效益测算填报.html';
         if(window.parent!==window){
             var pageId='env-detail-'+Date.now()+'-'+Math.random().toString(36).substr(2,6);
-            var label=mode==='view'?'环境效益测算详情':'环境效益测算填报';
+            var label=mode==='view' ? I18N.t('view_detail') : I18N.t('go_process');
             window.parent.postMessage({type:'openPage',pageId:pageId,file:targetUrl,label:label},'*');
         }else{window.location.href=targetUrl}
     }
+
+    // ==================== 初始化 ====================
+    document.title = I18N.t('pageTitle');
+    populateFilters();
+    renderAll();
 </script>
 </body>
 </html>

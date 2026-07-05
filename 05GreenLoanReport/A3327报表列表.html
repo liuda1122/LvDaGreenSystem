@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A3327绿色贷款统计报表 · 可持续金融管理系统</title>
+    <title data-i18n="title">A3327绿色贷款统计报表 · 可持续金融管理系统</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
@@ -48,6 +48,7 @@
         .filter-group input,.filter-group select{padding:6px 10px;border:1px solid var(--line-200);border-radius:var(--radius-md);font-size:13px;background:var(--white);outline:none;width:100%}
         .filter-group input:focus,.filter-group select:focus{border-color:var(--brand-500)}
     </style>
+    <script src="../i18n.js"></script>
 </head>
 <body>
 <div class="flex flex-col" style="height:100vh;background:var(--bg-subtle);">
@@ -56,168 +57,185 @@
             <!-- 筛选栏 -->
             <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);flex-shrink:0;">
                 <div class="filter-row">
-                    <div class="filter-group" style="min-width:160px;flex:1;"><label>报表期间（季度）</label><select><option>全部期间</option><option>2025年第二季度</option><option>2025年第一季度</option><option>2024年第四季度</option><option>2024年第三季度</option><option>2024年第二季度</option><option>2024年第一季度</option></select></div>
-                    <div class="filter-group" style="min-width:160px;flex:1;"><label>报表状态</label><select><option>全部状态</option><option>系统生成</option><option>已报送</option><option>已退回</option></select></div>
+                    <div class="filter-group" style="min-width:160px;flex:1;"><label data-i18n="filter_period">报表期间（季度）</label><select id="selPeriod"><option data-i18n="all_periods">全部期间</option><option data-i18n="q2_2025">2025年第二季度</option><option data-i18n="q1_2025">2025年第一季度</option><option data-i18n="q4_2024">2024年第四季度</option><option data-i18n="q3_2024">2024年第三季度</option><option data-i18n="q2_2024">2024年第二季度</option><option data-i18n="q1_2024">2024年第一季度</option></select></div>
+                    <div class="filter-group" style="min-width:160px;flex:1;"><label data-i18n="filter_status">报表状态</label><select id="selStatus"><option data-i18n="all_status">全部状态</option><option data-i18n="sys_generated">系统生成</option><option data-i18n="submitted">已报送</option><option data-i18n="returned">已退回</option></select></div>
                     <div class="filter-group" style="flex:0 0 auto;flex-direction:row;align-items:flex-end;gap:8px;padding-bottom:1px;">
-                        <button class="btn btn-primary btn-sm">查询</button>
-                        <button class="btn btn-secondary btn-sm">重置</button>
+                        <button class="btn btn-primary btn-sm" data-i18n="search">查询</button>
+                        <button class="btn btn-secondary btn-sm" data-i18n="reset">重置</button>
                     </div>
                 </div>
             </div>
             <!-- 操作栏 -->
-            <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100 flex-shrink-0">
-                <span class="text-sm text-slate-400">共 6 条（按季生成）</span>
+            <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100 flex-shrink-0" id="statsBar">
+                <span class="text-sm text-slate-400" data-i18n-html="total_count">共 6 条（按季生成）</span>
             </div>
             <!-- 表格 -->
             <div class="table-wrap custom-scroll">
                 <table>
                     <thead>
                         <tr>
-                            <th class="col-seq">序号</th>
-                            <th>报表名称</th>
-                            <th>报表编号</th>
-                            <th>报表期间</th>
-                            <th>绿色贷款余额（万元）</th>
-                            <th>贷款笔数</th>
-                            <th>涉及企业数</th>
-                            <th>年减CO₂当量（吨）</th>
-                            <th>报表状态</th>
-                            <th>生成时间</th>
-                            <th>报送时间</th>
-                            <th>操作</th>
+                            <th class="col-seq" data-i18n="th_seq">序号</th>
+                            <th data-i18n="th_name">报表名称</th>
+                            <th data-i18n="th_code">报表编号</th>
+                            <th data-i18n="th_period">报表期间</th>
+                            <th data-i18n="th_balance">绿色贷款余额（万元）</th>
+                            <th data-i18n="th_count">贷款笔数</th>
+                            <th data-i18n="th_enterprises">涉及企业数</th>
+                            <th data-i18n="th_co2">年减CO₂当量（吨）</th>
+                            <th data-i18n="th_status">报表状态</th>
+                            <th data-i18n="th_gen_time">生成时间</th>
+                            <th data-i18n="th_submit_time">报送时间</th>
+                            <th data-i18n="th_actions">操作</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="col-seq">1</td>
-                            <td style="font-weight:500;color:var(--brand-700);">A3327绿色贷款专项统计表-2025Q2</td>
-                            <td style="font-family:monospace;font-size:12px;">A3327-2025Q2</td>
-                            <td>2025年第二季度</td>
-                            <td style="font-family:var(--font-num);text-align:right;">156,832.50</td>
-                            <td style="font-family:var(--font-num);text-align:right;">48</td>
-                            <td style="font-family:var(--font-num);text-align:right;">23</td>
-                            <td style="font-family:var(--font-num);text-align:right;">18,456.78</td>
-                            <td><span class="tag tag-success">系统生成</span></td>
-                            <td>2025-07-01 00:05</td>
-                            <td>—</td>
-                            <td>
-                                <button class="btn btn-deep-blue btn-sm" onclick="goToDetail()">查看详情</button>
-                                <button class="btn btn-light-blue btn-sm" style="margin-left:4px;" onclick="downloadReport('2025Q2')">下载Excel</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-seq">2</td>
-                            <td style="font-weight:500;color:var(--brand-700);">A3327绿色贷款专项统计表-2025Q1</td>
-                            <td style="font-family:monospace;font-size:12px;">A3327-2025Q1</td>
-                            <td>2025年第一季度</td>
-                            <td style="font-family:var(--font-num);text-align:right;">142,156.80</td>
-                            <td style="font-family:var(--font-num);text-align:right;">45</td>
-                            <td style="font-family:var(--font-num);text-align:right;">21</td>
-                            <td style="font-family:var(--font-num);text-align:right;">16,820.35</td>
-                            <td><span class="tag tag-success">已报送</span></td>
-                            <td>2025-04-01 00:03</td>
-                            <td>2025-04-08 14:30</td>
-                            <td>
-                                <button class="btn btn-deep-blue btn-sm" onclick="goToDetail()">查看详情</button>
-                                <button class="btn btn-light-blue btn-sm" style="margin-left:4px;" onclick="downloadReport('2025Q1')">下载Excel</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-seq">3</td>
-                            <td style="font-weight:500;color:var(--brand-700);">A3327绿色贷款专项统计表-2024Q4</td>
-                            <td style="font-family:monospace;font-size:12px;">A3327-2024Q4</td>
-                            <td>2024年第四季度</td>
-                            <td style="font-family:var(--font-num);text-align:right;">138,920.30</td>
-                            <td style="font-family:var(--font-num);text-align:right;">42</td>
-                            <td style="font-family:var(--font-num);text-align:right;">20</td>
-                            <td style="font-family:var(--font-num);text-align:right;">15,680.12</td>
-                            <td><span class="tag tag-success">已报送</span></td>
-                            <td>2025-01-01 00:04</td>
-                            <td>2025-01-07 10:15</td>
-                            <td>
-                                <button class="btn btn-deep-blue btn-sm" onclick="goToDetail()">查看详情</button>
-                                <button class="btn btn-light-blue btn-sm" style="margin-left:4px;" onclick="downloadReport('2024Q4')">下载Excel</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-seq">4</td>
-                            <td style="font-weight:500;color:var(--brand-700);">A3327绿色贷款专项统计表-2024Q3</td>
-                            <td style="font-family:monospace;font-size:12px;">A3327-2024Q3</td>
-                            <td>2024年第三季度</td>
-                            <td style="font-family:var(--font-num);text-align:right;">135,468.20</td>
-                            <td style="font-family:var(--font-num);text-align:right;">40</td>
-                            <td style="font-family:var(--font-num);text-align:right;">19</td>
-                            <td style="font-family:var(--font-num);text-align:right;">14,520.00</td>
-                            <td><span class="tag tag-success">已报送</span></td>
-                            <td>2024-10-01 00:05</td>
-                            <td>2024-10-10 09:20</td>
-                            <td>
-                                <button class="btn btn-deep-blue btn-sm" onclick="goToDetail()">查看详情</button>
-                                <button class="btn btn-light-blue btn-sm" style="margin-left:4px;" onclick="downloadReport('2024Q3')">下载Excel</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-seq">5</td>
-                            <td style="font-weight:500;color:var(--brand-700);">A3327绿色贷款专项统计表-2024Q2</td>
-                            <td style="font-family:monospace;font-size:12px;">A3327-2024Q2</td>
-                            <td>2024年第二季度</td>
-                            <td style="font-family:var(--font-num);text-align:right;">128,765.00</td>
-                            <td style="font-family:var(--font-num);text-align:right;">37</td>
-                            <td style="font-family:var(--font-num);text-align:right;">18</td>
-                            <td style="font-family:var(--font-num);text-align:right;">12,890.50</td>
-                            <td><span class="tag tag-success">已报送</span></td>
-                            <td>2024-07-01 00:06</td>
-                            <td>2024-07-05 16:45</td>
-                            <td>
-                                <button class="btn btn-deep-blue btn-sm" onclick="goToDetail()">查看详情</button>
-                                <button class="btn btn-light-blue btn-sm" style="margin-left:4px;" onclick="downloadReport('2024Q2')">下载Excel</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-seq">6</td>
-                            <td style="font-weight:500;color:var(--brand-700);">A3327绿色贷款专项统计表-2024Q1</td>
-                            <td style="font-family:monospace;font-size:12px;">A3327-2024Q1</td>
-                            <td>2024年第一季度</td>
-                            <td style="font-family:var(--font-num);text-align:right;">122,340.00</td>
-                            <td style="font-family:var(--font-num);text-align:right;">35</td>
-                            <td style="font-family:var(--font-num);text-align:right;">17</td>
-                            <td style="font-family:var(--font-num);text-align:right;">11,230.00</td>
-                            <td><span class="tag tag-warning">已退回</span></td>
-                            <td>2024-04-01 00:02</td>
-                            <td>2024-04-03 11:00</td>
-                            <td>
-                                <button class="btn btn-deep-blue btn-sm" onclick="goToDetail()">查看详情</button>
-                                <button class="btn btn-light-blue btn-sm" style="margin-left:4px;" onclick="downloadReport('2024Q1')">下载Excel</button>
-                            </td>
-                        </tr>
+                    <tbody id="reportTableBody">
                     </tbody>
                 </table>
             </div>
             <!-- 分页 -->
-            <div class="flex items-center justify-between px-6 py-3 border-t border-slate-100 flex-shrink-0">
-                <span class="text-sm text-slate-400">共 6 条</span>
+            <div class="flex items-center justify-between px-6 py-3 border-t border-slate-100 flex-shrink-0" id="paginationBar">
+                <span class="text-sm text-slate-400" data-i18n-html="total_records">共 6 条</span>
                 <div class="flex items-center gap-2">
-                    <button class="btn btn-secondary btn-sm" disabled>‹</button>
+                    <button class="btn btn-secondary btn-sm" disabled>&#x2039;</button>
                     <span class="px-2 py-1 text-sm bg-brand-500 text-white rounded">1</span>
-                    <button class="btn btn-secondary btn-sm" disabled>›</button>
+                    <button class="btn btn-secondary btn-sm" disabled>&#x203A;</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script>
+    // ==================== I18N 页级字典 ====================
+    I18N.setDict({
+        title: {zh:'A3327绿色贷款统计报表 · 可持续金融管理系统', en:'A3327 Green Loan Statistics · Sustainable Finance System'},
+        filter_period: {zh:'报表期间（季度）', en:'Report Period (Quarter)'},
+        filter_status: {zh:'报表状态', en:'Status'},
+        all_periods: {zh:'全部期间', en:'All Periods'},
+        q2_2025: {zh:'2025年第二季度', en:'2025 Q2'},
+        q1_2025: {zh:'2025年第一季度', en:'2025 Q1'},
+        q4_2024: {zh:'2024年第四季度', en:'2024 Q4'},
+        q3_2024: {zh:'2024年第三季度', en:'2024 Q3'},
+        q2_2024: {zh:'2024年第二季度', en:'2024 Q2'},
+        q1_2024: {zh:'2024年第一季度', en:'2024 Q1'},
+        all_status: {zh:'全部状态', en:'All'},
+        sys_generated: {zh:'系统生成', en:'System Generated'},
+        submitted: {zh:'已报送', en:'Submitted'},
+        returned: {zh:'已退回', en:'Returned'},
+        search: {zh:'查询', en:'Search'},
+        reset: {zh:'重置', en:'Reset'},
+        th_seq: {zh:'序号', en:'#'},
+        th_name: {zh:'报表名称', en:'Report Name'},
+        th_code: {zh:'报表编号', en:'Report No.'},
+        th_period: {zh:'报表期间', en:'Period'},
+        th_balance: {zh:'绿色贷款余额（万元）', en:'Green Loan Balance (10k CNY)'},
+        th_count: {zh:'贷款笔数', en:'Loan Count'},
+        th_enterprises: {zh:'涉及企业数', en:'Enterprises'},
+        th_co2: {zh:'年减CO₂当量（吨）', en:'Annual CO₂ Reduction (tons)'},
+        th_status: {zh:'报表状态', en:'Status'},
+        th_gen_time: {zh:'生成时间', en:'Generated'},
+        th_submit_time: {zh:'报送时间', en:'Submitted'},
+        th_actions: {zh:'操作', en:'Actions'},
+        action_view: {zh:'查看详情', en:'View Details'},
+        action_download: {zh:'下载Excel', en:'Download Excel'},
+        confirm_download: {zh:'确认下载 A3327-{0} 报表Excel文件？', en:'Confirm download A3327-{0} report Excel file?'},
+        download_ok: {zh:'下载成功！\n\n文件：A3327绿色贷款专项统计表_{0}.xlsx', en:'Download successful!\n\nFile: A3327 Green Loan Statistics_{0}.xlsx'},
+        no_submit: {zh:'—', en:'—'},
+        total_count_tmpl: {zh:'共 {0} 条（按季生成）', en:'{0} records (generated quarterly)'},
+        total_records_tmpl: {zh:'共 {0} 条', en:'Total: {0} records'},
+        page_label: {zh:'页', en:'Page'},
+        report_name_prefix: {zh:'A3327绿色贷款专项统计表', en:'A3327 Green Loan Statistical Report'}
+    });
+
+    // ==================== 数据 ====================
+    var reportData = [
+        {seq:1, period:'q2_2025', code:'A3327-2025Q2', balance:'156,832.50', count:48, enterprises:23, co2:'18,456.78', status:'sys_generated', genTime:'2025-07-01 00:05', submitTime:''},
+        {seq:2, period:'q1_2025', code:'A3327-2025Q1', balance:'142,156.80', count:45, enterprises:21, co2:'16,820.35', status:'submitted', genTime:'2025-04-01 00:03', submitTime:'2025-04-08 14:30'},
+        {seq:3, period:'q4_2024', code:'A3327-2024Q4', balance:'138,920.30', count:42, enterprises:20, co2:'15,680.12', status:'submitted', genTime:'2025-01-01 00:04', submitTime:'2025-01-07 10:15'},
+        {seq:4, period:'q3_2024', code:'A3327-2024Q3', balance:'135,468.20', count:40, enterprises:19, co2:'14,520.00', status:'submitted', genTime:'2024-10-01 00:05', submitTime:'2024-10-10 09:20'},
+        {seq:5, period:'q2_2024', code:'A3327-2024Q2', balance:'128,765.00', count:37, enterprises:18, co2:'12,890.50', status:'submitted', genTime:'2024-07-01 00:06', submitTime:'2024-07-05 16:45'},
+        {seq:6, period:'q1_2024', code:'A3327-2024Q1', balance:'122,340.00', count:35, enterprises:17, co2:'11,230.00', status:'returned', genTime:'2024-04-01 00:02', submitTime:'2024-04-03 11:00'}
+    ];
+
+    function getStatusTagClass(status){
+        if(status==='sys_generated') return 'tag-success';
+        if(status==='submitted') return 'tag-success';
+        if(status==='returned') return 'tag-warning';
+        return 'tag-success';
+    }
+
+    function formatT(key, replacements){
+        var result = I18N.t(key);
+        if(replacements){
+            for(var i=0; i<replacements.length; i++){
+                result = result.replace('{'+i+'}', replacements[i]);
+            }
+        }
+        return result;
+    }
+
+    function renderTable(){
+        var tbody = document.getElementById('reportTableBody');
+        var html = '';
+        for(var i=0; i<reportData.length; i++){
+            var r = reportData[i];
+            var statusText = I18N.t(r.status);
+            var tagClass = getStatusTagClass(r.status);
+            var reportName = I18N.t('report_name_prefix') + '-' + I18N.t(r.period).replace(' ','').replace(/[^A-Za-z0-9]/g,'');
+            var periodText = I18N.t(r.period);
+            var submitTime = r.submitTime || I18N.t('no_submit');
+            html += '<tr>'+
+                '<td class="col-seq">'+r.seq+'</td>'+
+                '<td style="font-weight:500;color:var(--brand-700);">'+reportName+'</td>'+
+                '<td style="font-family:monospace;font-size:12px;">'+r.code+'</td>'+
+                '<td>'+periodText+'</td>'+
+                '<td style="font-family:var(--font-num);text-align:right;">'+r.balance+'</td>'+
+                '<td style="font-family:var(--font-num);text-align:right;">'+r.count+'</td>'+
+                '<td style="font-family:var(--font-num);text-align:right;">'+r.enterprises+'</td>'+
+                '<td style="font-family:var(--font-num);text-align:right;">'+r.co2+'</td>'+
+                '<td><span class="tag '+tagClass+'">'+statusText+'</span></td>'+
+                '<td>'+r.genTime+'</td>'+
+                '<td>'+submitTime+'</td>'+
+                '<td>'+
+                    '<button class="btn btn-deep-blue btn-sm" onclick="goToDetail()" data-i18n="action_view">'+I18N.t('action_view')+'</button>'+
+                    '<button class="btn btn-light-blue btn-sm" style="margin-left:4px;" onclick="downloadReport(\''+r.code.split('-')[1]+'\')" data-i18n="action_download">'+I18N.t('action_download')+'</button>'+
+                '</td>'+
+            '</tr>';
+        }
+        tbody.innerHTML = html;
+    }
+
+    function renderStatsBar(){
+        var total = reportData.length;
+        document.getElementById('statsBar').querySelector('span').textContent = formatT('total_count_tmpl', [total]);
+        document.getElementById('paginationBar').querySelector('span').textContent = formatT('total_records_tmpl', [total]);
+    }
+
+    // ==================== 语言切换回调 ====================
+    window.onLangChange = function(lang){
+        renderTable();
+        renderStatsBar();
+    };
+
+    // ==================== 业务函数 ====================
     function getCurrentDir(){var p=window.location.pathname;return p.substring(0,p.lastIndexOf('/')+1)}
     function goToDetail(){
         var dir=getCurrentDir();var targetUrl=dir+'A3327报表详情.html';
+        var label = I18N.t('action_view');
         if(window.parent!==window){
-            window.parent.postMessage({type:'openPage',pageId:'a3327-detail-'+Date.now(),file:targetUrl,label:'A3327报表详情'},'*');
+            window.parent.postMessage({type:'openPage',pageId:'a3327-detail-'+Date.now(),file:targetUrl,label:label},'*');
         }else{window.location.href=targetUrl}
     }
     function downloadReport(q){
-        if(confirm('确认下载 A3327-'+q+' 报表Excel文件？')){
-            alert('下载成功！\n\n文件：A3327绿色贷款专项统计表_'+q+'.xlsx');
+        var confirmMsg = formatT('confirm_download', [q]);
+        var okMsg = formatT('download_ok', [q]);
+        if(confirm(confirmMsg)){
+            alert(okMsg);
         }
     }
+
+    // ==================== 初始化渲染 ====================
+    renderTable();
+    renderStatsBar();
 </script>
 </body>
 </html>

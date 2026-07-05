@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>环境效益测算填报 · 潜在项目库</title>
+    <title data-i18n="title">环境效益测算填报 · 潜在项目库</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
@@ -56,12 +56,13 @@
         .result-table td{font-family:var(--font-num)}
         .result-table .cat-header{background:var(--brand-50);color:var(--brand-700);font-weight:600;font-size:13px}
     </style>
+    <script src="../i18n.js"></script>
 </head>
 <body>
 <div class="flex flex-col" style="height:100vh;background:var(--bg-subtle);">
     <!-- 返回栏 -->
     <div class="flex items-center px-6 py-3 flex-shrink-0" style="background:var(--white);border-bottom:1px solid var(--line-200);">
-        <button onclick="goBackToList()" style="display:inline-flex;align-items:center;gap:6px;color:#2A66C2;font-weight:500;cursor:pointer;border:none;background:none;font-size:14px;font-family:inherit;padding:0 8px;height:32px;border-radius:6px;">
+        <button onclick="goBackToList()" style="display:inline-flex;align-items:center;gap:6px;color:#2A66C2;font-weight:500;cursor:pointer;border:none;background:none;font-size:14px;font-family:inherit;padding:0 8px;height:32px;border-radius:6px;" data-i18n-html="back_btn">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
             返回列表
         </button>
@@ -71,33 +72,33 @@
 
         <!-- 项目信息区（只读） -->
         <div class="section-card">
-            <div class="card-head">项目信息</div>
+            <div class="card-head" data-i18n="project_info">项目信息</div>
             <div class="card-body">
                 <div class="info-row">
-                    <div class="info-item"><span class="lbl">项目名称：</span><span class="val" style="font-weight:500;">超低能耗建筑建设项目</span></div>
-                    <div class="info-item"><span class="lbl">项目编号：</span><span class="val" style="font-family:monospace;">test000001 / 02001071613</span></div>
-                    <div class="info-item"><span class="lbl">项目总投资：</span><span class="val" style="font-family:var(--font-num);">21,232,323,123 万元</span></div>
-                    <div class="info-item"><span class="lbl">项目性质：</span><span class="val">新建</span></div>
-                    <div class="info-item"><span class="lbl">项目所属行业：</span><span class="val">火力发电（国民经济行业四级分类）</span></div>
-                    <div class="info-item"><span class="lbl">项目所在地区：</span><span class="val">广东省 / 广州市 / 天河区</span></div>
-                    <div class="info-item" style="grid-column:1/-1;"><span class="lbl">建设内容与规模：</span><span class="val">采用超低能耗建筑设计标准，建设绿色建筑示范项目，总建筑面积约50万平方米</span></div>
-                    <div class="info-item"><span class="lbl">融资业务品种：</span><span class="val">绿色项目贷款（中长期）</span></div>
-                    <div class="info-item"><span class="lbl">项目融资余额：</span><span class="val" style="font-family:var(--font-num);">8,500 万元</span></div>
+                    <div class="info-item"><span class="lbl" data-i18n="project_name_lbl">项目名称：</span><span class="val" style="font-weight:500;">超低能耗建筑建设项目</span></div>
+                    <div class="info-item"><span class="lbl" data-i18n="project_code_lbl">项目编号：</span><span class="val" style="font-family:monospace;">test000001 / 02001071613</span></div>
+                    <div class="info-item"><span class="lbl" data-i18n="total_investment_lbl">项目总投资：</span><span class="val" style="font-family:var(--font-num);">21,232,323,123 <span data-i18n="wan_yuan">万元</span></span></div>
+                    <div class="info-item"><span class="lbl" data-i18n="project_nature_lbl">项目性质：</span><span class="val" data-i18n="new_project">新建</span></div>
+                    <div class="info-item"><span class="lbl" data-i18n="project_industry_lbl">项目所属行业：</span><span class="val">火力发电（国民经济行业四级分类）</span></div>
+                    <div class="info-item"><span class="lbl" data-i18n="project_location_lbl">项目所在地区：</span><span class="val">广东省 / 广州市 / 天河区</span></div>
+                    <div class="info-item" style="grid-column:1/-1;"><span class="lbl" data-i18n="construction_scope_lbl">建设内容与规模：</span><span class="val">采用超低能耗建筑设计标准，建设绿色建筑示范项目，总建筑面积约50万平方米</span></div>
+                    <div class="info-item"><span class="lbl" data-i18n="financing_type_lbl">融资业务品种：</span><span class="val" data-i18n="green_loan_type">绿色项目贷款（中长期）</span></div>
+                    <div class="info-item"><span class="lbl" data-i18n="financing_balance_lbl">项目融资余额：</span><span class="val" style="font-family:var(--font-num);">8,500 <span data-i18n="wan_yuan">万元</span></span></div>
                 </div>
             </div>
         </div>
 
         <!-- 测算参数区 -->
         <div class="section-card" id="calcSection">
-            <div class="card-head">测算参数</div>
+            <div class="card-head" data-i18n="calc_params">测算参数</div>
             <div class="card-body">
 
                 <!-- 测算方式 -->
                 <div class="form-item" style="margin-bottom:16px;">
-                    <label><span class="req">*</span> 测算方式</label>
+                    <label><span class="req">*</span> <span data-i18n="calc_method">测算方式</span></label>
                     <div class="radio-group" id="calcMethodGroup">
-                        <label><input type="radio" name="calcMethod" value="system" checked onchange="onCalcMethodChange('system')"> 系统测算工具</label>
-                        <label><input type="radio" name="calcMethod" value="manual" onchange="onCalcMethodChange('manual')"> 手工填报</label>
+                        <label><input type="radio" name="calcMethod" value="system" checked onchange="onCalcMethodChange('system')"> <span data-i18n="system_calc">系统测算工具</span></label>
+                        <label><input type="radio" name="calcMethod" value="manual" onchange="onCalcMethodChange('manual')"> <span data-i18n="manual_calc">手工填报</span></label>
                     </div>
                 </div>
 
@@ -106,68 +107,68 @@
                     <!-- 绿色产业分类（只读） -->
                     <div class="form-row">
                         <div class="form-item">
-                            <label>绿色产业分类</label>
-                            <input type="text" value="1.5.3 余热余压利用" readonly>
+                            <label data-i18n="gf_category">绿色产业分类</label>
+                            <input type="text" id="gfCategoryInput" value="" readonly>
                         </div>
                     </div>
 
                     <!-- 测算方案选择 -->
                     <div class="form-row">
                         <div class="form-item">
-                            <label><span class="req">*</span> 测算方案</label>
+                            <label><span class="req">*</span> <span data-i18n="calc_plan">测算方案</span></label>
                             <select id="calcPlan" onchange="onPlanChange()" style="max-width:100%;min-width:400px;">
-                                <option value="">请选择测算方案</option>
-                                <option value="plan1">方案一：二氧化碳减排计算的基本公式</option>
-                                <option value="plan2">方案二：按能源消费品种分别计算</option>
+                                <option value="" data-i18n="select_plan">请选择测算方案</option>
+                                <option value="plan1" data-i18n="plan1">方案一：二氧化碳减排计算的基本公式</option>
+                                <option value="plan2" data-i18n="plan2">方案二：按能源消费品种分别计算</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- 动态参数区 -->
                     <div id="dynamicParams" style="display:none;">
-                        <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--line-200);">
+                        <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--line-200);" data-i18n-html="param_fill_title">
                             📐 参数填报
                         </div>
                         <!-- 能源产出类参数 -->
                         <div class="form-row" id="energyOutputParams" style="display:none;">
-                            <div class="form-item"><label><span class="req">*</span> 项目年供电量（万千瓦时）</label><input type="number" id="annualPower" placeholder="请输入"></div>
-                            <div class="form-item"><label><span class="req">*</span> 项目年供热量（百万吉焦）</label><input type="number" id="annualHeat" placeholder="请输入"></div>
+                            <div class="form-item"><label><span class="req">*</span> <span data-i18n="annual_power">项目年供电量（万千瓦时）</span></label><input type="number" id="annualPower" data-i18n-placeholder="placeholder_input"></div>
+                            <div class="form-item"><label><span class="req">*</span> <span data-i18n="annual_heat">项目年供热量（百万吉焦）</span></label><input type="number" id="annualHeat" data-i18n-placeholder="placeholder_input"></div>
                         </div>
                         <!-- 能源消费类参数 -->
                         <div class="form-row" id="energyConsumeParams" style="display:none;">
-                            <div class="form-item"><label>能源消费品种类别</label><input type="text" value="标准煤、电燃气" readonly></div>
-                            <div class="form-item"><label><span class="req">*</span> 标准煤—实物节约量（千克）</label><input type="number" id="coalSaving" placeholder="请输入"></div>
-                            <div class="form-item"><label><span class="req">*</span> 电燃气—实物节约量（千克）</label><input type="number" id="gasSaving" placeholder="请输入"></div>
+                            <div class="form-item"><label data-i18n="energy_type">能源消费品种类别</label><input type="text" value="标准煤、电燃气" readonly></div>
+                            <div class="form-item"><label><span class="req">*</span> <span data-i18n="coal_saving">标准煤—实物节约量（千克）</span></label><input type="number" id="coalSaving" data-i18n-placeholder="placeholder_input"></div>
+                            <div class="form-item"><label><span class="req">*</span> <span data-i18n="gas_saving">电燃气—实物节约量（千克）</span></label><input type="number" id="gasSaving" data-i18n-placeholder="placeholder_input"></div>
                         </div>
                     </div>
 
                     <!-- 操作按钮 -->
                     <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;padding-top:14px;border-top:1px solid var(--line-200);">
-                        <button class="btn btn-secondary btn-md" onclick="goBackToList()">取消</button>
-                        <button class="btn btn-primary btn-md" id="calcBtn" onclick="doCalculate()" disabled>测算</button>
+                        <button class="btn btn-secondary btn-md" onclick="goBackToList()" data-i18n="cancel">取消</button>
+                        <button class="btn btn-primary btn-md" id="calcBtn" onclick="doCalculate()" disabled data-i18n="calculate">测算</button>
                     </div>
                 </div>
 
                 <!-- 手工填报区域（默认隐藏） -->
                 <div id="manualCalcArea" style="display:none;">
-                    <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:12px;"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="3" width="12" height="10" rx="1" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="9" y2="9" stroke="currentColor" stroke-width="1.3"/></svg> 手工填报环境效益数据</div>
+                    <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:12px;" data-i18n-html="manual_fill_title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="3" width="12" height="10" rx="1" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="9" y2="9" stroke="currentColor" stroke-width="1.3"/></svg> 手工填报环境效益数据</div>
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
                         <div>
-                            <div style="font-weight:600;color:var(--ink-700);margin-bottom:8px;"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><path d="M6 13a2 2 0 004 0M8 1a6 6 0 00-4.5 10H5a1 1 0 001 1h4a1 1 0 001-1h1.5A6 6 0 008 1z" stroke="currentColor" fill="none" stroke-width="1.3"/></svg> 节能量</div>
-                            <div class="form-item" style="margin-bottom:10px;"><label>标准煤（吨）</label><input type="number" placeholder="请输入"></div>
-                            <div class="form-item"><label>节水量（吨）</label><input type="number" placeholder="请输入"></div>
+                            <div style="font-weight:600;color:var(--ink-700);margin-bottom:8px;" data-i18n-html="energy_saving_title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><path d="M6 13a2 2 0 004 0M8 1a6 6 0 00-4.5 10H5a1 1 0 001 1h4a1 1 0 001-1h1.5A6 6 0 008 1z" stroke="currentColor" fill="none" stroke-width="1.3"/></svg> 节能量</div>
+                            <div class="form-item" style="margin-bottom:10px;"><label data-i18n="coal_saving_title">标准煤（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
+                            <div class="form-item"><label data-i18n="water_saving">节水量（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
                         </div>
                         <div>
-                            <div style="font-weight:600;color:var(--ink-700);margin-bottom:8px;">🌿 减排量</div>
-                            <div class="form-item" style="margin-bottom:10px;"><label>二氧化碳当量（吨）</label><input type="number" placeholder="请输入"></div>
-                            <div class="form-item" style="margin-bottom:10px;"><label>二氧化硫（吨）</label><input type="number" placeholder="请输入"></div>
-                            <div class="form-item" style="margin-bottom:10px;"><label>氮氧化物（吨）</label><input type="number" placeholder="请输入"></div>
-                            <div class="form-item" style="margin-bottom:10px;"><label>化学需氧量（吨）</label><input type="number" placeholder="请输入"></div>
-                            <div class="form-item" style="margin-bottom:10px;"><label>氨氮（吨）</label><input type="number" placeholder="请输入"></div>
-                            <div class="form-item" style="margin-bottom:10px;"><label>总氮（吨）</label><input type="number" placeholder="请输入"></div>
-                            <div class="form-item" style="margin-bottom:10px;"><label>总磷（吨）</label><input type="number" placeholder="请输入"></div>
-                            <div class="form-item" style="margin-bottom:10px;"><label>细颗粒物PM2.5（吨）</label><input type="number" placeholder="请输入"></div>
-                            <div class="form-item"><label>挥发性有机物VOCs（吨）</label><input type="number" placeholder="请输入"></div>
+                            <div style="font-weight:600;color:var(--ink-700);margin-bottom:8px;" data-i18n-html="emission_reduction_title">🌿 减排量</div>
+                            <div class="form-item" style="margin-bottom:10px;"><label data-i18n="co2">二氧化碳当量（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
+                            <div class="form-item" style="margin-bottom:10px;"><label data-i18n="so2">二氧化硫（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
+                            <div class="form-item" style="margin-bottom:10px;"><label data-i18n="nox">氮氧化物（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
+                            <div class="form-item" style="margin-bottom:10px;"><label data-i18n="cod">化学需氧量（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
+                            <div class="form-item" style="margin-bottom:10px;"><label data-i18n="nh3n">氨氮（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
+                            <div class="form-item" style="margin-bottom:10px;"><label data-i18n="tn">总氮（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
+                            <div class="form-item" style="margin-bottom:10px;"><label data-i18n="tp">总磷（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
+                            <div class="form-item" style="margin-bottom:10px;"><label data-i18n="pm25">细颗粒物PM2.5（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
+                            <div class="form-item"><label data-i18n="voc">挥发性有机物VOCs（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
                         </div>
                     </div>
                 </div>
@@ -176,36 +177,36 @@
 
         <!-- 测算结果区（默认隐藏） -->
         <div class="section-card" id="resultSection" style="display:none;">
-            <div class="card-head">测算结果</div>
+            <div class="card-head" data-i18n="calc_result">测算结果</div>
             <div class="card-body">
                 <!-- 输入参数回显 -->
                 <div style="margin-bottom:16px;">
-                    <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:10px;"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="11" y2="9" stroke="currentColor" stroke-width="1.3"/></svg> 输入参数</div>
+                    <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:10px;" data-i18n-html="input_params_title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="11" y2="9" stroke="currentColor" stroke-width="1.3"/></svg> 输入参数</div>
                     <div class="info-row">
-                        <div class="info-item"><span class="lbl">测算方式：</span><span class="val">系统测算工具</span></div>
-                        <div class="info-item"><span class="lbl">绿色产业分类：</span><span class="val" id="resGreenType">—</span></div>
-                        <div class="info-item"><span class="lbl">测算方案：</span><span class="val" id="resPlan">—</span></div>
-                        <div class="info-item" id="resPowerRow" style="display:none;"><span class="lbl">项目年供电量：</span><span class="val" id="resPower">—</span></div>
-                        <div class="info-item" id="resHeatRow" style="display:none;"><span class="lbl">项目年供热量：</span><span class="val" id="resHeat">—</span></div>
-                        <div class="info-item" id="resCoalRow" style="display:none;"><span class="lbl">标准煤节约量：</span><span class="val" id="resCoal">—</span></div>
-                        <div class="info-item" id="resGasRow" style="display:none;"><span class="lbl">电燃气节约量：</span><span class="val" id="resGas">—</span></div>
+                        <div class="info-item"><span class="lbl" data-i18n="calc_method_lbl">测算方式：</span><span class="val" data-i18n="system_calc">系统测算工具</span></div>
+                        <div class="info-item"><span class="lbl" data-i18n="gf_category_lbl">绿色产业分类：</span><span class="val" id="resGreenType">—</span></div>
+                        <div class="info-item"><span class="lbl" data-i18n="calc_plan_lbl">测算方案：</span><span class="val" id="resPlan">—</span></div>
+                        <div class="info-item" id="resPowerRow" style="display:none;"><span class="lbl" data-i18n="annual_power_lbl">项目年供电量：</span><span class="val" id="resPower">—</span></div>
+                        <div class="info-item" id="resHeatRow" style="display:none;"><span class="lbl" data-i18n="annual_heat_lbl">项目年供热量：</span><span class="val" id="resHeat">—</span></div>
+                        <div class="info-item" id="resCoalRow" style="display:none;"><span class="lbl" data-i18n="coal_saving_lbl">标准煤节约量：</span><span class="val" id="resCoal">—</span></div>
+                        <div class="info-item" id="resGasRow" style="display:none;"><span class="lbl" data-i18n="gas_saving_lbl">电燃气节约量：</span><span class="val" id="resGas">—</span></div>
                     </div>
                 </div>
                 <!-- 测算结果 -->
                 <div>
-                    <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:10px;"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="1" y="5" width="3" height="8" rx="0.5" fill="currentColor" opacity=".6"/><rect x="6.5" y="2" width="3" height="11" rx="0.5" fill="currentColor"/><rect x="12" y="7" width="3" height="6" rx="0.5" fill="currentColor" opacity=".4"/></svg> 环境效益测算结果</div>
+                    <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:10px;" data-i18n-html="env_result_title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="1" y="5" width="3" height="8" rx="0.5" fill="currentColor" opacity=".6"/><rect x="6.5" y="2" width="3" height="11" rx="0.5" fill="currentColor"/><rect x="12" y="7" width="3" height="6" rx="0.5" fill="currentColor" opacity=".4"/></svg> 环境效益测算结果</div>
                     <table class="result-table">
                         <thead>
-                            <tr><th>指标类别</th><th>具体指标</th><th>单位</th><th>测算值</th></tr>
+                            <tr><th data-i18n="indicator_cat">指标类别</th><th data-i18n="indicator_name">具体指标</th><th data-i18n="unit">单位</th><th data-i18n="calc_value">测算值</th></tr>
                         </thead>
                         <tbody id="resultTableBody"></tbody>
                     </table>
                 </div>
                 <!-- 结果操作 -->
                 <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;padding-top:14px;border-top:1px solid var(--line-200);">
-                    <button class="btn btn-secondary btn-md" onclick="reCalculate()">重新测算</button>
-                    <button class="btn btn-primary btn-md" onclick="handleSave()">保存</button>
-                    <button class="btn btn-success btn-md" onclick="handleSubmit()">提交审批</button>
+                    <button class="btn btn-secondary btn-md" onclick="reCalculate()" data-i18n="recalculate">重新测算</button>
+                    <button class="btn btn-primary btn-md" onclick="handleSave()" data-i18n="save">保存</button>
+                    <button class="btn btn-success btn-md" onclick="handleSubmit()" data-i18n="submit">提交审批</button>
                 </div>
             </div>
         </div>
@@ -213,6 +214,166 @@
     </div>
 </div>
 <script>
+    // ==================== I18N 页级字典 ====================
+    I18N.setDict({
+        title: {zh:'环境效益测算填报 · 潜在项目库', en:'Environmental Benefit Calc Form · Project Library'},
+        back_btn: {zh:'← 返回列表', en:'← Back to List'},
+        // Project info
+        project_info: {zh:'项目信息', en:'Project Info'},
+        project_name_lbl: {zh:'项目名称：', en:'Project Name:'},
+        project_code_lbl: {zh:'项目编号：', en:'Project Code:'},
+        total_investment_lbl: {zh:'项目总投资：', en:'Total Investment:'},
+        project_nature_lbl: {zh:'项目性质：', en:'Project Nature:'},
+        project_industry_lbl: {zh:'项目所属行业：', en:'Industry:'},
+        project_location_lbl: {zh:'项目所在地区：', en:'Location:'},
+        construction_scope_lbl: {zh:'建设内容与规模：', en:'Scope & Scale:'},
+        financing_type_lbl: {zh:'融资业务品种：', en:'Financing Type:'},
+        financing_balance_lbl: {zh:'项目融资余额：', en:'Financing Balance:'},
+        new_project: {zh:'新建', en:'New Project'},
+        green_loan_type: {zh:'绿色项目贷款（中长期）', en:'Green Project Loan (Medium/Long-term)'},
+        wan_yuan: {zh:'万元', en:'10k CNY'},
+        // Calc params
+        calc_params: {zh:'测算参数', en:'Calc Parameters'},
+        calc_method: {zh:'测算方式 (*)', en:'Calc Method (*)'},
+        system_calc: {zh:'系统测算工具', en:'System Calculator'},
+        manual_calc: {zh:'手工填报', en:'Manual Entry'},
+        gf_category: {zh:'绿色产业分类', en:'Green Industry Category'},
+        calc_plan: {zh:'测算方案 (*)', en:'Calc Plan (*)'},
+        select_plan: {zh:'请选择测算方案', en:'Select a plan'},
+        plan1: {zh:'方案一：二氧化碳减排计算的基本公式', en:'Plan 1: Basic CO₂ Reduction Formula'},
+        plan2: {zh:'方案二：按能源消费品种分别计算', en:'Plan 2: Calculate by Energy Type'},
+        param_fill_title: {zh:'📐 参数填报', en:'📐 Parameter Entry'},
+        annual_power: {zh:'项目年供电量（万千瓦时）', en:'Annual Power Supply (10k kWh)'},
+        annual_heat: {zh:'项目年供热量（百万吉焦）', en:'Annual Heat Supply (Million GJ)'},
+        energy_type: {zh:'能源消费品种类别', en:'Energy Type'},
+        coal_saving: {zh:'标准煤—实物节约量（千克）', en:'Coal Saving (kg)'},
+        gas_saving: {zh:'电燃气—实物节约量（千克）', en:'Gas Saving (kg)'},
+        placeholder_input: {zh:'请输入', en:'Please enter'},
+        cancel: {zh:'取消', en:'Cancel'},
+        calculate: {zh:'测算', en:'Calculate'},
+        // Manual entry
+        manual_fill_title: {zh:'手工填报环境效益数据', en:'Manual Environmental Benefit Data Entry'},
+        energy_saving_title: {zh:'节能量', en:'Energy Saved'},
+        emission_reduction_title: {zh:'减排量', en:'Emission Reduction'},
+        coal_saving_title: {zh:'标准煤（吨）', en:'Standard Coal (tons)'},
+        water_saving: {zh:'节水量（吨）', en:'Water Saved (tons)'},
+        co2: {zh:'二氧化碳当量（吨）', en:'CO₂ Equivalent (tons)'},
+        so2: {zh:'二氧化硫（吨）', en:'SO₂ (tons)'},
+        nox: {zh:'氮氧化物（吨）', en:'NOx (tons)'},
+        cod: {zh:'化学需氧量（吨）', en:'COD (tons)'},
+        nh3n: {zh:'氨氮（吨）', en:'NH₃-N (tons)'},
+        tn: {zh:'总氮（吨）', en:'Total Nitrogen (tons)'},
+        tp: {zh:'总磷（吨）', en:'Total Phosphorus (tons)'},
+        pm25: {zh:'细颗粒物PM2.5（吨）', en:'PM2.5 (tons)'},
+        voc: {zh:'挥发性有机物VOCs（吨）', en:'VOCs (tons)'},
+        // Results
+        calc_result: {zh:'测算结果', en:'Calc Results'},
+        input_params_title: {zh:'输入参数', en:'Input Parameters'},
+        env_result_title: {zh:'环境效益测算结果', en:'Environmental Benefit Results'},
+        calc_method_lbl: {zh:'测算方式：', en:'Calc Method:'},
+        gf_category_lbl: {zh:'绿色产业分类：', en:'Green Industry Category:'},
+        calc_plan_lbl: {zh:'测算方案：', en:'Calc Plan:'},
+        annual_power_lbl: {zh:'项目年供电量：', en:'Annual Power Supply:'},
+        annual_heat_lbl: {zh:'项目年供热量：', en:'Annual Heat Supply:'},
+        coal_saving_lbl: {zh:'标准煤节约量：', en:'Coal Saving:'},
+        gas_saving_lbl: {zh:'电燃气节约量：', en:'Gas Saving:'},
+        indicator_cat: {zh:'指标类别', en:'Indicator Category'},
+        indicator_name: {zh:'具体指标', en:'Indicator'},
+        unit: {zh:'单位', en:'Unit'},
+        calc_value: {zh:'测算值', en:'Calculated Value'},
+        energy_saving: {zh:'节能量', en:'Energy Saved'},
+        water_saving_cat: {zh:'节水量', en:'Water Saved'},
+        emission_reduction: {zh:'减排量', en:'Emission Reduction'},
+        result_co2: {zh:'二氧化碳当量', en:'CO₂ Equivalent'},
+        result_so2: {zh:'二氧化硫', en:'SO₂'},
+        result_nox: {zh:'氮氧化物', en:'NOx'},
+        result_cod: {zh:'化学需氧量', en:'COD'},
+        result_nh3n: {zh:'氨氮', en:'NH₃-N'},
+        result_tn: {zh:'总氮', en:'Total Nitrogen'},
+        result_tp: {zh:'总磷', en:'Total Phosphorus'},
+        result_pm25: {zh:'细颗粒物（PM2.5）', en:'PM2.5'},
+        result_voc: {zh:'挥发性有机物（VOCs）', en:'VOCs'},
+        result_coal: {zh:'标准煤', en:'Standard Coal'},
+        result_water: {zh:'节水量', en:'Water Saved'},
+        unit_ton: {zh:'吨', en:'tons'},
+        unit_10k_kwh: {zh:'万千瓦时', en:'10k kWh'},
+        unit_mil_gj: {zh:'百万吉焦', en:'Million GJ'},
+        unit_kg: {zh:'千克', en:'kg'},
+        recalculate: {zh:'重新测算', en:'Recalculate'},
+        save: {zh:'保存', en:'Save'},
+        submit: {zh:'提交审批', en:'Submit for Approval'},
+        // Alerts
+        fill_all_params: {zh:'请完整填写所有必填参数！', en:'Please fill in all required parameters!'},
+        save_ok: {zh:'测算结果已保存！\n\n测算状态：已测算\n审批状态：未提交', en:'Results saved!\n\nCalc Status: Calculated\nApproval Status: Not Submitted'},
+        confirm_submit: {zh:'确认提交审批？\n\n提交后进入审批流程：绿金专岗审批→总行初审→总行复核', en:'Confirm submit for approval?\n\nApproval flow: GF Specialist → HO Review → HO Approval'},
+        submit_ok: {zh:'已提交审批！\n\n测算状态：已测算\n审批状态：审批中', en:'Submitted for approval!\n\nCalc Status: Calculated\nApproval Status: Under Review'},
+        approval_flow: {zh:'绿金专岗审批→总行初审→总行复核', en:'GF Specialist → HO Review → HO Approval'},
+        // === 2025 Green Finance Categories - Complete Translations ===
+        // Level 1
+        '1.节能降碳产业': {zh:'1.节能降碳产业', en:'1. Energy Conservation & Carbon Reduction'},
+        '2.清洁生产产业': {zh:'2.清洁生产产业', en:'2. Cleaner Production'},
+        '3.清洁能源产业': {zh:'3.清洁能源产业', en:'3. Clean Energy Industry'},
+        '4.能源绿色低碳转型': {zh:'4.能源绿色低碳转型', en:'4. Green & Low-Carbon Energy Transition'},
+        '5.生态保护修复和利用': {zh:'5.生态保护修复和利用', en:'5. Ecological Protection & Restoration'},
+        '6.基础设施绿色升级': {zh:'6.基础设施绿色升级', en:'6. Green Infrastructure Upgrading'},
+        // Level 2
+        '1.1 能效提升': {zh:'1.1 能效提升', en:'1.1 Energy Efficiency Improvement'},
+        '1.2 先进交通装备制造': {zh:'1.2 先进交通装备制造', en:'1.2 Advanced Transportation Equipment Mfg'},
+        '2.1 污染防治': {zh:'2.1 污染防治', en:'2.1 Pollution Prevention & Control'},
+        '3.4 能源系统改造': {zh:'3.4 能源系统改造', en:'3.4 Energy System Renovation'},
+        '4.1 新能源与清洁能源装备制造': {zh:'4.1 新能源与清洁能源装备制造', en:'4.1 New & Clean Energy Equipment Mfg'},
+        '4.2 清洁能源设施建设和运营': {zh:'4.2 清洁能源设施建设和运营', en:'4.2 Clean Energy Facility Construction & Operation'},
+        '5.2 生态保护修复': {zh:'5.2 生态保护修复', en:'5.2 Ecological Protection & Restoration'},
+        '5.3 污染防治': {zh:'5.3 污染防治', en:'5.3 Pollution Prevention & Control'},
+        '6.5 城乡能源基础设施': {zh:'6.5 城乡能源基础设施', en:'6.5 Urban-Rural Energy Infrastructure'},
+        // Level 3
+        '1.2.1 新能源汽车及关键零部件制造': {zh:'1.2.1 新能源汽车及关键零部件制造', en:'1.2.1 NEV & Key Component Manufacturing'},
+        '2.1.2.1 重点行业水污染治理': {zh:'2.1.2.1 重点行业水污染治理', en:'2.1.2.1 Key Industry Water Pollution Control'},
+        '2.1.3 节能锅炉制造': {zh:'2.1.3 节能锅炉制造', en:'2.1.3 Energy-Efficient Boiler Manufacturing'},
+        '3.4.8 电网节能改造项目': {zh:'3.4.8 电网节能改造项目', en:'3.4.8 Grid Energy-Saving Renovation'},
+        '4.1.8 新型储能产品制造': {zh:'4.1.8 新型储能产品制造', en:'4.1.8 New Energy Storage Product Mfg'},
+        '4.2.4 大型水利发电设施建设和运营': {zh:'4.2.4 大型水利发电设施建设和运营', en:'4.2.4 Large Hydropower Facility Construction & Operation'},
+        '5.2.6 充电基础设施': {zh:'5.2.6 充电基础设施', en:'5.2.6 Charging Infrastructure'},
+        '5.2.11 水生态系统旱涝灾害防控及应对': {zh:'5.2.11 水生态系统旱涝灾害防控及应对', en:'5.2.11 Flood & Drought Prevention for Aquatic Ecosystems'},
+        '5.3.1.1 污水处理、再生利用及污泥处理处置设施建设运营': {zh:'5.3.1.1 污水处理、再生利用及污泥处理处置设施建设运营', en:'5.3.1.1 Sewage Treatment, Recycling & Sludge Disposal'},
+        '6.5.3 城镇集中供热系统清洁化、低碳化建设运营和改造': {zh:'6.5.3 城镇集中供热系统清洁化、低碳化建设运营和改造', en:'6.5.3 Clean District Heating Construction & Renovation'},
+        // Additional
+        '2.5 其他污染治理和环境综合整治': {zh:'2.5 其他污染治理和环境综合整治', en:'2.5 Other Pollution Control & Environmental Remediation'},
+        '2.5.2 危险废物处理处置': {zh:'2.5.2 危险废物处理处置', en:'2.5.2 Hazardous Waste Treatment & Disposal'},
+        '3.2 资源循环利用': {zh:'3.2 资源循环利用', en:'3.2 Resource Recycling & Utilization'},
+        '3.2.7 废气回收利用': {zh:'3.2.7 废气回收利用', en:'3.2.7 Waste Gas Recovery & Utilization'},
+        '绿色金融分类(2025)': {zh:'绿色金融分类(2025)', en:'Green Finance Category (2025)'},
+        '信贷系统2025绿色认定分类': {zh:'信贷系统2025绿色认定分类', en:'Credit System 2025 GF Category'},
+        '绿色金融标准：《绿色金融支持项目目录（2025年版）》': {zh:'绿色金融标准：《绿色金融支持项目目录（2025年版）》', en:'Green Finance Standard: Green Finance Project Catalogue (2025)'},
+        '绿色债券支持项目目录(2021)': {zh:'绿色债券支持项目目录(2021)', en:'Green Bond Project Catalogue (2021)'},
+        '碳减排支持工具范围': {zh:'碳减排支持工具范围', en:'Carbon Reduction Support Tools'},
+        '绿色低碳转型产业指导目录(2024)': {zh:'绿色低碳转型产业指导目录(2024)', en:'Green Low-Carbon Transition Industry Catalogue (2024)'},
+        // Current project GF category
+        gf_category_value: {zh:'1.5.3 余热余压利用', en:'1.5.3 Waste Heat & Pressure Utilization'}
+    });
+
+    // ==================== 初始化绿色产业分类显示 ====================
+    document.getElementById('gfCategoryInput').value = I18N.t('gf_category_value');
+
+    // ==================== 语言切换回调 ====================
+    window.onLangChange = function(lang){
+        // Re-apply everything since many elements are dynamically generated
+        I18N.applyToDOM();
+        // Re-apply GF category input (not covered by data-i18n)
+        document.getElementById('gfCategoryInput').value = I18N.t('gf_category_value');
+        // Re-render result table if visible
+        if(document.getElementById('resultSection').style.display !== 'none'){
+            var pw = document.getElementById('annualPower').value;
+            var ht = document.getElementById('annualHeat').value;
+            var cs = document.getElementById('coalSaving').value;
+            var gs = document.getElementById('gasSaving').value;
+            var plan = document.getElementById('calcPlan').value;
+            var existing = {plan:plan, pw:pw, ht:ht, cs:cs, gs:gs};
+            renderResultTable(existing);
+        }
+    };
+
+    // ==================== 业务函数 ====================
     function getCurrentDir(){var p=window.location.pathname;return p.substring(0,p.lastIndexOf('/')+1)}
     function goBackToList(){
         var dir=getCurrentDir();var targetUrl=dir+'环境效益测算.html';
@@ -236,7 +397,6 @@
         var ec=document.getElementById('energyConsumeParams');
         if(!plan){dp.style.display='none';document.getElementById('calcBtn').disabled=true;return;}
         dp.style.display='block';
-        // 方案一：二氧化碳减排基本公式 → 展示能源产出类参数
         if(plan==='plan1'){
             ep.style.display='flex';ec.style.display='none';
         }else{
@@ -244,59 +404,70 @@
         }
         document.getElementById('calcBtn').disabled=false;
     }
+    function renderResultTable(ctx){
+        // ctx is optional - if not provided, build from current state
+        var plan, pw, ht, cs, gs;
+        if(ctx){
+            plan = ctx.plan; pw = ctx.pw; ht = ctx.ht; cs = ctx.cs; gs = ctx.gs;
+        } else {
+            plan = document.getElementById('calcPlan').value;
+            pw = document.getElementById('annualPower').value;
+            ht = document.getElementById('annualHeat').value;
+            cs = document.getElementById('coalSaving').value;
+            gs = document.getElementById('gasSaving').value;
+        }
+        var results = [
+            {cat:I18N.t('emission_reduction'), name:I18N.t('result_co2'), unit:I18N.t('unit_ton'), val:'1,248.56'},
+            {cat:I18N.t('emission_reduction'), name:I18N.t('result_so2'), unit:I18N.t('unit_ton'), val:'32.18'},
+            {cat:I18N.t('emission_reduction'), name:I18N.t('result_nox'), unit:I18N.t('unit_ton'), val:'21.45'},
+            {cat:I18N.t('emission_reduction'), name:I18N.t('result_cod'), unit:I18N.t('unit_ton'), val:'68.30'},
+            {cat:I18N.t('emission_reduction'), name:I18N.t('result_nh3n'), unit:I18N.t('unit_ton'), val:'4.12'},
+            {cat:I18N.t('emission_reduction'), name:I18N.t('result_tn'), unit:I18N.t('unit_ton'), val:'10.25'},
+            {cat:I18N.t('emission_reduction'), name:I18N.t('result_tp'), unit:I18N.t('unit_ton'), val:'1.88'},
+            {cat:I18N.t('emission_reduction'), name:I18N.t('result_pm25'), unit:I18N.t('unit_ton'), val:'8.76'},
+            {cat:I18N.t('emission_reduction'), name:I18N.t('result_voc'), unit:I18N.t('unit_ton'), val:'15.42'},
+            {cat:I18N.t('energy_saving'), name:I18N.t('result_coal'), unit:I18N.t('unit_ton'), val:'512.36'},
+            {cat:I18N.t('water_saving_cat'), name:I18N.t('result_water'), unit:I18N.t('unit_ton'), val:'9,870.50'}
+        ];
+        var tbody = document.getElementById('resultTableBody');
+        var html = '', lastCat = '';
+        for(var i=0; i<results.length; i++){
+            var r = results[i];
+            if(r.cat !== lastCat){
+                html += '<tr><td class="cat-header" colspan="4">'+r.cat+'</td></tr>';
+                lastCat = r.cat;
+            }
+            html += '<tr><td></td><td>'+r.name+'</td><td>'+r.unit+'</td><td style="font-weight:600;color:var(--ink-900);">'+r.val+'</td></tr>';
+        }
+        tbody.innerHTML = html;
+    }
     function doCalculate(){
         var plan=document.getElementById('calcPlan').value;
-        var calcSection=document.getElementById('calcSection');
         var resultSection=document.getElementById('resultSection');
-        // 模拟输入校验
         if(plan==='plan1'){
             var pw=document.getElementById('annualPower').value;
             var ht=document.getElementById('annualHeat').value;
-            if(!pw||!ht){alert('请完整填写所有必填参数！');return;}
+            if(!pw||!ht){alert(I18N.t('fill_all_params'));return;}
             document.getElementById('resPowerRow').style.display='flex';
             document.getElementById('resHeatRow').style.display='flex';
-            document.getElementById('resPower').textContent=pw+' 万千瓦时';
-            document.getElementById('resHeat').textContent=ht+' 百万吉焦';
+            document.getElementById('resPower').textContent=pw+' '+I18N.t('unit_10k_kwh');
+            document.getElementById('resHeat').textContent=ht+' '+I18N.t('unit_mil_gj');
             document.getElementById('resCoalRow').style.display='none';
             document.getElementById('resGasRow').style.display='none';
         }else if(plan==='plan2'){
             var cs=document.getElementById('coalSaving').value;
             var gs=document.getElementById('gasSaving').value;
-            if(!cs||!gs){alert('请完整填写所有必填参数！');return;}
+            if(!cs||!gs){alert(I18N.t('fill_all_params'));return;}
             document.getElementById('resCoalRow').style.display='flex';
             document.getElementById('resGasRow').style.display='flex';
-            document.getElementById('resCoal').textContent=cs+' 千克';
-            document.getElementById('resGas').textContent=gs+' 千克';
+            document.getElementById('resCoal').textContent=cs+' '+I18N.t('unit_kg');
+            document.getElementById('resGas').textContent=gs+' '+I18N.t('unit_kg');
             document.getElementById('resPowerRow').style.display='none';
             document.getElementById('resHeatRow').style.display='none';
         }
-        document.getElementById('resGreenType').textContent='1.5.3 余热余压利用';
-        document.getElementById('resPlan').textContent=plan==='plan1'?'方案一：二氧化碳减排计算的基本公式':'方案二：按能源消费品种分别计算';
-        // 生成模拟结果
-        var results=[
-            {cat:'减排量',name:'二氧化碳当量',unit:'吨',val:'1,248.56'},
-            {cat:'减排量',name:'二氧化硫',unit:'吨',val:'32.18'},
-            {cat:'减排量',name:'氮氧化物',unit:'吨',val:'21.45'},
-            {cat:'减排量',name:'化学需氧量',unit:'吨',val:'68.30'},
-            {cat:'减排量',name:'氨氮',unit:'吨',val:'4.12'},
-            {cat:'减排量',name:'总氮',unit:'吨',val:'10.25'},
-            {cat:'减排量',name:'总磷',unit:'吨',val:'1.88'},
-            {cat:'减排量',name:'细颗粒物（PM2.5）',unit:'吨',val:'8.76'},
-            {cat:'减排量',name:'挥发性有机物（VOCs）',unit:'吨',val:'15.42'},
-            {cat:'节能量',name:'标准煤',unit:'吨',val:'512.36'},
-            {cat:'节水量',name:'节水量',unit:'吨',val:'9,870.50'}
-        ];
-        var tbody=document.getElementById('resultTableBody');
-        var html='',lastCat='';
-        for(var i=0;i<results.length;i++){
-            var r=results[i];
-            if(r.cat!==lastCat){
-                html+='<tr><td class="cat-header" colspan="4">'+r.cat+'</td></tr>';
-                lastCat=r.cat;
-            }
-            html+='<tr><td></td><td>'+r.name+'</td><td>'+r.unit+'</td><td style="font-weight:600;color:var(--ink-900);">'+r.val+'</td></tr>';
-        }
-        tbody.innerHTML=html;
+        document.getElementById('resGreenType').textContent = I18N.t('gf_category_value');
+        document.getElementById('resPlan').textContent = plan==='plan1' ? I18N.t('plan1') : I18N.t('plan2');
+        renderResultTable();
         resultSection.style.display='block';
         resultSection.scrollIntoView({behavior:'smooth',block:'start'});
     }
@@ -305,11 +476,11 @@
         document.getElementById('calcSection').scrollIntoView({behavior:'smooth',block:'start'});
     }
     function handleSave(){
-        alert('测算结果已保存！\n\n测算状态：已测算\n审批状态：未提交');
+        alert(I18N.t('save_ok'));
     }
     function handleSubmit(){
-        if(confirm('确认提交审批？\n\n提交后进入审批流程：绿金专岗审批→总行初审→总行复核')){
-            alert('已提交审批！\n\n测算状态：已测算\n审批状态：审批中');
+        if(confirm(I18N.t('confirm_submit'))){
+            alert(I18N.t('submit_ok'));
             goBackToList();
         }
     }

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>合同绿色认定 · 可持续金融管理系统</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../i18n.js"></script>
   <style>
     :root {
       --brand-50: #E8F0FB; --brand-100: #D1DFF4; --brand-300: #6E97D6;
@@ -149,8 +150,7 @@
     .modal-box p { font-size: 14px; color: var(--ink-500); margin-bottom: 16px; }
     .modal-box .btn-group { display: flex; gap: 8px; justify-content: center; }
 
-    /* ===== 
-    备注 - 美观样式 ===== */
+    /* ===== 备注 - 美观样式 ===== */
     .dev-note-container {
       background: linear-gradient(135deg, #F0F4FF 0%, #E8F4F0 100%);
       border: 2px dashed var(--brand-500);
@@ -159,8 +159,7 @@
       margin-top: 16px;
       position: relative;
     }
-    .dev-note-container::before {
-      content: '备注';
+    .dev-note-label {
       position: absolute;
       top: -12px;
       left: 20px;
@@ -171,6 +170,7 @@
       color: var(--brand-700);
       border-radius: 20px;
       letter-spacing: 0.5px;
+      z-index: 1;
     }
     .dev-note-container .note-body {
       font-size: 13px;
@@ -216,73 +216,73 @@
           <div class="filter-row">
             <!-- 合同信息 -->
             <div class="filter-item">
-              <label>合同信息</label>
-              <input type="text" placeholder="请输入合同名称/编号">
+              <label data-i18n="filter_contract_info">合同信息</label>
+              <input type="text" data-i18n-placeholder="ph_contract_info" placeholder="请输入合同名称/编号">
             </div>
             <!-- 客户信息 -->
             <div class="filter-item">
-              <label>客户信息</label>
-              <input type="text" placeholder="企业名称/编号/统一社会信用">
+              <label data-i18n="filter_client_info">客户信息</label>
+              <input type="text" data-i18n-placeholder="ph_client_info" placeholder="企业名称/编号/统一社会信用">
             </div>
             <!-- 贷款投向行业 -->
             <div class="filter-item">
-              <label>贷款投向行业</label>
-              <select><option>请选择</option></select>
+              <label data-i18n="filter_loan_industry">贷款投向行业</label>
+              <select><option data-i18n="opt_select">请选择</option></select>
             </div>
             <!-- 业务品种 -->
             <div class="filter-item">
-              <label>业务品种</label>
-              <select><option>请选择</option></select>
+              <label data-i18n="filter_biz_type">业务品种</label>
+              <select><option data-i18n="opt_select">请选择</option></select>
             </div>
             <!-- 业务条线 -->
             <div class="filter-item">
-              <label>业务条线</label>
-              <select><option>请选择</option></select>
+              <label data-i18n="filter_biz_line">业务条线</label>
+              <select><option data-i18n="opt_select">请选择</option></select>
             </div>
             <!-- 所属分支机构 -->
             <div class="filter-item">
-              <label>所属分支机构</label>
-              <select><option>请选择</option></select>
+              <label data-i18n="filter_branch">所属分支机构</label>
+              <select><option data-i18n="opt_select">请选择</option></select>
             </div>
             <!-- 管户人 -->
             <div class="filter-item">
-              <label>管户人</label>
-              <input type="text" placeholder="请输入姓名/工号">
+              <label data-i18n="filter_manager">管户人</label>
+              <input type="text" data-i18n-placeholder="ph_manager" placeholder="请输入姓名/工号">
             </div>
             <!-- 合同类型 -->
             <div class="filter-item">
-              <label>合同类型</label>
-              <select><option>请选择</option><option>项目类</option><option>非项目类</option></select>
+              <label data-i18n="filter_contract_type">合同类型</label>
+              <select><option data-i18n="opt_select">请选择</option><option data-i18n="opt_project">项目类</option><option data-i18n="opt_non_project">非项目类</option></select>
             </div>
             <!-- 智能识别是否命中 -->
             <div class="filter-item">
-              <label>智能识别是否命中</label>
+              <label data-i18n="filter_ai_match">智能识别是否命中</label>
               <select>
-                <option>全部</option>
-                <option>命中</option>
-                <option>未命中</option>
+                <option data-i18n="opt_all">全部</option>
+                <option data-i18n="opt_matched">命中</option>
+                <option data-i18n="opt_not_matched">未命中</option>
                 <option>-</option>
               </select>
             </div>
             <!-- 最近更新时间 -->
             <div class="filter-item">
-              <label>最近更新时间</label>
+              <label data-i18n="filter_last_updated">最近更新时间</label>
               <input type="date" value="2015-10-02">
               <span style="color:var(--ink-400);font-size:13px;">~</span>
               <input type="date" value="2015-10-10">
             </div>
             <!-- 查询/重置按钮 -->
             <div class="filter-actions">
-              <button class="btn btn-primary btn-sm">查询</button>
-              <button class="btn btn-secondary btn-sm">重置</button>
+              <button class="btn btn-primary btn-sm" data-i18n="btn_search">查询</button>
+              <button class="btn btn-secondary btn-sm" data-i18n="btn_reset">重置</button>
             </div>
           </div>
         </div>
 
         <!-- 操作栏 -->
         <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100">
-          <div class="flex gap-2"><button class="btn btn-primary btn-sm">+ 新增认定</button><button class="btn btn-secondary btn-sm">导出数据</button></div>
-          <span class="text-sm text-slate-400">共 1126 条</span>
+          <div class="flex gap-2"><button class="btn btn-primary btn-sm" data-i18n="btn_new_id">+ 新增认定</button><button class="btn btn-secondary btn-sm" data-i18n="btn_export">导出数据</button></div>
+          <span class="text-sm text-slate-400"><span data-i18n="lbl_total_prefix">共</span> 1126 <span data-i18n="lbl_records">条</span></span>
         </div>
 
         <!-- 表格 -->
@@ -290,36 +290,31 @@
           <table class="w-full text-sm border-collapse">
             <thead style="background:var(--bg-muted);border-bottom:1px solid var(--line-200)">
               <tr>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:80px;">合同编号</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;">业务品种大类</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;">业务品种</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;">合同金额(万元)</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;">合同余额(万元)</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;">贷款投向行业</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;">合同类型</th>
-                <!-- 智能识别是否命中 -->
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;">智能识别是否命中</th>
-                <!-- 信贷系统2025绿色认定分类（必须展示具体分类，不能只显示"绿色"） -->
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:140px;">信贷系统2025绿色认定分类</th>
-                <!-- 项目是否已有绿色贷款（放在信贷系统识别结果之后） -->
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:120px;">项目是否已有绿色贷款</th>
-                <!-- 客户是否已有绿色贷款（放在信贷系统识别结果之后） -->
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:130px;">客户是否已有绿色贷款</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:90px;">业务条线</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:80px;">合同状态</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;">项目代码</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:120px;">项目名称</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;">客户编号</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:130px;">客户名称</th>
-                <!-- 国民经济行业大类（二级分类） -->
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:120px;">国民经济行业大类</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;">客户国民经济行业</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:120px;">所属分支机构</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;">管户人</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;">操作人</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:130px;">最近更新时间</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;">创建时间</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600 sticky-right-header" style="min-width:80px;border-left:1px solid var(--line-200);">操作</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:80px;" data-i18n="th_contract_no">合同编号</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;" data-i18n="th_biz_category">业务品种大类</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;" data-i18n="th_biz_type">业务品种</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;" data-i18n="th_amount">合同金额(万元)</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;" data-i18n="th_balance">合同余额(万元)</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;" data-i18n="th_loan_industry">贷款投向行业</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;" data-i18n="th_contract_type">合同类型</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;" data-i18n="th_ai_match">智能识别是否命中</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:140px;" data-i18n="th_credit_gf">信贷系统2025绿色认定分类</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:120px;" data-i18n="th_has_green_loan">项目是否已有绿色贷款</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:130px;" data-i18n="th_client_green_loan">客户是否已有绿色贷款</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:90px;" data-i18n="th_biz_line">业务条线</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:80px;" data-i18n="th_contract_status">合同状态</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;" data-i18n="th_project_code">项目代码</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:120px;" data-i18n="th_project_name">项目名称</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;" data-i18n="th_client_code">客户编号</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:130px;" data-i18n="th_client_name">客户名称</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:120px;" data-i18n="th_industry_cat">国民经济行业大类</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;" data-i18n="th_client_industry">客户国民经济行业</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:120px;" data-i18n="th_branch">所属分支机构</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;" data-i18n="th_manager">管户人</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;" data-i18n="th_operator">操作人</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:130px;" data-i18n="th_last_updated">最近更新时间</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;" data-i18n="th_created">创建时间</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600 sticky-right-header" style="min-width:80px;border-left:1px solid var(--line-200);" data-i18n="th_actions">操作</th>
               </tr>
             </thead>
             <tbody>
@@ -331,18 +326,17 @@
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">100,030.00</td>
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">90,000,000.00</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">炼钢</td>
-                <td class="px-2 py-2"><span class="tag tag-info">项目类</span></td>
-                <td class="px-2 py-2"><span class="tag tag-success">命中</span></td>
-                <!-- 信贷系统2025绿色认定分类：必须展示具体分类 -->
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">1.1.1节能锅炉制造</span></td>
-                <td class="px-2 py-2"><span class="tag tag-success">是</span></td>
-                <td class="px-2 py-2"><span class="tag tag-success">是</span></td>
+                <td class="px-2 py-2"><span class="tag tag-info" data-i18n="tag_project">项目类</span></td>
+                <td class="px-2 py-2"><span class="tag tag-success" data-i18n="tag_matched">命中</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="1.1.1 节能锅炉制造">1.1.1 节能锅炉制造</span></td>
+                <td class="px-2 py-2"><span class="tag tag-success" data-i18n="tag_yes">是</span></td>
+                <td class="px-2 py-2"><span class="tag tag-success" data-i18n="tag_yes">是</span></td>
                 <td class="px-2 py-2" style="white-space:nowrap;">对公</td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">生效</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="tag_active">生效</span></td>
                 <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">PRJNO202004261603</td>
-                <td class="px-2 py-2" style="white-space:nowrap;">炼钢产能等量置换转型升级项目</td>
+                <td class="px-2 py-2" style="white-space:nowrap;" data-i18n="mock_project_1">动力及储能锂离子电池研发生产</td>
                 <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
-                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;">迁安轧一钢铁集团有限公司</td>
+                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;" data-i18n="mock_company_1">宁德时代新能源科技股份有限公司</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">C31 黑色金属冶炼和压延加工业</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">炼钢</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">北京分行</td>
@@ -351,7 +345,7 @@
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
-                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)">查看详情</button>
+                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)" data-i18n="btn_view_detail">查看详情</button>
                 </td>
               </tr>
               <!-- 行2：项目类 -->
@@ -362,18 +356,17 @@
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">300,000.00</td>
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">230,000,000.00</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">太阳能发电</td>
-                <td class="px-2 py-2"><span class="tag tag-info">项目类</span></td>
-                <td class="px-2 py-2"><span class="tag tag-danger">未命中</span></td>
-                <!-- 信贷系统2025绿色认定分类：非绿也展示具体状态 -->
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-danger">非绿</span></td>
-                <td class="px-2 py-2"><span class="tag tag-default">否</span></td>
-                <td class="px-2 py-2"><span class="tag tag-success">是</span></td>
+                <td class="px-2 py-2"><span class="tag tag-info" data-i18n="tag_project">项目类</span></td>
+                <td class="px-2 py-2"><span class="tag tag-danger" data-i18n="tag_not_matched">未命中</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-danger" data-i18n="tag_non_green">非绿</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default" data-i18n="tag_no">否</span></td>
+                <td class="px-2 py-2"><span class="tag tag-success" data-i18n="tag_yes">是</span></td>
                 <td class="px-2 py-2" style="white-space:nowrap;">对公</td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">生效</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="tag_active">生效</span></td>
                 <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">PRJNO202103091119</td>
-                <td class="px-2 py-2" style="white-space:nowrap;">光伏发电项目</td>
+                <td class="px-2 py-2" style="white-space:nowrap;" data-i18n="mock_project_2">银川隆基5GW单晶硅片及电池组件项目</td>
                 <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
-                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;">浙江阿波溪仑光伏科技有限公司</td>
+                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;" data-i18n="mock_company_2">隆基绿能科技股份有限公司</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">D44 电力、热力生产和供应业</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">热电联产</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">北京分行</td>
@@ -382,7 +375,7 @@
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
-                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)">查看详情</button>
+                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)" data-i18n="btn_view_detail">查看详情</button>
                 </td>
               </tr>
               <!-- 行3：非项目类 -->
@@ -393,18 +386,17 @@
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">200,000.00</td>
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">9,000,000.00</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">太阳能发电</td>
-                <td class="px-2 py-2"><span class="tag tag-default">非项目类</span></td>
-                <td class="px-2 py-2"><span class="tag tag-success">命中</span></td>
-                <!-- 信贷系统2025绿色认定分类：必须展示具体分类 -->
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">1.1.1节能锅炉制造</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default" data-i18n="tag_non_project">非项目类</span></td>
+                <td class="px-2 py-2"><span class="tag tag-success" data-i18n="tag_matched">命中</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="1.1.1 节能锅炉制造">1.1.1 节能锅炉制造</span></td>
                 <td class="px-2 py-2"><span class="tag tag-default">—</span></td>
-                <td class="px-2 py-2"><span class="tag tag-success">是</span></td>
+                <td class="px-2 py-2"><span class="tag tag-success" data-i18n="tag_yes">是</span></td>
                 <td class="px-2 py-2" style="white-space:nowrap;">对公</td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">生效</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="tag_active">生效</span></td>
                 <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
-                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;">安吉临港热电有限公司</td>
+                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;" data-i18n="mock_company_3">中国广核电力股份有限公司</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">D44 电力、热力生产和供应业</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">热电联产</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">北京分行</td>
@@ -413,7 +405,7 @@
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
-                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)">查看详情</button>
+                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)" data-i18n="btn_view_detail">查看详情</button>
                 </td>
               </tr>
               <!-- 行4：非项目类 -->
@@ -424,18 +416,17 @@
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">90,000.00</td>
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">6,000,000.00</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">太阳能发电</td>
-                <td class="px-2 py-2"><span class="tag tag-default">非项目类</span></td>
-                <td class="px-2 py-2"><span class="tag tag-success">命中</span></td>
-                <!-- 信贷系统2025绿色认定分类：必须展示具体分类 -->
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">3.2.7 废气回收利用</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default" data-i18n="tag_non_project">非项目类</span></td>
+                <td class="px-2 py-2"><span class="tag tag-success" data-i18n="tag_matched">命中</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="3.2.7 废气回收利用">3.2.7 废气回收利用</span></td>
                 <td class="px-2 py-2"><span class="tag tag-default">—</span></td>
-                <td class="px-2 py-2"><span class="tag tag-success">是</span></td>
+                <td class="px-2 py-2"><span class="tag tag-success" data-i18n="tag_yes">是</span></td>
                 <td class="px-2 py-2" style="white-space:nowrap;">对公</td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">生效</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="tag_active">生效</span></td>
                 <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
-                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;">重庆绿能新能源有限公司</td>
+                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;" data-i18n="mock_company_4">金风科技股份有限公司</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">D44 电力、热力生产和供应业</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">太阳能发电</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">重庆银行渝北支行</td>
@@ -444,7 +435,7 @@
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
-                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)">查看详情</button>
+                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)" data-i18n="btn_view_detail">查看详情</button>
                 </td>
               </tr>
               <!-- 行5：非项目类 -->
@@ -455,18 +446,17 @@
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">70,000.00</td>
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">20,000,000.00</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">大气污染治理</td>
-                <td class="px-2 py-2"><span class="tag tag-default">非项目类</span></td>
-                <td class="px-2 py-2"><span class="tag tag-success">命中</span></td>
-                <!-- 信贷系统2025绿色认定分类：必须展示具体分类 -->
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">2.5.2 危险废物处理处置</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default" data-i18n="tag_non_project">非项目类</span></td>
+                <td class="px-2 py-2"><span class="tag tag-success" data-i18n="tag_matched">命中</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="2.5.2 危险废物处理处置">2.5.2 危险废物处理处置</span></td>
                 <td class="px-2 py-2"><span class="tag tag-default">—</span></td>
-                <td class="px-2 py-2"><span class="tag tag-default">否</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default" data-i18n="tag_no">否</span></td>
                 <td class="px-2 py-2" style="white-space:nowrap;">小微</td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">生效</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="tag_active">生效</span></td>
                 <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
-                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;">重庆市煌发建筑劳务有限公司</td>
+                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;" data-i18n="mock_company_5">浙江嘉化能源化工股份有限公司</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">E48 土木工程建筑业</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">热力生产和供应</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">重庆银行渝北支行</td>
@@ -475,7 +465,7 @@
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
-                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)">查看详情</button>
+                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)" data-i18n="btn_view_detail">查看详情</button>
                 </td>
               </tr>
               <!-- 行6：非项目类 -->
@@ -486,18 +476,17 @@
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">107,000.00</td>
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">980,000,000.00</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">大气污染治理</td>
-                <td class="px-2 py-2"><span class="tag tag-default">非项目类</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default" data-i18n="tag_non_project">非项目类</span></td>
                 <td class="px-2 py-2"><span class="tag tag-default">-</span></td>
-                <!-- 信贷系统2025绿色认定分类：非绿展示具体状态 -->
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-danger">非绿</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-danger" data-i18n="tag_non_green">非绿</span></td>
                 <td class="px-2 py-2"><span class="tag tag-default">—</span></td>
-                <td class="px-2 py-2"><span class="tag tag-default">否</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default" data-i18n="tag_no">否</span></td>
                 <td class="px-2 py-2" style="white-space:nowrap;">小微</td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">生效</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="tag_active">生效</span></td>
                 <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
-                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;">湖州吴兴南太湖建设投资有限公司</td>
+                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;" data-i18n="mock_company_6">北控水务集团有限公司</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">E48 土木工程建筑业</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">热力生产和供应</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">重庆银行渝北支行</td>
@@ -506,7 +495,7 @@
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
-                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)">查看详情</button>
+                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)" data-i18n="btn_view_detail">查看详情</button>
                 </td>
               </tr>
               <!-- 行7：非项目类 -->
@@ -517,18 +506,17 @@
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">10,000.00</td>
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">78,000,000.00</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">炼铁</td>
-                <td class="px-2 py-2"><span class="tag tag-default">非项目类</span></td>
-                <td class="px-2 py-2"><span class="tag tag-danger">未命中</span></td>
-                <!-- 信贷系统2025绿色认定分类：非绿展示具体状态 -->
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-danger">非绿</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default" data-i18n="tag_non_project">非项目类</span></td>
+                <td class="px-2 py-2"><span class="tag tag-danger" data-i18n="tag_not_matched">未命中</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-danger" data-i18n="tag_non_green">非绿</span></td>
                 <td class="px-2 py-2"><span class="tag tag-default">—</span></td>
-                <td class="px-2 py-2"><span class="tag tag-default">否</span></td>
+                <td class="px-2 py-2"><span class="tag tag-default" data-i18n="tag_no">否</span></td>
                 <td class="px-2 py-2" style="white-space:nowrap;">零售</td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success">生效</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="tag_active">生效</span></td>
                 <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
-                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;">李XX</td>
+                <td class="px-2 py-2 font-medium text-slate-800" style="white-space:nowrap;" data-i18n="mock_company_7">宝武钢铁集团有限公司</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">F52 零售业</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">炼铁</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">北京分行</td>
@@ -537,7 +525,7 @@
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
-                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)">查看详情</button>
+                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)" data-i18n="btn_view_detail">查看详情</button>
                 </td>
               </tr>
             </tbody>
@@ -545,33 +533,32 @@
         </div>
         <!-- 分页 -->
         <div class="flex items-center justify-between px-6 py-3 border-t border-slate-100">
-          <span class="text-sm text-slate-400">共 1126 条</span>
-          <div class="flex items-center gap-2"><button class="btn btn-secondary btn-sm">‹</button><span class="px-2 py-1 text-sm bg-brand-500 text-white rounded">1</span><button class="btn btn-secondary btn-sm">2</button><button class="btn btn-secondary btn-sm">3</button><span class="text-sm text-slate-400">…</span><button class="btn btn-secondary btn-sm">50</button><button class="btn btn-secondary btn-sm">›</button><span class="text-sm text-slate-500 ml-2">跳至 <input type="number" class="w-12 px-1 py-0.5 border border-slate-300 rounded text-center text-sm" value="1"> /50页</span></div>
+          <span class="text-sm text-slate-400"><span data-i18n="lbl_total_prefix">共</span> 1126 <span data-i18n="lbl_records">条</span></span>
+          <div class="flex items-center gap-2"><button class="btn btn-secondary btn-sm">&#8249;</button><span class="px-2 py-1 text-sm bg-brand-500 text-white rounded">1</span><button class="btn btn-secondary btn-sm">2</button><button class="btn btn-secondary btn-sm">3</button><span class="text-sm text-slate-400">&hellip;</span><button class="btn btn-secondary btn-sm">50</button><button class="btn btn-secondary btn-sm">&#8250;</button><span class="text-sm text-slate-500 ml-2"><span data-i18n="lbl_jump_to">跳至</span> <input type="number" class="w-12 px-1 py-0.5 border border-slate-300 rounded text-center text-sm" value="1"> /50<span data-i18n="lbl_page">页</span></span></div>
         </div>
 
-        <!-- ===== 
-         备注 - 美观样式 ===== -->
+        <!-- ===== 备注 - 美观样式 ===== -->
         <div class="dev-note-container">
+          <span class="dev-note-label" data-i18n="dev_note_label">备注</span>
           <div class="note-body">
-            <span class="label-tag">业务流程</span>
+            <span class="label-tag" data-i18n="dev_biz_flow">业务流程</span>
             <span class="step">
-              <strong>第一步：发起合同绿色认定</strong><br>
-              自动发起流程：信贷系统放贷环节，符合以下条件的合同自动发起碳排放核算：【合同状态为“有效”。创建时间“待确认”】。<br>
-              手动发起流程：输入合同编号/客户编号查询为创建认定任务的合同数据，点击发起按钮，弹出确认弹窗，客户经理点击确认后，发起合同绿色认定。
+              <strong data-i18n="dev_step1_title">第一步：发起合同绿色认定</strong><br>
+              <span data-i18n="dev_step1_desc">自动发起流程：信贷系统放贷环节，符合以下条件的合同自动发起碳排放核算：【合同状态为"有效"。创建时间"待确认"】。<br>手动发起流程：输入合同编号/客户编号查询为创建认定任务的合同数据，点击发起按钮，弹出确认弹窗，客户经理点击确认后，发起合同绿色认定。</span>
             </span>
             <span class="step">
-              <strong>第二步：模型自动认定</strong><br>
-              合同绿色认定发起成功后，自动调用模型，基于合同融资用途生成智能识别结果。并与信贷系统识别结果做对比，若模型识别的浅明分类其中一个与信贷系统识别结果一致，则为“命中”，三个都与信贷系统分类不一致，则为“未命中”。信贷系统未保存分类，则显示为“-”。
+              <strong data-i18n="dev_step2_title">第二步：模型自动认定</strong><br>
+              <span data-i18n="dev_step2_desc">合同绿色认定发起成功后，自动调用模型，基于合同融资用途生成智能识别结果。并与信贷系统识别结果做对比，若模型识别的浅明分类其中一个与信贷系统识别结果一致，则为"命中"，三个都与信贷系统分类不一致，则为"未命中"。信贷系统未保存分类，则显示为"-"。</span>
             </span>
             <span class="step">
-              <strong>第三步：业务人员重新识别</strong><br>
-              不强制，支持业务人员修改“融资用途”，点击查看页面的【重新识别】按钮，调用模型重新识别。点击【保存】按钮，保存模型重新识别结果。（预留：识别过程记录口子，后续可能增加每次模型识别记录展示功能。）
+              <strong data-i18n="dev_step3_title">第三步：业务人员重新识别</strong><br>
+              <span data-i18n="dev_step3_desc">不强制，支持业务人员修改"融资用途"，点击查看页面的【重新识别】按钮，调用模型重新识别。点击【保存】按钮，保存模型重新识别结果。（预留：识别过程记录口子，后续可能增加每次模型识别记录展示功能。）</span>
             </span>
             <span class="step" style="margin-top:8px;">
-              <strong>列表贷款查看权限及操作权限：</strong>业务人员看自己主办的贷款数据、分行看自己机构及下设机构的贷款数据，浙江省分行看整个浙江省的。有本合同查看权限的人均有列表【查看详情】按钮，及详情页：“融资用途”编辑，及【重新识别】按钮操作权限。
+              <strong data-i18n="dev_perm_title">列表贷款查看权限及操作权限：</strong><span data-i18n="dev_perm_desc">业务人员看自己主办的贷款数据、分行看自己机构及下设机构的贷款数据，浙江省分行看整个浙江省的。有本合同查看权限的人均有列表【查看详情】按钮，及详情页："融资用途"编辑，及【重新识别】按钮操作权限。</span>
             </span>
             <span class="step" style="margin-top:8px;">
-              <strong>列表字段含义说明：</strong>1.智能识别是否命中：“命中”、“未命中”、“-”。基于合同融资用途生成智能识别结果与信贷系统识别结果做对比，若模型识别的浅明分类其中一个与信贷系统识别结果一致，则为“命中”，三个都与信贷系统分类不一致，则为“未命中”。信贷系统未保存分类，则显示为“-”。	2.信贷系统2025绿色认定分类：对接行内信贷系统，贷款绿色认定结果	3.项目是否已有绿色贷款：本项目关联的项目贷是否存在“信贷系统认定为绿色记录”	4.客户是否已有绿色贷款：本客户关联的所有贷款是否存在“信贷系统认定为绿色记录”
+              <strong data-i18n="dev_field_title">列表字段含义说明：</strong><span data-i18n="dev_field_desc">1.智能识别是否命中："命中"、"未命中"、"-"。基于合同融资用途生成智能识别结果与信贷系统识别结果做对比，若模型识别的浅明分类其中一个与信贷系统识别结果一致，则为"命中"，三个都与信贷系统分类不一致，则为"未命中"。信贷系统未保存分类，则显示为"-"。	2.信贷系统2025绿色认定分类：对接行内信贷系统，贷款绿色认定结果	3.项目是否已有绿色贷款：本项目关联的项目贷是否存在"信贷系统认定为绿色记录"	4.客户是否已有绿色贷款：本客户关联的所有贷款是否存在"信贷系统认定为绿色记录"</span>
             </span>
           </div>
         </div>
@@ -584,15 +571,170 @@
 <div class="modal-mask" id="infoModal">
   <div class="modal-box">
     <div class="icon"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="11" y2="9" stroke="currentColor" stroke-width="1.3"/></svg></div>
-    <h3>只读模式</h3>
-    <p id="modalMessage">展示本合同绿色认定结果</p>
+    <h3 data-i18n="modal_readonly_title">只读模式</h3>
+    <p id="modalMessage" data-i18n="modal_readonly_msg">展示本合同绿色认定结果</p>
     <div class="btn-group">
-      <button class="btn btn-primary btn-sm" onclick="closeModal()">我知道了</button>
+      <button class="btn btn-primary btn-sm" onclick="closeModal()" data-i18n="modal_got_it">我知道了</button>
     </div>
   </div>
 </div>
 
 <script>
+  // ==================== i18n 字典 ====================
+  I18N.setDict({
+    // Title
+    page_title: {zh:'合同绿色认定 · 可持续金融管理系统', en:'Contract Green ID · Sustainable Finance System'},
+    // Filter labels
+    filter_contract_info: {zh:'合同信息', en:'Contract Info'},
+    filter_client_info: {zh:'客户信息', en:'Client Info'},
+    filter_loan_industry: {zh:'贷款投向行业', en:'Loan Industry'},
+    filter_biz_type: {zh:'业务品种', en:'Business Type'},
+    filter_biz_line: {zh:'业务条线', en:'Business Line'},
+    filter_branch: {zh:'所属分支机构', en:'Branch'},
+    filter_manager: {zh:'管户人', en:'Manager'},
+    filter_contract_type: {zh:'合同类型', en:'Contract Type'},
+    filter_ai_match: {zh:'智能识别是否命中', en:'AI Match'},
+    filter_last_updated: {zh:'最近更新时间', en:'Last Updated'},
+    // Placeholders
+    ph_contract_info: {zh:'请输入合同名称/编号', en:'Contract name / number'},
+    ph_client_info: {zh:'企业名称/编号/统一社会信用', en:'Company name / code / credit code'},
+    ph_manager: {zh:'请输入姓名/工号', en:'Name / employee ID'},
+    // Options
+    opt_select: {zh:'请选择', en:'Select'},
+    opt_all: {zh:'全部', en:'All'},
+    opt_project: {zh:'项目类', en:'Project'},
+    opt_non_project: {zh:'非项目类', en:'Non-Project'},
+    opt_matched: {zh:'命中', en:'Matched'},
+    opt_not_matched: {zh:'未命中', en:'Not Matched'},
+    // Buttons
+    btn_search: {zh:'查询', en:'Search'},
+    btn_reset: {zh:'重置', en:'Reset'},
+    btn_new_id: {zh:'+ 新增认定', en:'+ New ID'},
+    btn_export: {zh:'导出数据', en:'Export'},
+    btn_view_detail: {zh:'查看详情', en:'View Details'},
+    // Table headers
+    th_contract_no: {zh:'合同编号', en:'Contract No.'},
+    th_biz_category: {zh:'业务品种大类', en:'Business Category'},
+    th_biz_type: {zh:'业务品种', en:'Business Type'},
+    th_amount: {zh:'合同金额(万元)', en:'Amount (10k CNY)'},
+    th_balance: {zh:'合同余额(万元)', en:'Balance (10k CNY)'},
+    th_loan_industry: {zh:'贷款投向行业', en:'Loan Industry'},
+    th_contract_type: {zh:'合同类型', en:'Type'},
+    th_ai_match: {zh:'智能识别是否命中', en:'AI Match'},
+    th_credit_gf: {zh:'信贷系统2025绿色认定分类', en:'Credit GF Category'},
+    th_has_green_loan: {zh:'项目是否已有绿色贷款', en:'Has Green Loan'},
+    th_client_green_loan: {zh:'客户是否已有绿色贷款', en:'Client Has Green Loan'},
+    th_biz_line: {zh:'业务条线', en:'Business Line'},
+    th_contract_status: {zh:'合同状态', en:'Status'},
+    th_project_code: {zh:'项目代码', en:'Project Code'},
+    th_project_name: {zh:'项目名称', en:'Project Name'},
+    th_client_code: {zh:'客户编号', en:'Client Code'},
+    th_client_name: {zh:'客户名称', en:'Client Name'},
+    th_industry_cat: {zh:'国民经济行业大类', en:'Industry Category'},
+    th_client_industry: {zh:'客户国民经济行业', en:'Client Industry'},
+    th_branch: {zh:'所属分支机构', en:'Branch'},
+    th_manager: {zh:'管户人', en:'Manager'},
+    th_operator: {zh:'操作人', en:'Operator'},
+    th_last_updated: {zh:'最近更新时间', en:'Last Updated'},
+    th_created: {zh:'创建时间', en:'Created'},
+    th_actions: {zh:'操作', en:'Actions'},
+    // Tags
+    tag_project: {zh:'项目类', en:'Project'},
+    tag_non_project: {zh:'非项目类', en:'Non-Project'},
+    tag_matched: {zh:'命中', en:'Matched'},
+    tag_not_matched: {zh:'未命中', en:'Not Matched'},
+    tag_non_green: {zh:'非绿', en:'Non-Green'},
+    tag_yes: {zh:'是', en:'Yes'},
+    tag_no: {zh:'否', en:'No'},
+    tag_active: {zh:'生效', en:'Active'},
+    // Pagination
+    lbl_total_prefix: {zh:'共', en:'Total'},
+    lbl_records: {zh:'条', en:'records'},
+    lbl_jump_to: {zh:'跳至', en:'Jump to'},
+    lbl_page: {zh:'页', en:'Page'},
+    // Modal
+    modal_readonly_title: {zh:'只读模式', en:'Read-Only Mode'},
+    modal_readonly_msg: {zh:'展示本合同绿色认定结果', en:'View contract green identification results'},
+    modal_got_it: {zh:'我知道了', en:'Got it'},
+    // Dev note
+    dev_note_label: {zh:'备注', en:'Note'},
+    dev_biz_flow: {zh:'业务流程', en:'Business Flow'},
+    dev_step1_title: {zh:'第一步：发起合同绿色认定', en:'Step 1: Initiate Contract Green ID'},
+    dev_step1_desc: {zh:'自动发起流程：信贷系统放贷环节，符合以下条件的合同自动发起碳排放核算：【合同状态为"有效"。创建时间"待确认"】。<br>手动发起流程：输入合同编号/客户编号查询为创建认定任务的合同数据，点击发起按钮，弹出确认弹窗，客户经理点击确认后，发起合同绿色认定。', en:'Auto-initiated: During the credit system lending process, contracts meeting the following conditions automatically trigger carbon accounting: [Contract status is "Active". Creation time "TBD"].<br>Manual initiation: Enter contract/client number to query contract data for creating ID tasks, click the initiate button, confirm the popup, and the contract manager confirms to initiate contract green ID.'},
+    dev_step2_title: {zh:'第二步：模型自动认定', en:'Step 2: Automatic Model Identification'},
+    dev_step2_desc: {zh:'合同绿色认定发起成功后，自动调用模型，基于合同融资用途生成智能识别结果。并与信贷系统识别结果做对比，若模型识别的浅明分类其中一个与信贷系统识别结果一致，则为"命中"，三个都与信贷系统分类不一致，则为"未命中"。信贷系统未保存分类，则显示为"-"。', en:'After successful initiation, the model is automatically invoked to generate AI ID results based on contract financing purpose. Results are compared with credit system ID results: if any one of the three AI-identified categories matches the credit system result, it is "Matched"; if all three differ, it is "Not Matched". If the credit system has no saved category, "-" is displayed.'},
+    dev_step3_title: {zh:'第三步：业务人员重新识别', en:'Step 3: Business Staff Re-identification'},
+    dev_step3_desc: {zh:'不强制，支持业务人员修改"融资用途"，点击查看页面的【重新识别】按钮，调用模型重新识别。点击【保存】按钮，保存模型重新识别结果。（预留：识别过程记录口子，后续可能增加每次模型识别记录展示功能。）', en:'Optional. Supports business staff modifying "Financing Purpose", clicking the [Re-identify] button on the view page to invoke model re-identification. Click [Save] to save re-identified results. (Reserved: identification process log, may add model identification record display later.)'},
+    dev_perm_title: {zh:'列表贷款查看权限及操作权限：', en:'List View & Operation Permissions:'},
+    dev_perm_desc: {zh:'业务人员看自己主办的贷款数据、分行看自己机构及下设机构的贷款数据，浙江省分行看整个浙江省的。有本合同查看权限的人均有列表【查看详情】按钮，及详情页："融资用途"编辑，及【重新识别】按钮操作权限。', en:'Business staff view their own loan data; branches view data of their own institution and subordinate institutions; Zhejiang Provincial Branch views all of Zhejiang Province. Anyone with view permission for this contract has access to the [View Details] button, and the detail page: "Financing Purpose" editing, and [Re-identify] button operations.'},
+    dev_field_title: {zh:'列表字段含义说明：', en:'Field Definitions:'},
+    dev_field_desc: {zh:'1.智能识别是否命中："命中"、"未命中"、"-"。基于合同融资用途生成智能识别结果与信贷系统识别结果做对比，若模型识别的浅明分类其中一个与信贷系统识别结果一致，则为"命中"，三个都与信贷系统分类不一致，则为"未命中"。信贷系统未保存分类，则显示为"-"。	2.信贷系统2025绿色认定分类：对接行内信贷系统，贷款绿色认定结果	3.项目是否已有绿色贷款：本项目关联的项目贷是否存在"信贷系统认定为绿色记录"	4.客户是否已有绿色贷款：本客户关联的所有贷款是否存在"信贷系统认定为绿色记录"', en:'1. AI Match: "Matched", "Not Matched", or "-". AI ID results based on financing purpose are compared with credit system results. If any of the three AI categories matches the credit system, it is "Matched"; if all three differ, "Not Matched". If no credit system category is saved, "-" is shown. 2. Credit System 2025 GF Category: Connected to internal credit system, loan green ID results. 3. Has Green Loan: Whether the associated project loan has a "credit system green record". 4. Client Has Green Loan: Whether any loan under this client has a "credit system green record".'},
+    // Mock company names
+    mock_company_1: {zh:'宁德时代新能源科技股份有限公司', en:'CATL (Contemporary Amperex Technology Co., Ltd.)'},
+    mock_company_2: {zh:'隆基绿能科技股份有限公司', en:'LONGi Green Energy Technology Co., Ltd.'},
+    mock_company_3: {zh:'中国广核电力股份有限公司', en:'CGN Power Co., Ltd.'},
+    mock_company_4: {zh:'金风科技股份有限公司', en:'Goldwind Science & Technology Co., Ltd.'},
+    mock_company_5: {zh:'浙江嘉化能源化工股份有限公司', en:'Zhejiang Jiahua Energy Chemical Co., Ltd.'},
+    mock_company_6: {zh:'北控水务集团有限公司', en:'BEWG (Beijing Enterprises Water Group) Ltd.'},
+    mock_company_7: {zh:'宝武钢铁集团有限公司', en:'Baowu Steel Group Co., Ltd.'},
+    // Mock project names
+    mock_project_1: {zh:'动力及储能锂离子电池研发生产', en:'Power & Energy Storage Li-ion Battery R&D'},
+    mock_project_2: {zh:'银川隆基5GW单晶硅片及电池组件项目', en:'Yinchuan LONGi 5GW Monocrystalline Silicon Wafer & Module'},
+    mock_project_3: {zh:'惠州港口海上风电项目', en:'Huizhou Port Offshore Wind Power Project'},
+    mock_project_4: {zh:'赤峰翁牛特旗风电场', en:'Chifeng Wengniute Wind Farm'},
+    mock_project_5: {zh:'嘉兴港区工业副产氢综合利用项目', en:'Jiaxing Port Industrial By-product Hydrogen Utilization'},
+    mock_project_6: {zh:'银川市再生水厂管网项目', en:'Yinchuan Reclaimed Water Plant & Pipeline Network'},
+    mock_project_7: {zh:'宝钢股份超低排放环保升级改造', en:'Baosteel Ultra-Low Emission Environmental Upgrade'},
+
+    // === 2025 Green Finance Categories - Complete Translations ===
+    // Level 1
+    '1.节能降碳产业': {zh:'1.节能降碳产业', en:'1. Energy Conservation & Carbon Reduction'},
+    '2.清洁生产产业': {zh:'2.清洁生产产业', en:'2. Cleaner Production'},
+    '3.清洁能源产业': {zh:'3.清洁能源产业', en:'3. Clean Energy Industry'},
+    '4.能源绿色低碳转型': {zh:'4.能源绿色低碳转型', en:'4. Green & Low-Carbon Energy Transition'},
+    '5.生态保护修复和利用': {zh:'5.生态保护修复和利用', en:'5. Ecological Protection & Restoration'},
+    '6.基础设施绿色升级': {zh:'6.基础设施绿色升级', en:'6. Green Infrastructure Upgrading'},
+    // Level 2
+    '1.1 能效提升': {zh:'1.1 能效提升', en:'1.1 Energy Efficiency Improvement'},
+    '1.2 先进交通装备制造': {zh:'1.2 先进交通装备制造', en:'1.2 Advanced Transportation Equipment Mfg'},
+    '2.1 污染防治': {zh:'2.1 污染防治', en:'2.1 Pollution Prevention & Control'},
+    '3.4 能源系统改造': {zh:'3.4 能源系统改造', en:'3.4 Energy System Renovation'},
+    '4.1 新能源与清洁能源装备制造': {zh:'4.1 新能源与清洁能源装备制造', en:'4.1 New & Clean Energy Equipment Mfg'},
+    '4.2 清洁能源设施建设和运营': {zh:'4.2 清洁能源设施建设和运营', en:'4.2 Clean Energy Facility Construction & Operation'},
+    '5.2 生态保护修复': {zh:'5.2 生态保护修复', en:'5.2 Ecological Protection & Restoration'},
+    '5.3 污染防治': {zh:'5.3 污染防治', en:'5.3 Pollution Prevention & Control'},
+    '6.5 城乡能源基础设施': {zh:'6.5 城乡能源基础设施', en:'6.5 Urban-Rural Energy Infrastructure'},
+    // Level 3
+    '1.2.1 新能源汽车及关键零部件制造': {zh:'1.2.1 新能源汽车及关键零部件制造', en:'1.2.1 NEV & Key Component Manufacturing'},
+    '2.1.2.1 重点行业水污染治理': {zh:'2.1.2.1 重点行业水污染治理', en:'2.1.2.1 Key Industry Water Pollution Control'},
+    '2.1.3 节能锅炉制造': {zh:'2.1.3 节能锅炉制造', en:'2.1.3 Energy-Efficient Boiler Manufacturing'},
+    '3.4.8 电网节能改造项目': {zh:'3.4.8 电网节能改造项目', en:'3.4.8 Grid Energy-Saving Renovation'},
+    '4.1.8 新型储能产品制造': {zh:'4.1.8 新型储能产品制造', en:'4.1.8 New Energy Storage Product Mfg'},
+    '4.2.4 大型水利发电设施建设和运营': {zh:'4.2.4 大型水利发电设施建设和运营', en:'4.2.4 Large Hydropower Facility Construction & Operation'},
+    '5.2.6 充电基础设施': {zh:'5.2.6 充电基础设施', en:'5.2.6 Charging Infrastructure'},
+    '5.2.11 水生态系统旱涝灾害防控及应对': {zh:'5.2.11 水生态系统旱涝灾害防控及应对', en:'5.2.11 Flood & Drought Prevention for Aquatic Ecosystems'},
+    '5.3.1.1 污水处理、再生利用及污泥处理处置设施建设运营': {zh:'5.3.1.1 污水处理、再生利用及污泥处理处置设施建设运营', en:'5.3.1.1 Sewage Treatment, Recycling & Sludge Disposal'},
+    '6.5.3 城镇集中供热系统清洁化、低碳化建设运营和改造': {zh:'6.5.3 城镇集中供热系统清洁化、低碳化建设运营和改造', en:'6.5.3 Clean District Heating Construction & Renovation'},
+    // Additional
+    '1.1.1 节能锅炉制造': {zh:'1.1.1 节能锅炉制造', en:'1.1.1 Energy-Efficient Boiler Manufacturing'},
+    '2.5 其他污染治理和环境综合整治': {zh:'2.5 其他污染治理和环境综合整治', en:'2.5 Other Pollution Control & Environmental Remediation'},
+    '2.5.2 危险废物处理处置': {zh:'2.5.2 危险废物处理处置', en:'2.5.2 Hazardous Waste Treatment & Disposal'},
+    '3.2 资源循环利用': {zh:'3.2 资源循环利用', en:'3.2 Resource Recycling & Utilization'},
+    '3.2.7 废气回收利用': {zh:'3.2.7 废气回收利用', en:'3.2.7 Waste Gas Recovery & Utilization'},
+    '绿色金融分类(2025)': {zh:'绿色金融分类(2025)', en:'Green Finance Category (2025)'},
+    '信贷系统2025绿色认定分类': {zh:'信贷系统2025绿色认定分类', en:'Credit System 2025 GF Category'},
+    '绿色金融标准：《绿色金融支持项目目录（2025年版）》': {zh:'绿色金融标准：《绿色金融支持项目目录（2025年版）》', en:'Green Finance Standard: Green Finance Project Catalogue (2025)'},
+    '绿色债券支持项目目录(2021)': {zh:'绿色债券支持项目目录(2021)', en:'Green Bond Project Catalogue (2021)'},
+    '碳减排支持工具范围': {zh:'碳减排支持工具范围', en:'Carbon Reduction Support Tools'},
+    '绿色低碳转型产业指导目录(2024)': {zh:'绿色低碳转型产业指导目录(2024)', en:'Green Low-Carbon Transition Industry Catalogue (2024)'},
+  });
+
+  // ==================== 语言切换时更新标题 ====================
+  window.onLangChange = function(lang) {
+    document.title = I18N.t('page_title');
+  };
+  document.title = I18N.t('page_title');
+
   // ==================== 获取当前路径 ====================
   function getCurrentDir() {
     var path = window.location.pathname;
@@ -600,10 +742,8 @@
   }
 
   // ==================== 处理"查看详情"按钮 ====================
-    // ==================== 处理"查看详情"按钮 ====================
   function handleView(btn) {
     var dir = getCurrentDir();
-    // 所有合同统一跳转到非项目类详情页
     window.location.href = dir + 'contract-green-identify-detail-nonproject.html';
   }
 
@@ -611,7 +751,7 @@
   function showModal(message) {
     var modal = document.getElementById('infoModal');
     var msg = document.getElementById('modalMessage');
-    msg.textContent = message || '展示本合同绿色认定结果';
+    msg.textContent = message || I18N.t('modal_readonly_msg');
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -632,7 +772,7 @@
 
   // ==================== 新增认定 ====================
   document.querySelector('.btn-primary.btn-sm')?.addEventListener('click', function(e) {
-    if (this.textContent.trim() === '+ 新增认定') {
+    if (this.textContent.trim().indexOf(I18N.t('btn_new_id').replace(/^\+ /,'')) !== -1 || this.textContent.trim().indexOf('New ID') !== -1 || this.textContent.trim().indexOf('新增认定') !== -1) {
       var dir = getCurrentDir();
       window.location.href = dir + '合同绿色认定详情页-项目类.html';
     }

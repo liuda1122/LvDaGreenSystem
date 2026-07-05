@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>绿色产业地图</title>
+    <title data-i18n="pageTitle">绿色产业地图</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         *{box-sizing:border-box;margin:0;padding:0}
@@ -13,6 +13,7 @@
         .placeholder{text-align:center;color:#94A3B8;font-size:14px}
         .placeholder .icon{font-size:64px;margin-bottom:16px}
     </style>
+    <script src="../i18n.js"></script>
 </head>
 <body>
     <div class="img-container">
@@ -22,10 +23,24 @@
              style="max-width:100%;max-height:100%;object-fit:contain;">
         <div id="placeholder" class="placeholder" style="display:none;">
             <div class="icon"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="2" width="12" height="12" rx="1.5" stroke="currentColor" fill="none" stroke-width="1.3"/><path d="M2 6h4M6 2v4M10 14V8M2 10h4M12 8h2v2" stroke="currentColor" fill="none" stroke-width="1.3"/></svg></div>
-            <div style="font-size:18px;font-weight:600;color:#475569;margin-bottom:8px;">绿色产业地图</div>
-            <div>全国绿色产业企业分布 · GIS可视化</div>
-            <div style="margin-top:12px;font-size:12px;color:#94A3B8;">请将地图图片保存至：02PotentialClientList/绿色产业地图.png</div>
+            <div style="font-size:18px;font-weight:600;color:#475569;margin-bottom:8px;" data-i18n="pageTitle">绿色产业地图</div>
+            <div data-i18n="subtitle">全国绿色产业企业分布 · GIS可视化</div>
+            <div style="margin-top:12px;font-size:12px;color:#94A3B8;" data-i18n="fallbackText">请将地图图片保存至：02PotentialClientList/绿色产业地图.png</div>
         </div>
     </div>
+    <script>
+    I18N.setDict({
+        pageTitle: {zh:'绿色产业地图', en:'Green Industry Map'},
+        subtitle: {zh:'全国绿色产业企业分布 · GIS可视化', en:'National Green Industry Distribution · GIS Visualization'},
+        fallbackText: {zh:'请将地图图片保存至：02PotentialClientList/绿色产业地图.png', en:'Save map image to: 02PotentialClientList/绿色产业地图.png'}
+    });
+    window.onLangChange = function(lang) {
+        document.title = I18N.t('pageTitle');
+        var img = document.querySelector('.img-container img');
+        if (img) img.alt = I18N.t('pageTitle');
+    };
+    // initial title update
+    document.title = I18N.t('pageTitle');
+    </script>
 </body>
 </html>
