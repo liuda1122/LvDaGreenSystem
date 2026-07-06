@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit -m 'feat: 项目绿色认定第7条示例数据完整更新 *)",
+      "Bash(git push *)"
+    ]
+  }
+}

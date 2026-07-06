@@ -319,12 +319,12 @@
     </div>
   </div>
 
-  <!-- ============ User List Drawer ============ -->
+  <!-- ============ User Management Drawer ============ -->
   <div class="drawer-mask" id="userListDrawerMask" onclick="closeUserListDrawer()"></div>
   <div class="drawer" id="userListDrawer">
     <div class="drawer-head">
       <div>
-        <div class="drawer-title" data-i18n="drawerUserList">用户清单</div>
+        <div class="drawer-title" data-i18n="drawerUserList">用户管理</div>
         <div class="drawer-subtitle" id="userListDrawerRole"><span data-i18n="drawerRolePrefix">角色：</span>系统管理员</div>
       </div>
       <button class="drawer-close" onclick="closeUserListDrawer()"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
@@ -340,27 +340,48 @@
       <div style="border:1px solid var(--line-200);border-radius:var(--radius-md);overflow:hidden">
         <table>
           <thead>
-            <tr><th style="width:40px" data-i18n="thSeq">序号</th><th data-i18n="thName">姓名</th><th data-i18n="thEmpNo">工号</th><th data-i18n="thOrg">所属机构</th><th data-i18n="thPosition">岗位</th><th data-i18n="thStatus">状态</th><th style="width:80px;text-align:right" data-i18n="thActions">操作</th></tr>
+            <tr><th style="width:50px" data-i18n="thSeq">序号</th><th data-i18n="thName">姓名</th><th data-i18n="thEmpNo">工号</th><th data-i18n="thOrg">所属机构</th><th data-i18n="thPosition">岗位名称</th><th data-i18n="thStatus">状态</th><th style="width:80px;text-align:right" data-i18n="thActions">操作</th></tr>
           </thead>
           <tbody id="userListTableBody"></tbody>
         </table>
       </div>
-      <div style="margin-top:12px;font-size:12px;color:var(--ink-500)"><span data-i18n="userCountPrefix">共</span> <strong id="userListCount" style="color:var(--brand-500)">0</strong> <span data-i18n="userCountSuffix">位用户</span></div>
+      <div style="display:flex;align-items:center;margin-top:12px;font-size:12px;color:var(--ink-500);flex-wrap:wrap;gap:8px">
+        <span><span data-i18n="userCountPrefix">共</span> <strong id="userListCount" style="color:var(--brand-500)">0</strong> <span data-i18n="userCountSuffix">位用户</span></span>
+        <div class="pagination" id="userListPaginationBar" style="margin-left:auto;padding:0;border-top:none;background:transparent">
+          <div class="pagination-controls" id="userListPaginationControls"></div>
+          <div style="display:flex;align-items:center;gap:6px;margin-left:12px">
+            <span style="font-size:12px;color:var(--ink-500)" data-i18n="paginationPerPage">每页</span>
+            <select class="select-native" style="width:auto;height:28px;padding:0 24px 0 8px;font-size:12px" onchange="changeUserListPageSize(this.value)"><option value="5">5</option><option value="10" selected>10</option><option value="20">20</option></select>
+            <span style="font-size:12px;color:var(--ink-500)" data-i18n="paginationUnit">条</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- ============ Add User to Role Modal ============ -->
   <div class="modal-mask" id="addUserToRoleModal">
-    <div class="modal">
+    <div class="modal" style="max-width:600px">
       <div class="modal-head">
         <span class="modal-title" data-i18n="modalAddUser">添加用户</span>
         <button class="modal-close" onclick="closeModal('addUserToRoleModal')"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
       </div>
       <div class="modal-body">
-        <div style="margin-bottom:12px">
-          <input type="text" class="input" data-i18n-placeholder="placeholderUserSearch" placeholder="搜索姓名/工号" id="addUserSearchInput" oninput="filterAvailableUsers(this.value)">
+        <!-- Search bar with buttons -->
+        <div style="display:flex;gap:var(--s-3);margin-bottom:12px;align-items:center">
+          <input type="text" class="input" data-i18n-placeholder="placeholderUserSearch" placeholder="搜索姓名/工号" id="addUserSearchInput" style="flex:1" onkeydown="if(event.key==='Enter')handleAddUserSearch()">
+          <button class="btn btn-primary btn-md" onclick="handleAddUserSearch()" data-i18n="btnAddUserSearch">查询</button>
+          <button class="btn btn-secondary btn-md" onclick="handleAddUserReset()" data-i18n="btnAddUserReset">重置</button>
+          <button class="btn btn-secondary btn-md" onclick="openBatchImport()" data-i18n="btnBatchImport">批量导入</button>
         </div>
-        <div style="max-height:240px;overflow-y:auto;border:1px solid var(--line-200);border-radius:var(--radius-md);padding:4px" id="availableUserList"></div>
+        <div style="margin-bottom:12px;font-size:12px;color:var(--ink-500);display:flex;align-items:center;gap:4px">
+          <span data-i18n="templateFields">工号、姓名、所属机构、岗位名称（多个岗位用逗号分隔）</span>
+          <a href="javascript:void(0)" onclick="downloadImportTemplate()" style="color:var(--brand-500);text-decoration:underline;margin-left:8px;cursor:pointer;font-size:12px" data-i18n="btnDownloadTemplate">下载模板</a>
+        </div>
+        <!-- Hidden file input for batch import -->
+        <input type="file" id="batchImportFileInput" accept=".csv" style="display:none" onchange="handleBatchImportFile(this)">
+        <!-- User list -->
+        <div style="max-height:280px;overflow-y:auto;border:1px solid var(--line-200);border-radius:var(--radius-md);padding:4px" id="availableUserList"></div>
         <div style="margin-top:12px;font-size:12px;color:var(--ink-500)"><span data-i18n="selectedUserCount1">已选择</span> <strong id="selectedUserCount" style="color:var(--brand-500)">0</strong> <span data-i18n="selectedUserCount2">位用户</span></div>
       </div>
       <div class="modal-foot">
@@ -437,30 +458,30 @@
 
     // All users (for add user to role)
     var allUsers = [
-      { name:'张明辉', empNo:'EMP001', org:'总行', position:'系统管理员', status:'启用' },
+      { name:'张明辉', empNo:'EMP001', org:'总行', position:'系统管理员, 产品经理', status:'启用' },
       { name:'李思雨', empNo:'EMP002', org:'总行', position:'绿色金融专员', status:'启用' },
-      { name:'王建国', empNo:'EMP003', org:'北京分行', position:'风险管理主管', status:'启用' },
+      { name:'王建国', empNo:'EMP003', org:'北京分行', position:'风险管理主管, ESG分析师', status:'启用' },
       { name:'赵晓燕', empNo:'EMP004', org:'北京分行-朝阳支行', position:'客户经理', status:'启用' },
       { name:'刘志强', empNo:'EMP005', org:'上海分行', position:'ESG分析师', status:'停用' },
       { name:'陈美玲', empNo:'EMP006', org:'上海分行-浦东支行', position:'信贷审批员', status:'启用' },
-      { name:'杨文博', empNo:'EMP007', org:'广州分行', position:'系统运维工程师', status:'启用' },
+      { name:'杨文博', empNo:'EMP007', org:'广州分行', position:'系统运维工程师, 数据分析师', status:'启用' },
       { name:'黄丽娟', empNo:'EMP008', org:'总行', position:'合规专员', status:'启用' },
       { name:'周天宇', empNo:'EMP009', org:'北京分行-海淀支行', position:'绿色信贷专员', status:'启用' },
       { name:'吴佳颖', empNo:'EMP010', org:'上海分行', position:'数据分析师', status:'启用' },
       { name:'孙浩然', empNo:'EMP011', org:'广州分行', position:'风险管理主管', status:'停用' },
       { name:'马晓东', empNo:'EMP012', org:'总行', position:'产品经理', status:'启用' },
-      { name:'林雅琪', empNo:'EMP013', org:'北京分行', position:'ESG分析师', status:'启用' },
+      { name:'林雅琪', empNo:'EMP013', org:'北京分行', position:'ESG分析师, 绿色信贷专员', status:'启用' },
       { name:'郑凯文', empNo:'EMP014', org:'上海分行-浦东支行', position:'客户经理', status:'启用' },
       { name:'何雨桐', empNo:'EMP015', org:'总行', position:'系统管理员', status:'启用' },
       { name:'徐明哲', empNo:'EMP016', org:'北京分行-朝阳支行', position:'绿色信贷专员', status:'启用' },
       { name:'胡文静', empNo:'EMP017', org:'广州分行', position:'合规专员', status:'启用' },
-      { name:'郭振华', empNo:'EMP018', org:'总行', position:'风险管理主管', status:'启用' },
+      { name:'郭振华', empNo:'EMP018', org:'总行', position:'风险管理主管, 合规主管', status:'启用' },
       { name:'曹雪萍', empNo:'EMP019', org:'上海分行', position:'产品经理', status:'停用' },
       { name:'邓子轩', empNo:'EMP020', org:'北京分行', position:'系统运维工程师', status:'启用' },
-      { name:'冯晓峰', empNo:'EMP021', org:'广州分行', position:'绿色信贷专员', status:'启用' },
+      { name:'冯晓峰', empNo:'EMP021', org:'广州分行', position:'绿色信贷专员, ESG分析师', status:'启用' },
       { name:'蒋丽芳', empNo:'EMP022', org:'总行', position:'ESG分析师', status:'启用' },
       { name:'韩天宇', empNo:'EMP023', org:'北京分行-海淀支行', position:'客户经理', status:'启用' },
-      { name:'田美华', empNo:'EMP024', org:'上海分行', position:'数据分析师', status:'启用' },
+      { name:'田美华', empNo:'EMP024', org:'上海分行', position:'数据分析师, 产品经理', status:'启用' },
       { name:'董建国', empNo:'EMP025', org:'总行', position:'合规主管', status:'启用' }
     ];
 
@@ -470,6 +491,25 @@
     var deletingRoleIndex = -1;
     var currentPermRole = null;
     var currentUserListRole = null;
+
+    // User list drawer pagination
+    var userListCurrentPage = 1;
+    var userListPageSize = 10;
+    var userListFilteredData = [];
+
+    // Add user modal state
+    var addUserSearchPerformed = false;
+    var batchImportedUsers = [];
+
+    // Helper: render position tags (supports comma-separated multiple positions)
+    function renderPositionTags(positionStr) {
+      if (!positionStr) return '';
+      var positions = positionStr.split(',').map(function(p) { return p.trim(); }).filter(function(p) { return p; });
+      if (positions.length === 0) return '';
+      return positions.map(function(p) {
+        return '<span class="role-chip" style="margin:1px">' + p + '</span>';
+      }).join('');
+    }
 
     // ===== Permission tree data =====
     var permModules = [
@@ -501,16 +541,16 @@
     // Users for each role (mock)
     var roleUsers = {
       '系统管理员': [
-        { name:'张明辉', empNo:'EMP001', org:'总行', position:'系统管理员', status:'启用' },
-        { name:'杨文博', empNo:'EMP007', org:'广州分行', position:'系统运维工程师', status:'启用' },
+        { name:'张明辉', empNo:'EMP001', org:'总行', position:'系统管理员, 产品经理', status:'启用' },
+        { name:'杨文博', empNo:'EMP007', org:'广州分行', position:'系统运维工程师, 数据分析师', status:'启用' },
         { name:'何雨桐', empNo:'EMP015', org:'总行', position:'系统管理员', status:'启用' }
       ],
       '总行管理员': [
-        { name:'王建国', empNo:'EMP003', org:'北京分行', position:'风险管理主管', status:'启用' },
-        { name:'杨文博', empNo:'EMP007', org:'广州分行', position:'系统运维工程师', status:'启用' },
+        { name:'王建国', empNo:'EMP003', org:'北京分行', position:'风险管理主管, ESG分析师', status:'启用' },
+        { name:'杨文博', empNo:'EMP007', org:'广州分行', position:'系统运维工程师, 数据分析师', status:'启用' },
         { name:'孙浩然', empNo:'EMP011', org:'广州分行', position:'风险管理主管', status:'停用' },
         { name:'马晓东', empNo:'EMP012', org:'总行', position:'产品经理', status:'启用' },
-        { name:'郭振华', empNo:'EMP018', org:'总行', position:'风险管理主管', status:'启用' }
+        { name:'郭振华', empNo:'EMP018', org:'总行', position:'风险管理主管, 合规主管', status:'启用' }
       ],
       '机构管理员': [
         { name:'李思雨', empNo:'EMP002', org:'总行', position:'绿色金融专员', status:'启用' },
@@ -520,7 +560,7 @@
         { name:'郑凯文', empNo:'EMP014', org:'上海分行-浦东支行', position:'客户经理', status:'启用' },
         { name:'胡文静', empNo:'EMP017', org:'广州分行', position:'合规专员', status:'启用' },
         { name:'蒋丽芳', empNo:'EMP022', org:'总行', position:'ESG分析师', status:'启用' },
-        { name:'田美华', empNo:'EMP024', org:'上海分行', position:'数据分析师', status:'启用' }
+        { name:'田美华', empNo:'EMP024', org:'上海分行', position:'数据分析师, 产品经理', status:'启用' }
       ],
       '绿色认定专员': [
         { name:'李思雨', empNo:'EMP002', org:'总行', position:'绿色金融专员', status:'启用' },
@@ -528,15 +568,15 @@
         { name:'周天宇', empNo:'EMP009', org:'北京分行-海淀支行', position:'绿色信贷专员', status:'启用' },
         { name:'徐明哲', empNo:'EMP016', org:'北京分行-朝阳支行', position:'绿色信贷专员', status:'启用' },
         { name:'曹雪萍', empNo:'EMP019', org:'上海分行', position:'产品经理', status:'停用' },
-        { name:'冯晓峰', empNo:'EMP021', org:'广州分行', position:'绿色信贷专员', status:'启用' }
+        { name:'冯晓峰', empNo:'EMP021', org:'广州分行', position:'绿色信贷专员, ESG分析师', status:'启用' }
       ],
       '审批人': [
-        { name:'王建国', empNo:'EMP003', org:'北京分行', position:'风险管理主管', status:'启用' },
+        { name:'王建国', empNo:'EMP003', org:'北京分行', position:'风险管理主管, ESG分析师', status:'启用' },
         { name:'陈美玲', empNo:'EMP006', org:'上海分行-浦东支行', position:'信贷审批员', status:'启用' },
         { name:'周天宇', empNo:'EMP009', org:'北京分行-海淀支行', position:'绿色信贷专员', status:'启用' },
         { name:'孙浩然', empNo:'EMP011', org:'广州分行', position:'风险管理主管', status:'停用' },
         { name:'徐明哲', empNo:'EMP016', org:'北京分行-朝阳支行', position:'绿色信贷专员', status:'启用' },
-        { name:'郭振华', empNo:'EMP018', org:'总行', position:'风险管理主管', status:'启用' },
+        { name:'郭振华', empNo:'EMP018', org:'总行', position:'风险管理主管, 合规主管', status:'启用' },
         { name:'董建国', empNo:'EMP025', org:'总行', position:'合规主管', status:'启用' }
       ]
     };
@@ -723,6 +763,8 @@
     // User list drawer
     function openUserListDrawer(idx) {
       currentUserListRole = allRoles[idx];
+      userListCurrentPage = 1;
+      userListPageSize = 10;
       document.getElementById('userListDrawerRole').innerHTML = '<span data-i18n="drawerRolePrefix">' + I18N.t('drawerRolePrefix', '角色：') + '</span>' + currentUserListRole.name;
       var users = roleUsers[currentUserListRole.name] || [];
       renderUserListTable(users);
@@ -731,9 +773,15 @@
     }
 
     function renderUserListTable(users) {
+      userListFilteredData = users;
+      var start = (userListCurrentPage - 1) * userListPageSize;
+      var end = Math.min(start + userListPageSize, users.length);
+      var pageUsers = users.slice(start, end);
+
       var tbody = document.getElementById('userListTableBody');
       var html = '';
-      users.forEach(function(u, i) {
+      pageUsers.forEach(function(u, i) {
+        var globalIdx = start + i;
         var statusKey = u.status === '启用' ? 'statusEnabled' : 'statusDisabled';
         var statusText = I18N.t(statusKey, u.status);
         var dotClass = u.status === '启用' ? 's-success' : 's-danger';
@@ -751,16 +799,42 @@
           removeBtn = '<button class="btn-danger-ghost" onclick="removeUserFromRole(\'' + u.empNo + '\')">' + I18N.t('actionRemove', '移除') + '</button>';
         }
 
-        html += '<tr><td style="color:var(--ink-500);font-family:var(--font-num);text-align:right">' + (i + 1) + '</td>'
+        html += '<tr><td style="color:var(--ink-500);font-family:var(--font-num);text-align:right">' + (globalIdx + 1) + '</td>'
           + '<td style="font-weight:500">' + u.name + taskBadge + '</td>'
           + '<td style="font-family:var(--font-mono);font-size:13px">' + u.empNo + '</td>'
           + '<td>' + u.org + '</td>'
-          + '<td>' + u.position + '</td>'
+          + '<td>' + renderPositionTags(u.position) + '</td>'
           + '<td>' + statusTag + '</td>'
           + '<td style="text-align:right">' + removeBtn + '</td></tr>';
       });
       tbody.innerHTML = html;
       document.getElementById('userListCount').textContent = users.length;
+      renderUserListPagination(users.length);
+    }
+
+    function renderUserListPagination(total) {
+      var totalPages = Math.ceil(total / userListPageSize);
+      if (totalPages < 1) totalPages = 1;
+      var controls = document.getElementById('userListPaginationControls');
+      var html = '';
+      html += '<button class="page-btn" style="font-size:12px;min-width:28px;height:28px" ' + (userListCurrentPage <= 1 ? 'disabled' : '') + ' onclick="changeUserListPage(-1)"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>';
+      for (var p = 1; p <= totalPages; p++) {
+        html += '<button class="page-btn' + (p === userListCurrentPage ? ' active' : '') + '" style="font-size:12px;min-width:28px;height:28px" onclick="goToUserListPage(' + p + ')">' + p + '</button>';
+      }
+      html += '<button class="page-btn" style="font-size:12px;min-width:28px;height:28px" ' + (userListCurrentPage >= totalPages ? 'disabled' : '') + ' onclick="changeUserListPage(1)"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>';
+      controls.innerHTML = html;
+    }
+
+    function goToUserListPage(p) { userListCurrentPage = p; renderUserListTable(userListFilteredData); }
+    function changeUserListPage(d) {
+      var t = Math.ceil(userListFilteredData.length / userListPageSize);
+      var n = userListCurrentPage + d;
+      if (n >= 1 && n <= t) { userListCurrentPage = n; renderUserListTable(userListFilteredData); }
+    }
+    function changeUserListPageSize(val) {
+      userListPageSize = parseInt(val);
+      userListCurrentPage = 1;
+      renderUserListTable(userListFilteredData);
     }
 
     var selectedAddUsers = [];
@@ -768,33 +842,69 @@
     function openAddUserToRoleModal() {
       if (!currentUserListRole) return;
       selectedAddUsers = [];
-      renderAvailableUsers();
+      batchImportedUsers = [];
+      addUserSearchPerformed = false;
+      document.getElementById('addUserSearchInput').value = '';
       document.getElementById('addUserToRoleModal').classList.add('open');
+      renderAvailableUsers();
+    }
+
+    // Add User search handler
+    function handleAddUserSearch() {
+      addUserSearchPerformed = true;
+      var filterVal = document.getElementById('addUserSearchInput').value.trim();
+      renderAvailableUsers(filterVal);
+    }
+
+    // Add User reset handler
+    function handleAddUserReset() {
+      document.getElementById('addUserSearchInput').value = '';
+      addUserSearchPerformed = false;
+      selectedAddUsers = [];
+      batchImportedUsers = [];
+      renderAvailableUsers();
     }
 
     function renderAvailableUsers(filter) {
       var container = document.getElementById('availableUserList');
       var currentUsers = roleUsers[currentUserListRole.name] || [];
-      var available = allUsers.filter(function(u) {
-        var alreadyAssigned = currentUsers.some(function(cu){ return cu.empNo === u.empNo; });
-        if (alreadyAssigned) return false;
-        if (filter && u.name.indexOf(filter) === -1 && u.empNo.toLowerCase().indexOf(filter.toLowerCase()) === -1) return false;
-        return true;
-      });
-      if (available.length === 0) {
-        container.innerHTML = '<div style="padding:16px;text-align:center;color:var(--ink-400);font-size:13px">' + I18N.t('noAvailableUsers', '暂无可选用户') + '</div>';
+
+      // If search not performed yet and no batch import, show empty prompt
+      if (!addUserSearchPerformed && batchImportedUsers.length === 0) {
+        container.innerHTML = '<div style="padding:24px;text-align:center;color:var(--ink-400);font-size:13px">' + I18N.t('searchPrompt', '请点击"查询"按钮搜索用户，或使用批量导入功能') + '</div>';
+        document.getElementById('selectedUserCount').textContent = selectedAddUsers.length;
         return;
       }
+
+      // Merge batch imported users with searched users
+      var displayUsers;
+      if (batchImportedUsers.length > 0) {
+        displayUsers = batchImportedUsers;
+      } else {
+        var available = allUsers.filter(function(u) {
+          var alreadyAssigned = currentUsers.some(function(cu){ return cu.empNo === u.empNo; });
+          if (alreadyAssigned) return false;
+          if (filter && u.name.indexOf(filter) === -1 && u.empNo.toLowerCase().indexOf(filter.toLowerCase()) === -1) return false;
+          return true;
+        });
+        displayUsers = available;
+      }
+
+      if (displayUsers.length === 0) {
+        container.innerHTML = '<div style="padding:16px;text-align:center;color:var(--ink-400);font-size:13px">' + I18N.t('noAvailableUsers', '暂无可选用户') + '</div>';
+        document.getElementById('selectedUserCount').textContent = selectedAddUsers.length;
+        return;
+      }
+
       var html = '';
-      available.forEach(function(u) {
+      displayUsers.forEach(function(u) {
         var checked = selectedAddUsers.indexOf(u.empNo) > -1;
-        var statusKey = u.status === '启用' ? 'statusEnabled' : 'statusDisabled';
-        var statusText = I18N.t(statusKey, u.status);
-        var dotClass = u.status === '启用' ? 's-success' : 's-danger';
-        var statusTag = '<span class="status"><span class="status-dot ' + dotClass + '"></span>' + statusText + '</span>';
-        html += '<div class="tree-option' + (checked ? ' selected' : '') + '" onclick="toggleSelectUser(this, \'' + u.empNo + '\')" style="justify-content:space-between">';
-        html += '<label class="checkbox"><input type="checkbox" ' + (checked ? 'checked' : '') + ' style="pointer-events:none">' + u.name + ' <span style="font-family:var(--font-mono);font-size:12px;color:var(--ink-500)">' + u.empNo + '</span></label>';
-        html += statusTag;
+        html += '<div class="tree-option' + (checked ? ' selected' : '') + '" onclick="toggleSelectUser(this, \'' + u.empNo + '\')" style="justify-content:space-between;padding:8px 10px">';
+        html += '<div style="display:flex;align-items:center;gap:12px">';
+        html += '<label class="checkbox"><input type="checkbox" ' + (checked ? 'checked' : '') + ' style="pointer-events:none">' + u.empNo + '</label>';
+        html += '<span style="font-weight:500">' + u.name + '</span>';
+        html += '<span style="color:var(--ink-500);font-size:13px">' + u.org + '</span>';
+        html += '</div>';
         html += '</div>';
       });
       container.innerHTML = html;
@@ -815,8 +925,112 @@
       document.getElementById('selectedUserCount').textContent = selectedAddUsers.length;
     }
 
-    function filterAvailableUsers(val) {
-      renderAvailableUsers(val.trim());
+    // Batch import functions
+    function openBatchImport() {
+      document.getElementById('batchImportFileInput').click();
+    }
+
+    function handleBatchImportFile(input) {
+      var file = input.files[0];
+      if (!file) return;
+
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var content = e.target.result;
+        var lines = content.split(/\r?\n/).filter(function(l) { return l.trim(); });
+        if (lines.length < 2) {
+          alert('CSV文件格式不正确，请使用下载的模板');
+          return;
+        }
+
+        // Skip header row
+        var imported = [];
+        for (var i = 1; i < lines.length; i++) {
+          var cols = parseCsvLine(lines[i]);
+          if (cols.length >= 3) {
+            imported.push({
+              empNo: (cols[0] || '').trim(),
+              name: (cols[1] || '').trim(),
+              org: (cols[2] || '').trim(),
+              position: (cols[3] || '').trim(),
+              status: '启用'
+            });
+          }
+        }
+
+        if (imported.length === 0) {
+          alert('未解析到有效数据，请检查文件格式');
+          return;
+        }
+
+        // Check for duplicates with already assigned users
+        var currentUsers = roleUsers[currentUserListRole.name] || [];
+        var validImports = imported.filter(function(u) {
+          return u.empNo && u.name && !currentUsers.some(function(cu) { return cu.empNo === u.empNo; });
+        });
+
+        if (validImports.length === 0) {
+          alert('导入的用户均已存在于该角色中');
+          return;
+        }
+
+        batchImportedUsers = validImports;
+        selectedAddUsers = validImports.map(function(u) { return u.empNo; });
+        addUserSearchPerformed = true;
+        renderAvailableUsers();
+        alert(I18N.t('importSuccess', '成功导入 ') + validImports.length + I18N.t('importUserCount', ' 位用户'));
+      };
+      reader.readAsText(file, 'UTF-8');
+      input.value = '';
+    }
+
+    function parseCsvLine(line) {
+      var result = [];
+      var current = '';
+      var inQuotes = false;
+      for (var i = 0; i < line.length; i++) {
+        var ch = line[i];
+        if (inQuotes) {
+          if (ch === '"') {
+            if (i + 1 < line.length && line[i + 1] === '"') {
+              current += '"';
+              i++;
+            } else {
+              inQuotes = false;
+            }
+          } else {
+            current += ch;
+          }
+        } else {
+          if (ch === '"') {
+            inQuotes = true;
+          } else if (ch === ',') {
+            result.push(current);
+            current = '';
+          } else {
+            current += ch;
+          }
+        }
+      }
+      result.push(current);
+      return result;
+    }
+
+    function downloadImportTemplate() {
+      var bom = '﻿';
+      var header = '工号,姓名,所属机构,岗位名称（多个岗位用逗号分隔）';
+      var sample1 = 'EMP026,测试用户A,总行,系统管理员, 产品经理';
+      var sample2 = 'EMP027,测试用户B,北京分行,风险管理主管';
+      var csvContent = bom + header + '\n' + sample1 + '\n' + sample2;
+      var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = '用户导入模板.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     }
 
     function confirmAddUsersToRole() {
@@ -825,8 +1039,13 @@
         return;
       }
       var currentUsers = roleUsers[currentUserListRole.name] || [];
+
+      // Find users from allUsers or batchImportedUsers
       selectedAddUsers.forEach(function(empNo) {
         var u = allUsers.find(function(a){ return a.empNo === empNo; });
+        if (!u) {
+          u = batchImportedUsers.find(function(b){ return b.empNo === empNo; });
+        }
         if (u && !currentUsers.some(function(cu){ return cu.empNo === u.empNo; })) {
           currentUsers.push({ name: u.name, empNo: u.empNo, org: u.org, position: u.position, status: u.status });
         }
@@ -841,6 +1060,7 @@
       if (searchVal) {
         filtered = currentUsers.filter(function(u) { return u.name.toLowerCase().indexOf(searchVal) > -1 || u.empNo.toLowerCase().indexOf(searchVal) > -1; });
       }
+      userListCurrentPage = 1;
       renderUserListTable(filtered);
       renderTable();
     }
@@ -874,11 +1094,13 @@
       if (searchVal) {
         filtered = users.filter(function(u) { return u.name.toLowerCase().indexOf(searchVal) > -1 || u.empNo.toLowerCase().indexOf(searchVal) > -1; });
       }
+      userListCurrentPage = 1;
       renderUserListTable(filtered);
       renderTable();
     }
 
     function filterUserList(val) {
+      userListCurrentPage = 1;
       var v = val.trim().toLowerCase();
       var users = roleUsers[currentUserListRole.name] || [];
       if (v) {
@@ -978,7 +1200,7 @@
       thName: {zh:'姓名', en:'Name'},
       thEmpNo: {zh:'工号', en:'Employee ID'},
       thOrg: {zh:'所属机构', en:'Organization'},
-      thPosition: {zh:'岗位', en:'Position'},
+      thPosition: {zh:'岗位名称', en:'Position'},
 
       // Pagination
       paginationTotal: {zh:'共', en:'Total '},
@@ -1003,8 +1225,8 @@
       permSelf: {zh:'本机构', en:'This Organization'},
       permMine: {zh:'本人', en:'Myself'},
 
-      // User List Drawer
-      drawerUserList: {zh:'用户清单', en:'User List'},
+      // User Management Drawer
+      drawerUserList: {zh:'用户管理', en:'User Management'},
       drawerRolePrefix: {zh:'角色：', en:'Role: '},
       placeholderUserSearch: {zh:'搜索姓名/工号', en:'Search name/employee ID'},
       userCountPrefix: {zh:'共', en:'Total: '},
@@ -1012,8 +1234,17 @@
 
       // Add User Modal
       modalAddUser: {zh:'添加用户', en:'Add User'},
+      btnBatchImport: {zh:'批量导入', en:'Batch Import'},
+      btnDownloadTemplate: {zh:'下载模板', en:'Download Template'},
+      btnAddUserSearch: {zh:'查询', en:'Search'},
+      btnAddUserReset: {zh:'重置', en:'Reset'},
+      importSuccess: {zh:'成功导入 ', en:'Successfully imported '},
+      importUserCount: {zh:' 位用户', en:' user(s)'},
+      templateFields: {zh:'工号、姓名、所属机构、岗位名称（多个岗位用逗号分隔）', en:'Employee ID, Name, Organization, Position (separate multiple positions with commas)'},
       selectedUserCount1: {zh:'已选择', en:'Selected: '},
       selectedUserCount2: {zh:'位用户', en:' user(s)'},
+      searchPrompt: {zh:'请点击"查询"按钮搜索用户，或使用批量导入功能', en:'Please click "Search" to find users, or use batch import'},
+      noAvailableUsers: {zh:'暂无可选用户', en:'No available users'},
 
       // Delete Modal
       modalDeleteTitle: {zh:'删除确认', en:'Delete Confirmation'},
@@ -1034,7 +1265,7 @@
       // JS action strings
       actionEdit: {zh:'编辑', en:'Edit'},
       actionPermAssign: {zh:'权限分配', en:'Permission'},
-      actionViewUsers: {zh:'查看用户清单', en:'View Users'},
+      actionViewUsers: {zh:'用户管理', en:'User Management'},
       actionRemove: {zh:'移除', en:'Remove'},
 
       // Alert messages
@@ -1053,7 +1284,6 @@
       alertLastUserInRole: {zh:'该角色下仅剩此用户，移除后该角色将无关联用户，建议先分配其他用户后再移除。', en:'This is the last user in this role. Removing will leave the role with no users. Please assign another user first.'},
       pendingTasksSuffix: {zh:'个待办任务', en:' pending task(s)'},
       pendingTaskTitle: {zh:'有待办任务不可移除', en:'Cannot remove: has pending tasks'},
-      noAvailableUsers: {zh:'暂无可选用户', en:'No available users'},
 
       // Permission modules
       permModuleContractGreen: {zh:'合同绿色认定', en:'Contract Green Certification'},
@@ -1069,14 +1299,12 @@
 
     window.onLangChange = function(lang) {
       renderTable();
-      // Re-render permission tree if modal is open
       if (document.getElementById('permModal').classList.contains('open')) {
         if (currentPermRole) {
           document.getElementById('permRoleName').textContent = I18N.t('drawerRolePrefix', '角色：') + currentPermRole.name;
         }
         renderPermTree();
       }
-      // Re-render user list drawer if open
       if (document.getElementById('userListDrawer').classList.contains('open')) {
         if (currentUserListRole) {
           document.getElementById('userListDrawerRole').innerHTML = '<span data-i18n="drawerRolePrefix">' + I18N.t('drawerRolePrefix', '角色：') + '</span>' + currentUserListRole.name;
@@ -1084,9 +1312,13 @@
           renderUserListTable(users);
         }
       }
-      // Re-render add user modal if open
       if (document.getElementById('addUserToRoleModal').classList.contains('open')) {
-        renderAvailableUsers();
+        if (addUserSearchPerformed || batchImportedUsers.length > 0) {
+          var filterVal = document.getElementById('addUserSearchInput').value.trim();
+          renderAvailableUsers(filterVal);
+        } else {
+          renderAvailableUsers();
+        }
       }
     };
   </script>
