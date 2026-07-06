@@ -3,7 +3,8 @@
     "allow": [
       "Bash(git add *)",
       "Bash(git commit -m 'feat: 项目绿色认定第7条示例数据完整更新 *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(git commit -m 'fix: PRJ-2026-007详情页Location/Region/Industry英文翻译补充 *)"
     ]
   }
 }
