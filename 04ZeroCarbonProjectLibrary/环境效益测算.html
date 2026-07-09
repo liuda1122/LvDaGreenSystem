@@ -98,9 +98,9 @@
                 <!-- 第一行：始终显示 -->
                 <div class="filter-row" id="filterRow1">
                     <div class="filter-group-inline"><label data-i18n="filter_client">客户信息：</label><input type="text" class="wide" data-i18n-placeholder="placeholder_client"></div>
+                    <div class="filter-group-inline"><label data-i18n="filter_approval">审批状态：</label><select id="selApproval"><option data-i18n="all_status">全部状态</option></select></div>
                     <div class="filter-group-inline"><label data-i18n="filter_industry">国民经济行业分类：</label><select class="wide" id="selIndustry"><option data-i18n="all_industries">全部行业</option></select></div>
                     <div class="filter-group-inline"><label data-i18n="filter_branch">所属支行机构：</label><select id="selBranch"><option data-i18n="all_branches">全部机构</option></select></div>
-                    <div class="filter-group-inline"><label data-i18n="filter_approval">审批状态：</label><select id="selApproval"><option data-i18n="all_status">全部状态</option></select></div>
                     <div class="filter-group-inline" style="margin-left:auto;gap:4px;">
                         <span id="filterToggleBtn" style="cursor:pointer;color:var(--brand-500);font-size:12px;white-space:nowrap;" onclick="toggleFilter()"></span>
                         <button class="btn btn-primary btn-sm" data-i18n="search">查询</button>
@@ -304,10 +304,10 @@
 
     // ==================== 数据 ====================
     var projectData = [
-        {seq:1, code:'test000001', bankCode:'02001071613', name:'超低能耗建筑建设项目', industry:'火力发电', investment:'21,232,323,123', location:'广州市', clientName:'广州XXXXXXX有限公司', creditCode:'02001071613', clientIndustry:'火力发电', gfCat:'5.1.1.1超低能耗建筑建设', hostBranch:'重庆银行渝北支行', region:'渝北区', manager:'张三/0122323', taskNode:'task_fill', calcStatus:'calculated', approval:'pending_approval', update:'2025/05/31 10:59:59', created:'2025/05/15 09:00:00', action:'view'},
-        {seq:2, code:'test000002', bankCode:'02001071614', name:'太阳能光伏发电项目', industry:'太阳能发电', investment:'50,000', location:'浙江省湖州市', clientName:'浙江XXXX能源有限公司', creditCode:'91330502MA28C6K2XJ', clientIndustry:'太阳能发电', gfCat:'3.1.1太阳能发电设施建设', hostBranch:'重庆银行渝北支行', region:'渝北区', manager:'李四/002', taskNode:'pending_fill', calcStatus:'not_calculated', approval:'not_submitted', update:'2025/05/20 14:30:00', created:'2025/05/20 14:30:00', action:'process'},
-        {seq:3, code:'test000003', bankCode:'02001071615', name:'工业余热回收利用项目', industry:'热电联产', investment:'100,030', location:'河北省唐山市', clientName:'迁安轧一钢铁集团有限公司', creditCode:'123456789123456789', clientIndustry:'炼钢', gfCat:'3.2.1节能技术改造', hostBranch:'重庆银行渝北支行', region:'渝北区', manager:'王五/001', taskNode:'completed', calcStatus:'calculated', approval:'approved', update:'2025/05/31 10:59:59', created:'2025/04/01 08:30:00', action:'view'},
-        {seq:4, code:'test000004', bankCode:'02001071616', name:'污水处理升级改造项目', industry:'大气污染治理', investment:'90,000', location:'重庆市渝北区', clientName:'重庆绿能新能源有限公司', creditCode:'123456789123456789', clientIndustry:'太阳能发电', gfCat:'4.2.1污水处理设施建设', hostBranch:'重庆银行渝北支行', region:'渝北区', manager:'赵六/003', taskNode:'task_fill', calcStatus:'calculated', approval:'rejected', update:'2025/06/15 16:00:00', created:'2025/06/10 10:00:00', action:'process'}
+        {seq:1, code:'test000001', bankCode:'02001071613', name:'超低能耗建筑建设项目', industry:'火力发电', investment:'21,232,323,123', location:'广州市', clientName:'广州XXXXXXX有限公司', creditCode:'02001071613', clientIndustry:'火力发电', gfCat:'5.1.1.1超低能耗建筑建设', hostBranch:'重庆银行渝北支行', region:'渝北区', manager:'张三/0122323', taskNode:'公司绿金联系人/赵绿金/001', calcStatus:'calculated', approval:'pending_approval', update:'2025/05/31 10:59:59', created:'2025/05/15 09:00:00', action:'view'},
+        {seq:2, code:'test000002', bankCode:'02001071614', name:'太阳能光伏发电项目', industry:'太阳能发电', investment:'50,000', location:'浙江省湖州市', clientName:'浙江XXXX能源有限公司', creditCode:'91330502MA28C6K2XJ', clientIndustry:'太阳能发电', gfCat:'3.1.1太阳能发电设施建设', hostBranch:'重庆银行渝北支行', region:'渝北区', manager:'李四/002', taskNode:'总行公司初审/王初审/001', calcStatus:'not_calculated', approval:'not_submitted', update:'2025/05/20 14:30:00', created:'2025/05/20 14:30:00', action:'process'},
+        {seq:3, code:'test000003', bankCode:'02001071615', name:'工业余热回收利用项目', industry:'热电联产', investment:'100,030', location:'河北省唐山市', clientName:'迁安轧一钢铁集团有限公司', creditCode:'123456789123456789', clientIndustry:'炼钢', gfCat:'3.2.1节能技术改造', hostBranch:'重庆银行渝北支行', region:'渝北区', manager:'王五/001', taskNode:'总行公司复核/李复核/002', calcStatus:'calculated', approval:'approved', update:'2025/05/31 10:59:59', created:'2025/04/01 08:30:00', action:'view'},
+        {seq:4, code:'test000004', bankCode:'02001071616', name:'污水处理升级改造项目', industry:'大气污染治理', investment:'90,000', location:'重庆市渝北区', clientName:'重庆绿能新能源有限公司', creditCode:'123456789123456789', clientIndustry:'太阳能发电', gfCat:'4.2.1污水处理设施建设', hostBranch:'重庆银行渝北支行', region:'渝北区', manager:'赵六/003', taskNode:'公司绿金联系人/赵绿金/001', calcStatus:'calculated', approval:'rejected', update:'2025/06/15 16:00:00', created:'2025/06/10 10:00:00', action:'process'}
     ];
 
     // ==================== 统计卡片数据 ====================
@@ -326,10 +326,8 @@
     ];
 
     function getTagClass(taskNode, calcStatus, approval){
-        var taskClass = ''; var calcClass = ''; var approvalClass = '';
-        if(taskNode==='task_fill') taskClass='tag-info';
-        else if(taskNode==='pending_fill') taskClass='tag-warning';
-        else if(taskNode==='completed') taskClass='tag-success';
+        var taskClass = 'tag-info'; // 当前任务节点统一用 info 样式
+        var calcClass = ''; var approvalClass = '';
 
         if(calcStatus==='calculated') calcClass='tag-success';
         else if(calcStatus==='not_calculated') calcClass='tag-danger';
@@ -369,10 +367,13 @@
         for(var i=0; i<projectData.length; i++){
             var r = projectData[i];
             var cls = getTagClass(r.taskNode, r.calcStatus, r.approval);
-            var actionBtn = r.action==='view'
-                ? '<button class="btn btn-deep-blue btn-sm" onclick="goToDetail(\'view\')">'+I18N.t('view_detail')+'</button>'
-                : '<button class="btn btn-primary btn-sm" onclick="goToDetail(\'edit\')">'+I18N.t('go_process')+'</button>';
-            html += '<tr>'+
+            var actionBtn = '<div class="action-btns"></div>';
+            // 映射 approval 值到中文显示
+            var apprMap = {'pending_approval':'审批中','not_submitted':'未提交','approved':'已完成','rejected':'已驳回'};
+            var apprText = apprMap[r.approval] || r.approval;
+            var calcMap = {'calculated':'已测算','not_calculated':'未测算'};
+            var calcText = calcMap[r.calcStatus] || r.calcStatus;
+            html += '<tr data-approval="'+apprText+'" data-node="'+r.taskNode+'" data-project-id="'+r.code+'">'+
                 '<td class="col-seq">'+r.seq+'</td>'+
                 '<td style="font-family:monospace;font-size:12px;">'+r.code+'</td>'+
                 '<td style="font-family:monospace;font-size:12px;">'+r.bankCode+'</td>'+
@@ -387,9 +388,9 @@
                 '<td>'+r.hostBranch+'</td>'+
                 '<td>'+r.region+'</td>'+
                 '<td>'+r.manager+'</td>'+
-                '<td><span class="tag '+cls.taskClass+'">'+I18N.t(r.taskNode)+'</span></td>'+
-                '<td><span class="tag '+cls.calcClass+'">'+I18N.t(r.calcStatus)+'</span></td>'+
-                '<td class="col-approval"><span class="tag '+cls.approvalClass+'">'+I18N.t(r.approval)+'</span></td>'+
+                '<td><span class="tag '+cls.taskClass+'">'+r.taskNode+'</span></td>'+
+                '<td><span class="tag '+cls.calcClass+'">'+calcText+'</span></td>'+
+                '<td class="col-approval"><span class="tag '+cls.approvalClass+'">'+apprText+'</span></td>'+
                 '<td>'+r.update+'</td>'+
                 '<td>'+r.created+'</td>'+
                 '<td class="col-actions">'+actionBtn+'</td>'+
@@ -498,10 +499,114 @@
         }else{window.location.href=targetUrl}
     }
 
+    // ==================== 环境效益测算 — 完整角色权限矩阵 ====================
+    var currentRole = '客户经理';
+
+    function nodeMatches(nodeText, roleKeyword) {
+        if (!nodeText) return false;
+        return nodeText.indexOf(roleKeyword) !== -1;
+    }
+
+    function buildActionButtons(row) {
+        var appr = row.getAttribute('data-approval') || '';
+        var node = row.getAttribute('data-node') || '';
+        var projectId = row.getAttribute('data-project-id') || '';
+        var container = row.querySelector('.col-actions .action-btns');
+        if (!container) return;
+        container.innerHTML = '';
+
+        var btns = [];
+
+        // ---- 公司客户经理（主办经理） ----
+        if (currentRole === '客户经理') {
+            if (appr === '未提交') {
+                btns.push({label:'去测算', cls:'btn btn-primary btn-sm'});
+            } else if (appr === '审批中') {
+                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+            } else if (appr === '已驳回') {
+                btns.push({label:'重新测算', cls:'btn btn-primary btn-sm'});
+            } else if (appr === '已完成') {
+                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+            }
+        }
+        // ---- 公司绿金联系人 ----
+        else if (currentRole === '公司绿金联系人') {
+            if (appr === '未提交') {
+                // — 无按钮
+            } else if (appr === '审批中' && nodeMatches(node, '绿金联系人')) {
+                btns.push({label:'去处理', cls:'btn btn-primary btn-sm'});
+            } else if (appr === '审批中' && !nodeMatches(node, '绿金联系人')) {
+                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+            } else if (appr === '已驳回') {
+                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+            } else if (appr === '已完成') {
+                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+            }
+        }
+        // ---- 总行公司初审 ----
+        else if (currentRole === '总行公司初审') {
+            if (appr === '未提交') {
+                // — 无按钮
+            } else if (appr === '审批中' && nodeMatches(node, '总行初审')) {
+                btns.push({label:'去处理', cls:'btn btn-primary btn-sm'});
+            } else if (appr === '审批中' && !nodeMatches(node, '总行初审')) {
+                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+            } else if (appr === '已驳回') {
+                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+            } else if (appr === '已完成') {
+                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+            }
+        }
+        // ---- 总行公司复核 ----
+        else if (currentRole === '总行公司复核') {
+            if (appr === '未提交') {
+                // — 无按钮
+            } else if (appr === '审批中' && nodeMatches(node, '总行复核')) {
+                btns.push({label:'去处理', cls:'btn btn-primary btn-sm'});
+            } else if (appr === '审批中' && !nodeMatches(node, '总行复核')) {
+                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+            } else if (appr === '已驳回') {
+                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+            } else if (appr === '已完成') {
+                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+            }
+        }
+        // ---- 总行管理员（仅查看） ----
+        else if (currentRole === '总行管理员') {
+            if (appr !== '未提交') {
+                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+            }
+        }
+
+        // 渲染按钮
+        btns.forEach(function(b) {
+            var btn = document.createElement('button');
+            btn.className = b.cls;
+            btn.textContent = b.label;
+            btn.onclick = function() { goToDetail(b.label === '查看详情' ? 'view' : 'edit'); };
+            container.appendChild(btn);
+        });
+    }
+
+    function applyRolePermissions() {
+        var rows = document.querySelectorAll('#projectTableBody tr');
+        rows.forEach(function(row) {
+            buildActionButtons(row);
+        });
+    }
+
+    window.addEventListener('message', function(e) {
+        if (e.data && e.data.type === 'roleChange' && e.data.role) {
+            currentRole = e.data.role;
+            setTimeout(applyRolePermissions, 50);
+        }
+    });
+
     // ==================== 初始化 ====================
     document.title = I18N.t('pageTitle');
     populateFilters();
     renderAll();
+    setTimeout(applyRolePermissions, 150);
 </script>
 </body>
 </html>

@@ -4,7 +4,8 @@
       "Bash(git add *)",
       "Bash(git commit -m 'feat: 项目绿色认定第7条示例数据完整更新 *)",
       "Bash(git push *)",
-      "Bash(git commit -m 'fix: PRJ-2026-007详情页Location/Region/Industry英文翻译补充 *)"
+      "Bash(git commit -m 'fix: PRJ-2026-007详情页Location/Region/Industry英文翻译补充 *)",
+      "Bash(git commit -m 'feat: 绿色潜在客户清单和营销过程管理页面增加「开始营销」按钮，删除对接机构字段 *)"
     ]
   }
 }

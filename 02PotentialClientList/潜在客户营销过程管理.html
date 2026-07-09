@@ -32,6 +32,7 @@
         .btn-deep-blue{background:var(--brand-700);color:#fff}.btn-deep-blue:hover{background:var(--brand-900)}
         .btn-light-blue{background:var(--brand-100);color:var(--brand-700);border-color:var(--brand-300)}.btn-light-blue:hover{background:var(--brand-50);border-color:var(--brand-500)}
         .btn-danger{background:var(--danger);color:#fff}.btn-danger:hover{background:#B91C1C}
+        .btn-success{background:var(--green-500);color:#fff}.btn-success:hover{background:var(--green-700)}
         .btn-outline-brand{background:var(--white);color:var(--brand-500);border-color:var(--brand-300)}.btn-outline-brand:hover{background:var(--brand-50)}
         .tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:var(--radius-sm);font-size:12px;font-weight:500;line-height:1.5;border:1px solid transparent;white-space:nowrap}
         .tag-success{background:var(--success-bg);color:var(--green-700);border-color:var(--success-border)}
@@ -98,15 +99,6 @@
 </head>
 <body>
 <div class="flex flex-col" style="height:100vh;background:var(--bg-subtle);">
-    <div style="padding:16px 24px 0 24px;flex-shrink:0;">
-        <div style="display:flex;align-items:center;justify-content:space-between;">
-            <h1 style="font-size:20px;font-weight:700;color:var(--ink-900);" data-i18n="pageTitle">潜在客户营销过程管理</h1>
-            <div style="display:flex;gap:4px;">
-                <button class="lang-switch active" id="btnZh" onclick="I18N.setLang('zh')">中</button>
-                <button class="lang-switch" id="btnEn" onclick="I18N.setLang('en')">EN</button>
-            </div>
-        </div>
-    </div>
     <div class="flex-1 overflow-hidden" style="padding:16px 24px 24px 24px;">
         <div class="section-card" style="height:100%;">
             <!-- 筛选栏 -->
@@ -160,7 +152,7 @@
                             <td>张伟</td>
                             <td>2025-06-28</td>
                             <td>2025-07-15</td>
-                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" data-i18n="btnUpdateProgress" onclick="openUpdateModal(0)">更新进度</button><button class="btn btn-light-blue btn-sm" data-i18n="btnViewRecords" onclick="openRecordDrawer(0)">查看记录</button></div></td>
+                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" data-i18n="btnUpdateProgress" onclick="openUpdateModal(0)">更新进度</button><button class="btn btn-light-blue btn-sm" data-i18n="btnViewRecords" onclick="openRecordDrawer(0)">查看记录</button><button class="btn btn-success btn-sm" data-i18n="btnStartMkt" onclick="startMarketing(this)">开始营销</button></div></td>
                         </tr>
                         <tr>
                             <td class="col-seq">2</td>
@@ -174,7 +166,7 @@
                             <td>赵丽</td>
                             <td>2025-06-25</td>
                             <td>2025-07-08</td>
-                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" data-i18n="btnUpdateProgress" onclick="openUpdateModal(1)">更新进度</button><button class="btn btn-light-blue btn-sm" data-i18n="btnViewRecords" onclick="openRecordDrawer(1)">查看记录</button></div></td>
+                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" data-i18n="btnUpdateProgress" onclick="openUpdateModal(1)">更新进度</button><button class="btn btn-light-blue btn-sm" data-i18n="btnViewRecords" onclick="openRecordDrawer(1)">查看记录</button><button class="btn btn-success btn-sm" data-i18n="btnStartMkt" onclick="startMarketing(this)">开始营销</button></div></td>
                         </tr>
                         <tr>
                             <td class="col-seq">3</td>
@@ -188,7 +180,7 @@
                             <td>李明</td>
                             <td>2025-06-20</td>
                             <td>2025-07-02</td>
-                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" data-i18n="btnUpdateProgress" onclick="openUpdateModal(2)">更新进度</button><button class="btn btn-light-blue btn-sm" data-i18n="btnViewRecords" onclick="openRecordDrawer(2)">查看记录</button></div></td>
+                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" data-i18n="btnUpdateProgress" onclick="openUpdateModal(2)">更新进度</button><button class="btn btn-light-blue btn-sm" data-i18n="btnViewRecords" onclick="openRecordDrawer(2)">查看记录</button><button class="btn btn-success btn-sm" data-i18n="btnStartMkt" onclick="startMarketing(this)">开始营销</button></div></td>
                         </tr>
                         <tr>
                             <td class="col-seq">4</td>
@@ -202,7 +194,7 @@
                             <td>王强</td>
                             <td>2025-06-18</td>
                             <td>—</td>
-                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" data-i18n="btnUpdateProgress" onclick="openUpdateModal(3)">更新进度</button><button class="btn btn-light-blue btn-sm" data-i18n="btnViewRecords" onclick="openRecordDrawer(3)">查看记录</button></div></td>
+                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" data-i18n="btnUpdateProgress" onclick="openUpdateModal(3)">更新进度</button><button class="btn btn-light-blue btn-sm" data-i18n="btnViewRecords" onclick="openRecordDrawer(3)">查看记录</button><button class="btn btn-success btn-sm" data-i18n="btnStartMkt" onclick="startMarketing(this)">开始营销</button></div></td>
                         </tr>
                         <tr>
                             <td class="col-seq">5</td>
@@ -216,7 +208,7 @@
                             <td>陈雪</td>
                             <td>2025-06-10</td>
                             <td>—</td>
-                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" data-i18n="btnUpdateProgress" onclick="openUpdateModal(4)">更新进度</button><button class="btn btn-light-blue btn-sm" data-i18n="btnViewRecords" onclick="openRecordDrawer(4)">查看记录</button></div></td>
+                            <td class="col-actions"><div class="action-btns"><button class="btn btn-deep-blue btn-sm" data-i18n="btnUpdateProgress" onclick="openUpdateModal(4)">更新进度</button><button class="btn btn-light-blue btn-sm" data-i18n="btnViewRecords" onclick="openRecordDrawer(4)">查看记录</button><button class="btn btn-success btn-sm" data-i18n="btnStartMkt" onclick="startMarketing(this)">开始营销</button></div></td>
                         </tr>
                     </tbody>
                 </table>
@@ -247,7 +239,6 @@
             <option data-i18n="stageFailChoseOther">未营销成功，客户已选其他产品</option>
         </select></div>
         <div class="form-item"><label><span class="req" aria-label="required">*</span> <span data-i18n="formContact">对接人</span></label><input type="text" data-i18n-placeholder="placeholderStaff" placeholder="请输入负责营销的员工姓名"></div>
-        <div class="form-item"><label data-i18n="formInstitution">对接机构</label><input type="text" data-i18n-placeholder="placeholderInstitution" placeholder="请输入对接的金融机构名称"></div>
         <div class="form-item"><label data-i18n="formDescription">进度说明</label><textarea data-i18n-placeholder="placeholderDescription" placeholder="请详细描述本次营销进度情况..."></textarea></div>
         <div class="form-item"><label data-i18n="formNextFollowUp">下次跟进计划</label><input type="date"></div>
     </div>
@@ -270,7 +261,6 @@
             <div class="record-item"><div class="rec-header"><span class="stage-tag stage-finance" data-i18n="stageFinance">融资方案对接</span><span class="rec-date">2025-06-28 14:30</span></div>
                 <div style="display:grid;grid-template-columns:80px 1fr;gap:4px 12px;font-size:13px;">
                     <span style="color:var(--ink-500);" data-i18n="drawerContact">对接人</span><span>张伟</span>
-                    <span style="color:var(--ink-500);" data-i18n="drawerInstitution">对接机构</span><span>兰州银行新区支行</span>
                     <span style="color:var(--ink-500);" data-i18n="drawerDescription">进度说明</span><span>已向客户提交绿色项目贷款方案，客户表示认可</span>
                     <span style="color:var(--ink-500);" data-i18n="drawerNextFollowUp">下次跟进</span><span>2025-07-15</span>
                 </div>
@@ -320,6 +310,8 @@
         btnExport: {zh:'导出', en:'Export'},
         btnUpdateProgress: {zh:'更新进度', en:'Update Progress'},
         btnViewRecords: {zh:'查看记录', en:'View Records'},
+        btnStartMkt: {zh:'开始营销', en:'Start Marketing'},
+        msgMarketingStarted: {zh:'已开始营销', en:'Marketing started'},
         btnSubmit: {zh:'提交', en:'Submit'},
         btnCancel: {zh:'取消', en:'Cancel'},
         btnEdit: {zh:'编辑', en:'Edit'},
@@ -362,14 +354,13 @@
         modalTitle: {zh:'更新营销进度', en:'Update Marketing Progress'},
         formStage: {zh:'当前营销阶段', en:'Stage'},
         formContact: {zh:'对接人', en:'Contact'},
-        formInstitution: {zh:'对接机构', en:'Institution'},
+
         formDescription: {zh:'进度说明', en:'Description'},
         formNextFollowUp: {zh:'下次跟进计划', en:'Next Follow-up Plan'},
         optSelect: {zh:'请选择', en:'Select'},
 
         // Modal placeholders
         placeholderStaff: {zh:'请输入负责营销的员工姓名', en:'Enter staff name'},
-        placeholderInstitution: {zh:'请输入对接的金融机构名称', en:'Enter institution name'},
         placeholderDescription: {zh:'请详细描述本次营销进度情况...', en:'Describe marketing progress in detail...'},
 
         // Drawer
@@ -377,7 +368,6 @@
         drawerEnterpriseInfo: {zh:'企业基本信息', en:'Enterprise Basic Info'},
         drawerMarketingRecords: {zh:'营销过程记录', en:'Marketing Process Records'},
         drawerContact: {zh:'对接人', en:'Contact'},
-        drawerInstitution: {zh:'对接机构', en:'Institution'},
         drawerDescription: {zh:'进度说明', en:'Description'},
         drawerNextFollowUp: {zh:'下次跟进', en:'Next Follow-up'},
 
@@ -406,6 +396,7 @@
     function openRecordDrawer(idx){document.getElementById('recordDrawer').classList.add('open')}
     function closeRecordDrawer(){document.getElementById('recordDrawer').classList.remove('open')}
     function submitUpdate(){closeUpdateModal();alert(I18N.t('msgUpdateSubmitted'))}
+    function startMarketing(el){var row=el.closest('tr');var name=row.querySelector('td:nth-child(2)').textContent;alert(I18N.t('msgMarketingStarted')+': '+name)}
     document.getElementById('updateModal').addEventListener('click',function(e){if(e.target===this)closeUpdateModal()})
     document.getElementById('recordDrawer').addEventListener('click',function(e){if(e.target===this)closeRecordDrawer()})
     document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeUpdateModal();closeRecordDrawer()}})

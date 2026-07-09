@@ -146,6 +146,14 @@
             color: var(--brand-700);
         }
 
+        .btn-success {
+            background: var(--green-500);
+            color: #fff;
+        }
+        .btn-success:hover {
+            background: var(--green-700);
+        }
+
         .tag {
             display: inline-flex;
             align-items: center;
@@ -551,6 +559,7 @@
             currency_rmb:            { zh: '人民币元',                         en: 'RMB' },
             action_eval_report:      { zh: '企业评价报告',                     en: 'Enterprise Report' },
             action_mkt_report:       { zh: '绿色业务营销报告',                 en: 'Green Marketing Report' },
+            action_start_mkt:        { zh: '开始营销',                         en: 'Start Marketing' },
             clean_energy:            { zh: '清洁能源',                         en: 'Clean Energy' },
             green_mfg:               { zh: '绿色制造',                         en: 'Green Manufacturing' },
             env_protection:          { zh: '环保产业',                         en: 'Environmental Protection' },
@@ -817,6 +826,7 @@
                         '<div class="action-btns">' +
                             '<button class="btn btn-deep-blue btn-sm" onclick="openReport(\'企业评价报告.html\')">' + I18N.t('action_eval_report') + '</button>' +
                             '<button class="btn btn-light-blue btn-sm" onclick="openReport(\'绿色业务营销报告.html\')">' + I18N.t('action_mkt_report') + '</button>' +
+                            '<button class="btn btn-success btn-sm" onclick="startMarketing(\'' + r.id + '\')">' + I18N.t('action_start_mkt') + '</button>' +
                         '</div>' +
                     '</td>' +
                     '</tr>';
@@ -874,6 +884,25 @@
                 }, '*');
             } else {
                 window.location.href = targetUrl;
+            }
+        }
+
+        // ==================== 开始营销 ====================
+        function startMarketing(companyId) {
+            var currentPath = window.location.pathname;
+            var currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+            if (currentDir === '') { currentDir = './'; }
+            var targetUrl = currentDir + '潜在客户营销过程管理.html';
+            var pageId = 'mkt-process-' + companyId;
+            var label = I18N.t('action_start_mkt');
+
+            if (window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'openPage',
+                    pageId: pageId,
+                    file: targetUrl,
+                    label: label
+                }, '*');
             }
         }
 

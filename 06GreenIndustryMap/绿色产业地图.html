@@ -3,350 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="pageTitle">绿色产业地图 · 可持续金融管理系统</title>
+    <title data-i18n="pageTitle">绿色产业地图</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
     <style>
-        :root {
-            --brand-50:#E8F0FB;--brand-100:#D1DFF4;--brand-500:#2A66C2;--brand-700:#143F8F;
-            --green-50:#ECFDF5;--green-500:#10B981;--green-700:#047857;
-            --ink-900:#0F172A;--ink-800:#1E293B;--ink-600:#475569;--ink-500:#64748B;--ink-400:#94A3B8;
-            --line-200:#E2E8F0;--bg-muted:#F1F5F9;--bg-subtle:#F8FAFC;--white:#FFFFFF;
-        }
         *{box-sizing:border-box;margin:0;padding:0}
-        body{font-family:'PingFang SC','Microsoft YaHei','Inter',system-ui,sans-serif;color:var(--ink-800);background:var(--bg-subtle);font-size:14px;height:100vh;overflow:hidden}
-        .custom-scroll::-webkit-scrollbar{width:4px}
-        .custom-scroll::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:2px}
-        .sidebar{width:280px;background:var(--white);border-right:1px solid var(--line-200);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
-        .sidebar-head{padding:14px 16px;border-bottom:1px solid var(--line-200)}
-        .sidebar-body{flex:1;overflow-y:auto;padding:10px 14px}
-        .ind-group{margin-bottom:10px}
-        .ind-group .grp-title{font-size:12px;font-weight:600;color:var(--ink-800);margin-bottom:4px;display:flex;align-items:center;gap:6px;cursor:pointer}
-        .ind-group .grp-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-        .ind-item{display:flex;align-items:center;justify-content:space-between;padding:4px 8px;border-radius:4px;cursor:pointer;font-size:12px;margin-bottom:1px;transition:all .15s}
-        .ind-item:hover{background:var(--bg-muted)}
-        .ind-item.active{background:var(--brand-50);color:var(--brand-700);font-weight:500}
-        .ind-item .count{color:var(--ink-400);font-size:11px}
-        .stats-bar{display:flex;gap:10px;padding:10px 16px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle)}
-        .stat-item{text-align:center;flex:1}
-        .stat-item .val{font-size:18px;font-weight:700;color:var(--brand-700)}
-        .stat-item .lbl{font-size:10px;color:var(--ink-500);white-space:nowrap}
-        #mapChart{flex:1;width:100%}
-        .map-legend{position:absolute;bottom:16px;right:16px;background:rgba(255,255,255,.95);border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.12);padding:10px 14px;z-index:100;font-size:11px}
-        .map-legend .item{display:flex;align-items:center;gap:6px;margin:2px 0}
-        .map-legend .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+        body{background:#F8FAFC;height:100vh;overflow:auto}
+        .img-container{width:100%;min-height:100%;padding:0}
+        .img-container img{display:block;max-width:none;border-radius:0;box-shadow:none}
+        .placeholder{text-align:center;color:#94A3B8;font-size:14px}
+        .placeholder .icon{font-size:64px;margin-bottom:16px}
     </style>
     <script src="../i18n.js"></script>
 </head>
 <body>
-<div class="flex" style="height:100vh">
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-head">
-            <div style="font-size:16px;font-weight:700;color:var(--ink-900);" data-i18n="sidebarTitle">🌿 绿色产业地图</div>
-            <div style="font-size:11px;color:var(--ink-500);margin-top:2px;" data-i18n="sidebarSubtitle">全国绿色产业企业分布 · GIS可视化</div>
-        </div>
-        <div class="stats-bar">
-            <div class="stat-item"><div class="val" id="totalCount">286</div><div class="lbl" data-i18n="totalEnterprises">企业总数</div></div>
-            <div class="stat-item"><div class="val">156,832</div><div class="lbl" data-i18n="loanBalance">贷款余额(万)</div></div>
-            <div class="stat-item"><div class="val" id="provCount">31</div><div class="lbl" data-i18n="coverageProvinces">覆盖省市</div></div>
-        </div>
-        <div class="sidebar-body custom-scroll">
-            <div style="font-size:12px;font-weight:600;color:var(--ink-800);margin-bottom:6px;"><span data-i18n="filterLabel">八大重点行业</span> <span style="font-weight:400;color:var(--ink-400);font-size:10px;" data-i18n="clickToFilter">（点击筛选）</span></div>
-            <div class="ind-item active" onclick="filterIndustry('all')"><span><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="1" y="5" width="3" height="8" rx="0.5" fill="currentColor" opacity=".6"/><rect x="6.5" y="2" width="3" height="11" rx="0.5" fill="currentColor"/><rect x="12" y="7" width="3" height="6" rx="0.5" fill="currentColor" opacity=".4"/></svg> <span data-i18n="allEnterprises">全部企业</span></span><span class="count" id="cntAll">286</span></div>
-            <div class="ind-group"><div class="grp-title"><span class="grp-dot" style="background:#2563EB;"></span><span data-i18n="industry1">1. 节能环保产业</span></div>
-                <div class="ind-item" data-ind="1" onclick="filterIndustry('1')"><span data-i18n="sub_pollution">污染治理</span><span class="count">42</span></div>
-                <div class="ind-item" data-ind="1b" onclick="filterIndustry('1b')"><span data-i18n="sub_energy">高效节能装备</span><span class="count">38</span></div>
-            </div>
-            <div class="ind-group"><div class="grp-title"><span class="grp-dot" style="background:#10B981;"></span><span data-i18n="industry2">2. 清洁能源产业</span></div>
-                <div class="ind-item" data-ind="2" onclick="filterIndustry('2')"><span data-i18n="sub_solar">太阳能利用</span><span class="count">56</span></div>
-                <div class="ind-item" data-ind="2b" onclick="filterIndustry('2b')"><span data-i18n="sub_wind">风能利用</span><span class="count">28</span></div>
-                <div class="ind-item" data-ind="2c" onclick="filterIndustry('2c')"><span data-i18n="sub_other_clean">其他清洁能源</span><span class="count">14</span></div>
-            </div>
-            <div class="ind-group"><div class="grp-title"><span class="grp-dot" style="background:#7C3AED;"></span><span data-i18n="industry3">3. 生态环境产业</span></div>
-                <div class="ind-item" data-ind="3" onclick="filterIndustry('3')"><span data-i18n="sub_ecology">生态保护与修复</span><span class="count">22</span></div>
-                <div class="ind-item" data-ind="3b" onclick="filterIndustry('3b')"><span data-i18n="sub_forestry">碳汇林业</span><span class="count">18</span></div>
-            </div>
-            <div class="ind-group"><div class="grp-title"><span class="grp-dot" style="background:#F59E0B;"></span><span data-i18n="industry4">4. 绿色建筑</span></div>
-                <div class="ind-item" data-ind="4" onclick="filterIndustry('4')"><span data-i18n="sub_green_material">绿色建筑材料</span><span class="count">24</span></div>
-                <div class="ind-item" data-ind="4b" onclick="filterIndustry('4b')"><span data-i18n="sub_passive_building">超低能耗建筑</span><span class="count">12</span></div>
-            </div>
-            <div class="ind-group"><div class="grp-title"><span class="grp-dot" style="background:#DC2626;"></span><span data-i18n="industry5">5. 绿色交通</span></div>
-                <div class="ind-item" data-ind="5" onclick="filterIndustry('5')"><span data-i18n="sub_ev">新能源汽车</span><span class="count">14</span></div>
-                <div class="ind-item" data-ind="5b" onclick="filterIndustry('5b')"><span data-i18n="sub_charging">充电基础设施</span><span class="count">12</span></div>
-            </div>
-            <div class="ind-group"><div class="grp-title"><span class="grp-dot" style="background:#9333EA;"></span><span data-i18n="industry6">6. 绿色农业</span></div>
-                <div class="ind-item" data-ind="6" onclick="filterIndustry('6')"><span data-i18n="sub_organic">有机农业</span><span class="count">16</span></div>
-                <div class="ind-item" data-ind="6b" onclick="filterIndustry('6b')"><span data-i18n="sub_irrigation">节水灌溉</span><span class="count">10</span></div>
-            </div>
-            <div class="ind-group"><div class="grp-title"><span class="grp-dot" style="background:#0891B2;"></span><span data-i18n="industry7">7. 资源循环利用</span></div>
-                <div class="ind-item" data-ind="7" onclick="filterIndustry('7')"><span data-i18n="sub_solid_waste">固废资源化</span><span class="count">20</span></div>
-                <div class="ind-item" data-ind="7b" onclick="filterIndustry('7b')"><span data-i18n="sub_water_recycle">水循环利用</span><span class="count">12</span></div>
-            </div>
-            <div class="ind-group"><div class="grp-title"><span class="grp-dot" style="background:#4F46E5;"></span><span data-i18n="industry8">8. 绿色服务</span></div>
-                <div class="ind-item" data-ind="8" onclick="filterIndustry('8')"><span data-i18n="sub_energy_service">节能环保服务</span><span class="count">16</span></div>
-                <div class="ind-item" data-ind="8b" onclick="filterIndustry('8b')"><span data-i18n="sub_carbon_mgmt">碳资产管理</span><span class="count">8</span></div>
-            </div>
+    <div class="img-container">
+        <img src="绿色产业地图.png"
+             alt="绿色产业地图"
+             onerror="this.style.display='none';document.getElementById('placeholder').style.display='block';"
+             style="max-width:100%;max-height:100%;object-fit:contain;">
+        <div id="placeholder" class="placeholder" style="display:none;">
+            <div class="icon"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="2" width="12" height="12" rx="1.5" stroke="currentColor" fill="none" stroke-width="1.3"/><path d="M2 6h4M6 2v4M10 14V8M2 10h4M12 8h2v2" stroke="currentColor" fill="none" stroke-width="1.3"/></svg></div>
+            <div style="font-size:18px;font-weight:600;color:#475569;margin-bottom:8px;" data-i18n="pageTitle">绿色产业地图</div>
+            <div data-i18n="subtitle">全国绿色产业企业分布 · GIS可视化</div>
+            <div style="margin-top:12px;font-size:12px;color:#94A3B8;" data-i18n="fallbackText">请将地图图片保存至：06GreenIndustryMap/绿色产业地图.png</div>
         </div>
     </div>
-    <!-- Map -->
-    <div style="flex:1;position:relative;">
-        <div id="mapChart" style="width:100%;height:100%;"></div>
-        <div class="map-legend">
-            <div style="font-weight:600;margin-bottom:4px;" data-i18n="legend_title">图例</div>
-            <div class="item"><span class="dot" style="background:#2563EB;"></span><span data-i18n="legend_energy_conservation">节能环保</span></div>
-            <div class="item"><span class="dot" style="background:#10B981;"></span><span data-i18n="legend_clean_energy">清洁能源</span></div>
-            <div class="item"><span class="dot" style="background:#7C3AED;"></span><span data-i18n="legend_ecology">生态环境</span></div>
-            <div class="item"><span class="dot" style="background:#F59E0B;"></span><span data-i18n="legend_green_building">绿色建筑</span></div>
-            <div class="item"><span class="dot" style="background:#DC2626;"></span><span data-i18n="legend_green_transport">绿色交通</span></div>
-            <div class="item"><span class="dot" style="background:#9333EA;"></span><span data-i18n="legend_green_agri">绿色农业</span></div>
-            <div class="item"><span class="dot" style="background:#0891B2;"></span><span data-i18n="legend_recycling">资源循环</span></div>
-            <div class="item"><span class="dot" style="background:#4F46E5;"></span><span data-i18n="legend_green_service">绿色服务</span></div>
-        </div>
-    </div>
-</div>
-<script>
-var chartDom=document.getElementById('mapChart');
-var myChart=echarts.init(chartDom);
-
-var iconColors={
-    '1':'#2563EB','1b':'#2563EB',
-    '2':'#10B981','2b':'#10B981','2c':'#10B981',
-    '3':'#7C3AED','3b':'#7C3AED',
-    '4':'#F59E0B','4b':'#F59E0B',
-    '5':'#DC2626','5b':'#DC2626',
-    '6':'#9333EA','6b':'#9333EA',
-    '7':'#0891B2','7b':'#0891B2',
-    '8':'#4F46E5','8b':'#4F46E5'
-};
-
-var allEnterprises=[
-    {name:'隆基绿能科技股份有限公司',value:[108.95,34.23,52000],city:'西安',ind:'2',loan:52000,desc:'单晶硅片全球龙头'},
-    {name:'通威太阳能科技有限公司',value:[104.07,30.57,38000],city:'成都',ind:'2',loan:38000,desc:'高效晶硅电池'},
-    {name:'晶澳太阳能科技股份有限公司',value:[116.40,39.93,29000],city:'北京',ind:'2',loan:29000,desc:'光伏组件制造商'},
-    {name:'天合光能股份有限公司',value:[119.98,31.82,45000],city:'常州',ind:'2',loan:45000,desc:'光伏智慧能源'},
-    {name:'阳光电源股份有限公司',value:[117.25,31.85,22000],city:'合肥',ind:'2',loan:22000,desc:'逆变器及储能'},
-    {name:'阿特斯阳光电力集团有限公司',value:[120.62,31.30,18000],city:'苏州',ind:'2',loan:18000,desc:'光伏组件'},
-    {name:'金风科技股份有限公司',value:[87.57,43.85,62000],city:'乌鲁木齐',ind:'2b',loan:62000,desc:'风电整机制造'},
-    {name:'明阳智慧能源集团股份有限公司',value:[113.38,22.54,35000],city:'中山',ind:'2b',loan:35000,desc:'海上风电'},
-    {name:'远景能源有限公司',value:[120.28,31.95,28000],city:'江阴',ind:'2b',loan:28000,desc:'智能风机'},
-    {name:'上海电气风电集团股份有限公司',value:[121.47,31.23,18000],city:'上海',ind:'2b',loan:18000,desc:'海上风电'},
-    {name:'中广核集团有限公司',value:[114.05,22.55,120000],city:'深圳',ind:'2c',loan:120000,desc:'核电+新能源'},
-    {name:'国电投绿能科技发展有限公司',value:[116.40,39.93,85000],city:'北京',ind:'2c',loan:85000,desc:'综合能源'},
-    {name:'北京清新环境技术股份有限公司',value:[116.40,39.93,15000],city:'北京',ind:'1',loan:15000,desc:'烟气治理'},
-    {name:'浙江菲达环保科技股份有限公司',value:[120.25,29.72,8000],city:'诸暨',ind:'1',loan:8000,desc:'除尘设备'},
-    {name:'福建龙净环保股份有限公司',value:[117.02,25.07,12000],city:'龙岩',ind:'1',loan:12000,desc:'大气污染治理'},
-    {name:'中节能环保装备股份有限公司',value:[108.94,34.26,18000],city:'西安',ind:'1',loan:18000,desc:'节能装备'},
-    {name:'青岛华世洁环保科技有限公司',value:[120.38,36.07,5000],city:'青岛',ind:'1',loan:5000,desc:'VOCs治理'},
-    {name:'北京碧水源科技股份有限公司',value:[116.40,39.93,22000],city:'北京',ind:'1b',loan:22000,desc:'膜技术水处理'},
-    {name:'重庆三峰环境集团股份有限公司',value:[106.57,29.56,16000],city:'重庆',ind:'1b',loan:16000,desc:'垃圾焚烧发电'},
-    {name:'启迪环境科技发展股份有限公司',value:[114.30,30.59,28000],city:'武汉',ind:'1b',loan:28000,desc:'固废处理'},
-    {name:'蒙草生态环境集团股份有限公司',value:[111.75,40.82,12000],city:'呼和浩特',ind:'3',loan:12000,desc:'草原生态修复'},
-    {name:'东方园林环境股份有限公司',value:[116.40,39.93,25000],city:'北京',ind:'3',loan:25000,desc:'生态园林'},
-    {name:'铁汉生态环境股份有限公司',value:[114.05,22.54,18000],city:'深圳',ind:'3',loan:18000,desc:'生态修复'},
-    {name:'福建金森股份有限公司',value:[117.35,26.26,6000],city:'三明',ind:'3b',loan:6000,desc:'碳汇林业'},
-    {name:'远大住工集团股份有限公司',value:[112.93,28.22,12000],city:'长沙',ind:'4',loan:12000,desc:'装配式建筑'},
-    {name:'北新建材集团有限公司',value:[116.40,39.93,15000],city:'北京',ind:'4',loan:15000,desc:'绿色建材'},
-    {name:'中国建筑科学研究院有限公司',value:[116.40,39.93,8000],city:'北京',ind:'4b',loan:8000,desc:'超低能耗建筑'},
-    {name:'朗诗绿色地产有限公司',value:[121.47,31.23,28000],city:'上海',ind:'4b',loan:28000,desc:'绿色地产开发'},
-    {name:'比亚迪股份有限公司',value:[114.05,22.55,180000],city:'深圳',ind:'5',loan:180000,desc:'新能源汽车'},
-    {name:'蔚来汽车科技有限公司',value:[121.47,31.23,65000],city:'上海',ind:'5',loan:65000,desc:'智能电动汽车'},
-    {name:'特来电新能源股份有限公司',value:[120.38,36.07,12000],city:'青岛',ind:'5b',loan:12000,desc:'充电基础设施'},
-    {name:'星星充电科技有限公司',value:[119.98,31.78,9000],city:'常州',ind:'5b',loan:9000,desc:'充电桩运营'},
-    {name:'黑龙江北大荒农业股份有限公司',value:[126.53,45.80,22000],city:'哈尔滨',ind:'6',loan:22000,desc:'绿色农产品'},
-    {name:'新希望六和股份有限公司',value:[104.07,30.57,35000],city:'成都',ind:'6',loan:35000,desc:'生态养殖'},
-    {name:'大禹节水集团股份有限公司',value:[103.83,36.06,8000],city:'兰州',ind:'6b',loan:8000,desc:'高效节水灌溉'},
-    {name:'格林美股份有限公司',value:[114.05,22.55,25000],city:'深圳',ind:'7',loan:25000,desc:'动力电池回收'},
-    {name:'中再资源环境股份有限公司',value:[121.59,31.26,12000],city:'上海',ind:'7',loan:12000,desc:'再生资源回收'},
-    {name:'北京首创生态环保集团',value:[116.40,39.93,18000],city:'北京',ind:'7b',loan:18000,desc:'水环境治理'},
-    {name:'中碳能源投资有限公司',value:[114.05,22.55,5000],city:'深圳',ind:'8',loan:5000,desc:'碳交易服务'},
-    {name:'上海环境能源交易所',value:[121.47,31.23,3000],city:'上海',ind:'8',loan:3000,desc:'碳配额交易'},
-    {name:'中诚信绿金科技有限公司',value:[116.40,39.93,2000],city:'北京',ind:'8',loan:2000,desc:'绿色评估认证'},
-];
-
-var provData=[
-    {name:'北京',value:12,loan:185000},
-    {name:'上海',value:8,loan:152000},
-    {name:'广东',value:10,loan:380000},
-    {name:'江苏',value:8,loan:125000},
-    {name:'浙江',value:6,loan:68000},
-    {name:'山东',value:5,loan:42000},
-    {name:'河北',value:3,loan:28000},
-    {name:'四川',value:5,loan:73000},
-    {name:'湖北',value:3,loan:38000},
-    {name:'湖南',value:3,loan:22000},
-    {name:'福建',value:4,loan:35000},
-    {name:'安徽',value:3,loan:28000},
-    {name:'陕西',value:4,loan:52000},
-    {name:'新疆',value:2,loan:68000},
-    {name:'内蒙古',value:3,loan:28000},
-    {name:'甘肃',value:2,loan:12000},
-    {name:'重庆',value:3,loan:32000},
-    {name:'黑龙江',value:2,loan:24000},
-    {name:'河南',value:2,loan:15000},
-    {name:'辽宁',value:2,loan:12000},
-    {name:'江西',value:2,loan:10000},
-    {name:'广西',value:2,loan:8000},
-    {name:'云南',value:2,loan:15000},
-    {name:'贵州',value:2,loan:10000},
-    {name:'山西',value:2,loan:12000},
-    {name:'吉林',value:1,loan:6000},
-    {name:'海南',value:1,loan:5000},
-    {name:'宁夏',value:1,loan:8000},
-    {name:'青海',value:1,loan:12000},
-    {name:'西藏',value:1,loan:3000},
-    {name:'天津',value:2,loan:18000}
-];
-
-function buildOption(enterprises){
-    var seriesData=[];
-    enterprises.forEach(function(e){
-        var c=iconColors[e.ind]||'#888';
-        seriesData.push({value:e.value,name:e.name,city:e.city,ind:e.ind,loan:e.loan,desc:e.desc,itemStyle:{color:c}});
+    <script>
+    I18N.setDict({
+        pageTitle: {zh:'绿色产业地图', en:'Green Industry Map'},
+        subtitle: {zh:'全国绿色产业企业分布 · GIS可视化', en:'National Green Industry Distribution · GIS Visualization'},
+        fallbackText: {zh:'请将地图图片保存至：06GreenIndustryMap/绿色产业地图.png', en:'Save map image to: 06GreenIndustryMap/绿色产业地图.png'}
     });
-
-    return {
-        tooltip:{
-            trigger:'item',
-            formatter:function(p){
-                if(p.seriesType==='map'){
-                    var d=p.data||{};
-                    return '<b>'+p.name+'</b><br/>'+I18N.t('tooltip_enterprises')+'：'+(d.entCount||0)+' '+I18N.t('tooltip_unit')+'<br/>'+I18N.t('tooltip_balance')+'：<b>'+(d.loan||0).toLocaleString()+' '+I18N.t('tooltip_wan')+'</b>';
-                }
-                if(p.seriesType==='scatter'){
-                    return '<b>'+p.name+'</b><br/>'+I18N.t('tooltip_industry')+'：'+p.data.desc+'<br/>'+I18N.t('tooltip_city')+'：'+p.data.city+'<br/>'+I18N.t('tooltip_greenLoan')+'：'+p.data.loan.toLocaleString()+' '+I18N.t('tooltip_wan');
-                }
-                return '';
-            }
-        },
-        visualMap:{
-            min:0,max:400000,
-            seriesIndex:0,
-            left:12,bottom:28,
-            text:[I18N.t('legend_high'),I18N.t('legend_low')],
-            textStyle:{fontSize:10,color:'#475569'},
-            inRange:{color:['#DBEAFE','#BFDBFE','#93C5FD','#60A5FA','#3B82F6','#2563EB','#1D4ED8']},
-            calculable:true,
-            itemWidth:14,itemHeight:120
-        },
-        geo:{
-            map:'china',
-            roam:true,
-            zoom:1.2,
-            center:[104.5,36],
-            label:{show:true,fontSize:10,color:'#334155'},
-            emphasis:{label:{show:true,fontSize:12,color:'#0F172A'},itemStyle:{areaColor:'#DBEAFE'}}
-        },
-        series:[
-            {
-                name:I18N.t('mapSeries_province'),type:'map',map:'china',
-                geoIndex:0,
-                data:provData.map(function(d){return {name:d.name,value:d.loan,entCount:d.value,loan:d.loan};})
-            },
-            {
-                name:I18N.t('mapSeries_enterprise'),type:'scatter',coordinateSystem:'geo',
-                data:seriesData,
-                symbolSize:function(val){return Math.max(6,Math.min(18,val[2]/8000));},
-                label:{show:false},
-                emphasis:{label:{show:true,formatter:'{b}',fontSize:11}}
-            }
-        ]
+    window.onLangChange = function(lang) {
+        document.title = I18N.t('pageTitle');
+        var img = document.querySelector('.img-container img');
+        if (img) img.alt = I18N.t('pageTitle');
     };
-}
-
-function loadMap(){
-    fetch('https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json')
-        .then(function(r){return r.json();})
-        .then(function(geoJson){
-            echarts.registerMap('china',geoJson);
-            myChart.setOption(buildOption(allEnterprises));
-        })
-        .catch(function(){
-            myChart.setOption(buildOption(allEnterprises));
-        });
-}
-
-loadMap();
-window.addEventListener('resize',function(){myChart.resize();});
-
-function filterIndustry(ind){
-    document.querySelectorAll('.ind-item').forEach(function(el){el.classList.remove('active');});
-    if(ind==='all'){
-        document.querySelector('.ind-item').classList.add('active');
-        myChart.setOption(buildOption(allEnterprises));
-        document.getElementById('totalCount').textContent=allEnterprises.length;
-    }else{
-        var target=document.querySelector('[data-ind="'+ind+'"]');
-        if(target)target.classList.add('active');
-        var filtered=allEnterprises.filter(function(e){return e.ind===ind;});
-        myChart.setOption(buildOption(filtered));
-        document.getElementById('totalCount').textContent=filtered.length;
-    }
-}
-
-// ==================== I18N ====================
-I18N.setDict({
-    pageTitle:{zh:'绿色产业地图 · 可持续金融管理系统',en:'Green Industry Map · Sustainable Finance System'},
-    sidebarTitle:{zh:'🌿 绿色产业地图',en:'🌿 Green Industry Map'},
-    sidebarSubtitle:{zh:'全国绿色产业企业分布 · GIS可视化',en:'National Distribution · GIS Visualization'},
-    totalEnterprises:{zh:'企业总数',en:'Total Enterprises'},
-    loanBalance:{zh:'贷款余额(万)',en:'Loan Balance (10k)'},
-    coverageProvinces:{zh:'覆盖省市',en:'Provinces'},
-    filterLabel:{zh:'八大重点行业',en:'8 Key Industries'},
-    clickToFilter:{zh:'（点击筛选）',en:' (Click to Filter)'},
-    allEnterprises:{zh:'全部企业',en:'All Enterprises'},
-    industry1:{zh:'1. 节能环保产业',en:'1. Energy Conservation & Environmental Protection'},
-    industry2:{zh:'2. 清洁能源产业',en:'2. Clean Energy'},
-    industry3:{zh:'3. 生态环境产业',en:'3. Ecological Environment'},
-    industry4:{zh:'4. 绿色建筑',en:'4. Green Building'},
-    industry5:{zh:'5. 绿色交通',en:'5. Green Transportation'},
-    industry6:{zh:'6. 绿色农业',en:'6. Green Agriculture'},
-    industry7:{zh:'7. 资源循环利用',en:'7. Resource Recycling'},
-    industry8:{zh:'8. 绿色服务',en:'8. Green Services'},
-    tooltip_enterprises:{zh:'绿色企业数',en:'Green Enterprises'},
-    tooltip_balance:{zh:'贷款余额',en:'Loan Balance'},
-    tooltip_industry:{zh:'行业',en:'Industry'},
-    tooltip_city:{zh:'城市',en:'City'},
-    tooltip_greenLoan:{zh:'绿色贷款',en:'Green Loan'},
-    tooltip_unit:{zh:'个',en:''},
-    tooltip_wan:{zh:'万元',en:'10k CNY'},
-    legend_high:{zh:'高',en:'High'},
-    legend_low:{zh:'低',en:'Low'},
-    legend_title:{zh:'图例',en:'Legend'},
-    legend_energy_conservation:{zh:'节能环保',en:'Energy Conservation'},
-    legend_clean_energy:{zh:'清洁能源',en:'Clean Energy'},
-    legend_ecology:{zh:'生态环境',en:'Ecological Environment'},
-    legend_green_building:{zh:'绿色建筑',en:'Green Building'},
-    legend_green_transport:{zh:'绿色交通',en:'Green Transportation'},
-    legend_green_agri:{zh:'绿色农业',en:'Green Agriculture'},
-    legend_recycling:{zh:'资源循环',en:'Resource Recycling'},
-    legend_green_service:{zh:'绿色服务',en:'Green Services'},
-    mapSeries_province:{zh:'省份贷款分布',en:'Provincial Loan Distribution'},
-    mapSeries_enterprise:{zh:'绿色企业',en:'Green Enterprises'},
-    sub_energy:{zh:'高效节能装备',en:'Energy-efficient Equipment'},
-    sub_pollution:{zh:'污染治理',en:'Pollution Control'},
-    sub_solar:{zh:'太阳能利用',en:'Solar Energy'},
-    sub_wind:{zh:'风能利用',en:'Wind Energy'},
-    sub_other_clean:{zh:'其他清洁能源',en:'Other Clean Energy'},
-    sub_ecology:{zh:'生态保护与修复',en:'Ecological Protection'},
-    sub_forestry:{zh:'碳汇林业',en:'Carbon Sink Forestry'},
-    sub_green_material:{zh:'绿色建筑材料',en:'Green Building Materials'},
-    sub_passive_building:{zh:'超低能耗建筑',en:'Ultra-low Energy Buildings'},
-    sub_ev:{zh:'新能源汽车',en:'New Energy Vehicles'},
-    sub_charging:{zh:'充电基础设施',en:'Charging Infrastructure'},
-    sub_organic:{zh:'有机农业',en:'Organic Agriculture'},
-    sub_irrigation:{zh:'节水灌溉',en:'Water-saving Irrigation'},
-    sub_solid_waste:{zh:'固废资源化',en:'Solid Waste Recycling'},
-    sub_water_recycle:{zh:'水循环利用',en:'Water Recycling'},
-    sub_energy_service:{zh:'节能环保服务',en:'Energy & Environmental Services'},
-    sub_carbon_mgmt:{zh:'碳资产管理',en:'Carbon Asset Management'}
-});
-
-window.onLangChange = function(lang) {
+    // initial title update
     document.title = I18N.t('pageTitle');
-    myChart.setOption(buildOption(allEnterprises));
-};
-document.title = I18N.t('pageTitle');
-</script>
+    </script>
 </body>
 </html>

@@ -243,6 +243,7 @@
         }
 
         .table-wrap .col-status,
+        .table-wrap .col-approval,
         .table-wrap .col-actions {
             position: sticky;
             background: var(--white);
@@ -250,19 +251,25 @@
             box-shadow: -4px 0 12px rgba(0, 0, 0, 0.06);
         }
         .table-wrap .col-status {
-            right: 180px;
+            right: 280px;
             min-width: 110px;
+        }
+        .table-wrap .col-approval {
+            right: 180px;
+            min-width: 100px;
         }
         .table-wrap .col-actions {
             right: 0;
             min-width: 180px;
         }
         .table-wrap thead .col-status,
+        .table-wrap thead .col-approval,
         .table-wrap thead .col-actions {
             background: var(--bg-muted);
             z-index: 11;
         }
         .table-wrap tbody tr:hover .col-status,
+        .table-wrap tbody tr:hover .col-approval,
         .table-wrap tbody tr:hover .col-actions {
             background: var(--bg-subtle);
         }
@@ -340,6 +347,16 @@
                         <div class="filter-group" style="min-width:200px;flex:2;">
                             <label data-i18n="filter_client_info">客户信息</label>
                             <input type="text" data-i18n-placeholder="ph_client_info" placeholder="客户名称/编号/统一社会信用代码">
+                        </div>
+                        <div class="filter-group" style="min-width:140px;flex:0.8;">
+                            <label data-i18n="filter_approval_status">审批状态</label>
+                            <select>
+                                <option data-i18n="opt_all">全部</option>
+                                <option>未提交</option>
+                                <option>审批中</option>
+                                <option>已驳回</option>
+                                <option>已完成</option>
+                            </select>
                         </div>
                         <div class="filter-group" style="min-width:160px;flex:1;">
                             <label data-i18n="filter_industry_class">国民经济行业分类</label>
@@ -442,16 +459,18 @@
                                 <th data-i18n="th_branch">所属分支机构</th>
                                 <th data-i18n="th_manager">管户人</th>
                                 <th data-i18n="th_operator">操作人</th>
+                                <th class="col-current-node" data-i18n="th_current_node">当前任务节点</th>
                                 <th data-i18n="th_last_updated">最近更新时间</th>
                                 <th data-i18n="th_id_date">认定日期</th>
                                 <th data-i18n="th_created">创建时间</th>
                                 <th class="col-status" data-i18n="th_status">识别状态</th>
+                                <th class="col-approval" data-i18n="th_approval_status">审批状态</th>
                                 <th class="col-actions" data-i18n="th_actions">操作</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- 1. 贵州乌江水电 → 未识别 → 绿色分类列全部显示为 "—" -->
-                            <tr>
+                            <!-- 1. 贵州乌江水电 → 未识别 → 审批中-绿金联系人 -->
+                            <tr data-approval="审批中" data-node="公司绿金联系人/赵绿金/001" data-project-id="PRJ-2026-001">
                                 <td class="col-seq">1</td>
                                 <td style="font-family:monospace;font-size:12px;color:var(--brand-600);">PRJ-2026-001</td>
                                 <td style="font-weight:500;color:var(--ink-900);" data-i18n="project_goupitan">构皮滩水电站项目</td>
@@ -463,7 +482,6 @@
                                 <td style="font-family:monospace;font-size:12px;">91520000714735261Y</td>
                                 <td data-i18n="ind_hydropower">水电开发</td>
                                 <td><span class="tag tag-warning" data-i18n="tag_constructing">建设中</span></td>
-                                <!-- 未识别：绿色分类列全部显示为 "—" -->
                                 <td><span class="tag tag-default">—</span></td>
                                 <td><span class="tag tag-default">—</span></td>
                                 <td><span class="tag tag-default">—</span></td>
@@ -475,15 +493,10 @@
                                 <td>2026/07/01</td>
                                 <td>2026/07/01 10:00:00</td>
                                 <td class="col-status"><span class="tag tag-unidentified" data-i18n="tag_unidentified">未识别</span></td>
-                                <td class="col-actions">
-                                    <div class="action-btns">
-                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-001')" data-i18n="btn_view">查看</button>
-                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-001')" data-i18n="btn_start_id">开始识别</button>
-                                    </div>
-                                </td>
+                                <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
-                            <!-- 2. 中交一公局（吕梁供热）→ 未识别 → 绿色分类列全部显示为 "—" -->
-                            <tr>
+                            <!-- 2. 中交一公局 → 未提交-客户经理本人 -->
+                            <tr data-approval="未提交" data-node="客户经理/陈经理/005" data-project-id="PRJ-2026-002">
                                 <td class="col-seq">2</td>
                                 <td style="font-family:monospace;font-size:12px;color:var(--brand-600);">PRJ-2026-002</td>
                                 <td style="font-weight:500;color:var(--ink-900);" data-i18n="project_lvliang">吕梁市区长输集中供热工程</td>
@@ -495,7 +508,6 @@
                                 <td style="font-family:monospace;font-size:12px;">91110000100088498T</td>
                                 <td data-i18n="ind_civil_eng">土木工程建筑业</td>
                                 <td><span class="tag tag-warning" data-i18n="tag_constructing">建设中</span></td>
-                                <!-- 未识别：绿色分类列全部显示为 "—" -->
                                 <td><span class="tag tag-default">—</span></td>
                                 <td><span class="tag tag-default">—</span></td>
                                 <td><span class="tag tag-default">—</span></td>
@@ -507,15 +519,10 @@
                                 <td>2026/07/01</td>
                                 <td>2026/07/01 11:20:00</td>
                                 <td class="col-status"><span class="tag tag-unidentified" data-i18n="tag_unidentified">未识别</span></td>
-                                <td class="col-actions">
-                                    <div class="action-btns">
-                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-002')" data-i18n="btn_view">查看</button>
-                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-002')" data-i18n="btn_start_id">开始识别</button>
-                                    </div>
-                                </td>
+                                <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
-                            <!-- 3. 宁德时代 → 已识别 -->
-                            <tr>
+                            <!-- 3. 宁德时代 → 已完成 -->
+                            <tr data-approval="已完成" data-node="流程结束" data-project-id="PRJ-2026-003">
                                 <td class="col-seq">3</td>
                                 <td style="font-family:monospace;font-size:12px;color:var(--brand-600);">PRJ-2026-003</td>
                                 <td style="font-weight:500;color:var(--ink-900);" data-i18n="project_catl_battery">动力及储能锂离子电池研发生产</td>
@@ -538,15 +545,10 @@
                                 <td>2026/07/02</td>
                                 <td>2026/07/02 08:00:00</td>
                                 <td class="col-status"><span class="tag tag-identified" data-i18n="tag_identified">已识别</span></td>
-                                <td class="col-actions">
-                                    <div class="action-btns">
-                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-003')" data-i18n="btn_view">查看</button>
-                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-003')" data-i18n="btn_start_id">开始识别</button>
-                                    </div>
-                                </td>
+                                <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
-                            <!-- 4. 广东省环保集团 → 已识别 -->
-                            <tr>
+                            <!-- 4. 广东省环保集团 → 审批中-总行初审 -->
+                            <tr data-approval="审批中" data-node="总行公司初审/王初审/001" data-project-id="PRJ-2026-004">
                                 <td class="col-seq">4</td>
                                 <td style="font-family:monospace;font-size:12px;color:var(--brand-600);">PRJ-2026-004</td>
                                 <td style="font-weight:500;color:var(--ink-900);" data-i18n="project_sewage">城市污水处理厂新建与改造</td>
@@ -569,15 +571,10 @@
                                 <td>2026/07/01</td>
                                 <td>2026/07/01 14:00:00</td>
                                 <td class="col-status"><span class="tag tag-identified" data-i18n="tag_identified">已识别</span></td>
-                                <td class="col-actions">
-                                    <div class="action-btns">
-                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-004')" data-i18n="btn_view">查看</button>
-                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-004')" data-i18n="btn_start_id">开始识别</button>
-                                    </div>
-                                </td>
+                                <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
-                            <!-- 5. 广州地铁 → 已识别 -->
-                            <tr>
+                            <!-- 5. 广州地铁 → 已驳回-客户经理本人 -->
+                            <tr data-approval="已驳回" data-node="客户经理/陈经理/005" data-project-id="PRJ-2026-005">
                                 <td class="col-seq">5</td>
                                 <td style="font-family:monospace;font-size:12px;color:var(--brand-600);">PRJ-2026-005</td>
                                 <td style="font-weight:500;color:var(--ink-900);" data-i18n="project_metro">城市轨道交通建设工程</td>
@@ -600,15 +597,10 @@
                                 <td>2026/07/02</td>
                                 <td>2026/07/02 09:00:00</td>
                                 <td class="col-status"><span class="tag tag-identified" data-i18n="tag_identified">已识别</span></td>
-                                <td class="col-actions">
-                                    <div class="action-btns">
-                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-005')" data-i18n="btn_view">查看</button>
-                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-005')" data-i18n="btn_start_id">开始识别</button>
-                                    </div>
-                                </td>
+                                <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
-                            <!-- 6. 中国铝业（非绿）→ 已识别 -->
-                            <tr>
+                            <!-- 6. 中国铝业 → 审批中-总行复核 -->
+                            <tr data-approval="审批中" data-node="总行公司复核/李复核/002" data-project-id="PRJ-2026-006">
                                 <td class="col-seq">6</td>
                                 <td style="font-family:monospace;font-size:12px;color:var(--brand-600);">PRJ-2026-006</td>
                                 <td style="font-weight:500;color:var(--ink-900);" data-i18n="project_electrolytic">电解槽节能技改及环保升级</td>
@@ -631,15 +623,10 @@
                                 <td>2026/07/01</td>
                                 <td>2026/07/01 11:30:00</td>
                                 <td class="col-status"><span class="tag tag-identified" data-i18n="tag_identified">已识别</span></td>
-                                <td class="col-actions">
-                                    <div class="action-btns">
-                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-006')" data-i18n="btn_view">查看</button>
-                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-006')" data-i18n="btn_start_id">开始识别</button>
-                                    </div>
-                                </td>
+                                <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
-                            <!-- 7. 现代牧业 → 已识别 -->
-                            <tr>
+                            <!-- 7. 现代牧业 → 审批中-绿金联系人 -->
+                            <tr data-approval="审批中" data-node="公司绿金联系人/赵绿金/001" data-project-id="PRJ-2026-007">
                                 <td class="col-seq">7</td>
                                 <td style="font-family:monospace;font-size:12px;color:var(--brand-600);">PRJ-2026-007</td>
                                 <td style="font-weight:500;color:var(--ink-900);" data-i18n="project_ranch_full">标准化示范牧场建设项目，奶牛养殖基地，绿色畜牧业项目</td>
@@ -662,15 +649,10 @@
                                 <td>2026/07/02</td>
                                 <td>2026/07/02 10:00:00</td>
                                 <td class="col-status"><span class="tag tag-identified" data-i18n="tag_identified">已识别</span></td>
-                                <td class="col-actions">
-                                    <div class="action-btns">
-                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-007')" data-i18n="btn_view">查看</button>
-                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-007')" data-i18n="btn_start_id">开始识别</button>
-                                    </div>
-                                </td>
+                                <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
-                            <!-- 8. 中创新航（储能）→ 已识别 -->
-                            <tr>
+                            <!-- 8. 中创新航 → 已完成 -->
+                            <tr data-approval="已完成" data-node="流程结束" data-project-id="PRJ-2026-008">
                                 <td class="col-seq">8</td>
                                 <td style="font-family:monospace;font-size:12px;color:var(--brand-600);">PRJ-2026-008</td>
                                 <td style="font-weight:500;color:var(--ink-900);" data-i18n="project_energy_storage">新型储能电池生产基地</td>
@@ -693,12 +675,7 @@
                                 <td>2026/07/02</td>
                                 <td>2026/07/02 12:00:00</td>
                                 <td class="col-status"><span class="tag tag-identified" data-i18n="tag_identified">已识别</span></td>
-                                <td class="col-actions">
-                                    <div class="action-btns">
-                                        <button class="btn btn-outline-brand btn-sm" onclick="goToDetail('view', 'PRJ-2026-008')" data-i18n="btn_view">查看</button>
-                                        <button class="btn btn-primary btn-sm" onclick="goToDetail('edit', 'PRJ-2026-008')" data-i18n="btn_start_id">开始识别</button>
-                                    </div>
-                                </td>
+                                <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
                         </tbody>
                     </table>
@@ -924,6 +901,136 @@
             page_label_view: {zh:'项目绿色认定详情', en:'Project Green ID Detail'},
             page_label_edit: {zh:'项目绿色认定操作', en:'Project Green ID Operation'}
         });
+
+        // ==================== 审批状态列 & 当前任务节点列 — 运行时注入 ====================
+        (function injectColumns() {
+            var rows = document.querySelectorAll('tbody tr');
+            rows.forEach(function(row) {
+                var cells = row.querySelectorAll('td');
+                // 插入"当前任务节点"列（操作人之后）
+                var nodeText = row.getAttribute('data-node') || '—';
+                var nodeCell = document.createElement('td');
+                nodeCell.className = 'col-current-node';
+                nodeCell.textContent = nodeText;
+                nodeCell.style.whiteSpace = 'nowrap';
+                var operatorCell = cells[cells.length - 6]; // 操作人在倒数第6 (status, actions, 5 extra cols...)
+                operatorCell.parentNode.insertBefore(nodeCell, operatorCell.nextSibling);
+
+                // 插入"审批状态"列（识别状态之后）
+                var apprText = row.getAttribute('data-approval') || '待提交';
+                var statusCell = row.querySelector('.col-status');
+                var approvalCell = document.createElement('td');
+                approvalCell.className = 'col-approval';
+                var tagClass = apprText === '审批中' ? 'tag-warning' : (apprText === '已完成' ? 'tag-success' : (apprText === '已驳回' ? 'tag-danger' : 'tag-default'));
+                approvalCell.innerHTML = '<span class="tag ' + tagClass + '">' + apprText + '</span>';
+                statusCell.parentNode.insertBefore(approvalCell, statusCell.nextSibling);
+            });
+        })();
+
+        // ==================== 项目绿色认定 — 完整角色权限矩阵 ====================
+        var currentRole = '客户经理';
+
+        // 判断当前任务节点是否匹配角色
+        function nodeMatches(nodeText, roleKeyword) {
+            if (!nodeText) return false;
+            return nodeText.indexOf(roleKeyword) !== -1;
+        }
+
+        function buildActionButtons(row) {
+            var appr = row.getAttribute('data-approval') || '';
+            var node = row.getAttribute('data-node') || '';
+            var projectId = row.getAttribute('data-project-id') || '';
+            var container = row.querySelector('.col-actions .action-btns');
+            if (!container) return;
+            container.innerHTML = '';
+
+            var btns = [];
+
+            // ---- 客户经理（主办经理） ----
+            if (currentRole === '客户经理') {
+                if (appr === '未提交') {
+                    btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'edit'});
+                } else if (appr === '审批中') {
+                    btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
+                } else if (appr === '已驳回') {
+                    btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'edit'});
+                } else if (appr === '已完成') {
+                    btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
+                }
+            }
+            // ---- 公司绿金联系人 ----
+            else if (currentRole === '公司绿金联系人') {
+                if (appr === '未提交') {
+                    // — 无按钮
+                } else if (appr === '审批中' && nodeMatches(node, '绿金联系人')) {
+                    btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'edit'});
+                } else if (appr === '审批中' && !nodeMatches(node, '绿金联系人')) {
+                    btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
+                } else if (appr === '已驳回') {
+                    btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
+                } else if (appr === '已完成') {
+                    btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
+                }
+            }
+            // ---- 总行公司初审 ----
+            else if (currentRole === '总行公司初审') {
+                if (appr === '未提交') {
+                    // — 无按钮
+                } else if (appr === '审批中' && nodeMatches(node, '总行初审')) {
+                    btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'edit'});
+                } else if (appr === '审批中' && !nodeMatches(node, '总行初审')) {
+                    btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
+                } else if (appr === '已驳回') {
+                    btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
+                } else if (appr === '已完成') {
+                    btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
+                }
+            }
+            // ---- 总行公司复核 ----
+            else if (currentRole === '总行公司复核') {
+                if (appr === '未提交') {
+                    // — 无按钮
+                } else if (appr === '审批中' && nodeMatches(node, '总行复核')) {
+                    btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'edit'});
+                } else if (appr === '审批中' && !nodeMatches(node, '总行复核')) {
+                    btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
+                } else if (appr === '已驳回') {
+                    btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
+                } else if (appr === '已完成') {
+                    btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
+                }
+            }
+            // ---- 总行管理员（仅查看，无编辑权限） ----
+            else if (currentRole === '总行管理员') {
+                if (appr !== '未提交') {
+                    btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
+                }
+            }
+
+            // 渲染按钮
+            btns.forEach(function(b) {
+                var btn = document.createElement('button');
+                btn.className = b.cls;
+                btn.textContent = b.label;
+                btn.onclick = function() { goToDetail(b.action, projectId); };
+                container.appendChild(btn);
+            });
+        }
+
+        function applyRolePermissions() {
+            var rows = document.querySelectorAll('tbody tr');
+            rows.forEach(function(row) {
+                buildActionButtons(row);
+            });
+        }
+
+        window.addEventListener('message', function(e) {
+            if (e.data && e.data.type === 'roleChange' && e.data.role) {
+                currentRole = e.data.role;
+                applyRolePermissions();
+            }
+        });
+        setTimeout(applyRolePermissions, 100);
     </script>
 
 </body>

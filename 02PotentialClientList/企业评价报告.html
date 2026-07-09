@@ -310,7 +310,17 @@
 function goBack() {
     var path = window.location.pathname;
     var dir = path.substring(0, path.lastIndexOf('/') + 1);
-    window.location.href = dir + '绿色潜在客户清单.html';
+    var targetUrl = dir + '绿色潜在客户清单.html';
+    if (window.parent !== window) {
+        window.parent.postMessage({
+            type: 'openPage',
+            pageId: 'potential-clients',
+            file: targetUrl,
+            label: '绿色潜在客户业务营销'
+        }, '*');
+    } else {
+        window.location.href = targetUrl;
+    }
 }
 
 // ==================== I18N ====================

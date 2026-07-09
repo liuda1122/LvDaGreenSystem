@@ -72,6 +72,8 @@
     .table-wrap th, .table-wrap td { white-space: nowrap; }
     .sticky-right { position: sticky; right: 0; z-index: 10; background: var(--white); border-left: 1px solid var(--line-200); }
     .sticky-right-header { position: sticky; right: 0; z-index: 20; background: var(--bg-muted); border-left: 1px solid var(--line-200); }
+    .sticky-approval { position: sticky; right: 100px; z-index: 9; background: var(--white); border-left: 1px solid var(--line-200); }
+    .sticky-approval-header { position: sticky; right: 100px; z-index: 19; background: var(--bg-muted); border-left: 1px solid var(--line-200); }
 
     /* 筛选栏水平布局 */
     .filter-row {
@@ -224,6 +226,17 @@
               <label data-i18n="filter_client_info">客户信息</label>
               <input type="text" data-i18n-placeholder="ph_client_info" placeholder="企业名称/编号/统一社会信用">
             </div>
+            <!-- 审批状态 -->
+            <div class="filter-item">
+              <label data-i18n="filter_approval_status">审批状态</label>
+              <select>
+                <option data-i18n="opt_all">全部</option>
+                <option>未提交</option>
+                <option>审批中</option>
+                <option>已驳回</option>
+                <option>已完成</option>
+              </select>
+            </div>
             <!-- 贷款投向行业 -->
             <div class="filter-item">
               <label data-i18n="filter_loan_industry">贷款投向行业</label>
@@ -312,14 +325,16 @@
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:120px;" data-i18n="th_branch">所属分支机构</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;" data-i18n="th_manager">管户人</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;" data-i18n="th_operator">操作人</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;" data-i18n="th_current_node">当前任务节点</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:130px;" data-i18n="th_last_updated">最近更新时间</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;" data-i18n="th_created">创建时间</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600 sticky-approval-header" style="min-width:90px;border-left:1px solid var(--line-200);" data-i18n="th_approval_status">审批状态</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600 sticky-right-header" style="min-width:80px;border-left:1px solid var(--line-200);" data-i18n="th_actions">操作</th>
               </tr>
             </thead>
             <tbody>
-              <!-- 行1：项目类 -->
-              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="project">
+              <!-- 行1：项目类 → 审批中-绿金联系人 -->
+              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="project" data-approval="审批中" data-node="公司绿金联系人/赵绿金/001" data-contract-id="2021012900000050">
                 <td class="px-2 py-2 font-mono text-brand-600" style="white-space:nowrap;">2021012900000050</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">固定项目贷</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">固定项目贷</td>
@@ -344,12 +359,11 @@
                 <td class="px-2 py-2" style="white-space:nowrap;">王五/001</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
-                <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
-                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)" data-i18n="btn_view_detail">查看详情</button>
-                </td>
+                <td class="px-2 py-2 sticky-approval col-approval-cell" style="border-left:1px solid var(--line-200);"></td>
+                <td class="px-2 py-2 sticky-right col-actions-cell" style="border-left:1px solid var(--line-200);"><div class="action-btns"></div></td>
               </tr>
-              <!-- 行2：项目类 -->
-              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="project">
+              <!-- 行2：项目类 → 未提交-客户经理本人 -->
+              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="project" data-approval="未提交" data-node="客户经理/陈经理/005" data-contract-id="2021012900055550">
                 <td class="px-2 py-2 font-mono text-brand-600" style="white-space:nowrap;">2021012900055550</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">固定项目贷</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">技改项目贷款</td>
@@ -374,12 +388,11 @@
                 <td class="px-2 py-2" style="white-space:nowrap;">李四/002</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
-                <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
-                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)" data-i18n="btn_view_detail">查看详情</button>
-                </td>
+                <td class="px-2 py-2 sticky-approval col-approval-cell" style="border-left:1px solid var(--line-200);"></td>
+                <td class="px-2 py-2 sticky-right col-actions-cell" style="border-left:1px solid var(--line-200);"><div class="action-btns"></div></td>
               </tr>
-              <!-- 行3：非项目类 -->
-              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="non-project">
+              <!-- 行3：非项目类 → 已完成 -->
+              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="non-project" data-approval="已完成" data-node="流程结束" data-contract-id="2021012900000052">
                 <td class="px-2 py-2 font-mono text-brand-600" style="white-space:nowrap;">2021012900000052</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">流动资金贷款</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">一般流行性资金贷款</td>
@@ -404,12 +417,11 @@
                 <td class="px-2 py-2" style="white-space:nowrap;">赵六/003</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
-                <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
-                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)" data-i18n="btn_view_detail">查看详情</button>
-                </td>
+                <td class="px-2 py-2 sticky-approval col-approval-cell" style="border-left:1px solid var(--line-200);"></td>
+                <td class="px-2 py-2 sticky-right col-actions-cell" style="border-left:1px solid var(--line-200);"><div class="action-btns"></div></td>
               </tr>
-              <!-- 行4：非项目类 -->
-              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="non-project">
+              <!-- 行4：非项目类 → 审批中-总行初审 -->
+              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="non-project" data-approval="审批中" data-node="总行公司初审/王初审/001" data-contract-id="2021012900000053">
                 <td class="px-2 py-2 font-mono text-brand-600" style="white-space:nowrap;">2021012900000053</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">流动资金贷款</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">一般流行性资金贷款</td>
@@ -434,12 +446,11 @@
                 <td class="px-2 py-2" style="white-space:nowrap;">王五/001</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
-                <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
-                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)" data-i18n="btn_view_detail">查看详情</button>
-                </td>
+                <td class="px-2 py-2 sticky-approval col-approval-cell" style="border-left:1px solid var(--line-200);"></td>
+                <td class="px-2 py-2 sticky-right col-actions-cell" style="border-left:1px solid var(--line-200);"><div class="action-btns"></div></td>
               </tr>
-              <!-- 行5：非项目类 -->
-              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="non-project">
+              <!-- 行5：非项目类 → 已驳回-客户经理 -->
+              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="non-project" data-approval="已驳回" data-node="客户经理/陈经理/005" data-contract-id="2021012900000054">
                 <td class="px-2 py-2 font-mono text-brand-600" style="white-space:nowrap;">2021012900000054</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">流动资金贷款</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">一般流行性资金贷款</td>
@@ -464,12 +475,11 @@
                 <td class="px-2 py-2" style="white-space:nowrap;">李四/002</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
-                <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
-                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)" data-i18n="btn_view_detail">查看详情</button>
-                </td>
+                <td class="px-2 py-2 sticky-approval col-approval-cell" style="border-left:1px solid var(--line-200);"></td>
+                <td class="px-2 py-2 sticky-right col-actions-cell" style="border-left:1px solid var(--line-200);"><div class="action-btns"></div></td>
               </tr>
-              <!-- 行6：非项目类 -->
-              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="non-project">
+              <!-- 行6：非项目类 → 审批中-总行复核 -->
+              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="non-project" data-approval="审批中" data-node="总行公司复核/李复核/002" data-contract-id="2021012900000055">
                 <td class="px-2 py-2 font-mono text-brand-600" style="white-space:nowrap;">2021012900000055</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">流动资金贷款</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">XXX贷</td>
@@ -494,12 +504,11 @@
                 <td class="px-2 py-2" style="white-space:nowrap;">赵六/003</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
-                <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
-                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)" data-i18n="btn_view_detail">查看详情</button>
-                </td>
+                <td class="px-2 py-2 sticky-approval col-approval-cell" style="border-left:1px solid var(--line-200);"></td>
+                <td class="px-2 py-2 sticky-right col-actions-cell" style="border-left:1px solid var(--line-200);"><div class="action-btns"></div></td>
               </tr>
-              <!-- 行7：非项目类 -->
-              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="non-project">
+              <!-- 行7：非项目类 → 审批中-绿金联系人 -->
+              <tr class="border-b border-slate-100 hover:bg-slate-50/50" data-type="non-project" data-approval="审批中" data-node="公司绿金联系人/赵绿金/001" data-contract-id="2021012900000058">
                 <td class="px-2 py-2 font-mono text-brand-600" style="white-space:nowrap;">2021012900000058</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">流动资金贷款</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">XXX贷</td>
@@ -524,9 +533,8 @@
                 <td class="px-2 py-2" style="white-space:nowrap;">王五/001</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">2025/05/31 10:59:59</td>
-                <td class="px-2 py-2 sticky-right" style="border-left:1px solid var(--line-200);">
-                  <button class="btn btn-secondary btn-sm" onclick="handleView(this)" data-i18n="btn_view_detail">查看详情</button>
-                </td>
+                <td class="px-2 py-2 sticky-approval col-approval-cell" style="border-left:1px solid var(--line-200);"></td>
+                <td class="px-2 py-2 sticky-right col-actions-cell" style="border-left:1px solid var(--line-200);"><div class="action-btns"></div></td>
               </tr>
             </tbody>
           </table>
@@ -744,7 +752,21 @@
   // ==================== 处理"查看详情"按钮 ====================
   function handleView(btn) {
     var dir = getCurrentDir();
-    window.location.href = dir + 'contract-green-identify-detail-nonproject.html';
+    var row = btn.closest('tr');
+    var targetFile = (row && row.getAttribute('data-type') === 'project')
+        ? dir + '合同绿色认定详情页-项目类.html'
+        : dir + 'contract-green-identify-detail-nonproject.html';
+    if (window.parent !== window) {
+        var pageId = 'contract-detail-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
+        window.parent.postMessage({
+            type: 'openPage',
+            pageId: pageId,
+            file: targetFile,
+            label: I18N.t('page_title')
+        }, '*');
+    } else {
+        window.location.href = targetFile;
+    }
   }
 
   // ==================== 弹窗控制 ====================
@@ -777,6 +799,134 @@
       window.location.href = dir + '合同绿色认定详情页-项目类.html';
     }
   });
+
+  // ==================== 审批状态列 & 当前任务节点列 — 运行时注入 ====================
+  (function injectColumns() {
+    var rows = document.querySelectorAll('tbody tr');
+    rows.forEach(function(row) {
+      // 在操作人之后插入"当前任务节点"
+      var nodeText = row.getAttribute('data-node') || '—';
+      var nodeCell = document.createElement('td');
+      nodeCell.className = 'col-current-node px-2 py-2 text-sm';
+      nodeCell.textContent = nodeText;
+      nodeCell.style.whiteSpace = 'nowrap';
+      // 操作人是倒数第7个td（操作人, node, 最近更新, 创建, approval, actions）
+      var allTds = row.querySelectorAll('td');
+      var operatorIdx = allTds.length - 6; // 6 cells from end: node, update, created, approval, actions (5), plus operator makes 6
+      allTds[operatorIdx].parentNode.insertBefore(nodeCell, allTds[operatorIdx].nextSibling);
+
+      // 在审批状态cell填充内容
+      var apprText = row.getAttribute('data-approval') || '待提交';
+      var approvalCell = row.querySelector('.col-approval-cell');
+      if (approvalCell) {
+        var tagClass = apprText === '审批中' ? 'tag tag-warning' : (apprText === '已完成' ? 'tag tag-success' : (apprText === '已驳回' ? 'tag tag-danger' : 'tag tag-default'));
+        approvalCell.innerHTML = '<span class="' + tagClass + '">' + apprText + '</span>';
+      }
+    });
+  })();
+
+  // ==================== 合同绿色认定 — 完整角色权限矩阵 ====================
+  var currentRole = '客户经理';
+
+  function nodeMatches(nodeText, roleKeyword) {
+    if (!nodeText) return false;
+    return nodeText.indexOf(roleKeyword) !== -1;
+  }
+
+  function buildActionButtons(row) {
+    var appr = row.getAttribute('data-approval') || '';
+    var node = row.getAttribute('data-node') || '';
+    var container = row.querySelector('.col-actions-cell .action-btns');
+    if (!container) return;
+    container.innerHTML = '';
+
+    var btns = [];
+
+    // ---- 客户经理（对应条线主办经理） ----
+    if (currentRole === '客户经理') {
+      if (appr === '未提交') {
+        btns.push({label:'去处理', cls:'btn btn-primary btn-sm'});
+      } else if (appr === '审批中') {
+        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+      } else if (appr === '已驳回') {
+        btns.push({label:'去处理', cls:'btn btn-primary btn-sm'});
+      } else if (appr === '已完成') {
+        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+      }
+    }
+    // ---- 公司绿金联系人（对应条线） ----
+    else if (currentRole === '公司绿金联系人') {
+      if (appr === '未提交') {
+        // — 无按钮
+      } else if (appr === '审批中' && nodeMatches(node, '绿金联系人')) {
+        btns.push({label:'去处理', cls:'btn btn-primary btn-sm'});
+      } else if (appr === '审批中' && !nodeMatches(node, '绿金联系人')) {
+        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+      } else if (appr === '已驳回') {
+        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+      } else if (appr === '已完成') {
+        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+      }
+    }
+    // ---- 总行公司初审（对应条线） ----
+    else if (currentRole === '总行公司初审') {
+      if (appr === '未提交') {
+        // — 无按钮
+      } else if (appr === '审批中' && nodeMatches(node, '总行初审')) {
+        btns.push({label:'去处理', cls:'btn btn-primary btn-sm'});
+      } else if (appr === '审批中' && !nodeMatches(node, '总行初审')) {
+        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+      } else if (appr === '已驳回') {
+        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+      } else if (appr === '已完成') {
+        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+      }
+    }
+    // ---- 总行公司复核（对应条线） ----
+    else if (currentRole === '总行公司复核') {
+      if (appr === '未提交') {
+        // — 无按钮
+      } else if (appr === '审批中' && nodeMatches(node, '总行复核')) {
+        btns.push({label:'去处理', cls:'btn btn-primary btn-sm'});
+      } else if (appr === '审批中' && !nodeMatches(node, '总行复核')) {
+        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+      } else if (appr === '已驳回') {
+        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+      } else if (appr === '已完成') {
+        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+      }
+    }
+    // ---- 总行管理员（仅查看，无编辑权限） ----
+    else if (currentRole === '总行管理员') {
+      if (appr !== '未提交') {
+        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+      }
+    }
+
+    // 渲染按钮
+    btns.forEach(function(b) {
+      var btn = document.createElement('button');
+      btn.className = b.cls;
+      btn.textContent = b.label;
+      btn.onclick = function() { handleView(this); };
+      container.appendChild(btn);
+    });
+  }
+
+  function applyRolePermissions() {
+    var rows = document.querySelectorAll('tbody tr');
+    rows.forEach(function(row) {
+      buildActionButtons(row);
+    });
+  }
+
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'roleChange' && e.data.role) {
+      currentRole = e.data.role;
+      applyRolePermissions();
+    }
+  });
+  setTimeout(applyRolePermissions, 100);
 </script>
 
 </body>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>绿色金融业务画像</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+  <style>
+    :root {
+      --brand-50:#E8F0FB; --brand-100:#D1DFF4; --brand-300:#6E97D6;
+      --brand-500:#2A66C2; --brand-700:#143F8F; --brand-900:#01256A;
+      --green-50:#ECFDF5; --green-500:#10B981; --green-700:#047857;
+      --red-500:#EF4444; --red-50:#FEF2F2;
+      --ink-900:#0F172A; --ink-800:#1E293B; --ink-600:#475569;
+      --ink-500:#64748B; --ink-400:#94A3B8; --ink-300:#CBD5E1;
+      --line-200:#E2E8F0; --bg-muted:#F1F5F9; --bg-subtle:#F8FAFC;
+      --white:#FFFFFF;
+      --radius-sm:4px; --radius-md:6px; --radius-lg:8px;
+      --radius-xl:12px; --radius-2xl:16px;
+      --s-3:12px; --s-4:16px; --s-6:24px;
+      --font-sans:'PingFang SC','Microsoft YaHei','Inter',system-ui,sans-serif;
+      --font-num:'Inter','SF Pro Display',system-ui,sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--font-sans);color:var(--ink-800);background:var(--bg-subtle);font-size:14px;line-height:1.57;height:100vh;overflow:hidden}
+    .custom-scroll::-webkit-scrollbar{width:5px}
+    .custom-scroll::-webkit-scrollbar-track{background:transparent}
+    .custom-scroll::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}
+    .section-card{background:var(--white);border-radius:var(--radius-xl);border:1px solid var(--line-200);overflow:hidden;display:flex;flex-direction:column}
+    .section-card-head{display:flex;align-items:center;padding:var(--s-3) var(--s-4);border-bottom:1px solid var(--line-200);background:linear-gradient(135deg,var(--brand-50) 0%,var(--bg-subtle) 100%);flex-shrink:0}
+    .section-card-title{font-size:15px;font-weight:600;color:var(--ink-900)}
+    .stat-card{background:var(--white);border-radius:var(--radius-xl);border:1px solid var(--line-200);padding:var(--s-4) var(--s-6);display:flex;flex-direction:column;gap:2px}
+    .stat-value{font-size:26px;font-weight:700;color:var(--brand-700);font-family:var(--font-num);line-height:1.2}
+    .stat-label{font-size:12px;color:var(--ink-500)}
+    .stat-change{font-size:11px;font-weight:600}
+    .stat-change.up{color:var(--green-700)}
+    .stat-change.down{color:var(--red-500)}
+    .chart-box{flex:1;min-height:0;width:100%}
+  </style>
+</head>
+<body class="flex flex-col p-5 gap-4 overflow-y-auto custom-scroll">
+
+  <!-- ====== 概览卡片 ====== -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;flex-shrink:0">
+    <div class="stat-card">
+      <div class="stat-label">绿色金融客户总数</div>
+      <div class="stat-value">128<span style="font-size:14px;font-weight:400"> 户</span></div>
+      <div class="stat-change up">▲ 12.3% <span style="font-weight:400;color:var(--ink-400)">较上年</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">绿色贷款余额</div>
+      <div class="stat-value">856<span style="font-size:14px;font-weight:400"> 亿元</span></div>
+      <div class="stat-change up">▲ 18.7% <span style="font-weight:400;color:var(--ink-400)">较上年</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">绿色产业覆盖行业</div>
+      <div class="stat-value">47<span style="font-size:14px;font-weight:400"> 个</span></div>
+      <div class="stat-change up">▲ 6.8% <span style="font-weight:400;color:var(--ink-400)">较上年</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">绿色客户活跃率</div>
+      <div class="stat-value">93.2<span style="font-size:14px;font-weight:400">%</span></div>
+      <div class="stat-change up">▲ 2.1pp <span style="font-weight:400;color:var(--ink-400)">较上年</span></div>
+    </div>
+  </div>
+
+  <!-- ====== 上排：业务画像饼图 + 客户画像条形图 ====== -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;flex:1;min-height:0">
+    <!-- 绿色金融业务画像 - 饼图 -->
+    <div class="section-card">
+      <div class="section-card-head"><span class="section-card-title">行内绿色金融业务画像</span></div>
+      <div class="chart-box" id="chart-business"></div>
+    </div>
+
+    <!-- 绿色客户画像 - 条形图 -->
+    <div class="section-card">
+      <div class="section-card-head"><span class="section-card-title">绿色客户画像分析</span></div>
+      <div class="chart-box" id="chart-customer"></div>
+    </div>
+  </div>
+
+  <!-- ====== 下排：三个维度贷款分析 ====== -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;flex:1;min-height:0">
+    <!-- 按分支机构维度 -->
+    <div class="section-card">
+      <div class="section-card-head"><span class="section-card-title">按分支机构维度贷款分析</span></div>
+      <div class="chart-box" id="chart-branch"></div>
+    </div>
+
+    <!-- 按地区维度 -->
+    <div class="section-card">
+      <div class="section-card-head"><span class="section-card-title">按地区维度贷款分析</span></div>
+      <div class="chart-box" id="chart-region"></div>
+    </div>
+
+    <!-- 按行业维度 -->
+    <div class="section-card">
+      <div class="section-card-head"><span class="section-card-title">按行业维度贷款分析</span></div>
+      <div class="chart-box" id="chart-industry"></div>
+    </div>
+  </div>
+
+  <script>
+    // ===== ECharts 通用配色 =====
+    var brandColors = ['#2A66C2', '#6E97D6', '#A8C4ED', '#143F8F', '#01256A'];
+    var greenColors  = ['#10B981', '#34D399', '#6EE7B7', '#047857', '#059669', '#A7F3D0', '#D1FAE5'];
+    var mixColors    = ['#2A66C2', '#10B981', '#F59E0B', '#8B5CF6', '#EF4444', '#06B6D4', '#EC4899'];
+
+    function makePieOpt(data, title) {
+      return {
+        tooltip: { trigger: 'item', formatter: '{b}: {c} 亿元 ({d}%)' },
+        legend: { orient: 'vertical', right: 10, top: 'center', textStyle: { fontSize: 11, color: '#475569' } },
+        series: [{
+          name: title, type: 'pie', radius: ['45%', '75%'], center: ['40%', '50%'],
+          avoidLabelOverlap: false,
+          itemStyle: { borderRadius: 4, borderColor: '#fff', borderWidth: 2 },
+          label: { show: false },
+          emphasis: { label: { show: true, fontSize: 14, fontWeight: 'bold' } },
+          data: data
+        }]
+      };
+    }
+
+    function makeBarOpt(categories, values, name, isHorizontal) {
+      if (isHorizontal) {
+        return {
+          tooltip: { trigger: 'axis', formatter: function(p) { return p[0].name + '<br/>' + p[0].marker + ' ' + p[0].value + ' 亿元'; } },
+          grid: { left: 80, right: 30, top: 10, bottom: 20 },
+          xAxis: { type: 'value', axisLabel: { fontSize: 10, color: '#94A3B8' }, splitLine: { lineStyle: { color: '#F1F5F9' } } },
+          yAxis: { type: 'category', data: categories, axisLabel: { fontSize: 11, color: '#475569' }, axisLine: { show: false }, axisTick: { show: false } },
+          series: [{
+            name: name, type: 'bar', data: values,
+            itemStyle: { borderRadius: [0, 4, 4, 0], color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+              { offset: 0, color: '#2A66C2' }, { offset: 1, color: '#6E97D6' }
+            ]) },
+            barWidth: 14,
+            label: { show: true, position: 'right', fontSize: 10, color: '#475569', formatter: '{c}' }
+          }]
+        };
+      }
+      return {
+        tooltip: { trigger: 'axis' },
+        grid: { left: 50, right: 20, top: 10, bottom: 50 },
+        xAxis: { type: 'category', data: categories, axisLabel: { fontSize: 9, color: '#94A3B8', rotate: 30 }, axisTick: { alignWithLabel: true } },
+        yAxis: { type: 'value', axisLabel: { fontSize: 10, color: '#94A3B8' }, splitLine: { lineStyle: { color: '#F1F5F9' } } },
+        series: [{
+          name: name, type: 'bar', data: values,
+          itemStyle: { borderRadius: [4, 4, 0, 0], color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            { offset: 0, color: '#10B981' }, { offset: 1, color: '#6EE7B7' }
+          ]) },
+          barWidth: 16
+        }]
+      };
+    }
+
+    // ===== 1. 业务画像 - 环形饼图 =====
+    (function() {
+      var dom = document.getElementById('chart-business');
+      var chart = echarts.init(dom);
+      chart.setOption(makePieOpt([
+        { value: 456.8, name: '绿色贷款' },
+        { value: 212.3, name: '绿色债券' },
+        { value:  98.5, name: 'ESG理财' },
+        { value:  56.4, name: '碳金融' },
+        { value:  32.0, name: '其他' }
+      ], '业务类别'));
+      window.addEventListener('resize', function() { chart.resize(); });
+    })();
+
+    // ===== 2. 客户画像 - 横向条形图（删除绿色评级和活跃度） =====
+    (function() {
+      var dom = document.getElementById('chart-customer');
+      var chart = echarts.init(dom);
+      chart.setOption(makeBarOpt(
+        ['清洁能源', '节能环保', '绿色交通', '绿色建筑', '生态农业'],
+        [286.4, 198.2, 172.5, 115.8, 83.1],
+        '贷款余额(亿元)', true
+      ));
+      window.addEventListener('resize', function() { chart.resize(); });
+    })();
+
+    // ===== 3. 按分支机构维度 =====
+    (function() {
+      var dom = document.getElementById('chart-branch');
+      var chart = echarts.init(dom);
+      chart.setOption({
+        tooltip: { trigger: 'axis' },
+        grid: { left: 55, right: 25, top: 10, bottom: 50 },
+        xAxis: { type: 'category', data: ['北京分行','上海分行','广州分行','深圳分行','杭州分行','其他'], axisLabel: { fontSize: 10, color: '#94A3B8', rotate: 30 } },
+        yAxis: { type: 'value', name: '亿元', axisLabel: { fontSize: 10, color: '#94A3B8' }, splitLine: { lineStyle: { color: '#F1F5F9' } } },
+        series: [{
+          type: 'bar', data: [234.6, 198.3, 152.7, 128.4, 85.9, 56.1],
+          itemStyle: { borderRadius: [4,4,0,0], color: new echarts.graphic.LinearGradient(0,0,0,1,[
+            {offset:0,color:'#2A66C2'},{offset:1,color:'#A8C4ED'}
+          ])},
+          barWidth: 18,
+          label: { show: true, position: 'top', fontSize: 9, color: '#475569' }
+        }]
+      });
+      window.addEventListener('resize', function() { chart.resize(); });
+    })();
+
+    // ===== 4. 按地区维度 =====
+    (function() {
+      var dom = document.getElementById('chart-region');
+      var chart = echarts.init(dom);
+      chart.setOption({
+        tooltip: { trigger: 'axis' },
+        grid: { left: 55, right: 25, top: 10, bottom: 50 },
+        xAxis: { type: 'category', data: ['长三角','京津冀','粤港澳大湾区','成渝经济圈','中部地区','其他地区'], axisLabel: { fontSize: 9, color: '#94A3B8', rotate: 25 } },
+        yAxis: { type: 'value', name: '亿元', axisLabel: { fontSize: 10, color: '#94A3B8' }, splitLine: { lineStyle: { color: '#F1F5F9' } } },
+        series: [{
+          type: 'bar', data: [312.5, 245.8, 168.4, 72.3, 38.6, 18.4],
+          itemStyle: { borderRadius: [4,4,0,0], color: new echarts.graphic.LinearGradient(0,0,0,1,[
+            {offset:0,color:'#10B981'},{offset:1,color:'#A7F3D0'}
+          ])},
+          barWidth: 18,
+          label: { show: true, position: 'top', fontSize: 9, color: '#475569' }
+        }]
+      });
+      window.addEventListener('resize', function() { chart.resize(); });
+    })();
+
+    // ===== 5. 按行业维度 =====
+    (function() {
+      var dom = document.getElementById('chart-industry');
+      var chart = echarts.init(dom);
+      chart.setOption({
+        tooltip: { trigger: 'axis' },
+        grid: { left: 55, right: 25, top: 10, bottom: 55 },
+        xAxis: { type: 'category', data: ['可再生能源','节能环保装备','新能源汽车','绿色建筑建材','污水处理/水环境','固废处理/资源化','生态农林'], axisLabel: { fontSize: 8, color: '#94A3B8', rotate: 30 } },
+        yAxis: { type: 'value', name: '亿元', axisLabel: { fontSize: 10, color: '#94A3B8' }, splitLine: { lineStyle: { color: '#F1F5F9' } } },
+        series: [{
+          type: 'bar', data: [234.6, 167.2, 152.8, 118.5, 89.4, 57.3, 36.2],
+          itemStyle: { borderRadius: [4,4,0,0], color: new echarts.graphic.LinearGradient(0,0,0,1,[
+            {offset:0,color:'#F59E0B'},{offset:1,color:'#FCD34D'}
+          ])},
+          barWidth: 16,
+          label: { show: true, position: 'top', fontSize: 9, color: '#475569' }
+        }]
+      });
+      window.addEventListener('resize', function() { chart.resize(); });
+    })();
+
+    // ===== 响应 iframe 容器尺寸变化 =====
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.type === 'langChange') {
+        // 语言切换事件（当前仅中文）
+      }
+    });
+  </script>
+</body>
+</html>

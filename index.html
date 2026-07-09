@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>绿达智能体系统 · 菜单导航</title>
+    <title>至简绿达智能体系统 · 菜单导航</title>
     <style>
         :root {
             --brand-50: #E8F0FB;
@@ -93,6 +93,81 @@
             border-bottom: 1px solid var(--line-200);
             flex-shrink: 0;
             z-index: 10;
+        }
+
+        .topbar-brand-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--brand-500);
+            flex-shrink: 0;
+        }
+
+        .topbar-brand {
+            font-size: 17px;
+            font-weight: 700;
+            white-space: nowrap;
+            color: var(--brand-900);
+        }
+
+        .topbar-divider {
+            width: 1px;
+            height: 22px;
+            background: var(--line-200);
+        }
+
+        .topbar-badge {
+            padding: 5px 10px;
+            font-size: 12px;
+            color: var(--brand-700);
+            font-weight: 600;
+            background: var(--brand-50);
+            border-radius: 20px;
+        }
+
+        .topbar-spacer { flex: 1; }
+
+        .role-label-text {
+            font-size: 12px;
+            color: var(--ink-500);
+            margin-right: 8px;
+        }
+
+        .role-select {
+            padding: 4px 8px;
+            border: 1px solid var(--line-200);
+            border-radius: var(--radius-md);
+            font-size: 12px;
+            color: var(--ink-600);
+            background: var(--white);
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .role-select:focus {
+            outline: none;
+            border-color: var(--brand-500);
+        }
+
+        .user-label {
+            font-size: 12px;
+            color: var(--ink-500);
+        }
+
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--brand-500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            flex-shrink: 0;
         }
 
         /* ===== 侧边栏 ===== */
@@ -462,7 +537,7 @@
 </head>
 <body>
 
-    <!-- ===== 顶部导航 ===== -->
+    <!-- ===== 顶部导航栏 ===== -->
     <header class="topbar">
         <div class="sidebar-toggle" onclick="toggleSidebar()" title="收起/展开菜单">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -472,24 +547,29 @@
             </svg>
         </div>
         <div style="display:flex;align-items:center;gap:10px;">
-            <div class="relative" style="position:relative;">
-                <div class="absolute inset-0 rounded-lg breathe" style="background:radial-gradient(circle,rgba(16,185,129,.25) 0%,transparent 70%);filter:blur(8px);"></div>
-                <div style="position:relative;width:30px;height:30px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--brand-900) 0%,var(--brand-500) 100%);">
-                    <svg class="w-4 h-4 text-white leaf-sway" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;">
-                        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
-                        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
-                    </svg>
-                </div>
+            <div class="topbar-brand-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" style="width:16px;height:16px;">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 6v6l4 2"/>
+                </svg>
             </div>
             <div>
-                <div id="sysBrandName" style="font-size:17px;font-weight:700;white-space:nowrap;background:linear-gradient(90deg,var(--brand-900) 0%,var(--brand-500) 40%,var(--green-500) 60%,var(--brand-900) 100%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 6s linear infinite;">绿达智能体系统</div>
+                <div id="sysBrandName" class="topbar-brand">至简绿达智能体系统</div>
             </div>
         </div>
-        <div style="width:1px;height:22px;background:var(--line-200);"></div>
-        <span id="sysBadge" style="padding:5px 10px;font-size:12px;color:var(--brand-700);font-weight:600;background:var(--brand-50);border-radius:20px;">菜单导航</span>
-        <div style="flex:1;"></div>
-        <span id="sysUserLabel" style="font-size:12px;color:var(--ink-500);">系统管理员</span>
-        <div style="width:30px;height:30px;border-radius:50%;background:var(--brand-500);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:600;">李</div>
+        <div class="topbar-divider"></div>
+        <span id="sysBadge" class="topbar-badge">绿色识别业务管理</span>
+        <div class="topbar-spacer"></div>
+        <span class="role-label-text">当前角色</span>
+        <select class="role-select" id="roleSelect" onchange="switchRole(this.value)">
+            <option value="总行管理员">总行管理员</option>
+            <option value="总行公司复核">总行公司复核</option>
+            <option value="总行公司初审">总行公司初审</option>
+            <option value="公司绿金联系人">公司绿金联系人</option>
+            <option value="客户经理">客户经理</option>
+        </select>
+        <span id="sysUserLabel" class="user-label">张管理 / admin_001</span>
+        <div class="user-avatar" id="userAvatar">张</div>
         <button class="lang-toggle" id="langToggle" onclick="switchLang()" title="切换语言 / Switch Language">
             <span class="lang-active">中</span><span class="lang-inactive">En</span>
         </button>
@@ -515,7 +595,7 @@
                 <div id="welcomePage" style="display:flex;align-items:center;justify-content:center;height:100%;">
                     <div style="text-align:center;">
                         <div style="font-size:48px;margin-bottom:16px;">🌿</div>
-                        <div id="welcomeTitle" style="font-size:18px;font-weight:600;color:var(--ink-800);margin-bottom:8px;">绿达智能体系统</div>
+                        <div id="welcomeTitle" style="font-size:18px;font-weight:600;color:var(--ink-800);margin-bottom:8px;">绿色识别业务管理</div>
                         <div id="welcomeSub" style="font-size:13px;color:var(--ink-500);line-height:1.8;">请从左侧菜单选择功能模块<br/>支持多标签页同时打开</div>
                     </div>
                 </div>
@@ -525,40 +605,37 @@
 
     <script>
         // ==================== 国际化 (i18n) ====================
-        var currentLang = localStorage.getItem('lvda-lang') || 'zh';
+        var currentLang = 'zh';
 
         var i18n = {
             // ---- 系统 UI ----
-            pageTitle:      { zh:'绿达智能体系统 · 菜单导航',    en:'LvDa Agent System · Menu' },
-            sysBrandName:   { zh:'绿达智能体系统',               en:'LvDa Agent System' },
-            sysBadge:       { zh:'菜单导航',                     en:'Menu' },
-            sysUserLabel:   { zh:'系统管理员',                   en:'System Admin' },
-            welcomeTitle:   { zh:'绿达智能体系统',               en:'LvDa Agent System' },
+            pageTitle:      { zh:'至简绿达智能体系统 · 绿色识别业务管理',    en:'ZhiJian LvDa Agent · Green Identification' },
+            sysBrandName:   { zh:'至简绿达智能体系统',               en:'ZhiJian LvDa Agent' },
+            sysBadge:       { zh:'绿色识别业务管理',                     en:'Green Identification Mgmt' },
+            sysUserLabel:   { zh:'张管理 / admin_001',                   en:'Zhang / admin_001' },
+            welcomeTitle:   { zh:'绿色识别业务管理',               en:'Green Identification Management' },
             welcomeSub:     { zh:'请从左侧菜单选择功能模块<br/>支持多标签页同时打开', en:'Select a module from the left menu<br/>Multi-tab browsing supported' },
             toggleTitle:    { zh:'切换语言 / Switch Language',   en:'切换语言 / Switch Language' },
 
             // ---- 一级菜单 ----
-            'menu-green-marketing':     { zh:'潜在客户业务营销',  en:'Potential Client Marketing' },
-            'menu-zero-carbon-library': { zh:'潜在项目业务营销',  en:'Potential Project Marketing' },
-            'menu-green-identify':      { zh:'绿色识别业务管理',  en:'Green Identification Mgmt' },
-            'menu-system-mgmt':         { zh:'系统管理',          en:'System Management' },
+            'menu-green-marketing':        { zh:'潜在客户业务营销',  en:'Potential Client Marketing' },
+            'menu-zero-carbon-library':    { zh:'潜在项目业务营销',  en:'Potential Project Marketing' },
+            'menu-green-business-analysis': { zh:'绿色业务分析',      en:'Green Business Analysis' },
+            'menu-green-identify':         { zh:'绿色识别业务管理',  en:'Green Identification Mgmt' },
 
             // ---- 二级菜单 ----
-            'menu-potential-clients':           { zh:'绿色潜在客户业务营销',  en:'Green Potential Clients' },
-            'menu-transition-clients':          { zh:'转型潜在客户业务营销',  en:'Transition Client Marketing' },
-            'menu-client-mkt-process':          { zh:'潜在客户营销过程管理',  en:'Client Marketing Process' },
-            'menu-zc-potential-project-mkt':    { zh:'潜在项目业务营销',      en:'Potential Project Marketing' },
-            'menu-zc-project-mkt-process':      { zh:'项目营销过程管理',      en:'Project Marketing Process' },
-            'menu-green-industry-map':          { zh:'绿色产业地图',          en:'Green Industry Map' },
-            'menu-project-green-identify':      { zh:'项目绿色识别',          en:'Project Green Identification' },
-            'menu-zc-env-benefit':              { zh:'环境效益测算',          en:'Environmental Benefit Calc' },
-            'menu-contract-identify':           { zh:'合同绿色认定',          en:'Contract Green Identification' },
-            'menu-a3327-report':                { zh:'绿色贷款统计报送',      en:'Green Loan Statistics Report' },
-            'menu-loan-pre-identify':           { zh:'贷款预识别',            en:'Loan Pre-identification' },
-            'menu-user-mgmt':                   { zh:'用户管理',              en:'User Management' },
-            'menu-role-mgmt':                   { zh:'角色管理',              en:'Role Management' },
-            'menu-org-mgmt':                    { zh:'机构管理',              en:'Organization Management' },
-            'menu-dict-mgmt':                   { zh:'数据字典',              en:'Data Dictionary' }
+            'menu-potential-clients':           { zh:'绿色潜在客户业务营销',         en:'Green Potential Clients' },
+            'menu-transition-clients':          { zh:'转型潜在客户业务营销',         en:'Transition Client Marketing' },
+            'menu-client-mkt-process':          { zh:'潜在客户营销过程管理',         en:'Client Marketing Process' },
+            'menu-zc-potential-project-mkt':    { zh:'潜在项目业务营销',             en:'Potential Project Marketing' },
+            'menu-zc-project-mkt-process':      { zh:'项目营销过程管理',             en:'Project Marketing Process' },
+            'menu-green-industry-map':          { zh:'绿色产业地图',                 en:'Green Industry Map' },
+            'menu-bank-green-portrait':         { zh:'绿色金融业务画像',               en:'Green Finance Business Profile' },
+            'menu-project-green-identify':      { zh:'项目绿色识别',                 en:'Project Green Identification' },
+            'menu-zc-env-benefit':              { zh:'环境效益测算',                 en:'Environmental Benefit Calc' },
+            'menu-contract-identify':           { zh:'合同绿色认定',                 en:'Contract Green Identification' },
+            'menu-a3327-report':                { zh:'绿色贷款统计报送',             en:'Green Loan Statistics Report' },
+            'menu-loan-pre-identify':           { zh:'贷款预识别',                   en:'Loan Pre-identification' }
         };
 
         function t(key) {
@@ -567,11 +644,52 @@
             return entry[currentLang] || entry['zh'] || key;
         }
 
+        // ==================== 角色管理 ====================
+        var currentRole = '总行管理员';
+
+        var roleUserMap = {
+            '总行管理员':     { name: '张管理', id: 'admin_001' },
+            '总行公司复核':   { name: '李复核', id: 'reviewer_002' },
+            '总行公司初审':   { name: '王初审', id: 'reviewer_001' },
+            '公司绿金联系人': { name: '赵绿金', id: 'green_001' },
+            '客户经理':       { name: '陈经理', id: 'mgr_005' }
+        };
+
+        function updateUserInfo(role) {
+            var user = roleUserMap[role];
+            if (!user) return;
+            document.getElementById('sysUserLabel').textContent = user.name + ' / ' + user.id;
+            document.getElementById('userAvatar').textContent = user.name.charAt(0);
+        }
+
+        function switchRole(role) {
+            currentRole = role;
+            localStorage.setItem('lvda-role', role);
+            updateUserInfo(role);
+            document.getElementById('roleSelect').value = role;
+
+            // 通知所有已打开的 iframe 角色变化
+            Object.keys(tabIframes).forEach(function(id) {
+                try {
+                    tabIframes[id].contentWindow.postMessage({ type: 'roleChange', role: role }, '*');
+                } catch (e) {}
+            });
+
+            // 通知父页面角色变化
+            if (window.parent && window.parent !== window) {
+                try {
+                    window.parent.postMessage({ type: 'roleChange', role: role }, '*');
+                } catch (e) {}
+            }
+        }
+
         // ==================== 语言切换 ====================
         function switchLang() {
             currentLang = currentLang === 'zh' ? 'en' : 'zh';
             localStorage.setItem('lvda-lang', currentLang);
             applyLang();
+            // 语言切换后恢复当前角色的用户信息
+            updateUserInfo(currentRole);
         }
 
         function applyLang() {
@@ -579,22 +697,27 @@
             document.title = t('pageTitle');
 
             // 2. 顶栏静态文本
-            document.getElementById('sysBrandName').textContent = t('sysBrandName');
-            document.getElementById('sysBadge').textContent = t('sysBadge');
-            document.getElementById('sysUserLabel').textContent = t('sysUserLabel');
+            var brandNameEl = document.getElementById('sysBrandName');
+            if (brandNameEl) brandNameEl.textContent = t('sysBrandName');
+            var badgeEl = document.getElementById('sysBadge');
+            if (badgeEl) badgeEl.textContent = t('sysBadge');
 
             // 3. 欢迎页
-            document.getElementById('welcomeTitle').textContent = t('welcomeTitle');
-            document.getElementById('welcomeSub').innerHTML = t('welcomeSub');
+            var welcomeTitleEl = document.getElementById('welcomeTitle');
+            if (welcomeTitleEl) welcomeTitleEl.textContent = t('welcomeTitle');
+            var welcomeSubEl = document.getElementById('welcomeSub');
+            if (welcomeSubEl) welcomeSubEl.innerHTML = t('welcomeSub');
 
             // 4. 语言按钮样式
             var btn = document.getElementById('langToggle');
-            if (currentLang === 'zh') {
-                btn.innerHTML = '<span class="lang-active">中</span><span class="lang-inactive">En</span>';
-            } else {
-                btn.innerHTML = '<span class="lang-inactive">中</span><span class="lang-active">En</span>';
+            if (btn) {
+                if (currentLang === 'zh') {
+                    btn.innerHTML = '<span class="lang-active">中</span><span class="lang-inactive">En</span>';
+                } else {
+                    btn.innerHTML = '<span class="lang-inactive">中</span><span class="lang-active">En</span>';
+                }
+                btn.title = t('toggleTitle');
             }
-            btn.title = t('toggleTitle');
 
             // 5. 重建侧边栏菜单
             buildSidebar();
@@ -639,7 +762,8 @@
             dash: '<svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="14" rx="2"/><line x1="8" y1="20" x2="16" y2="20"/><line x1="12" y1="16" x2="12" y2="20"/><rect x="4" y="6" width="3" height="6"/><rect x="9" y="8" width="3" height="4"/><rect x="14" y="4" width="3" height="8"/></svg>',
             project: '<svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><path d="M8 12h8"/></svg>',
             'zero-carbon': '<svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>',
-            system: '<svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M8 2v20M16 2v20M2 8h20M2 16h20"/></svg>'
+            report: '<svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+            analytics: '<svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>'
         };
 
         // ==================== 菜单配置（label 现在通过 t('menu-' + id) 获取） ====================
@@ -658,8 +782,15 @@
             icon: 'zero-carbon',
             children: [
                 { type: 'l2', id: 'zc-potential-project-mkt', file: '04ZeroCarbonProjectLibrary/潜在项目业务营销.html' },
-                { type: 'l2', id: 'zc-project-mkt-process',   file: '04ZeroCarbonProjectLibrary/项目营销过程管理.html' },
-                { type: 'l2', id: 'green-industry-map',       file: '06GreenIndustryMap/绿色产业地图展示.html' }
+                { type: 'l2', id: 'zc-project-mkt-process',   file: '04ZeroCarbonProjectLibrary/项目营销过程管理.html' }
+            ]
+        }, {
+            type: 'l1',
+            id: 'green-business-analysis',
+            icon: 'analytics',
+            children: [
+                { type: 'l2', id: 'green-industry-map',   file: '06GreenIndustryMap/绿色产业地图.html' },
+                { type: 'l2', id: 'bank-green-portrait',  file: '06GreenIndustryMap/行内绿色金融业务画像及客户画像分析.html' }
             ]
         }, {
             type: 'l1',
@@ -669,19 +800,13 @@
                 { type: 'l2', id: 'project-green-identify', file: '01GreenIdentifyManagement/项目绿色认定.html' },
                 { type: 'l2', id: 'zc-env-benefit',         file: '04ZeroCarbonProjectLibrary/环境效益测算.html' },
                 { type: 'l2', id: 'contract-identify',       file: '01GreenIdentifyManagement/合同绿色认定.html' },
-                { type: 'l2', id: 'a3327-report',            file: '05GreenLoanReport/A3327报表列表.html' },
                 { type: 'l2', id: 'loan-pre-identify',       file: '01GreenIdentifyManagement/loan-pre-identify.html' }
             ]
         }, {
             type: 'l1',
-            id: 'system-mgmt',
-            icon: 'system',
-            children: [
-                { type: 'l2', id: 'user-mgmt',  file: '03SystemManagement/用户管理-用户列表.html' },
-                { type: 'l2', id: 'role-mgmt',  file: '03SystemManagement/角色管理-角色列表.html' },
-                { type: 'l2', id: 'org-mgmt',   file: '03SystemManagement/机构管理-机构树.html' },
-                { type: 'l2', id: 'dict-mgmt',  file: '03SystemManagement/数据字典-字典管理.html' }
-            ]
+            id: 'a3327-report',
+            icon: 'report',
+            file: '05GreenLoanReport/A3327报表列表.html'
         }];
 
         // ==================== 渲染侧边栏 ====================
@@ -689,16 +814,23 @@
             var html = '';
             menuConfig.forEach(function(section) {
                 var labelKey = 'menu-' + section.id;
-                html += '<div class="menu-l1" onclick="toggleMenu(this)" data-menu="' + section.id + '">';
-                html += (icons[section.icon] || '') + '<span>' + t(labelKey) + '</span>';
-                html += '<svg class="l1-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>';
-                html += '</div><div class="submenu">';
-                section.children.forEach(function(item) {
-                    var itemKey = 'menu-' + item.id;
-                    var label = t(itemKey);
-                    html += '<div class="menu-l2" data-page="' + item.id + '" data-file="' + item.file + '" data-menu-key="' + itemKey + '" onclick="openPage(this)">' + label + '</div>';
-                });
-                html += '</div>';
+                // 叶子节点（无 children）：直接点击打开页面
+                if (!section.children && section.file) {
+                    html += '<div class="menu-l1" onclick="openPageDirect(\'' + section.id + '\',\'' + section.file + '\',\'' + t(labelKey) + '\')" data-menu="' + section.id + '" data-file="' + section.file + '" data-menu-key="' + labelKey + '">';
+                    html += (icons[section.icon] || '') + '<span>' + t(labelKey) + '</span>';
+                    html += '</div>';
+                } else {
+                    html += '<div class="menu-l1" onclick="toggleMenu(this)" data-menu="' + section.id + '">';
+                    html += (icons[section.icon] || '') + '<span>' + t(labelKey) + '</span>';
+                    html += '<svg class="l1-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>';
+                    html += '</div><div class="submenu">';
+                    section.children.forEach(function(item) {
+                        var itemKey = 'menu-' + item.id;
+                        var label = t(itemKey);
+                        html += '<div class="menu-l2" data-page="' + item.id + '" data-file="' + item.file + '" data-menu-key="' + itemKey + '" onclick="openPage(this)">' + label + '</div>';
+                    });
+                    html += '</div>';
+                }
             });
             document.getElementById('sidebarScroll').innerHTML = html;
         }
@@ -708,11 +840,11 @@
         var activeTabId = null;
         var tabIframes = {};
 
+        // ==================== 菜单点击 ====================
         function openPage(menuEl) {
             var pageId = menuEl.dataset.page;
             var file = menuEl.dataset.file;
-            var menuKey = menuEl.dataset.menuKey;
-            var label = t(menuKey);
+            var label = menuEl.dataset.menuKey ? t(menuEl.dataset.menuKey) : menuEl.textContent.trim();
 
             // 更新侧边栏高亮
             document.querySelectorAll('.menu-l2').forEach(function(m) { m.classList.remove('active'); });
@@ -724,38 +856,67 @@
                 l1.classList.add('open');
             }
 
-            // 检查是否已打开
-            var existing = openTabs.find(function(t) { return t.id === pageId; });
-            if (existing) {
-                switchTab(pageId);
-                return;
+            // ============================================================
+            //  关键修改：发送 postMessage 给父页面，让父页面打开业务页面
+            // ============================================================
+            if (window.parent && window.parent !== window) {
+                // 当前页面在 iframe 中，通知父页面
+                window.parent.postMessage({
+                    type: 'openPage',
+                    pageId: pageId,
+                    file: file,
+                    label: label
+                }, '*');
+            } else {
+                // 当前页面独立打开（未嵌入 iframe），直接创建 iframe 显示
+                // 这个分支用于您直接打开 01LvDaGreenSystem/index.html 时调试
+                var existing = openTabs.find(function(t) { return t.id === pageId; });
+                if (existing) {
+                    switchTab(pageId);
+                    return;
+                }
+
+                var tab = { id: pageId, label: label, file: file, menuKey: menuEl.dataset.menuKey };
+                openTabs.push(tab);
+                activeTabId = pageId;
+
+                var separator = file.indexOf('?') === -1 ? '?' : '&';
+                var iframe = document.createElement('iframe');
+                iframe.src = file + separator + 'lang=' + currentLang;
+                iframe.id = 'iframe-' + pageId;
+                iframe.classList.add('active');
+                iframe.setAttribute('data-lang', currentLang);
+                tabIframes[pageId] = iframe;
+
+                iframe.onload = function() {
+                    try {
+                        iframe.contentWindow.postMessage({ type: 'roleChange', role: currentRole }, '*');
+                    } catch (e) {}
+                };
+
+                Object.keys(tabIframes).forEach(function(id) {
+                    if (id !== pageId) tabIframes[id].classList.remove('active');
+                });
+                document.getElementById('welcomePage').style.display = 'none';
+                document.getElementById('iframeContainer').appendChild(iframe);
+
+                renderTabs();
             }
-
-            // 创建新 tab
-            var tab = { id: pageId, label: label, file: file, menuKey: menuKey };
-            openTabs.push(tab);
-            activeTabId = pageId;
-
-            // 创建 iframe（附带语言参数）
-            var separator = file.indexOf('?') === -1 ? '?' : '&';
-            var iframe = document.createElement('iframe');
-            iframe.src = file + separator + 'lang=' + currentLang;
-            iframe.id = 'iframe-' + pageId;
-            iframe.classList.add('active');
-            iframe.setAttribute('data-lang', currentLang);
-            tabIframes[pageId] = iframe;
-
-            // 隐藏其他 iframe
-            Object.keys(tabIframes).forEach(function(id) {
-                if (id !== pageId) tabIframes[id].classList.remove('active');
-            });
-            document.getElementById('welcomePage').style.display = 'none';
-            document.getElementById('iframeContainer').appendChild(iframe);
-
-            renderTabs();
         }
 
         function openPageDirect(pageId, file, label) {
+            // 同样优先使用 postMessage 通知父页面
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'openPage',
+                    pageId: pageId,
+                    file: file,
+                    label: label
+                }, '*');
+                return;
+            }
+
+            // 独立打开时的备用逻辑
             var existing = openTabs.find(function(t) { return t.id === pageId; });
             if (existing) {
                 switchTab(pageId);
@@ -773,6 +934,12 @@
             iframe.classList.add('active');
             iframe.setAttribute('data-lang', currentLang);
             tabIframes[pageId] = iframe;
+
+            iframe.onload = function() {
+                try {
+                    iframe.contentWindow.postMessage({ type: 'roleChange', role: currentRole }, '*');
+                } catch (e) {}
+            };
 
             Object.keys(tabIframes).forEach(function(id) {
                 if (id !== pageId) tabIframes[id].classList.remove('active');
@@ -869,14 +1036,33 @@
         // ==================== 初始化语言 ====================
         applyLang();
 
+        // ==================== 初始化角色 ====================
+        (function() {
+            var savedRole = localStorage.getItem('lvda-role');
+            if (savedRole && roleUserMap[savedRole]) {
+                currentRole = savedRole;
+                document.getElementById('roleSelect').value = savedRole;
+            }
+            updateUserInfo(currentRole);
+        })();
+
         // ==================== 默认展开第一个菜单 ====================
         (function() {
             var firstL1 = document.querySelector('.menu-l1');
             if (firstL1) firstL1.classList.add('open');
         })();
 
-        // ==================== 监听子页面消息 ====================
+        // ==================== 监听父页面消息 ====================
         window.addEventListener('message', function(e) {
+            // 处理父页面语言切换
+            if (e.data && e.data.type === 'langChange' && e.data.lang) {
+                if (e.data.lang !== currentLang) {
+                    currentLang = e.data.lang;
+                    applyLang();
+                }
+                return;
+            }
+
             // 处理子页面请求打开新页面
             if (e.data && e.data.type === 'openPage') {
                 var pageId = e.data.pageId;
@@ -888,6 +1074,17 @@
                     openPage(menuEl);
                 } else {
                     openPageDirect(pageId, file, label);
+                }
+                return;
+            }
+
+            // 处理父页面角色切换
+            if (e.data && e.data.type === 'roleChange' && e.data.role) {
+                if (e.data.role !== currentRole && roleUserMap[e.data.role]) {
+                    currentRole = e.data.role;
+                    updateUserInfo(currentRole);
+                    document.getElementById('roleSelect').value = currentRole;
+                    localStorage.setItem('lvda-role', currentRole);
                 }
                 return;
             }

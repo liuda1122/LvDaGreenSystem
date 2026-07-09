@@ -459,7 +459,16 @@ function goBack() {
         currentDir = './';
     }
     var targetUrl = currentDir + '绿色潜在客户清单.html';
-    window.location.href = targetUrl;
+    if (window.parent !== window) {
+        window.parent.postMessage({
+            type: 'openPage',
+            pageId: 'potential-clients',
+            file: targetUrl,
+            label: '绿色潜在客户业务营销'
+        }, '*');
+    } else {
+        window.location.href = targetUrl;
+    }
 }
 
 // ================================================================
