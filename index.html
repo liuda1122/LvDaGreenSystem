@@ -170,9 +170,9 @@
             flex-shrink: 0;
         }
 
-        /* ===== 侧边栏 ===== */
+        /* ===== 侧边栏（模板风格） ===== */
         .sidebar {
-            width: 232px;
+            width: 240px;
             flex-shrink: 0;
             background: var(--white);
             border-right: 1px solid var(--line-200);
@@ -186,142 +186,172 @@
             min-width: 0;
             border-right: none;
         }
+        /* ===== 侧边栏菜单（参考风格） ===== */
         .sidebar-scroll {
             flex: 1;
             overflow-y: auto;
-            padding: 12px 0;
+            padding: 16px 8px 16px 8px;
         }
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
 
-        .custom-scroll::-webkit-scrollbar {
-            width: 6px;
+        /* 菜单分组容器 */
+        .nav-group {
+            margin-bottom: 16px;
         }
-        .custom-scroll::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .custom-scroll::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 3px;
-        }
-        .custom-scroll::-webkit-scrollbar-thumb:hover {
-            background: var(--brand-500);
-        }
+        .nav-group:last-child { margin-bottom: 0; }
 
-        /* ===== 菜单样式 ===== */
-        .menu-l1 {
+        /* 一级分组标题 */
+        .group-title {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 7px 10px;
+            padding: 8px 12px;
             font-size: 13px;
-            color: #334155;
-            cursor: pointer;
-            border-radius: 8px;
-            margin: 0 8px 2px;
-            transition: all .2s;
-            background: var(--bg-subtle);
+            font-weight: 500;
+            color: #64748B;
+            letter-spacing: 0.04em;
+            margin-bottom: 2px;
             user-select: none;
+            border-radius: var(--radius-md);
+            transition: all 0.15s ease;
         }
-        .menu-l1:hover {
-            background: #EEF2F7;
-            color: var(--brand-500);
-        }
-        .menu-l1.active {
-            background: var(--brand-50);
-            color: var(--brand-700);
-            font-weight: 600;
-        }
-        .menu-l1.open .l1-arrow {
-            transform: rotate(90deg);
-            color: var(--brand-500);
-        }
-        .menu-l1 .l1-arrow {
-            width: 13px;
-            height: 13px;
-            transition: transform .3s;
-            color: var(--ink-400);
-            flex-shrink: 0;
-            margin-left: auto;
-        }
-        .menu-l1 .menu-icon {
+        .group-title .group-icon {
             width: 16px;
             height: 16px;
             flex-shrink: 0;
-            color: var(--ink-400);
         }
-        .menu-l1:hover .menu-icon {
-            color: var(--brand-500);
-        }
-
-        .submenu {
-            overflow: hidden;
-            max-height: 0;
-            opacity: 0;
-            transition: max-height .35s, opacity .25s;
-            position: relative;
-            margin: 0 8px;
-        }
-        .menu-l1.open+.submenu {
-            max-height: 600px;
-            opacity: 1;
-            margin: 2px 8px 6px;
-        }
-        .submenu::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 4px;
-            bottom: 4px;
-            width: 1px;
-            background: var(--line-200);
-        }
-
-        .menu-l2 {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 10px 6px 34px;
-            font-size: 12px;
-            color: #475569;
-            cursor: pointer;
-            border-radius: 6px;
-            margin: 2px 0;
-            transition: all .2s;
-            position: relative;
-        }
-        .menu-l2:hover {
-            background: var(--bg-muted);
-            color: var(--brand-500);
-        }
-        .menu-l2.active {
-            background: var(--brand-50);
-            color: var(--brand-700);
-            font-weight: 500;
-        }
-        .menu-l2.active::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: var(--brand-700);
-        }
-        .menu-l2 .l2-icon {
+        .group-title .group-chevron {
             width: 14px;
             height: 14px;
             flex-shrink: 0;
-            color: var(--ink-400);
+            margin-left: auto;
+            transition: transform 0.2s ease;
+            color: #94A3B8;
         }
-        .menu-l2:hover .l2-icon {
-            color: var(--brand-500);
+        /* 有子菜单的一级分组标题：可点击展开/收起 */
+        .group-title.has-children {
+            cursor: pointer;
+        }
+        .group-title.has-children:hover {
+            background: #F1F5F9;
+            color: #0F172A;
+        }
+        .group-title.has-children.collapsed .group-chevron {
+            transform: rotate(-90deg);
+        }
+        /* 一级分组子内容区域 */
+        .group-children.collapsed {
+            display: none;
+        }
+        /* 叶子节点分组标题可点击 */
+        .group-title.clickable {
+            cursor: pointer;
+        }
+        .group-title.clickable:hover {
+            background: #F1F5F9;
+            color: #0F172A;
+        }
+        .group-title.clickable.active {
+            background: rgba(42, 102, 194, 0.08);
+            color: #01256A;
+            font-weight: 500;
+            position: relative;
+        }
+        .group-title.clickable.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 4px;
+            bottom: 4px;
+            width: 3px;
+            border-radius: 0 3px 3px 0;
+            background: #01256A;
         }
 
-        .menu-divider {
-            height: 1px;
-            background: var(--line-200);
-            margin: 8px 16px;
+        /* 菜单列表 */
+        .menu-list {
+            list-style: none;
+        }
+        .menu-list.collapsed {
+            display: none;
+        }
+
+        /* 菜单项 */
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 6px 12px 6px 36px;
+            font-size: 14px;
+            color: #475569;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            position: relative;
+            line-height: 1.5;
+            user-select: none;
+        }
+        .menu-item:hover {
+            background: #F1F5F9;
+            color: #0F172A;
+        }
+        .menu-item.active {
+            background: rgba(42, 102, 194, 0.08);
+            color: #01256A;
+            font-weight: 500;
+        }
+        .menu-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 4px;
+            bottom: 4px;
+            width: 3px;
+            border-radius: 0 3px 3px 0;
+            background: #01256A;
+        }
+
+        /* 子分组标题（二级标题，可点击展开/收起） */
+        .sub-group-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px 6px 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #64748B;
+            cursor: pointer;
+            user-select: none;
+            border-radius: var(--radius-md);
+            transition: all 0.15s ease;
+            letter-spacing: 0.03em;
+        }
+        .sub-group-title:hover {
+            background: #F1F5F9;
+            color: #0F172A;
+        }
+        .sub-group-title .sub-chevron {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+            margin-left: auto;
+            transition: transform 0.2s ease;
+            color: #94A3B8;
+        }
+        .sub-group-title.collapsed .sub-chevron {
+            transform: rotate(-90deg);
+        }
+
+        /* 子分组下的菜单列表 */
+        .sub-menu-list {
+            list-style: none;
+        }
+        .sub-menu-list.collapsed {
+            display: none;
+        }
+        /* 子分组下的菜单项多一层缩进 */
+        .sub-menu-list .menu-item {
+            padding-left: 44px;
         }
 
         /* ===== 内容区 ===== */
@@ -578,9 +608,9 @@
     <!-- ===== 主体 ===== -->
     <div style="display:flex;flex:1;overflow:hidden;min-height:0;">
 
-        <!-- 侧边栏 -->
-        <aside class="sidebar custom-scroll" id="sidebar">
-            <div class="sidebar-scroll" id="sidebarScroll"></div>
+        <!-- 侧边栏（模板风格） -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-scroll custom-scroll" id="sidebarScroll"></div>
         </aside>
 
         <!-- 内容区 -->
@@ -621,7 +651,9 @@
             'menu-green-marketing':        { zh:'潜在客户业务营销',  en:'Potential Client Marketing' },
             'menu-zero-carbon-library':    { zh:'潜在项目业务营销',  en:'Potential Project Marketing' },
             'menu-green-business-analysis': { zh:'绿色业务分析',      en:'Green Business Analysis' },
-            'menu-green-identify':         { zh:'绿色识别业务管理',  en:'Green Identification Mgmt' },
+            'menu-green-biz-mgmt':             { zh:'绿色业务管理',               en:'Green Business Management' },
+            'menu-green-project-mgmt-sub':     { zh:'绿色项目业务管理',           en:'Green Project Mgmt' },
+            'menu-green-loan-mgmt-sub':        { zh:'绿色贷款业务管理',           en:'Green Loan Mgmt' },
 
             // ---- 二级菜单 ----
             'menu-potential-clients':           { zh:'绿色潜在客户业务营销',         en:'Green Potential Clients' },
@@ -630,10 +662,11 @@
             'menu-zc-potential-project-mkt':    { zh:'潜在项目业务营销',             en:'Potential Project Marketing' },
             'menu-zc-project-mkt-process':      { zh:'项目营销过程管理',             en:'Project Marketing Process' },
             'menu-green-industry-map':          { zh:'绿色产业地图',                 en:'Green Industry Map' },
-            'menu-bank-green-portrait':         { zh:'绿色金融业务画像',               en:'Green Finance Business Profile' },
+            'menu-bank-green-portrait':         { zh:'绿色金融业务统计',               en:'Green Finance Statistics' },
             'menu-project-green-identify':      { zh:'项目绿色识别',                 en:'Project Green Identification' },
             'menu-zc-env-benefit':              { zh:'环境效益测算',                 en:'Environmental Benefit Calc' },
             'menu-contract-identify':           { zh:'合同绿色认定',                 en:'Contract Green Identification' },
+            'menu-contract-identify-change':   { zh:'合同绿色认定变更',             en:'Contract Green ID Change' },
             'menu-a3327-report':                { zh:'绿色贷款统计报送',             en:'Green Loan Statistics Report' },
             'menu-loan-pre-identify':           { zh:'贷款预识别',                   en:'Loan Pre-identification' }
         };
@@ -741,7 +774,7 @@
             renderTabs();
 
             // 更新侧边栏高亮
-            document.querySelectorAll('.menu-l2').forEach(function(m) { m.classList.remove('active'); });
+            document.querySelectorAll('.menu-item, .group-title.clickable').forEach(function(m) { m.classList.remove('active'); });
             if (activeTabId) {
                 var menuEl = document.querySelector('[data-page="' + activeTabId + '"]');
                 if (menuEl) menuEl.classList.add('active');
@@ -787,46 +820,117 @@
             ]
         }, {
             type: 'l1',
-            id: 'green-identify',
+            id: 'green-biz-mgmt',
             icon: 'project',
             children: [
                 { type: 'l2', id: 'bank-green-portrait',      file: '06GreenIndustryMap/行内绿色金融业务画像及客户画像分析.html' },
+                { type: 'subtitle', id: 'green-project-mgmt-sub' },
                 { type: 'l2', id: 'project-green-identify', file: '01GreenIdentifyManagement/项目绿色认定.html' },
                 { type: 'l2', id: 'zc-env-benefit',         file: '04ZeroCarbonProjectLibrary/环境效益测算.html' },
+                { type: 'subtitle', id: 'green-loan-mgmt-sub' },
+                { type: 'l2', id: 'loan-pre-identify',       file: '01GreenIdentifyManagement/loan-pre-identify.html' },
                 { type: 'l2', id: 'contract-identify',       file: '01GreenIdentifyManagement/合同绿色认定.html' },
-                { type: 'l2', id: 'loan-pre-identify',       file: '01GreenIdentifyManagement/loan-pre-identify.html' }
+                { type: 'l2', id: 'contract-identify-change', file: '01GreenIdentifyManagement/合同绿色认定变更.html' },
+                { type: 'l2', id: 'a3327-report',            file: '05GreenLoanReport/A3327报表列表.html' }
             ]
-        }, {
-            type: 'l1',
-            id: 'a3327-report',
-            icon: 'report',
-            file: '05GreenLoanReport/A3327报表列表.html'
         }];
 
-        // ==================== 渲染侧边栏 ====================
+        // ==================== 渲染侧边栏（参考风格 + 子标题展开/收起） ====================
         function buildSidebar() {
             var html = '';
             menuConfig.forEach(function(section) {
                 var labelKey = 'menu-' + section.id;
-                // 叶子节点（无 children）：直接点击打开页面
+                var label = t(labelKey);
+                var iconSvg = (icons[section.icon] || '').replace('class="menu-icon"', 'class="group-icon"');
+
+                // 叶子节点（无 children）：标题直接可点击打开页面
                 if (!section.children && section.file) {
-                    html += '<div class="menu-l1" onclick="openPageDirect(\'' + section.id + '\',\'' + section.file + '\',\'' + t(labelKey) + '\')" data-menu="' + section.id + '" data-file="' + section.file + '" data-menu-key="' + labelKey + '">';
-                    html += (icons[section.icon] || '') + '<span>' + t(labelKey) + '</span>';
+                    html += '<div class="nav-group">';
+                    html += '<div class="group-title clickable" onclick="openPageDirect(\'' + section.id + '\',\'' + section.file + '\',\'' + label + '\')" data-page="' + section.id + '" data-file="' + section.file + '" data-menu-key="' + labelKey + '">';
+                    html += iconSvg + '<span>' + label + '</span>';
                     html += '</div>';
-                } else {
-                    html += '<div class="menu-l1" onclick="toggleMenu(this)" data-menu="' + section.id + '">';
-                    html += (icons[section.icon] || '') + '<span>' + t(labelKey) + '</span>';
-                    html += '<svg class="l1-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>';
-                    html += '</div><div class="submenu">';
-                    section.children.forEach(function(item) {
-                        var itemKey = 'menu-' + item.id;
-                        var label = t(itemKey);
-                        html += '<div class="menu-l2" data-page="' + item.id + '" data-file="' + item.file + '" data-menu-key="' + itemKey + '" onclick="openPage(this)">' + label + '</div>';
-                    });
                     html += '</div>';
+                    return;
                 }
+
+                // 有 children 的分组
+                html += '<div class="nav-group">';
+                html += '<div class="group-title has-children" onclick="toggleGroup(this)" data-group="' + section.id + '">' + iconSvg + '<span>' + label + '</span>';
+                html += '<svg class="group-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>';
+                html += '</div>';
+                html += '<div class="group-children" data-group-list="' + section.id + '">';
+
+                // 处理 children：按 subtitle 边界自动分组
+                // subtitle 之前的 l2 → 直接渲染（无子标题包裹）
+                // subtitle 之后的 l2 → 归入该子标题下
+                var currentSubGroup = null; // null = 无子标题的默认区域
+                var subGroupItems = [];      // 当前子分组收集的项
+
+                function flushSubGroup() {
+                    if (currentSubGroup === null) {
+                        // 默认区域：直接渲染为 menu-list
+                        if (subGroupItems.length > 0) {
+                            html += '<ul class="menu-list">';
+                            subGroupItems.forEach(function(it) { html += it; });
+                            html += '</ul>';
+                        }
+                    } else if (subGroupItems.length > 0) {
+                        // 子标题区域（仅当有子项时才渲染）
+                        var subLabel = t('menu-' + currentSubGroup);
+                        html += '<div class="sub-group-title" onclick="toggleSubGroup(this)" data-subgroup="' + currentSubGroup + '">';
+                        html += '<span>' + subLabel + '</span>';
+                        html += '<svg class="sub-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>';
+                        html += '</div>';
+                        html += '<ul class="sub-menu-list" data-subgroup-list="' + currentSubGroup + '">';
+                        subGroupItems.forEach(function(it) { html += it; });
+                        html += '</ul>';
+                    }
+                    subGroupItems = [];
+                }
+
+                section.children.forEach(function(item) {
+                    if (item.type === 'subtitle') {
+                        flushSubGroup();
+                        currentSubGroup = item.id;
+                    } else {
+                        var itemKey = 'menu-' + item.id;
+                        var itemLabel = t(itemKey);
+                        var li = '<li class="menu-item" data-page="' + item.id + '" data-file="' + item.file + '" data-menu-key="' + itemKey + '" onclick="openPage(this)">' + itemLabel + '</li>';
+                        subGroupItems.push(li);
+                    }
+                });
+                flushSubGroup();
+
+                html += '</div>'; // close group-children
+                html += '</div>'; // close nav-group
             });
             document.getElementById('sidebarScroll').innerHTML = html;
+
+            // 恢复当前活跃菜单项高亮
+            if (activeTabId) {
+                var el = document.querySelector('[data-page="' + activeTabId + '"]');
+                if (el) el.classList.add('active');
+            }
+        }
+
+        // ==================== 一级分组展开/收起 ====================
+        function toggleGroup(el) {
+            el.classList.toggle('collapsed');
+            var groupId = el.dataset.group;
+            var list = document.querySelector('[data-group-list="' + groupId + '"]');
+            if (list) {
+                list.classList.toggle('collapsed');
+            }
+        }
+
+        // ==================== 子标题展开/收起 ====================
+        function toggleSubGroup(el) {
+            el.classList.toggle('collapsed');
+            var subgroupId = el.dataset.subgroup;
+            var list = document.querySelector('[data-subgroup-list="' + subgroupId + '"]');
+            if (list) {
+                list.classList.toggle('collapsed');
+            }
         }
 
         // ==================== Tab 管理 ====================
@@ -841,14 +945,8 @@
             var label = menuEl.dataset.menuKey ? t(menuEl.dataset.menuKey) : menuEl.textContent.trim();
 
             // 更新侧边栏高亮
-            document.querySelectorAll('.menu-l2').forEach(function(m) { m.classList.remove('active'); });
+            document.querySelectorAll('.menu-item, .group-title.clickable').forEach(function(m) { m.classList.remove('active'); });
             menuEl.classList.add('active');
-
-            // 展开上级菜单
-            var l1 = menuEl.closest('.submenu').previousElementSibling;
-            if (l1 && !l1.classList.contains('open')) {
-                l1.classList.add('open');
-            }
 
             // ============================================================
             //  关键修改：发送 postMessage 给父页面，让父页面打开业务页面
@@ -899,6 +997,11 @@
         }
 
         function openPageDirect(pageId, file, label) {
+            // 更新侧边栏高亮
+            document.querySelectorAll('.menu-item, .group-title.clickable').forEach(function(m) { m.classList.remove('active'); });
+            var directEl = document.querySelector('[data-page="' + pageId + '"]');
+            if (directEl) directEl.classList.add('active');
+
             // 同样优先使用 postMessage 通知父页面
             if (window.parent && window.parent !== window) {
                 window.parent.postMessage({
@@ -952,7 +1055,7 @@
                 tabIframes[id].classList.toggle('active', id === pageId);
             });
 
-            document.querySelectorAll('.menu-l2').forEach(function(m) { m.classList.remove('active'); });
+            document.querySelectorAll('.menu-item, .group-title.clickable').forEach(function(m) { m.classList.remove('active'); });
             var menuEl = document.querySelector('[data-page="' + pageId + '"]');
             if (menuEl) menuEl.classList.add('active');
 
@@ -982,7 +1085,7 @@
                 }
             }
 
-            document.querySelectorAll('.menu-l2').forEach(function(m) { m.classList.remove('active'); });
+            document.querySelectorAll('.menu-item, .group-title.clickable').forEach(function(m) { m.classList.remove('active'); });
             if (activeTabId) {
                 var menuEl = document.querySelector('[data-page="' + activeTabId + '"]');
                 if (menuEl) menuEl.classList.add('active');
@@ -1007,20 +1110,6 @@
             tabBar.innerHTML = html;
         }
 
-        // ==================== 菜单折叠 ====================
-        function toggleMenu(el) {
-            var wasOpen = el.classList.contains('open');
-            var allL1 = document.querySelectorAll('.menu-l1');
-            allL1.forEach(function(m) {
-                if (m !== el) m.classList.remove('open');
-            });
-            if (wasOpen) {
-                el.classList.remove('open');
-            } else {
-                el.classList.add('open');
-            }
-        }
-
         // ==================== 侧边栏收起 ====================
         function toggleSidebar() {
             var sidebar = document.getElementById('sidebar');
@@ -1038,12 +1127,6 @@
                 document.getElementById('roleSelect').value = savedRole;
             }
             updateUserInfo(currentRole);
-        })();
-
-        // ==================== 默认展开第一个菜单 ====================
-        (function() {
-            var firstL1 = document.querySelector('.menu-l1');
-            if (firstL1) firstL1.classList.add('open');
         })();
 
         // ==================== 监听父页面消息 ====================

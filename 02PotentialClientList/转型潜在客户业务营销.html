@@ -32,10 +32,13 @@
         .custom-scroll::-webkit-scrollbar-thumb:hover{background:var(--brand-500)}
         .btn{display:inline-flex;align-items:center;gap:6px;border-radius:var(--radius-md);font-family:inherit;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid transparent;line-height:1;white-space:nowrap}
         .btn-sm{padding:6px 12px;font-size:12px;line-height:20px;height:28px}
+        .btn-md{padding:8px 16px;font-size:14px;line-height:22px;height:32px}
         .btn-primary{background:var(--brand-500);color:#fff}
         .btn-primary:hover{background:var(--brand-700)}
         .btn-secondary{background:var(--white);color:var(--ink-800);border-color:var(--ink-300)}
         .btn-secondary:hover{border-color:var(--brand-500);color:var(--brand-500)}
+        .btn-success{background:var(--green-500);color:#fff}
+        .btn-success:hover{background:var(--green-700)}
         .btn-deep-blue{background:var(--brand-700);color:#fff}
         .btn-deep-blue:hover{background:var(--brand-900)}
         .btn-light-blue{background:var(--brand-100);color:var(--brand-700);border-color:var(--brand-300)}
@@ -66,6 +69,16 @@
         .trans-chem{background:#FEF3C7;color:#92400E}
         .trans-cement{background:#E0E7FF;color:#3730A3}
         .trans-power{background:#F3E8FF;color:#6B21A8}
+        .modal-mask{position:fixed;inset:0;background:rgba(15,23,42,0.45);z-index:1600;display:none;align-items:center;justify-content:center}
+        .modal-mask.open{display:flex}
+        .modal{background:var(--white);border-radius:var(--radius-2xl);box-shadow:0 20px 40px rgba(15,23,42,.16),0 8px 16px rgba(15,23,42,.06);width:100%;max-width:480px;overflow:hidden;animation:modalIn .18s ease-out}
+        @keyframes modalIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+        .modal-head{display:flex;align-items:center;padding:16px 24px;border-bottom:1px solid var(--line-200)}
+        .modal-title{font-size:16px;font-weight:600;color:var(--ink-900)}
+        .modal-close{margin-left:auto;background:none;border:none;cursor:pointer;color:var(--ink-500);padding:4px;display:flex;border-radius:var(--radius-sm)}
+        .modal-close:hover{background:var(--bg-muted);color:var(--ink-900)}
+        .modal-body{padding:20px 24px;color:var(--ink-800);font-size:14px}
+        .modal-foot{display:flex;justify-content:center;gap:8px;padding:12px 24px;border-top:1px solid var(--line-200);background:var(--bg-subtle)}
     </style>
 </head>
 <body>
@@ -300,6 +313,40 @@
             </div>
         </div>
     </div>
+
+    <!-- ============ 开始营销弹窗 ============ -->
+    <div class="modal-mask" id="marketingModal">
+        <div class="modal">
+            <div class="modal-head">
+                <div class="modal-title" data-i18n="mkt_modal_title">客户基本信息</div>
+                <button class="modal-close" onclick="closeMarketingModal()">
+                    <svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align:left;">
+                <div style="display:grid;grid-template-columns:120px 1fr;gap:10px 16px;font-size:13px;">
+                    <span style="color:var(--ink-500);font-weight:500;" data-i18n="mkt_label_name">企业名称：</span>
+                    <span id="mktName" style="font-weight:500;color:var(--ink-900);">—</span>
+                    <span style="color:var(--ink-500);font-weight:500;" data-i18n="mkt_label_code">统一社会信用代码：</span>
+                    <span id="mktCode" style="font-family:monospace;font-size:12px;color:var(--ink-800);">—</span>
+                    <span style="color:var(--ink-500);font-weight:500;" data-i18n="mkt_label_category">转型类别：</span>
+                    <span id="mktCategory">—</span>
+                    <span style="color:var(--ink-500);font-weight:500;" data-i18n="mkt_label_region">所属地区：</span>
+                    <span id="mktRegion" style="color:var(--ink-800);">—</span>
+                    <span style="color:var(--ink-500);font-weight:500;" data-i18n="mkt_label_status">经营状态：</span>
+                    <span id="mktStatus">—</span>
+                    <span style="color:var(--ink-500);font-weight:500;" data-i18n="mkt_label_capital">注册资本：</span>
+                    <span id="mktCapital" style="font-family:var(--font-num);color:var(--ink-800);">—</span>
+                    <span style="color:var(--ink-500);font-weight:500;" data-i18n="mkt_label_stage">转型阶段：</span>
+                    <span id="mktStage">—</span>
+                </div>
+            </div>
+            <div class="modal-foot">
+                <button class="btn btn-success btn-md" onclick="confirmStartMarketing()" data-i18n="mkt_confirm">确认开始营销</button>
+                <button class="btn btn-secondary btn-md" onclick="closeMarketingModal()" data-i18n="mkt_cancel">取消</button>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
 I18N.setDict({
@@ -389,6 +436,71 @@ I18N.setDict({
     '煤电+生物质耦合发电+CCUS改造': {zh:'煤电+生物质耦合发电+CCUS改造', en:'Coal-Biomass Co-firing + CCUS Retrofit'},
     '全废钢电弧炉短流程+智慧能碳管理平台': {zh:'全废钢电弧炉短流程+智慧能碳管理平台', en:'Full-scrap EAF + Smart Carbon Mgmt Platform'},
     '高炉富氢冶炼+连铸连轧节能改造': {zh:'高炉富氢冶炼+连铸连轧节能改造', en:'H₂-rich BF Smelting + Continuous Casting Upgrade'},
+
+    // Marketing modal
+    mkt_modal_title: {zh:'客户基本信息', en:'Customer Basic Info'},
+    mkt_label_name: {zh:'企业名称：', en:'Enterprise Name:'},
+    mkt_label_code: {zh:'统一社会信用代码：', en:'Credit Code:'},
+    mkt_label_category: {zh:'转型类别：', en:'Transition Category:'},
+    mkt_label_region: {zh:'所属地区：', en:'Region:'},
+    mkt_label_status: {zh:'经营状态：', en:'Status:'},
+    mkt_label_capital: {zh:'注册资本：', en:'Registered Capital:'},
+    mkt_label_stage: {zh:'转型阶段：', en:'Transition Stage:'},
+    mkt_confirm: {zh:'确认开始营销', en:'Confirm Start Marketing'},
+    mkt_cancel: {zh:'取消', en:'Cancel'},
+    start_mkt: {zh:'开始营销', en:'Start Marketing'},
+});
+
+// ==================== 开始营销弹窗 ====================
+var currentMktRow = null;
+
+function openTransitionMarketing(row) {
+    currentMktRow = row;
+    var cells = row.querySelectorAll('td');
+    document.getElementById('mktName').textContent = cells[1].textContent.trim();
+    document.getElementById('mktCode').textContent = cells[2].textContent.trim();
+    document.getElementById('mktCategory').innerHTML = cells[3].querySelector('.transition-tag') ? cells[3].querySelector('.transition-tag').outerHTML : cells[3].textContent.trim();
+    document.getElementById('mktRegion').textContent = cells[4].textContent.trim();
+    document.getElementById('mktStatus').innerHTML = cells[5].querySelector('.tag') ? cells[5].querySelector('.tag').outerHTML : cells[5].textContent.trim();
+    document.getElementById('mktCapital').textContent = cells[6].textContent.trim();
+    document.getElementById('mktStage').innerHTML = cells[8].querySelector('.tag') ? cells[8].querySelector('.tag').outerHTML : cells[8].textContent.trim();
+    document.getElementById('marketingModal').classList.add('open');
+}
+
+function closeMarketingModal() {
+    document.getElementById('marketingModal').classList.remove('open');
+    currentMktRow = null;
+}
+
+function confirmStartMarketing() {
+    if (!currentMktRow) return;
+    var name = currentMktRow.querySelector('td:nth-child(2)').textContent.trim();
+    alert(I18N.t('start_mkt') + ': ' + name);
+    closeMarketingModal();
+}
+
+// Inject "开始营销" buttons into each row
+(function injectMktBtns() {
+    var rows = document.querySelectorAll('tbody tr');
+    rows.forEach(function(row) {
+        var container = row.querySelector('.col-actions .action-btns');
+        if (container) {
+            var btn = document.createElement('button');
+            btn.className = 'btn btn-success btn-sm';
+            btn.setAttribute('data-i18n', 'start_mkt');
+            btn.textContent = I18N.t('start_mkt');
+            btn.onclick = function() { openTransitionMarketing(row); };
+            container.appendChild(btn);
+        }
+    });
+})();
+
+// Click mask / ESC to close
+document.getElementById('marketingModal').addEventListener('click', function(e) {
+    if (e.target === this) closeMarketingModal();
+});
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeMarketingModal();
 });
 </script>
 </body>

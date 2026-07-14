@@ -47,15 +47,11 @@
     .btn-primary:hover { background: var(--brand-700); }
     .btn-secondary { background: var(--white); color: var(--ink-800); border-color: var(--ink-300); }
     .btn-secondary:hover { border-color: var(--brand-500); color: var(--brand-500); }
+    .btn-outline-brand { background: var(--white); color: var(--brand-500); border-color: #A3C2E8; }
+    .btn-outline-brand:hover { background: var(--brand-50); border-color: var(--brand-500); }
     .btn-ghost { background: transparent; color: var(--brand-500); border: none; padding: 4px 8px; font-size: 13px; }
     .btn-ghost:hover { background: var(--brand-50); }
     .btn svg { width: 14px; height: 14px; stroke-width: 1.75; }
-    .tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; line-height: 1.5; border: 1px solid transparent; white-space: nowrap; }
-    .tag-default { background: var(--bg-muted); color: var(--ink-600); border-color: var(--line-200); }
-    .tag-success { background: var(--success-bg); color: var(--green-700); border-color: var(--success-border); }
-    .tag-danger { background: var(--danger-bg); color: var(--danger); border-color: var(--danger-border); }
-    .tag-warning { background: var(--warning-bg); color: var(--warning); border-color: var(--warning-border); }
-    .tag-info { background: var(--info-bg); color: var(--info); border-color: var(--info-border); }
     .section-card { background: var(--white); border-radius: var(--radius-xl); border: 1px solid var(--line-200); overflow: hidden; }
     .breadcrumb { display: flex; align-items: center; gap: 8px; color: var(--ink-500); font-size: 14px; }
     .breadcrumb a { color: var(--ink-500); text-decoration: none; }
@@ -70,8 +66,8 @@
     .table-wrap { position: relative; overflow-x: auto; }
     .table-wrap table { border-collapse: separate; border-spacing: 0; }
     .table-wrap th, .table-wrap td { white-space: nowrap; }
-    .sticky-right { position: sticky; right: 0; z-index: 10; background: var(--white); border-left: 1px solid var(--line-200); }
-    .sticky-right-header { position: sticky; right: 0; z-index: 20; background: var(--bg-muted); border-left: 1px solid var(--line-200); }
+    .sticky-right { position: sticky; right: 0; z-index: 10; background: var(--white); border-left: 1px solid var(--line-200); box-shadow: -4px 0 12px rgba(0,0,0,0.06); }
+    .sticky-right-header { position: sticky; right: 0; z-index: 20; background: var(--bg-muted); border-left: 1px solid var(--line-200); box-shadow: -4px 0 12px rgba(0,0,0,0.06); }
     .sticky-approval { position: sticky; right: 100px; z-index: 9; background: var(--white); border-left: 1px solid var(--line-200); }
     .sticky-approval-header { position: sticky; right: 100px; z-index: 19; background: var(--bg-muted); border-left: 1px solid var(--line-200); }
 
@@ -96,14 +92,14 @@
     }
     .filter-item input,
     .filter-item select {
-      padding: 4px 8px;
+      padding: 6px 10px;
       border: 1px solid var(--line-200);
       border-radius: var(--radius-md);
       font-size: 13px;
       background: var(--white);
       outline: none;
       transition: border-color .2s;
-      height: 28px;
+      height: 32px;
     }
     .filter-item input:focus,
     .filter-item select:focus {
@@ -214,88 +210,66 @@
     <div class="flex-1 overflow-y-auto custom-scroll" style="padding:var(--s-6)">
       <div class="section-card">
         <!-- 筛选栏 - 水平布局 -->
-        <div style="padding:12px 20px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle)">
-          <div class="filter-row">
-            <!-- 合同信息 -->
+        <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle)">
+          <!-- 筛选条件：flex-wrap 自动换行 -->
+          <div style="display:flex;flex-wrap:wrap;gap:12px 16px;align-items:flex-end;">
             <div class="filter-item">
               <label data-i18n="filter_contract_info">合同信息</label>
               <input type="text" data-i18n-placeholder="ph_contract_info" placeholder="请输入合同名称/编号">
             </div>
-            <!-- 客户信息 -->
             <div class="filter-item">
               <label data-i18n="filter_client_info">客户信息</label>
               <input type="text" data-i18n-placeholder="ph_client_info" placeholder="企业名称/编号/统一社会信用">
             </div>
-            <!-- 审批状态 -->
             <div class="filter-item">
               <label data-i18n="filter_approval_status">审批状态</label>
-              <select>
-                <option data-i18n="opt_all">全部</option>
-                <option>未提交</option>
-                <option>审批中</option>
-                <option>已驳回</option>
-                <option>已完成</option>
-              </select>
+              <select><option data-i18n="opt_all">全部</option><option>未提交</option><option>审批中</option><option>已驳回</option><option>已完成</option></select>
             </div>
-            <!-- 贷款投向行业 -->
             <div class="filter-item">
               <label data-i18n="filter_loan_industry">贷款投向行业</label>
               <select><option data-i18n="opt_select">请选择</option></select>
             </div>
-            <!-- 业务品种 -->
             <div class="filter-item">
               <label data-i18n="filter_biz_type">业务品种</label>
               <select><option data-i18n="opt_select">请选择</option></select>
             </div>
-            <!-- 业务条线 -->
-            <div class="filter-item">
-              <label data-i18n="filter_biz_line">业务条线</label>
-              <select><option data-i18n="opt_select">请选择</option></select>
-            </div>
-            <!-- 所属分支机构 -->
-            <div class="filter-item">
-              <label data-i18n="filter_branch">所属分支机构</label>
-              <select><option data-i18n="opt_select">请选择</option></select>
-            </div>
-            <!-- 管户人 -->
-            <div class="filter-item">
-              <label data-i18n="filter_manager">管户人</label>
-              <input type="text" data-i18n-placeholder="ph_manager" placeholder="请输入姓名/工号">
-            </div>
-            <!-- 合同类型 -->
-            <div class="filter-item">
-              <label data-i18n="filter_contract_type">合同类型</label>
-              <select><option data-i18n="opt_select">请选择</option><option data-i18n="opt_project">项目类</option><option data-i18n="opt_non_project">非项目类</option></select>
-            </div>
-            <!-- 智能识别是否命中 -->
-            <div class="filter-item">
-              <label data-i18n="filter_ai_match">智能识别是否命中</label>
-              <select>
-                <option data-i18n="opt_all">全部</option>
-                <option data-i18n="opt_matched">命中</option>
-                <option data-i18n="opt_not_matched">未命中</option>
-                <option>-</option>
-              </select>
-            </div>
-            <!-- 最近更新时间 -->
-            <div class="filter-item">
-              <label data-i18n="filter_last_updated">最近更新时间</label>
-              <input type="date" value="2015-10-02">
-              <span style="color:var(--ink-400);font-size:13px;">~</span>
-              <input type="date" value="2015-10-10">
-            </div>
-            <!-- 查询/重置按钮 -->
-            <div class="filter-actions">
-              <button class="btn btn-primary btn-sm" data-i18n="btn_search">查询</button>
-              <button class="btn btn-secondary btn-sm" data-i18n="btn_reset">重置</button>
-            </div>
+            <span id="filterRow2" style="display:contents;">
+              <div class="filter-item">
+                <label data-i18n="filter_biz_line">业务条线</label>
+                <select><option data-i18n="opt_select">请选择</option></select>
+              </div>
+              <div class="filter-item">
+                <label data-i18n="filter_branch">所属分支机构</label>
+                <select><option data-i18n="opt_select">请选择</option></select>
+              </div>
+              <div class="filter-item">
+                <label data-i18n="filter_manager">管户人</label>
+                <input type="text" data-i18n-placeholder="ph_manager" placeholder="请输入姓名/工号">
+              </div>
+              <div class="filter-item">
+                <label data-i18n="filter_contract_type">合同类型</label>
+                <select><option data-i18n="opt_select">请选择</option><option data-i18n="opt_project">项目类</option><option data-i18n="opt_non_project">非项目类</option></select>
+              </div>
+              <div class="filter-item">
+                <label data-i18n="filter_last_updated">最近更新时间</label>
+                <input type="date" value="2015-10-02">
+                <span style="color:var(--ink-400);font-size:13px;">~</span>
+                <input type="date" value="2015-10-10">
+              </div>
+            </span>
+          </div>
+          <!-- 按钮区：右下角 -->
+          <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px;">
+            <button id="filterToggleBtn" class="btn btn-secondary btn-sm" onclick="toggleFilter()" style="padding:6px 8px;">▲</button>
+            <button class="btn btn-primary btn-sm" data-i18n="btn_search">查询</button>
+            <button class="btn btn-secondary btn-sm" data-i18n="btn_reset">重置</button>
           </div>
         </div>
 
         <!-- 操作栏 -->
-        <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100">
-          <div class="flex gap-2"><button class="btn btn-primary btn-sm" data-i18n="btn_new_id">+ 新增认定</button><button class="btn btn-secondary btn-sm" data-i18n="btn_export">导出数据</button></div>
-          <span class="text-sm text-slate-400"><span data-i18n="lbl_total_prefix">共</span> 1126 <span data-i18n="lbl_records">条</span></span>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid var(--line-200);flex-shrink:0;">
+          <div style="display:flex;gap:8px;"><button class="btn btn-primary btn-sm" data-i18n="btn_new_id">+ 新增认定</button><button class="btn btn-secondary btn-sm" data-i18n="btn_export">导出数据</button></div>
+          <span style="font-size:14px;color:var(--ink-400);"><span data-i18n="lbl_total_prefix">共</span> 1126 <span data-i18n="lbl_records">条</span></span>
         </div>
 
         <!-- 表格 -->
@@ -310,7 +284,6 @@
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;" data-i18n="th_balance">合同余额(万元)</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;" data-i18n="th_loan_industry">贷款投向行业</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;" data-i18n="th_contract_type">合同类型</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;" data-i18n="th_ai_match">智能识别是否命中</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:140px;" data-i18n="th_credit_gf">信贷系统2025绿色认定分类</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:120px;" data-i18n="th_has_green_loan">项目是否已有绿色贷款</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:130px;" data-i18n="th_client_green_loan">客户是否已有绿色贷款</th>
@@ -341,13 +314,12 @@
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">100,030.00</td>
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">90,000,000.00</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">炼钢</td>
-                <td class="px-2 py-2"><span class="tag tag-info" data-i18n="tag_project">项目类</span></td>
-                <td class="px-2 py-2"><span class="tag tag-success" data-i18n="tag_matched">命中</span></td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="1.1.1 节能锅炉制造">1.1.1 节能锅炉制造</span></td>
-                <td class="px-2 py-2"><span class="tag tag-success" data-i18n="tag_yes">是</span></td>
-                <td class="px-2 py-2"><span class="tag tag-success" data-i18n="tag_yes">是</span></td>
+                <td class="px-2 py-2">项目类</td>
+                                <td class="px-2 py-2" style="white-space:nowrap;">1.1.1 节能锅炉制造</td>
+                <td class="px-2 py-2">是</td>
+                <td class="px-2 py-2">是</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">对公</td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="tag_active">生效</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;">生效</td>
                 <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">PRJNO202004261603</td>
                 <td class="px-2 py-2" style="white-space:nowrap;" data-i18n="mock_project_1">动力及储能锂离子电池研发生产</td>
                 <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
@@ -370,13 +342,12 @@
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">300,000.00</td>
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">230,000,000.00</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">太阳能发电</td>
-                <td class="px-2 py-2"><span class="tag tag-info" data-i18n="tag_project">项目类</span></td>
-                <td class="px-2 py-2"><span class="tag tag-danger" data-i18n="tag_not_matched">未命中</span></td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-danger" data-i18n="tag_non_green">非绿</span></td>
-                <td class="px-2 py-2"><span class="tag tag-default" data-i18n="tag_no">否</span></td>
-                <td class="px-2 py-2"><span class="tag tag-success" data-i18n="tag_yes">是</span></td>
+                <td class="px-2 py-2">项目类</td>
+                                <td class="px-2 py-2" style="white-space:nowrap;">非绿</td>
+                <td class="px-2 py-2">否</td>
+                <td class="px-2 py-2">是</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">对公</td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="tag_active">生效</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;">生效</td>
                 <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">PRJNO202103091119</td>
                 <td class="px-2 py-2" style="white-space:nowrap;" data-i18n="mock_project_2">银川隆基5GW单晶硅片及电池组件项目</td>
                 <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
@@ -399,13 +370,12 @@
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">200,000.00</td>
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">9,000,000.00</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">太阳能发电</td>
-                <td class="px-2 py-2"><span class="tag tag-default" data-i18n="tag_non_project">非项目类</span></td>
-                <td class="px-2 py-2"><span class="tag tag-success" data-i18n="tag_matched">命中</span></td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="1.1.1 节能锅炉制造">1.1.1 节能锅炉制造</span></td>
-                <td class="px-2 py-2"><span class="tag tag-default">—</span></td>
-                <td class="px-2 py-2"><span class="tag tag-success" data-i18n="tag_yes">是</span></td>
+                <td class="px-2 py-2">非项目类</td>
+                                <td class="px-2 py-2" style="white-space:nowrap;">1.1.1 节能锅炉制造</td>
+                <td class="px-2 py-2">—</td>
+                <td class="px-2 py-2">是</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">对公</td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="tag_active">生效</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;">生效</td>
                 <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
@@ -428,13 +398,12 @@
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">90,000.00</td>
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">6,000,000.00</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">太阳能发电</td>
-                <td class="px-2 py-2"><span class="tag tag-default" data-i18n="tag_non_project">非项目类</span></td>
-                <td class="px-2 py-2"><span class="tag tag-success" data-i18n="tag_matched">命中</span></td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="3.2.7 废气回收利用">3.2.7 废气回收利用</span></td>
-                <td class="px-2 py-2"><span class="tag tag-default">—</span></td>
-                <td class="px-2 py-2"><span class="tag tag-success" data-i18n="tag_yes">是</span></td>
+                <td class="px-2 py-2">非项目类</td>
+                                <td class="px-2 py-2" style="white-space:nowrap;">3.2.7 废气回收利用</td>
+                <td class="px-2 py-2">—</td>
+                <td class="px-2 py-2">是</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">对公</td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="tag_active">生效</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;">生效</td>
                 <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
@@ -457,13 +426,12 @@
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">70,000.00</td>
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">20,000,000.00</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">大气污染治理</td>
-                <td class="px-2 py-2"><span class="tag tag-default" data-i18n="tag_non_project">非项目类</span></td>
-                <td class="px-2 py-2"><span class="tag tag-success" data-i18n="tag_matched">命中</span></td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="2.5.2 危险废物处理处置">2.5.2 危险废物处理处置</span></td>
-                <td class="px-2 py-2"><span class="tag tag-default">—</span></td>
-                <td class="px-2 py-2"><span class="tag tag-default" data-i18n="tag_no">否</span></td>
+                <td class="px-2 py-2">非项目类</td>
+                                <td class="px-2 py-2" style="white-space:nowrap;">2.5.2 危险废物处理处置</td>
+                <td class="px-2 py-2">—</td>
+                <td class="px-2 py-2">否</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">小微</td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="tag_active">生效</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;">生效</td>
                 <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
@@ -486,13 +454,12 @@
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">107,000.00</td>
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">980,000,000.00</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">大气污染治理</td>
-                <td class="px-2 py-2"><span class="tag tag-default" data-i18n="tag_non_project">非项目类</span></td>
-                <td class="px-2 py-2"><span class="tag tag-default">-</span></td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-danger" data-i18n="tag_non_green">非绿</span></td>
-                <td class="px-2 py-2"><span class="tag tag-default">—</span></td>
-                <td class="px-2 py-2"><span class="tag tag-default" data-i18n="tag_no">否</span></td>
+                <td class="px-2 py-2">非项目类</td>
+                                <td class="px-2 py-2" style="white-space:nowrap;">非绿</td>
+                <td class="px-2 py-2">—</td>
+                <td class="px-2 py-2">否</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">小微</td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="tag_active">生效</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;">生效</td>
                 <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
@@ -515,13 +482,12 @@
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">10,000.00</td>
                 <td class="px-2 py-2 font-num" style="white-space:nowrap;">78,000,000.00</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">炼铁</td>
-                <td class="px-2 py-2"><span class="tag tag-default" data-i18n="tag_non_project">非项目类</span></td>
-                <td class="px-2 py-2"><span class="tag tag-danger" data-i18n="tag_not_matched">未命中</span></td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-danger" data-i18n="tag_non_green">非绿</span></td>
-                <td class="px-2 py-2"><span class="tag tag-default">—</span></td>
-                <td class="px-2 py-2"><span class="tag tag-default" data-i18n="tag_no">否</span></td>
+                <td class="px-2 py-2">非项目类</td>
+                                <td class="px-2 py-2" style="white-space:nowrap;">非绿</td>
+                <td class="px-2 py-2">—</td>
+                <td class="px-2 py-2">否</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">零售</td>
-                <td class="px-2 py-2" style="white-space:nowrap;"><span class="tag tag-success" data-i18n="tag_active">生效</span></td>
+                <td class="px-2 py-2" style="white-space:nowrap;">生效</td>
                 <td class="px-2 py-2 font-mono text-xs" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2" style="white-space:nowrap;">—</td>
                 <td class="px-2 py-2 font-mono" style="white-space:nowrap;">202004271059</td>
@@ -543,32 +509,6 @@
         <div class="flex items-center justify-between px-6 py-3 border-t border-slate-100">
           <span class="text-sm text-slate-400"><span data-i18n="lbl_total_prefix">共</span> 1126 <span data-i18n="lbl_records">条</span></span>
           <div class="flex items-center gap-2"><button class="btn btn-secondary btn-sm">&#8249;</button><span class="px-2 py-1 text-sm bg-brand-500 text-white rounded">1</span><button class="btn btn-secondary btn-sm">2</button><button class="btn btn-secondary btn-sm">3</button><span class="text-sm text-slate-400">&hellip;</span><button class="btn btn-secondary btn-sm">50</button><button class="btn btn-secondary btn-sm">&#8250;</button><span class="text-sm text-slate-500 ml-2"><span data-i18n="lbl_jump_to">跳至</span> <input type="number" class="w-12 px-1 py-0.5 border border-slate-300 rounded text-center text-sm" value="1"> /50<span data-i18n="lbl_page">页</span></span></div>
-        </div>
-
-        <!-- ===== 备注 - 美观样式 ===== -->
-        <div class="dev-note-container">
-          <span class="dev-note-label" data-i18n="dev_note_label">备注</span>
-          <div class="note-body">
-            <span class="label-tag" data-i18n="dev_biz_flow">业务流程</span>
-            <span class="step">
-              <strong data-i18n="dev_step1_title">第一步：发起合同绿色认定</strong><br>
-              <span data-i18n="dev_step1_desc">自动发起流程：信贷系统放贷环节，符合以下条件的合同自动发起碳排放核算：【合同状态为"有效"。创建时间"待确认"】。<br>手动发起流程：输入合同编号/客户编号查询为创建认定任务的合同数据，点击发起按钮，弹出确认弹窗，客户经理点击确认后，发起合同绿色认定。</span>
-            </span>
-            <span class="step">
-              <strong data-i18n="dev_step2_title">第二步：模型自动认定</strong><br>
-              <span data-i18n="dev_step2_desc">合同绿色认定发起成功后，自动调用模型，基于合同融资用途生成智能识别结果。并与信贷系统识别结果做对比，若模型识别的浅明分类其中一个与信贷系统识别结果一致，则为"命中"，三个都与信贷系统分类不一致，则为"未命中"。信贷系统未保存分类，则显示为"-"。</span>
-            </span>
-            <span class="step">
-              <strong data-i18n="dev_step3_title">第三步：业务人员重新识别</strong><br>
-              <span data-i18n="dev_step3_desc">不强制，支持业务人员修改"融资用途"，点击查看页面的【重新识别】按钮，调用模型重新识别。点击【保存】按钮，保存模型重新识别结果。（预留：识别过程记录口子，后续可能增加每次模型识别记录展示功能。）</span>
-            </span>
-            <span class="step" style="margin-top:8px;">
-              <strong data-i18n="dev_perm_title">列表贷款查看权限及操作权限：</strong><span data-i18n="dev_perm_desc">业务人员看自己主办的贷款数据、分行看自己机构及下设机构的贷款数据，浙江省分行看整个浙江省的。有本合同查看权限的人均有列表【查看详情】按钮，及详情页："融资用途"编辑，及【重新识别】按钮操作权限。</span>
-            </span>
-            <span class="step" style="margin-top:8px;">
-              <strong data-i18n="dev_field_title">列表字段含义说明：</strong><span data-i18n="dev_field_desc">1.智能识别是否命中："命中"、"未命中"、"-"。基于合同融资用途生成智能识别结果与信贷系统识别结果做对比，若模型识别的浅明分类其中一个与信贷系统识别结果一致，则为"命中"，三个都与信贷系统分类不一致，则为"未命中"。信贷系统未保存分类，则显示为"-"。	2.信贷系统2025绿色认定分类：对接行内信贷系统，贷款绿色认定结果	3.项目是否已有绿色贷款：本项目关联的项目贷是否存在"信贷系统认定为绿色记录"	4.客户是否已有绿色贷款：本客户关联的所有贷款是否存在"信贷系统认定为绿色记录"</span>
-            </span>
-          </div>
         </div>
       </div>
     </div>
@@ -749,13 +689,20 @@
     return path.substring(0, path.lastIndexOf('/') + 1);
   }
 
-  // ==================== 处理"查看详情"按钮 ====================
-  function handleView(btn) {
+  // ==================== 处理按钮跳转 ====================
+  function handleAction(action) {
     var dir = getCurrentDir();
-    var row = btn.closest('tr');
-    var targetFile = (row && row.getAttribute('data-type') === 'project')
-        ? dir + '合同绿色认定详情页-项目类.html'
-        : dir + 'contract-green-identify-detail-nonproject.html';
+    var targetFile;
+    if (action === 'approve') {
+      // 审核员 → 审批页
+      targetFile = dir + 'contract-green-identify-approval.html';
+    } else if (action === 'view') {
+      // 查看详情 → 查看页（只读）
+      targetFile = dir + 'contract-green-identify-view.html';
+    } else {
+      // 'edit' — 客户经理编辑页
+      targetFile = dir + 'contract-green-identify-detail-nonproject.html';
+    }
     if (window.parent !== window) {
         var pageId = 'contract-detail-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
         window.parent.postMessage({
@@ -845,62 +792,50 @@
     // ---- 客户经理（对应条线主办经理） ----
     if (currentRole === '客户经理') {
       if (appr === '未提交') {
-        btns.push({label:'去处理', cls:'btn btn-primary btn-sm'});
+        btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'edit'});
       } else if (appr === '审批中') {
-        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
       } else if (appr === '已驳回') {
-        btns.push({label:'去处理', cls:'btn btn-primary btn-sm'});
+        btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'edit'});
       } else if (appr === '已完成') {
-        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
       }
     }
     // ---- 公司绿金联系人（对应条线） ----
     else if (currentRole === '公司绿金联系人') {
-      if (appr === '未提交') {
-        // — 无按钮
-      } else if (appr === '审批中' && nodeMatches(node, '绿金联系人')) {
-        btns.push({label:'去处理', cls:'btn btn-primary btn-sm'});
-      } else if (appr === '审批中' && !nodeMatches(node, '绿金联系人')) {
-        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
-      } else if (appr === '已驳回') {
-        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+      if (appr === '审批中' && nodeMatches(node, '绿金联系人')) {
+        btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'approve'});
       } else if (appr === '已完成') {
-        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
       }
+      // 未提交/已驳回/审批中非当前节点 → —
     }
     // ---- 总行公司初审（对应条线） ----
     else if (currentRole === '总行公司初审') {
-      if (appr === '未提交') {
-        // — 无按钮
-      } else if (appr === '审批中' && nodeMatches(node, '总行初审')) {
-        btns.push({label:'去处理', cls:'btn btn-primary btn-sm'});
-      } else if (appr === '审批中' && !nodeMatches(node, '总行初审')) {
-        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
-      } else if (appr === '已驳回') {
-        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+      if (appr === '审批中' && nodeMatches(node, '总行初审')) {
+        btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'approve'});
       } else if (appr === '已完成') {
-        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
       }
+      // 未提交/已驳回/审批中非当前节点 → —
     }
     // ---- 总行公司复核（对应条线） ----
     else if (currentRole === '总行公司复核') {
-      if (appr === '未提交') {
-        // — 无按钮
-      } else if (appr === '审批中' && nodeMatches(node, '总行复核')) {
-        btns.push({label:'去处理', cls:'btn btn-primary btn-sm'});
-      } else if (appr === '审批中' && !nodeMatches(node, '总行复核')) {
-        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
-      } else if (appr === '已驳回') {
-        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+      if (appr === '审批中' && nodeMatches(node, '总行复核')) {
+        btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'approve'});
       } else if (appr === '已完成') {
-        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
       }
+      // 未提交/已驳回/审批中非当前节点 → —
     }
-    // ---- 总行管理员（仅查看，无编辑权限） ----
+    // ---- 总行管理员 ----
     else if (currentRole === '总行管理员') {
-      if (appr !== '未提交') {
-        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm'});
+      if (appr === '已完成') {
+        btns.push({label:'编辑', cls:'btn btn-primary btn-sm', action:'edit'});
+      } else if (appr === '审批中' || appr === '已驳回') {
+        btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
       }
+      // 未提交 → —（可通过页面"取消任务"按钮删除待办）
     }
 
     // 渲染按钮
@@ -908,7 +843,7 @@
       var btn = document.createElement('button');
       btn.className = b.cls;
       btn.textContent = b.label;
-      btn.onclick = function() { handleView(this); };
+      btn.onclick = function() { handleAction(b.action); };
       container.appendChild(btn);
     });
   }
@@ -927,6 +862,15 @@
     }
   });
   setTimeout(applyRolePermissions, 100);
+
+  // 筛选展开/收起
+  var filterExpanded=true;
+  function toggleFilter(){
+    var row2=document.getElementById('filterRow2');
+    var btn=document.getElementById('filterToggleBtn');
+    if(filterExpanded){row2.style.display='none';btn.innerHTML='▼';filterExpanded=false;}
+    else{row2.style.display='contents';btn.innerHTML='▲';filterExpanded=true;}
+  }
 </script>
 
 </body>

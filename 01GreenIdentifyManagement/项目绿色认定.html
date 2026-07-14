@@ -140,53 +140,6 @@
             border-color: var(--brand-500);
         }
 
-        .tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 2px 8px;
-            border-radius: var(--radius-sm);
-            font-size: 12px;
-            font-weight: 500;
-            line-height: 1.5;
-            border: 1px solid transparent;
-            white-space: nowrap;
-        }
-        .tag-default {
-            background: var(--bg-muted);
-            color: var(--ink-600);
-            border-color: var(--line-200);
-        }
-        .tag-success {
-            background: var(--success-bg);
-            color: var(--green-700);
-            border-color: var(--success-border);
-        }
-        .tag-danger {
-            background: var(--danger-bg);
-            color: var(--danger);
-            border-color: var(--danger-border);
-        }
-        .tag-warning {
-            background: var(--warning-bg);
-            color: var(--warning);
-            border-color: var(--warning-border);
-        }
-        .tag-info {
-            background: var(--info-bg);
-            color: var(--info);
-            border-color: var(--info-border);
-        }
-        .tag-identified {
-            background: #D1FAE5;
-            color: #065F46;
-            border-color: #A7F3D0;
-        }
-        .tag-unidentified {
-            background: #FEF3C7;
-            color: #92400E;
-            border-color: #FDE68A;
-        }
 
         .section-card {
             background: var(--white);
@@ -339,7 +292,8 @@
 
                 <!-- 筛选栏 -->
                 <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);flex-shrink:0;">
-                    <div class="filter-row">
+                    <!-- 筛选条件：flex-wrap 自动换行 -->
+                    <div style="display:flex;flex-wrap:wrap;gap:12px 16px;align-items:flex-end;">
                         <div class="filter-group" style="min-width:200px;flex:2;">
                             <label data-i18n="filter_project_info">项目信息</label>
                             <input type="text" data-i18n-placeholder="ph_project_info" placeholder="请输入项目名称/代码/编号">
@@ -350,81 +304,44 @@
                         </div>
                         <div class="filter-group" style="min-width:140px;flex:0.8;">
                             <label data-i18n="filter_approval_status">审批状态</label>
-                            <select>
-                                <option data-i18n="opt_all">全部</option>
-                                <option>未提交</option>
-                                <option>审批中</option>
-                                <option>已驳回</option>
-                                <option>已完成</option>
-                            </select>
+                            <select><option data-i18n="opt_all">全部</option><option>未提交</option><option>审批中</option><option>已驳回</option><option>已完成</option></select>
                         </div>
                         <div class="filter-group" style="min-width:160px;flex:1;">
                             <label data-i18n="filter_industry_class">国民经济行业分类</label>
-                            <select>
-                                <option data-i18n="ph_select_industry">请选择国民经济行业分类</option>
-                                <option data-i18n="ind_hydropower">水电开发</option>
-                                <option data-i18n="ind_civil_eng">土木工程建筑业</option>
-                                <option data-i18n="ind_elec_machinery">电气机械及器材制造业</option>
-                                <option data-i18n="ind_water_env">水利、环境和公共设施管理业</option>
-                                <option data-i18n="ind_nonferrous">有色金属行业</option>
-                                <option>食物饮品 - 乳制品</option>
-                            </select>
+                            <select><option data-i18n="ph_select_industry">请选择国民经济行业分类</option><option data-i18n="ind_hydropower">水电开发</option><option data-i18n="ind_civil_eng">土木工程建筑业</option><option data-i18n="ind_elec_machinery">电气机械及器材制造业</option><option data-i18n="ind_water_env">水利、环境和公共设施管理业</option><option data-i18n="ind_nonferrous">有色金属行业</option><option>食物饮品 - 乳制品</option></select>
                         </div>
                         <div class="filter-group" style="min-width:150px;flex:1;">
                             <label data-i18n="filter_branch">所属分支机构</label>
-                            <select>
-                                <option data-i18n="ph_select_branch">请选择机构</option>
-                                <option>北京分行</option>
-                                <option>上海分行</option>
-                                <option>重庆银行渝北支行</option>
-                            </select>
+                            <select><option data-i18n="ph_select_branch">请选择机构</option><option>北京分行</option><option>上海分行</option><option>重庆银行渝北支行</option></select>
                         </div>
+                        <span id="filterRow2" style="display:contents;">
+                            <div class="filter-group" style="min-width:160px;flex:1;">
+                                <label data-i18n="filter_gf_category">绿色金融分类(2025)</label>
+                                <select><option data-i18n="ph_select_gf">请选择绿色金融分类</option><option>4.2.4 大型水利发电设施</option><option>6.5.3 城镇集中供热系统</option><option>1.2.1 新能源汽车关键零部件</option><option>5.3.1.1 污水处理设施</option><option>5.5.1.5 城乡公共交通系统</option><option>5.1.14 绿色畜牧业</option></select>
+                            </div>
+                            <div class="filter-group" style="min-width:140px;flex:0.8;">
+                                <label data-i18n="filter_manager">管户人</label>
+                                <input type="text" data-i18n-placeholder="ph_manager" placeholder="请输入姓名/工号">
+                            </div>
+                            <div class="filter-group" style="min-width:140px;flex:0.8;">
+                                <label data-i18n="filter_status">识别状态</label>
+                                <select><option data-i18n="opt_all">全部</option><option data-i18n="opt_identified">已识别</option><option data-i18n="opt_unidentified">未识别</option></select>
+                            </div>
+                            <div class="filter-group" style="min-width:220px;flex:1.2;">
+                                <label data-i18n="filter_last_op_time">最近操作时间</label>
+                                <div class="date-range"><input type="date" value="2015-10-02"><span style="color:var(--ink-400);font-size:13px;">~</span><input type="date" value="2015-10-10"></div>
+                            </div>
+                            <div class="filter-group" style="min-width:220px;flex:1.2;">
+                                <label data-i18n="filter_id_date">认定日期</label>
+                                <div class="date-range"><input type="date" value="2015-10-02"><span style="color:var(--ink-400);font-size:13px;">~</span><input type="date" value="2015-10-10"></div>
+                            </div>
+                        </span>
                     </div>
-                    <div class="filter-row" style="margin-top:12px;">
-                        <div class="filter-group" style="min-width:160px;flex:1;">
-                            <label data-i18n="filter_gf_category">绿色金融分类(2025)</label>
-                            <select>
-                                <option data-i18n="ph_select_gf">请选择绿色金融分类</option>
-                                <option>4.2.4 大型水利发电设施</option>
-                                <option>6.5.3 城镇集中供热系统</option>
-                                <option>1.2.1 新能源汽车关键零部件</option>
-                                <option>5.3.1.1 污水处理设施</option>
-                                <option>5.5.1.5 城乡公共交通系统</option>
-                                <option>5.1.14 绿色畜牧业</option>
-                            </select>
-                        </div>
-                        <div class="filter-group" style="min-width:140px;flex:0.8;">
-                            <label data-i18n="filter_manager">管户人</label>
-                            <input type="text" data-i18n-placeholder="ph_manager" placeholder="请输入姓名/工号">
-                        </div>
-                        <div class="filter-group" style="min-width:140px;flex:0.8;">
-                            <label data-i18n="filter_status">识别状态</label>
-                            <select>
-                                <option data-i18n="opt_all">全部</option>
-                                <option data-i18n="opt_identified">已识别</option>
-                                <option data-i18n="opt_unidentified">未识别</option>
-                            </select>
-                        </div>
-                        <div class="filter-group" style="min-width:220px;flex:1.2;">
-                            <label data-i18n="filter_last_op_time">最近操作时间</label>
-                            <div class="date-range">
-                                <input type="date" value="2015-10-02">
-                                <span style="color:var(--ink-400);font-size:13px;">~</span>
-                                <input type="date" value="2015-10-10">
-                            </div>
-                        </div>
-                        <div class="filter-group" style="min-width:220px;flex:1.2;">
-                            <label data-i18n="filter_id_date">认定日期</label>
-                            <div class="date-range">
-                                <input type="date" value="2015-10-02">
-                                <span style="color:var(--ink-400);font-size:13px;">~</span>
-                                <input type="date" value="2015-10-10">
-                            </div>
-                        </div>
-                        <div class="filter-actions" style="flex:0 0 auto;">
-                            <button class="btn btn-primary btn-sm" data-i18n="btn_search">查询</button>
-                            <button class="btn btn-secondary btn-sm" data-i18n="btn_reset">重置</button>
-                        </div>
+                    <!-- 按钮区：右下角 -->
+                    <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px;">
+                        <button id="filterToggleBtn" class="btn btn-secondary btn-sm" onclick="toggleFilter()" style="padding:6px 8px;">▲</button>
+                        <button class="btn btn-primary btn-sm" data-i18n="btn_search">查询</button>
+                        <button class="btn btn-secondary btn-sm" data-i18n="btn_reset">重置</button>
                     </div>
                 </div>
 
@@ -481,18 +398,18 @@
                                 <td data-i18n="company_wujiang">贵州乌江水电开发有限责任公司</td>
                                 <td style="font-family:monospace;font-size:12px;">91520000714735261Y</td>
                                 <td data-i18n="ind_hydropower">水电开发</td>
-                                <td><span class="tag tag-warning" data-i18n="tag_constructing">建设中</span></td>
-                                <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-default">—</span></td>
+                                <td>建设中</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
                                 <td data-i18n="branch_bj">北京分行</td>
                                 <td>李经理/001</td>
                                 <td>张审核/007</td>
                                 <td>2026/07/01 14:23:10</td>
                                 <td>2026/07/01</td>
                                 <td>2026/07/01 10:00:00</td>
-                                <td class="col-status"><span class="tag tag-unidentified" data-i18n="tag_unidentified">未识别</span></td>
+                                <td class="col-status">未识别</td>
                                 <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
                             <!-- 2. 中交一公局 → 未提交-客户经理本人 -->
@@ -507,18 +424,18 @@
                                 <td data-i18n="company_cccc">中交一公局集团有限公司</td>
                                 <td style="font-family:monospace;font-size:12px;">91110000100088498T</td>
                                 <td data-i18n="ind_civil_eng">土木工程建筑业</td>
-                                <td><span class="tag tag-warning" data-i18n="tag_constructing">建设中</span></td>
-                                <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-default">—</span></td>
+                                <td>建设中</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
                                 <td data-i18n="branch_bj">北京分行</td>
                                 <td>王经理/002</td>
                                 <td>李审核/008</td>
                                 <td>2026/07/01 15:10:22</td>
                                 <td>2026/07/01</td>
                                 <td>2026/07/01 11:20:00</td>
-                                <td class="col-status"><span class="tag tag-unidentified" data-i18n="tag_unidentified">未识别</span></td>
+                                <td class="col-status">未识别</td>
                                 <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
                             <!-- 3. 宁德时代 → 已完成 -->
@@ -533,18 +450,18 @@
                                 <td data-i18n="company_catl">宁德时代新能源科技股份有限公司</td>
                                 <td style="font-family:monospace;font-size:12px;">91350900587627358C</td>
                                 <td data-i18n="cind_battery">锂离子电池制造</td>
-                                <td><span class="tag tag-success" data-i18n="tag_op_under_30">运营不足30天</span></td>
-                                <td><span class="tag tag-info" data-i18n="gf_val_1_2_1">1.2.1 新能源汽车关键零部件</span></td>
-                                <td><span class="tag tag-info" data-i18n="gf_val_4_1_8">4.1.8 新型储能产品制造</span></td>
-                                <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-success" data-i18n="gf_val_1_2_1">1.2.1 新能源汽车关键零部件</span></td>
+                                <td>运营不足30天</td>
+                                <td>1.2.1 新能源汽车关键零部件</td>
+                                <td>4.1.8 新型储能产品制造</td>
+                                <td>—</td>
+                                <td>1.2.1 新能源汽车关键零部件</td>
                                 <td data-i18n="branch_sh">上海分行</td>
                                 <td>赵经理/003</td>
                                 <td>王审核/009</td>
                                 <td>2026/07/02 09:30:15</td>
                                 <td>2026/07/02</td>
                                 <td>2026/07/02 08:00:00</td>
-                                <td class="col-status"><span class="tag tag-identified" data-i18n="tag_identified">已识别</span></td>
+                                <td class="col-status">已识别</td>
                                 <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
                             <!-- 4. 广东省环保集团 → 审批中-总行初审 -->
@@ -559,18 +476,18 @@
                                 <td data-i18n="company_gdep">广东省环保集团有限公司</td>
                                 <td style="font-family:monospace;font-size:12px;">91440000100034167A</td>
                                 <td data-i18n="cind_water_pollution">水污染治理</td>
-                                <td><span class="tag tag-warning" data-i18n="tag_constructing">建设中</span></td>
-                                <td><span class="tag tag-info" data-i18n="gf_val_5_3_1_1a">5.3.1.1 污水处理设施建设</span></td>
-                                <td><span class="tag tag-info" data-i18n="gf_val_2_1_2_1">2.1.2.1 重点行业水污染治理</span></td>
-                                <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-success" data-i18n="gf_val_5_3_1_1b">5.3.1.1 污水处理设施</span></td>
+                                <td>建设中</td>
+                                <td>5.3.1.1 污水处理设施建设</td>
+                                <td>2.1.2.1 重点行业水污染治理</td>
+                                <td>—</td>
+                                <td>5.3.1.1 污水处理设施</td>
                                 <td data-i18n="branch_sh">上海分行</td>
                                 <td>陈经理/004</td>
                                 <td>刘审核/010</td>
                                 <td>2026/07/01 16:45:30</td>
                                 <td>2026/07/01</td>
                                 <td>2026/07/01 14:00:00</td>
-                                <td class="col-status"><span class="tag tag-identified" data-i18n="tag_identified">已识别</span></td>
+                                <td class="col-status">已识别</td>
                                 <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
                             <!-- 5. 广州地铁 → 已驳回-客户经理本人 -->
@@ -585,18 +502,18 @@
                                 <td data-i18n="company_gzmetro">广州地铁集团有限公司</td>
                                 <td style="font-family:monospace;font-size:12px;">91440101687183456Y</td>
                                 <td data-i18n="cind_rail">城市轨道交通</td>
-                                <td><span class="tag tag-warning" data-i18n="tag_constructing">建设中</span></td>
-                                <td><span class="tag tag-info" data-i18n="gf_val_5_5_1_5">5.5.1.5 城乡公共交通系统</span></td>
-                                <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-success" data-i18n="gf_val_5_5_1_5">5.5.1.5 城乡公共交通系统</span></td>
+                                <td>建设中</td>
+                                <td>5.5.1.5 城乡公共交通系统</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>5.5.1.5 城乡公共交通系统</td>
                                 <td data-i18n="branch_bj">北京分行</td>
                                 <td>刘经理/005</td>
                                 <td>张审核/011</td>
                                 <td>2026/07/02 10:15:40</td>
                                 <td>2026/07/02</td>
                                 <td>2026/07/02 09:00:00</td>
-                                <td class="col-status"><span class="tag tag-identified" data-i18n="tag_identified">已识别</span></td>
+                                <td class="col-status">已识别</td>
                                 <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
                             <!-- 6. 中国铝业 → 审批中-总行复核 -->
@@ -611,18 +528,18 @@
                                 <td data-i18n="company_chalco">中国铝业股份有限公司</td>
                                 <td style="font-family:monospace;font-size:12px;">91110000100003231E</td>
                                 <td data-i18n="cind_smelting">铝冶炼</td>
-                                <td><span class="tag tag-info" data-i18n="tag_op_over_30">运营30天及以上</span></td>
-                                <td><span class="tag tag-danger" data-i18n="tag_non_green">非绿</span></td>
-                                <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-danger" data-i18n="tag_non_green">非绿</span></td>
+                                <td>运营30天及以上</td>
+                                <td>非绿</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>非绿</td>
                                 <td data-i18n="branch_cqyb">重庆银行渝北支行</td>
                                 <td>周经理/006</td>
                                 <td>李审核/012</td>
                                 <td>2026/07/01 12:00:00</td>
                                 <td>2026/07/01</td>
                                 <td>2026/07/01 11:30:00</td>
-                                <td class="col-status"><span class="tag tag-identified" data-i18n="tag_identified">已识别</span></td>
+                                <td class="col-status">已识别</td>
                                 <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
                             <!-- 7. 现代牧业 → 审批中-绿金联系人 -->
@@ -637,18 +554,18 @@
                                 <td data-i18n="company_modern_dairy">现代牧业集团有限公司</td>
                                 <td style="font-family:monospace;font-size:12px;">91340500705893214P</td>
                                 <td data-i18n="cind_husbandry">畜牧业</td>
-                                <td><span class="tag tag-warning" data-i18n="tag_constructing">建设中</span></td>
-                                <td><span class="tag tag-info" data-i18n="gf_val_5_1_14">5.1.14 绿色畜牧业</span></td>
-                                <td><span class="tag tag-info" data-i18n="gf_val_2_5_10">2.5.10 畜禽养殖废弃物治理</span></td>
-                                <td><span class="tag tag-info" data-i18n="gf_val_2_4_3">2.4.3 农林草业面源污染防治</span></td>
-                                <td><span class="tag tag-success" data-i18n="gf_val_5_1_14">5.1.14 绿色畜牧业</span></td>
+                                <td>建设中</td>
+                                <td>5.1.14 绿色畜牧业</td>
+                                <td>2.5.10 畜禽养殖废弃物治理</td>
+                                <td>2.4.3 农林草业面源污染防治</td>
+                                <td>5.1.14 绿色畜牧业</td>
                                 <td data-i18n="branch_sh">上海分行</td>
                                 <td>吴经理/007</td>
                                 <td>王审核/013</td>
                                 <td>2026/07/02 11:20:50</td>
                                 <td>2026/07/02</td>
                                 <td>2026/07/02 10:00:00</td>
-                                <td class="col-status"><span class="tag tag-identified" data-i18n="tag_identified">已识别</span></td>
+                                <td class="col-status">已识别</td>
                                 <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
                             <!-- 8. 中创新航 → 已完成 -->
@@ -663,18 +580,18 @@
                                 <td data-i18n="company_calb">中创新航科技集团</td>
                                 <td style="font-family:monospace;font-size:12px;">91320400MA1XW8LQ5C</td>
                                 <td data-i18n="cind_battery">锂离子电池制造</td>
-                                <td><span class="tag tag-success" data-i18n="tag_op_under_30">运营不足30天</span></td>
-                                <td><span class="tag tag-info" data-i18n="gf_val_4_1_8">4.1.8 新型储能产品制造</span></td>
-                                <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-default">—</span></td>
-                                <td><span class="tag tag-success" data-i18n="gf_val_4_1_8">4.1.8 新型储能产品制造</span></td>
+                                <td>运营不足30天</td>
+                                <td>4.1.8 新型储能产品制造</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>4.1.8 新型储能产品制造</td>
                                 <td data-i18n="branch_sh">上海分行</td>
                                 <td>郑经理/008</td>
                                 <td>赵审核/014</td>
                                 <td>2026/07/02 13:45:10</td>
                                 <td>2026/07/02</td>
                                 <td>2026/07/02 12:00:00</td>
-                                <td class="col-status"><span class="tag tag-identified" data-i18n="tag_identified">已识别</span></td>
+                                <td class="col-status">已识别</td>
                                 <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
                         </tbody>
@@ -881,10 +798,21 @@
 
         function goToDetail(mode, projectId) {
             var dir = getCurrentDir();
-            var targetUrl = dir + '项目绿色认定开始认定页1.html?projectId=' + projectId;
+            var targetUrl;
+            if (mode === 'approve') {
+                // 审核员 → 审批页
+                targetUrl = dir + '项目绿色认定审批.html?projectId=' + projectId;
+            } else if (mode === 'view') {
+                // 查看详情 → 查看页
+                targetUrl = dir + '项目绿色认定查看.html?projectId=' + projectId;
+            } else {
+                // 'edit' — 客户经理编辑/总行管理员编辑
+                targetUrl = dir + '项目绿色认定开始认定页1.html?projectId=' + projectId;
+            }
             if (window.parent !== window) {
                 var pageId = 'project-identify-detail-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
-                var label = mode === 'view' ? I18N.t('page_label_view', '项目绿色认定详情') : I18N.t('page_label_edit', '项目绿色认定操作');
+                var labelMap = {view: I18N.t('page_label_view', '项目绿色认定详情'), approve: I18N.t('page_label_approve', '项目绿色认定审批'), edit: I18N.t('page_label_edit', '项目绿色认定操作')};
+                var label = labelMap[mode] || labelMap['edit'];
                 window.parent.postMessage({
                     type: 'openPage',
                     pageId: pageId,
@@ -899,7 +827,8 @@
         // 追加 goToDetail 用到的字典
         I18N.addDict({
             page_label_view: {zh:'项目绿色认定详情', en:'Project Green ID Detail'},
-            page_label_edit: {zh:'项目绿色认定操作', en:'Project Green ID Operation'}
+            page_label_edit: {zh:'项目绿色认定操作', en:'Project Green ID Operation'},
+            page_label_approve: {zh:'项目绿色认定审批', en:'Project Green ID Approval'}
         });
 
         // ==================== 审批状态列 & 当前任务节点列 — 运行时注入 ====================
@@ -921,8 +850,7 @@
                 var statusCell = row.querySelector('.col-status');
                 var approvalCell = document.createElement('td');
                 approvalCell.className = 'col-approval';
-                var tagClass = apprText === '审批中' ? 'tag-warning' : (apprText === '已完成' ? 'tag-success' : (apprText === '已驳回' ? 'tag-danger' : 'tag-default'));
-                approvalCell.innerHTML = '<span class="tag ' + tagClass + '">' + apprText + '</span>';
+                approvalCell.textContent = apprText;
                 statusCell.parentNode.insertBefore(approvalCell, statusCell.nextSibling);
             });
         })();
@@ -960,51 +888,39 @@
             }
             // ---- 公司绿金联系人 ----
             else if (currentRole === '公司绿金联系人') {
-                if (appr === '未提交') {
-                    // — 无按钮
-                } else if (appr === '审批中' && nodeMatches(node, '绿金联系人')) {
-                    btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'edit'});
-                } else if (appr === '审批中' && !nodeMatches(node, '绿金联系人')) {
-                    btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
-                } else if (appr === '已驳回') {
-                    btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
+                if (appr === '审批中' && nodeMatches(node, '绿金联系人')) {
+                    btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'approve'});
                 } else if (appr === '已完成') {
                     btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
                 }
+                // 未提交/已驳回/审批中非当前节点 → —
             }
             // ---- 总行公司初审 ----
             else if (currentRole === '总行公司初审') {
-                if (appr === '未提交') {
-                    // — 无按钮
-                } else if (appr === '审批中' && nodeMatches(node, '总行初审')) {
-                    btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'edit'});
-                } else if (appr === '审批中' && !nodeMatches(node, '总行初审')) {
-                    btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
-                } else if (appr === '已驳回') {
-                    btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
+                if (appr === '审批中' && nodeMatches(node, '总行初审')) {
+                    btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'approve'});
                 } else if (appr === '已完成') {
                     btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
                 }
+                // 未提交/已驳回/审批中非当前节点 → —
             }
             // ---- 总行公司复核 ----
             else if (currentRole === '总行公司复核') {
-                if (appr === '未提交') {
-                    // — 无按钮
-                } else if (appr === '审批中' && nodeMatches(node, '总行复核')) {
-                    btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'edit'});
-                } else if (appr === '审批中' && !nodeMatches(node, '总行复核')) {
-                    btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
-                } else if (appr === '已驳回') {
-                    btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
+                if (appr === '审批中' && nodeMatches(node, '总行复核')) {
+                    btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'approve'});
                 } else if (appr === '已完成') {
                     btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
                 }
+                // 未提交/已驳回/审批中非当前节点 → —
             }
-            // ---- 总行管理员（仅查看，无编辑权限） ----
+            // ---- 总行管理员 ----
             else if (currentRole === '总行管理员') {
-                if (appr !== '未提交') {
+                if (appr === '已完成') {
+                    btns.push({label:'编辑', cls:'btn btn-primary btn-sm', action:'edit'});
+                } else if (appr === '审批中' || appr === '已驳回') {
                     btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
                 }
+                // 未提交 → —
             }
 
             // 渲染按钮
@@ -1031,6 +947,15 @@
             }
         });
         setTimeout(applyRolePermissions, 100);
+
+        // 筛选展开/收起
+        var filterExpanded=true;
+        function toggleFilter(){
+          var row2=document.getElementById('filterRow2');
+          var btn=document.getElementById('filterToggleBtn');
+          if(filterExpanded){row2.style.display='none';btn.innerHTML='▼';filterExpanded=false;}
+          else{row2.style.display='contents';btn.innerHTML='▲';filterExpanded=true;}
+        }
     </script>
 
 </body>

@@ -46,7 +46,7 @@
     <div class="flex items-center px-6 py-2 flex-shrink-0" style="background:var(--white);border-bottom:1px solid var(--line-200);">
         <button onclick="goBackToList()" style="display:inline-flex;align-items:center;gap:6px;color:#2A66C2;font-weight:500;cursor:pointer;border:none;background:none;font-size:13px;font-family:inherit;padding:0 8px;height:30px;border-radius:6px;" data-i18n-html="back_btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-            返回列表
+            返回
         </button>
         <span style="margin-left:10px;font-size:14px;font-weight:700;color:var(--ink-900);" data-i18n="header_title">A3327 绿色贷款专项统计表</span>
         <span style="margin-left:12px;font-size:12px;color:var(--ink-500);" data-i18n="period_q2_2025">2025年第二季度</span>
@@ -139,7 +139,7 @@
 
         <div style="display:flex;justify-content:center;gap:10px;padding:8px 0 20px;">
             <button class="btn btn-deep-blue btn-sm" onclick="downloadReport()" data-i18n-html="download_excel_btn">&#x1F4E5; 下载Excel</button>
-            <button class="btn btn-secondary btn-sm" onclick="goBackToList()" data-i18n-html="back_btn2">&#x2190; 返回列表</button>
+            <button class="btn btn-secondary btn-sm" onclick="goBackToList()" data-i18n-html="back_btn2">&#x2190; 返回</button>
         </div>
     </div>
 </div>
@@ -147,8 +147,8 @@
     // ==================== I18N 页级字典 ====================
     I18N.setDict({
         title: {zh:'A3327报表详情 · 可持续金融管理系统', en:'A3327 Report Detail · Sustainable Finance System'},
-        back_btn: {zh:'← 返回列表', en:'← Back to List'},
-        back_btn2: {zh:'← 返回列表', en:'← Back to List'},
+        back_btn: {zh:'← 返回', en:'← Back to List'},
+        back_btn2: {zh:'← 返回', en:'← Back to List'},
         header_title: {zh:'A3327 绿色贷款专项统计表', en:'A3327 Green Loan Statistical Report'},
         period_q2_2025: {zh:'2025年第二季度', en:'2025 Q2'},
         report_code: {zh:'报表编号', en:'Report No.'},
@@ -216,7 +216,7 @@
         // Buttons
         download_excel: {zh:'下载Excel', en:'Download Excel'},
         download_excel_btn: {zh:'📥 下载Excel', en:'📥 Download Excel'},
-        back: {zh:'返回列表', en:'Back to List'},
+        back: {zh:'返回', en:'Back to List'},
         confirm_download: {zh:'确认下载 A3327-2025Q2 报表Excel文件？', en:'Confirm download A3327-2025Q2 report Excel file?'},
         download_ok: {zh:'下载成功！\n\n文件：A3327绿色贷款专项统计表_2025Q2.xlsx', en:'Download successful!\n\nFile: A3327 Green Loan Statistical Report_2025Q2.xlsx'}
     });

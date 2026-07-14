@@ -3,487 +3,868 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="title">环境效益测算填报 · 潜在项目库</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>环境效益测算详情编辑 · 客户经理端</title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
     <style>
         :root {
-            --brand-50:#E8F0FB;--brand-100:#D1DFF4;--brand-300:#6E97D6;--brand-500:#2A66C2;--brand-700:#143F8F;--brand-900:#01256A;
-            --green-50:#ECFDF5;--green-500:#10B981;--green-700:#047857;
-            --success:#10B981;--success-bg:#ECFDF5;--success-border:#A7F3D0;
-            --warning:#D97706;--warning-bg:#FFFBEB;--warning-border:#FDE68A;
-            --danger:#DC2626;--danger-bg:#FEF2F2;--danger-border:#FECACA;
-            --info:#2A66C2;--info-bg:#E8F0FB;--info-border:#D1DFF4;
-            --ink-900:#0F172A;--ink-800:#1E293B;--ink-600:#475569;--ink-500:#64748B;--ink-400:#94A3B8;--ink-300:#CBD5E1;
-            --line-200:#E2E8F0;--bg-muted:#F1F5F9;--bg-subtle:#F8FAFC;--white:#FFFFFF;
-            --radius-sm:4px;--radius-md:6px;--radius-lg:8px;--radius-xl:12px;--radius-2xl:16px;
-            --font-sans:'PingFang SC','Microsoft YaHei','Inter',system-ui,sans-serif;
-            --font-num:'Inter','SF Pro Display',system-ui,sans-serif;
+            --brand-50: #E8F0FB;
+            --brand-100: #D1DFF4;
+            --brand-300: #6E97D6;
+            --brand-500: #2A66C2;
+            --brand-700: #143F8F;
+            --brand-900: #01256A;
+            --green-50: #ECFDF5;
+            --green-500: #10B981;
+            --green-700: #047857;
+            --success: #10B981;
+            --success-bg: #ECFDF5;
+            --success-border: #A7F3D0;
+            --warning: #D97706;
+            --warning-bg: #FFFBEB;
+            --warning-border: #FDE68A;
+            --danger: #DC2626;
+            --danger-bg: #FEF2F2;
+            --danger-border: #FECACA;
+            --info: #2A66C2;
+            --info-bg: #E8F0FB;
+            --info-border: #D1DFF4;
+            --ink-900: #0F172A;
+            --ink-800: #1E293B;
+            --ink-600: #475569;
+            --ink-500: #64748B;
+            --ink-400: #94A3B8;
+            --ink-300: #CBD5E1;
+            --line-200: #E2E8F0;
+            --bg-muted: #F1F5F9;
+            --bg-subtle: #F8FAFC;
+            --white: #FFFFFF;
+            --radius-sm: 4px;
+            --radius-md: 6px;
+            --radius-lg: 8px;
+            --radius-xl: 12px;
+            --radius-2xl: 16px;
+            --font-sans: 'PingFang SC', 'Microsoft YaHei', 'Inter', system-ui, sans-serif;
+            --font-num: 'Inter', 'SF Pro Display', system-ui, sans-serif;
         }
-        *{box-sizing:border-box;margin:0;padding:0}
-        body{font-family:var(--font-sans);color:var(--ink-800);background:var(--bg-subtle);font-size:14px;line-height:1.57;-webkit-font-smoothing:antialiased;height:100vh;overflow:hidden}
-        .custom-scroll::-webkit-scrollbar{width:6px;height:6px}
-        .custom-scroll::-webkit-scrollbar-track{background:transparent}
-        .custom-scroll::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}
-        .custom-scroll::-webkit-scrollbar-thumb:hover{background:var(--brand-500)}
-        .btn{display:inline-flex;align-items:center;gap:6px;border-radius:var(--radius-md);font-family:inherit;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid transparent;line-height:1;white-space:nowrap}
-        .btn-sm{padding:6px 12px;font-size:12px;line-height:20px;height:28px}
-        .btn-md{padding:8px 16px;font-size:14px;line-height:22px;height:32px}
-        .btn-primary{background:var(--brand-500);color:#fff}.btn-primary:hover{background:var(--brand-700)}
-        .btn-secondary{background:var(--white);color:var(--ink-800);border-color:var(--ink-300)}.btn-secondary:hover{border-color:var(--brand-500);color:var(--brand-500)}
-        .btn-success{background:var(--green-500);color:#fff}.btn-success:hover{background:var(--green-700)}
-        .tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:var(--radius-sm);font-size:12px;font-weight:500;line-height:1.5;border:1px solid transparent;white-space:nowrap}
-        .tag-info{background:var(--info-bg);color:var(--brand-700);border-color:var(--info-border)}
-        .tag-success{background:var(--success-bg);color:var(--green-700);border-color:var(--success-border)}
-        .section-card{background:var(--white);border-radius:var(--radius-xl);border:1px solid var(--line-200);overflow:hidden;margin-bottom:16px}
-        .section-card .card-head{padding:14px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);font-weight:600;color:var(--ink-900);font-size:15px}
-        .section-card .card-body{padding:18px 24px}
-        .info-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px 24px}
-        .info-item{display:flex;align-items:baseline;gap:8px;font-size:13px}
-        .info-item .lbl{color:var(--ink-500);white-space:nowrap;min-width:100px;text-align:right}
-        .info-item .val{color:var(--ink-900);word-break:break-word}
-        .form-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px 20px;margin-bottom:14px}
-        .form-item{display:flex;flex-direction:column;gap:4px}
-        .form-item label{font-size:13px;color:var(--ink-700);font-weight:500}
-        .form-item label .req{color:var(--danger)}
-        .form-item input,.form-item select{padding:8px 12px;border:1px solid var(--line-200);border-radius:var(--radius-md);font-size:14px;font-family:inherit;background:var(--white);outline:none;width:100%}
-        .form-item input:focus,.form-item select:focus{border-color:var(--brand-500)}
-        .form-item input[readonly],.form-item select[disabled]{background:var(--bg-muted);color:var(--ink-600)}
-        .radio-group{display:flex;gap:60px;align-items:center;padding:8px 0}
-        .radio-group label{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:14px;font-weight:400}
-        .result-table{width:100%;border-collapse:collapse;font-size:13px}
-        .result-table th,.result-table td{padding:8px 14px;border:1px solid var(--line-200);text-align:left}
-        .result-table th{background:var(--bg-muted);font-weight:600;color:var(--ink-600);font-size:12px}
-        .result-table td{font-family:var(--font-num)}
-        .result-table .cat-header{background:var(--brand-50);color:var(--brand-700);font-weight:600;font-size:13px}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: var(--font-sans);
+            color: var(--ink-800);
+            background: var(--bg-subtle);
+            font-size: 14px;
+            line-height: 1.57;
+            -webkit-font-smoothing: antialiased;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: var(--brand-500);
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all .15s;
+            border: 1px solid transparent;
+            line-height: 1;
+            white-space: nowrap;
+        }
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+            line-height: 20px;
+            height: 28px;
+        }
+        .btn-md {
+            padding: 8px 16px;
+            font-size: 14px;
+            line-height: 22px;
+            height: 32px;
+        }
+        .btn-primary {
+            background: var(--brand-500);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: var(--brand-700);
+        }
+        .btn-secondary {
+            background: var(--white);
+            color: var(--ink-800);
+            border-color: var(--ink-300);
+        }
+        .btn-secondary:hover {
+            border-color: var(--brand-500);
+            color: var(--brand-500);
+        }
+        .btn-success {
+            background: var(--green-500);
+            color: #fff;
+        }
+        .btn-success:hover {
+            background: var(--green-700);
+        }
+        .section-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--line-200);
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+        .section-card .card-head {
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--line-200);
+            background: var(--bg-subtle);
+            font-weight: 600;
+            color: var(--ink-900);
+            font-size: 15px;
+        }
+        .section-card .card-body {
+            padding: 18px 24px;
+        }
+        .info-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 8px 24px;
+        }
+        .info-item {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            font-size: 13px;
+        }
+        .info-item .lbl {
+            color: var(--ink-500);
+            white-space: nowrap;
+            min-width: 100px;
+            text-align: right;
+        }
+        .info-item .val {
+            color: var(--ink-900);
+            word-break: break-word;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 14px 20px;
+            margin-bottom: 14px;
+        }
+        .form-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .form-item label {
+            font-size: 13px;
+            color: var(--ink-700);
+            font-weight: 500;
+        }
+        .form-item label .req {
+            color: var(--danger);
+        }
+        .form-item input,
+        .form-item select {
+            padding: 8px 12px;
+            border: 1px solid var(--line-200);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-family: inherit;
+            background: var(--white);
+            outline: none;
+            width: 100%;
+        }
+        .form-item input:focus,
+        .form-item select:focus {
+            border-color: var(--brand-500);
+        }
+        .form-item input[readonly] {
+            background: var(--bg-muted);
+            color: var(--ink-600);
+        }
+        .radio-group {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+            padding: 8px 0;
+            flex-wrap: nowrap;
+        }
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 400;
+            white-space: nowrap;
+        }
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .result-table th,
+        .result-table td {
+            padding: 8px 14px;
+            border: 1px solid var(--line-200);
+            text-align: left;
+        }
+        .result-table th {
+            background: var(--bg-muted);
+            font-weight: 600;
+            color: var(--ink-600);
+            font-size: 12px;
+        }
+        .result-table td {
+            font-family: var(--font-num);
+        }
+        .result-table .cat-header {
+            background: var(--brand-50);
+            color: var(--brand-700);
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .flex {
+            display: flex;
+        }
+        .flex-col {
+            flex-direction: column;
+        }
+        .flex-1 {
+            flex: 1 1 0;
+        }
+        .flex-shrink-0 {
+            flex-shrink: 0;
+        }
+        .items-center {
+            align-items: center;
+        }
+        .px-6 {
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+        .py-3 {
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+        .justify-end {
+            justify-content: flex-end;
+        }
+        .gap-4 {
+            gap: 16px;
+        }
+        .gap-3 {
+            gap: 12px;
+        }
+        .border-t {
+            border-top: 1px solid var(--line-200);
+        }
+        .pt-4 {
+            padding-top: 16px;
+        }
+        .text-ink-500 {
+            color: var(--ink-500);
+        }
+        .text-ink-700 {
+            color: var(--ink-700);
+        }
+        .text-ink-800 {
+            color: var(--ink-800);
+        }
+        .text-ink-900 {
+            color: var(--ink-900);
+        }
+        .grid-cols-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+        .grid-cols-3 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        .manual-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .manual-section {
+            background: var(--bg-muted);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            border: 1px solid var(--line-200);
+        }
+        .manual-section .section-title {
+            font-weight: 600;
+            color: var(--ink-800);
+            margin-bottom: 12px;
+            font-size: 15px;
+            border-bottom: 1px solid var(--line-200);
+            padding-bottom: 6px;
+        }
+        .energy-type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 6px 12px;
+            margin-bottom: 10px;
+        }
+        .energy-type-grid label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 4px 0;
+        }
+        .energy-type-grid input[type="checkbox"] {
+            accent-color: var(--brand-500);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .energy-saving-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 0;
+            border-bottom: 1px dashed var(--line-200);
+        }
+        .energy-saving-row:last-child {
+            border-bottom: none;
+        }
+        .energy-saving-row .type-label {
+            min-width: 90px;
+            font-weight: 500;
+            color: var(--ink-700);
+            font-size: 13px;
+        }
+        .energy-saving-row .form-item {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        .energy-saving-row .form-item input {
+            padding: 6px 10px;
+            font-size: 13px;
+        }
+        @media (max-width:640px) {
+            .radio-group {
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+            .grid-cols-2,
+            .grid-cols-3 {
+                grid-template-columns: 1fr;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .energy-saving-row {
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+            .energy-saving-row .type-label {
+                min-width: 70px;
+                font-size: 12px;
+            }
+            .energy-type-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+        }
     </style>
-    <script src="../i18n.js"></script>
 </head>
 <body>
-<div class="flex flex-col" style="height:100vh;background:var(--bg-subtle);">
-    <!-- 返回栏 -->
-    <div class="flex items-center px-6 py-3 flex-shrink-0" style="background:var(--white);border-bottom:1px solid var(--line-200);">
-        <button onclick="goBackToList()" style="display:inline-flex;align-items:center;gap:6px;color:#2A66C2;font-weight:500;cursor:pointer;border:none;background:none;font-size:14px;font-family:inherit;padding:0 8px;height:32px;border-radius:6px;" data-i18n-html="back_btn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-            返回列表
-        </button>
-    </div>
-    <!-- 内容区 -->
-    <div class="flex-1 overflow-y-auto custom-scroll" style="padding:16px 24px 24px;">
 
-        <!-- 项目信息区（只读） -->
-        <div class="section-card">
-            <div class="card-head" data-i18n="project_info">项目信息</div>
-            <div class="card-body">
-                <div class="info-row">
-                    <div class="info-item"><span class="lbl" data-i18n="project_name_lbl">项目名称：</span><span class="val" style="font-weight:500;">超低能耗建筑建设项目</span></div>
-                    <div class="info-item"><span class="lbl" data-i18n="project_code_lbl">项目编号：</span><span class="val" style="font-family:monospace;">test000001 / 02001071613</span></div>
-                    <div class="info-item"><span class="lbl" data-i18n="total_investment_lbl">项目总投资：</span><span class="val" style="font-family:var(--font-num);">21,232,323,123 <span data-i18n="wan_yuan">万元</span></span></div>
-                    <div class="info-item"><span class="lbl" data-i18n="project_nature_lbl">项目性质：</span><span class="val" data-i18n="new_project">新建</span></div>
-                    <div class="info-item"><span class="lbl" data-i18n="project_industry_lbl">项目所属行业：</span><span class="val">火力发电（国民经济行业四级分类）</span></div>
-                    <div class="info-item"><span class="lbl" data-i18n="project_location_lbl">项目所在地区：</span><span class="val">广东省 / 广州市 / 天河区</span></div>
-                    <div class="info-item" style="grid-column:1/-1;"><span class="lbl" data-i18n="construction_scope_lbl">建设内容与规模：</span><span class="val">采用超低能耗建筑设计标准，建设绿色建筑示范项目，总建筑面积约50万平方米</span></div>
-                    <div class="info-item"><span class="lbl" data-i18n="financing_type_lbl">融资业务品种：</span><span class="val" data-i18n="green_loan_type">绿色项目贷款（中长期）</span></div>
-                    <div class="info-item"><span class="lbl" data-i18n="financing_balance_lbl">项目融资余额：</span><span class="val" style="font-family:var(--font-num);">8,500 <span data-i18n="wan_yuan">万元</span></span></div>
-                </div>
-            </div>
+    <div class="flex flex-col" style="height:100vh;background:var(--bg-subtle);">
+        <!-- 返回栏 -->
+        <div class="flex items-center px-6 py-3 flex-shrink-0" style="background:var(--white);border-bottom:1px solid var(--line-200);">
+            <button onclick="goBackToList()" style="display:inline-flex;align-items:center;gap:6px;color:#2A66C2;font-weight:500;cursor:pointer;border:none;background:none;font-size:14px;font-family:inherit;padding:0 8px;height:32px;border-radius:6px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                返回
+            </button>
         </div>
 
-        <!-- 测算参数区 -->
-        <div class="section-card" id="calcSection">
-            <div class="card-head" data-i18n="calc_params">测算参数</div>
-            <div class="card-body">
+        <!-- 内容区 -->
+        <div class="flex-1 overflow-y-auto custom-scroll" style="padding:16px 24px 24px;">
 
-                <!-- 测算方式 -->
-                <div class="form-item" style="margin-bottom:16px;">
-                    <label><span class="req">*</span> <span data-i18n="calc_method">测算方式</span></label>
-                    <div class="radio-group" id="calcMethodGroup">
-                        <label><input type="radio" name="calcMethod" value="system" checked onchange="onCalcMethodChange('system')"> <span data-i18n="system_calc">系统测算工具</span></label>
-                        <label><input type="radio" name="calcMethod" value="manual" onchange="onCalcMethodChange('manual')"> <span data-i18n="manual_calc">手工填报</span></label>
-                    </div>
-                </div>
-
-                <!-- 系统测算区域 -->
-                <div id="systemCalcArea">
-                    <!-- 绿色产业分类（只读） -->
-                    <div class="form-row">
-                        <div class="form-item">
-                            <label data-i18n="gf_category">绿色产业分类</label>
-                            <input type="text" id="gfCategoryInput" value="" readonly>
-                        </div>
-                    </div>
-
-                    <!-- 测算方案选择 -->
-                    <div class="form-row">
-                        <div class="form-item">
-                            <label><span class="req">*</span> <span data-i18n="calc_plan">测算方案</span></label>
-                            <select id="calcPlan" onchange="onPlanChange()" style="max-width:100%;min-width:400px;">
-                                <option value="" data-i18n="select_plan">请选择测算方案</option>
-                                <option value="plan1" data-i18n="plan1">方案一：二氧化碳减排计算的基本公式</option>
-                                <option value="plan2" data-i18n="plan2">方案二：按能源消费品种分别计算</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- 动态参数区 -->
-                    <div id="dynamicParams" style="display:none;">
-                        <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--line-200);" data-i18n-html="param_fill_title">
-                            📐 参数填报
-                        </div>
-                        <!-- 能源产出类参数 -->
-                        <div class="form-row" id="energyOutputParams" style="display:none;">
-                            <div class="form-item"><label><span class="req">*</span> <span data-i18n="annual_power">项目年供电量（万千瓦时）</span></label><input type="number" id="annualPower" data-i18n-placeholder="placeholder_input"></div>
-                            <div class="form-item"><label><span class="req">*</span> <span data-i18n="annual_heat">项目年供热量（百万吉焦）</span></label><input type="number" id="annualHeat" data-i18n-placeholder="placeholder_input"></div>
-                        </div>
-                        <!-- 能源消费类参数 -->
-                        <div class="form-row" id="energyConsumeParams" style="display:none;">
-                            <div class="form-item"><label data-i18n="energy_type">能源消费品种类别</label><input type="text" value="标准煤、电燃气" readonly></div>
-                            <div class="form-item"><label><span class="req">*</span> <span data-i18n="coal_saving">标准煤—实物节约量（千克）</span></label><input type="number" id="coalSaving" data-i18n-placeholder="placeholder_input"></div>
-                            <div class="form-item"><label><span class="req">*</span> <span data-i18n="gas_saving">电燃气—实物节约量（千克）</span></label><input type="number" id="gasSaving" data-i18n-placeholder="placeholder_input"></div>
-                        </div>
-                    </div>
-
-                    <!-- 操作按钮 -->
-                    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;padding-top:14px;border-top:1px solid var(--line-200);">
-                        <button class="btn btn-secondary btn-md" onclick="goBackToList()" data-i18n="cancel">取消</button>
-                        <button class="btn btn-primary btn-md" id="calcBtn" onclick="doCalculate()" disabled data-i18n="calculate">测算</button>
-                    </div>
-                </div>
-
-                <!-- 手工填报区域（默认隐藏） -->
-                <div id="manualCalcArea" style="display:none;">
-                    <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:12px;" data-i18n-html="manual_fill_title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="3" width="12" height="10" rx="1" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="9" y2="9" stroke="currentColor" stroke-width="1.3"/></svg> 手工填报环境效益数据</div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-                        <div>
-                            <div style="font-weight:600;color:var(--ink-700);margin-bottom:8px;" data-i18n-html="energy_saving_title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><path d="M6 13a2 2 0 004 0M8 1a6 6 0 00-4.5 10H5a1 1 0 001 1h4a1 1 0 001-1h1.5A6 6 0 008 1z" stroke="currentColor" fill="none" stroke-width="1.3"/></svg> 节能量</div>
-                            <div class="form-item" style="margin-bottom:10px;"><label data-i18n="coal_saving_title">标准煤（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
-                            <div class="form-item"><label data-i18n="water_saving">节水量（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
-                        </div>
-                        <div>
-                            <div style="font-weight:600;color:var(--ink-700);margin-bottom:8px;" data-i18n-html="emission_reduction_title">🌿 减排量</div>
-                            <div class="form-item" style="margin-bottom:10px;"><label data-i18n="co2">二氧化碳当量（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
-                            <div class="form-item" style="margin-bottom:10px;"><label data-i18n="so2">二氧化硫（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
-                            <div class="form-item" style="margin-bottom:10px;"><label data-i18n="nox">氮氧化物（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
-                            <div class="form-item" style="margin-bottom:10px;"><label data-i18n="cod">化学需氧量（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
-                            <div class="form-item" style="margin-bottom:10px;"><label data-i18n="nh3n">氨氮（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
-                            <div class="form-item" style="margin-bottom:10px;"><label data-i18n="tn">总氮（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
-                            <div class="form-item" style="margin-bottom:10px;"><label data-i18n="tp">总磷（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
-                            <div class="form-item" style="margin-bottom:10px;"><label data-i18n="pm25">细颗粒物PM2.5（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
-                            <div class="form-item"><label data-i18n="voc">挥发性有机物VOCs（吨）</label><input type="number" data-i18n-placeholder="placeholder_input"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 测算结果区（默认隐藏） -->
-        <div class="section-card" id="resultSection" style="display:none;">
-            <div class="card-head" data-i18n="calc_result">测算结果</div>
-            <div class="card-body">
-                <!-- 输入参数回显 -->
-                <div style="margin-bottom:16px;">
-                    <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:10px;" data-i18n-html="input_params_title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" fill="none" stroke-width="1.3"/><line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="9" x2="11" y2="9" stroke="currentColor" stroke-width="1.3"/></svg> 输入参数</div>
+            <!-- ===== 项目信息区（只读） ===== -->
+            <div class="section-card">
+                <div class="card-head">项目信息</div>
+                <div class="card-body">
                     <div class="info-row">
-                        <div class="info-item"><span class="lbl" data-i18n="calc_method_lbl">测算方式：</span><span class="val" data-i18n="system_calc">系统测算工具</span></div>
-                        <div class="info-item"><span class="lbl" data-i18n="gf_category_lbl">绿色产业分类：</span><span class="val" id="resGreenType">—</span></div>
-                        <div class="info-item"><span class="lbl" data-i18n="calc_plan_lbl">测算方案：</span><span class="val" id="resPlan">—</span></div>
-                        <div class="info-item" id="resPowerRow" style="display:none;"><span class="lbl" data-i18n="annual_power_lbl">项目年供电量：</span><span class="val" id="resPower">—</span></div>
-                        <div class="info-item" id="resHeatRow" style="display:none;"><span class="lbl" data-i18n="annual_heat_lbl">项目年供热量：</span><span class="val" id="resHeat">—</span></div>
-                        <div class="info-item" id="resCoalRow" style="display:none;"><span class="lbl" data-i18n="coal_saving_lbl">标准煤节约量：</span><span class="val" id="resCoal">—</span></div>
-                        <div class="info-item" id="resGasRow" style="display:none;"><span class="lbl" data-i18n="gas_saving_lbl">电燃气节约量：</span><span class="val" id="resGas">—</span></div>
+                        <div class="info-item"><span class="lbl">项目名称：</span><span class="val" style="font-weight:500;">超低能耗建筑建设项目</span></div>
+                        <div class="info-item"><span class="lbl">项目编号：</span><span class="val" style="font-family:monospace;">test000001 / 02001071613</span></div>
+                        <div class="info-item"><span class="lbl">项目总投资：</span><span class="val" style="font-family:var(--font-num);">21,232,323,123 万元</span></div>
+                        <div class="info-item"><span class="lbl">项目性质：</span><span class="val">新建</span></div>
+                        <div class="info-item"><span class="lbl">项目所属行业：</span><span class="val">火力发电（国民经济行业四级分类）</span></div>
+                        <div class="info-item"><span class="lbl">项目所在地区：</span><span class="val">广东省 / 广州市 / 天河区</span></div>
+                        <div class="info-item" style="grid-column:1/-1;"><span class="lbl">建设内容与规模：</span><span class="val">采用超低能耗建筑设计标准，建设绿色建筑示范项目，总建筑面积约50万平方米</span></div>
+                        <div class="info-item"><span class="lbl">融资业务品种：</span><span class="val">绿色项目贷款（中长期）</span></div>
+                        <div class="info-item"><span class="lbl">项目融资余额：</span><span class="val" style="font-family:var(--font-num);">8,500 万元</span></div>
                     </div>
                 </div>
-                <!-- 测算结果 -->
-                <div>
-                    <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:10px;" data-i18n-html="env_result_title"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><rect x="1" y="5" width="3" height="8" rx="0.5" fill="currentColor" opacity=".6"/><rect x="6.5" y="2" width="3" height="11" rx="0.5" fill="currentColor"/><rect x="12" y="7" width="3" height="6" rx="0.5" fill="currentColor" opacity=".4"/></svg> 环境效益测算结果</div>
-                    <table class="result-table">
-                        <thead>
-                            <tr><th data-i18n="indicator_cat">指标类别</th><th data-i18n="indicator_name">具体指标</th><th data-i18n="unit">单位</th><th data-i18n="calc_value">测算值</th></tr>
-                        </thead>
-                        <tbody id="resultTableBody"></tbody>
-                    </table>
-                </div>
-                <!-- 结果操作 -->
-                <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;padding-top:14px;border-top:1px solid var(--line-200);">
-                    <button class="btn btn-secondary btn-md" onclick="reCalculate()" data-i18n="recalculate">重新测算</button>
-                    <button class="btn btn-primary btn-md" onclick="handleSave()" data-i18n="save">保存</button>
-                    <button class="btn btn-success btn-md" onclick="handleSubmit()" data-i18n="submit">提交审批</button>
+            </div>
+
+            <!-- ===== 测算参数区 ===== -->
+            <div class="section-card" id="calcSection">
+                <div class="card-head">测算参数</div>
+                <div class="card-body">
+
+                    <!-- 测算方式（同一行） -->
+                    <div class="form-item" style="margin-bottom:16px;">
+                        <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+                            <label style="font-weight:600;font-size:14px;margin:0;"><span class="req">*</span> 测算方式</label>
+                            <div class="radio-group" id="calcMethodGroup" style="padding:0;gap:30px;">
+                                <label><input type="radio" name="calcMethod" value="system" checked onchange="onCalcMethodChange('system')"> 系统测算工具</label>
+                                <label><input type="radio" name="calcMethod" value="manual" onchange="onCalcMethodChange('manual')"> 手工填报</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== 系统测算区域 ===== -->
+                    <div id="systemCalcArea">
+                        <!-- 绿色产业分类（只读） -->
+                        <div class="form-row">
+                            <div class="form-item">
+                                <label>绿色产业分类（2025）</label>
+                                <input type="text" id="gfCategoryInput" value="1.5.3 余热余压利用" readonly>
+                            </div>
+                            <div class="form-item">
+                                <label>映射 2020 绿色产业目录</label>
+                                <input type="text" id="mappingDisplay" value="3.1.1 可再生能源 → 太阳能发电" readonly>
+                            </div>
+                        </div>
+
+                        <!-- 测算方案选择 -->
+                        <div class="form-row">
+                            <div class="form-item">
+                                <label><span class="req">*</span> 测算方案</label>
+                                <select id="calcPlan" onchange="onPlanChange()" style="max-width:100%;min-width:400px;">
+                                    <option value="">请选择测算方案</option>
+                                    <option value="plan1">方案一：二氧化碳减排计算的基本公式</option>
+                                    <option value="plan2">方案二：按能源消费品种分别计算</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 动态参数区 -->
+                        <div id="dynamicParams" style="display:none;">
+                            <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--line-200);">
+                                参数填报
+                            </div>
+                            <!-- 能源产出类参数（方案一） -->
+                            <div class="form-row" id="energyOutputParams" style="display:none;">
+                                <div class="form-item"><label>项目年供电量（万千瓦时）</label><input type="number" id="annualPower" placeholder="请输入"></div>
+                                <div class="form-item"><label>项目年供热量（百万吉焦）</label><input type="number" id="annualHeat" placeholder="请输入"></div>
+                            </div>
+                            <!-- 能源消费类参数（方案二） -->
+                            <div id="energyConsumeParams" style="display:none;">
+                                <div class="form-item" style="margin-bottom:10px;">
+                                    <label>选择能源消费品种（可多选）</label>
+                                    <div class="energy-type-grid" id="energyTypeCheckboxes"></div>
+                                </div>
+                                <div id="energySavingContainer" style="margin-top:10px;padding:10px 12px;background:var(--bg-subtle);border-radius:var(--radius-md);border:1px solid var(--line-200);">
+                                    <div style="font-weight:500;color:var(--ink-700);font-size:13px;margin-bottom:8px;">各品种节约量（千克）</div>
+                                    <div id="energySavingItems">
+                                        <div style="color:var(--ink-500);font-size:13px;padding:8px 0;text-align:center;">请在上方选择能源品种</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 操作按钮 -->
+                        <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;padding-top:14px;border-top:1px solid var(--line-200);">
+                            <button class="btn btn-secondary btn-md" onclick="goBackToList()">取消</button>
+                            <button class="btn btn-primary btn-md" id="calcBtn" onclick="doCalculate()" disabled>测算</button>
+                        </div>
+                    </div>
+
+                    <!-- ===== 手工填报区域（默认隐藏） ===== -->
+                    <div id="manualCalcArea" style="display:none;">
+                        <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:12px;">
+                            手工填报环境效益数据
+                            <span style="font-weight:400;font-size:12px;color:var(--ink-500);margin-left:8px;">（所有指标均为非必填）</span>
+                        </div>
+                        <div class="manual-sections">
+                            <div class="manual-section">
+                                <div class="section-title">节能量</div>
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                                    <div class="form-item"><label>标准煤 / Standard Coal（吨）</label><input type="number" id="manualCoal" class="manual-input" placeholder="请输入"></div>
+                                    <div class="form-item"><label>节水量 / Water Saved（吨）</label><input type="number" id="manualWater" class="manual-input" placeholder="请输入"></div>
+                                </div>
+                            </div>
+                            <div class="manual-section">
+                                <div class="section-title">减排量</div>
+                                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+                                    <div class="form-item"><label>二氧化碳 / CO₂（吨）</label><input type="number" id="manualCo2" class="manual-input" placeholder="请输入"></div>
+                                    <div class="form-item"><label>二氧化硫 / SO₂（吨）</label><input type="number" id="manualSo2" class="manual-input" placeholder="请输入"></div>
+                                    <div class="form-item"><label>氮氧化物 / NOx（吨）</label><input type="number" id="manualNox" class="manual-input" placeholder="请输入"></div>
+                                    <div class="form-item"><label>化学需氧量 / COD（吨）</label><input type="number" id="manualCod" class="manual-input" placeholder="请输入"></div>
+                                    <div class="form-item"><label>氨氮 / NH₃-N（吨）</label><input type="number" id="manualNh3n" class="manual-input" placeholder="请输入"></div>
+                                    <div class="form-item"><label>总氮 / Total Nitrogen（吨）</label><input type="number" id="manualTn" class="manual-input" placeholder="请输入"></div>
+                                    <div class="form-item"><label>总磷 / Total Phosphorus（吨）</label><input type="number" id="manualTp" class="manual-input" placeholder="请输入"></div>
+                                    <div class="form-item"><label>细颗粒物 / PM2.5（吨）</label><input type="number" id="manualPm25" class="manual-input" placeholder="请输入"></div>
+                                    <div class="form-item"><label>挥发性有机物 / VOCs（吨）</label><input type="number" id="manualVoc" class="manual-input" placeholder="请输入"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;padding-top:14px;border-top:1px solid var(--line-200);">
+                            <button class="btn btn-secondary btn-md" onclick="goBackToList()">取消</button>
+                            <button class="btn btn-secondary btn-md" onclick="saveManualDraft()">暂存</button>
+                            <button class="btn btn-primary btn-md" onclick="submitManual()">提交</button>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!-- ===== 测算结果区（默认隐藏） ===== -->
+            <div class="section-card" id="resultSection" style="display:none;">
+                <div class="card-head">测算结果</div>
+                <div class="card-body">
+                    <div style="margin-bottom:16px;">
+                        <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:10px;">输入参数</div>
+                        <div class="info-row">
+                            <div class="info-item"><span class="lbl">测算方式：</span><span class="val" id="resMethod">系统测算工具</span></div>
+                            <div class="info-item"><span class="lbl">绿色产业分类：</span><span class="val" id="resGreenType">—</span></div>
+                            <div class="info-item"><span class="lbl">测算方案：</span><span class="val" id="resPlan">—</span></div>
+                            <div class="info-item" id="resPowerRow" style="display:none;"><span class="lbl">项目年供电量：</span><span class="val" id="resPower">—</span></div>
+                            <div class="info-item" id="resHeatRow" style="display:none;"><span class="lbl">项目年供热量：</span><span class="val" id="resHeat">—</span></div>
+                            <div class="info-item" id="resCoalRow" style="display:none;"><span class="lbl">标准煤节约量：</span><span class="val" id="resCoal">—</span></div>
+                            <div class="info-item" id="resGasRow" style="display:none;"><span class="lbl">电燃气节约量：</span><span class="val" id="resGas">—</span></div>
+                        </div>
+                        <div id="resEnergyTypesContainer" style="display:none;margin-top:8px;padding:8px 12px;background:var(--bg-muted);border-radius:var(--radius-md);border:1px solid var(--line-200);">
+                            <div style="font-weight:500;color:var(--ink-700);font-size:13px;margin-bottom:4px;">各品种节约量明细</div>
+                            <div id="resEnergyTypesList" style="font-size:13px;color:var(--ink-800);"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:14px;font-weight:600;color:var(--ink-800);margin-bottom:10px;">环境效益测算结果</div>
+                        <table class="result-table">
+                            <thead><tr><th>指标类别</th><th>具体指标</th><th>单位</th><th>测算值</th></tr></thead>
+                            <tbody id="resultTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;padding-top:14px;border-top:1px solid var(--line-200);">
+                        <button class="btn btn-secondary btn-md" onclick="goBackToList()">返回</button>
+                        <button class="btn btn-secondary btn-md" onclick="saveDraft()">暂存</button>
+                        <button class="btn btn-primary btn-md" onclick="handleSubmit()">提交</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
-
     </div>
-</div>
-<script>
-    // ==================== I18N 页级字典 ====================
-    I18N.setDict({
-        title: {zh:'环境效益测算填报 · 潜在项目库', en:'Environmental Benefit Calc Form · Project Library'},
-        back_btn: {zh:'← 返回列表', en:'← Back to List'},
-        // Project info
-        project_info: {zh:'项目信息', en:'Project Info'},
-        project_name_lbl: {zh:'项目名称：', en:'Project Name:'},
-        project_code_lbl: {zh:'项目编号：', en:'Project Code:'},
-        total_investment_lbl: {zh:'项目总投资：', en:'Total Investment:'},
-        project_nature_lbl: {zh:'项目性质：', en:'Project Nature:'},
-        project_industry_lbl: {zh:'项目所属行业：', en:'Industry:'},
-        project_location_lbl: {zh:'项目所在地区：', en:'Location:'},
-        construction_scope_lbl: {zh:'建设内容与规模：', en:'Scope & Scale:'},
-        financing_type_lbl: {zh:'融资业务品种：', en:'Financing Type:'},
-        financing_balance_lbl: {zh:'项目融资余额：', en:'Financing Balance:'},
-        new_project: {zh:'新建', en:'New Project'},
-        green_loan_type: {zh:'绿色项目贷款（中长期）', en:'Green Project Loan (Medium/Long-term)'},
-        wan_yuan: {zh:'万元', en:'10k CNY'},
-        // Calc params
-        calc_params: {zh:'测算参数', en:'Calc Parameters'},
-        calc_method: {zh:'测算方式 (*)', en:'Calc Method (*)'},
-        system_calc: {zh:'系统测算工具', en:'System Calculator'},
-        manual_calc: {zh:'手工填报', en:'Manual Entry'},
-        gf_category: {zh:'绿色产业分类', en:'Green Industry Category'},
-        calc_plan: {zh:'测算方案 (*)', en:'Calc Plan (*)'},
-        select_plan: {zh:'请选择测算方案', en:'Select a plan'},
-        plan1: {zh:'方案一：二氧化碳减排计算的基本公式', en:'Plan 1: Basic CO₂ Reduction Formula'},
-        plan2: {zh:'方案二：按能源消费品种分别计算', en:'Plan 2: Calculate by Energy Type'},
-        param_fill_title: {zh:'📐 参数填报', en:'📐 Parameter Entry'},
-        annual_power: {zh:'项目年供电量（万千瓦时）', en:'Annual Power Supply (10k kWh)'},
-        annual_heat: {zh:'项目年供热量（百万吉焦）', en:'Annual Heat Supply (Million GJ)'},
-        energy_type: {zh:'能源消费品种类别', en:'Energy Type'},
-        coal_saving: {zh:'标准煤—实物节约量（千克）', en:'Coal Saving (kg)'},
-        gas_saving: {zh:'电燃气—实物节约量（千克）', en:'Gas Saving (kg)'},
-        placeholder_input: {zh:'请输入', en:'Please enter'},
-        cancel: {zh:'取消', en:'Cancel'},
-        calculate: {zh:'测算', en:'Calculate'},
-        // Manual entry
-        manual_fill_title: {zh:'手工填报环境效益数据', en:'Manual Environmental Benefit Data Entry'},
-        energy_saving_title: {zh:'节能量', en:'Energy Saved'},
-        emission_reduction_title: {zh:'减排量', en:'Emission Reduction'},
-        coal_saving_title: {zh:'标准煤（吨）', en:'Standard Coal (tons)'},
-        water_saving: {zh:'节水量（吨）', en:'Water Saved (tons)'},
-        co2: {zh:'二氧化碳当量（吨）', en:'CO₂ Equivalent (tons)'},
-        so2: {zh:'二氧化硫（吨）', en:'SO₂ (tons)'},
-        nox: {zh:'氮氧化物（吨）', en:'NOx (tons)'},
-        cod: {zh:'化学需氧量（吨）', en:'COD (tons)'},
-        nh3n: {zh:'氨氮（吨）', en:'NH₃-N (tons)'},
-        tn: {zh:'总氮（吨）', en:'Total Nitrogen (tons)'},
-        tp: {zh:'总磷（吨）', en:'Total Phosphorus (tons)'},
-        pm25: {zh:'细颗粒物PM2.5（吨）', en:'PM2.5 (tons)'},
-        voc: {zh:'挥发性有机物VOCs（吨）', en:'VOCs (tons)'},
-        // Results
-        calc_result: {zh:'测算结果', en:'Calc Results'},
-        input_params_title: {zh:'输入参数', en:'Input Parameters'},
-        env_result_title: {zh:'环境效益测算结果', en:'Environmental Benefit Results'},
-        calc_method_lbl: {zh:'测算方式：', en:'Calc Method:'},
-        gf_category_lbl: {zh:'绿色产业分类：', en:'Green Industry Category:'},
-        calc_plan_lbl: {zh:'测算方案：', en:'Calc Plan:'},
-        annual_power_lbl: {zh:'项目年供电量：', en:'Annual Power Supply:'},
-        annual_heat_lbl: {zh:'项目年供热量：', en:'Annual Heat Supply:'},
-        coal_saving_lbl: {zh:'标准煤节约量：', en:'Coal Saving:'},
-        gas_saving_lbl: {zh:'电燃气节约量：', en:'Gas Saving:'},
-        indicator_cat: {zh:'指标类别', en:'Indicator Category'},
-        indicator_name: {zh:'具体指标', en:'Indicator'},
-        unit: {zh:'单位', en:'Unit'},
-        calc_value: {zh:'测算值', en:'Calculated Value'},
-        energy_saving: {zh:'节能量', en:'Energy Saved'},
-        water_saving_cat: {zh:'节水量', en:'Water Saved'},
-        emission_reduction: {zh:'减排量', en:'Emission Reduction'},
-        result_co2: {zh:'二氧化碳当量', en:'CO₂ Equivalent'},
-        result_so2: {zh:'二氧化硫', en:'SO₂'},
-        result_nox: {zh:'氮氧化物', en:'NOx'},
-        result_cod: {zh:'化学需氧量', en:'COD'},
-        result_nh3n: {zh:'氨氮', en:'NH₃-N'},
-        result_tn: {zh:'总氮', en:'Total Nitrogen'},
-        result_tp: {zh:'总磷', en:'Total Phosphorus'},
-        result_pm25: {zh:'细颗粒物（PM2.5）', en:'PM2.5'},
-        result_voc: {zh:'挥发性有机物（VOCs）', en:'VOCs'},
-        result_coal: {zh:'标准煤', en:'Standard Coal'},
-        result_water: {zh:'节水量', en:'Water Saved'},
-        unit_ton: {zh:'吨', en:'tons'},
-        unit_10k_kwh: {zh:'万千瓦时', en:'10k kWh'},
-        unit_mil_gj: {zh:'百万吉焦', en:'Million GJ'},
-        unit_kg: {zh:'千克', en:'kg'},
-        recalculate: {zh:'重新测算', en:'Recalculate'},
-        save: {zh:'保存', en:'Save'},
-        submit: {zh:'提交审批', en:'Submit for Approval'},
-        // Alerts
-        fill_all_params: {zh:'请完整填写所有必填参数！', en:'Please fill in all required parameters!'},
-        save_ok: {zh:'测算结果已保存！\n\n测算状态：已测算\n审批状态：未提交', en:'Results saved!\n\nCalc Status: Calculated\nApproval Status: Not Submitted'},
-        confirm_submit: {zh:'确认提交审批？\n\n提交后进入审批流程：绿金专岗审批→总行初审→总行复核', en:'Confirm submit for approval?\n\nApproval flow: GF Specialist → HO Review → HO Approval'},
-        submit_ok: {zh:'已提交审批！\n\n测算状态：已测算\n审批状态：审批中', en:'Submitted for approval!\n\nCalc Status: Calculated\nApproval Status: Under Review'},
-        approval_flow: {zh:'绿金专岗审批→总行初审→总行复核', en:'GF Specialist → HO Review → HO Approval'},
-        // === 2025 Green Finance Categories - Complete Translations ===
-        // Level 1
-        '1.节能降碳产业': {zh:'1.节能降碳产业', en:'1. Energy Conservation & Carbon Reduction'},
-        '2.清洁生产产业': {zh:'2.清洁生产产业', en:'2. Cleaner Production'},
-        '3.清洁能源产业': {zh:'3.清洁能源产业', en:'3. Clean Energy Industry'},
-        '4.能源绿色低碳转型': {zh:'4.能源绿色低碳转型', en:'4. Green & Low-Carbon Energy Transition'},
-        '5.生态保护修复和利用': {zh:'5.生态保护修复和利用', en:'5. Ecological Protection & Restoration'},
-        '6.基础设施绿色升级': {zh:'6.基础设施绿色升级', en:'6. Green Infrastructure Upgrading'},
-        // Level 2
-        '1.1 能效提升': {zh:'1.1 能效提升', en:'1.1 Energy Efficiency Improvement'},
-        '1.2 先进交通装备制造': {zh:'1.2 先进交通装备制造', en:'1.2 Advanced Transportation Equipment Mfg'},
-        '2.1 污染防治': {zh:'2.1 污染防治', en:'2.1 Pollution Prevention & Control'},
-        '3.4 能源系统改造': {zh:'3.4 能源系统改造', en:'3.4 Energy System Renovation'},
-        '4.1 新能源与清洁能源装备制造': {zh:'4.1 新能源与清洁能源装备制造', en:'4.1 New & Clean Energy Equipment Mfg'},
-        '4.2 清洁能源设施建设和运营': {zh:'4.2 清洁能源设施建设和运营', en:'4.2 Clean Energy Facility Construction & Operation'},
-        '5.2 生态保护修复': {zh:'5.2 生态保护修复', en:'5.2 Ecological Protection & Restoration'},
-        '5.3 污染防治': {zh:'5.3 污染防治', en:'5.3 Pollution Prevention & Control'},
-        '6.5 城乡能源基础设施': {zh:'6.5 城乡能源基础设施', en:'6.5 Urban-Rural Energy Infrastructure'},
-        // Level 3
-        '1.2.1 新能源汽车及关键零部件制造': {zh:'1.2.1 新能源汽车及关键零部件制造', en:'1.2.1 NEV & Key Component Manufacturing'},
-        '2.1.2.1 重点行业水污染治理': {zh:'2.1.2.1 重点行业水污染治理', en:'2.1.2.1 Key Industry Water Pollution Control'},
-        '2.1.3 节能锅炉制造': {zh:'2.1.3 节能锅炉制造', en:'2.1.3 Energy-Efficient Boiler Manufacturing'},
-        '3.4.8 电网节能改造项目': {zh:'3.4.8 电网节能改造项目', en:'3.4.8 Grid Energy-Saving Renovation'},
-        '4.1.8 新型储能产品制造': {zh:'4.1.8 新型储能产品制造', en:'4.1.8 New Energy Storage Product Mfg'},
-        '4.2.4 大型水利发电设施建设和运营': {zh:'4.2.4 大型水利发电设施建设和运营', en:'4.2.4 Large Hydropower Facility Construction & Operation'},
-        '5.2.6 充电基础设施': {zh:'5.2.6 充电基础设施', en:'5.2.6 Charging Infrastructure'},
-        '5.2.11 水生态系统旱涝灾害防控及应对': {zh:'5.2.11 水生态系统旱涝灾害防控及应对', en:'5.2.11 Flood & Drought Prevention for Aquatic Ecosystems'},
-        '5.3.1.1 污水处理、再生利用及污泥处理处置设施建设运营': {zh:'5.3.1.1 污水处理、再生利用及污泥处理处置设施建设运营', en:'5.3.1.1 Sewage Treatment, Recycling & Sludge Disposal'},
-        '6.5.3 城镇集中供热系统清洁化、低碳化建设运营和改造': {zh:'6.5.3 城镇集中供热系统清洁化、低碳化建设运营和改造', en:'6.5.3 Clean District Heating Construction & Renovation'},
-        // Additional
-        '2.5 其他污染治理和环境综合整治': {zh:'2.5 其他污染治理和环境综合整治', en:'2.5 Other Pollution Control & Environmental Remediation'},
-        '2.5.2 危险废物处理处置': {zh:'2.5.2 危险废物处理处置', en:'2.5.2 Hazardous Waste Treatment & Disposal'},
-        '3.2 资源循环利用': {zh:'3.2 资源循环利用', en:'3.2 Resource Recycling & Utilization'},
-        '3.2.7 废气回收利用': {zh:'3.2.7 废气回收利用', en:'3.2.7 Waste Gas Recovery & Utilization'},
-        '绿色金融分类(2025)': {zh:'绿色金融分类(2025)', en:'Green Finance Category (2025)'},
-        '信贷系统2025绿色认定分类': {zh:'信贷系统2025绿色认定分类', en:'Credit System 2025 GF Category'},
-        '绿色金融标准：《绿色金融支持项目目录（2025年版）》': {zh:'绿色金融标准：《绿色金融支持项目目录（2025年版）》', en:'Green Finance Standard: Green Finance Project Catalogue (2025)'},
-        '绿色债券支持项目目录(2021)': {zh:'绿色债券支持项目目录(2021)', en:'Green Bond Project Catalogue (2021)'},
-        '碳减排支持工具范围': {zh:'碳减排支持工具范围', en:'Carbon Reduction Support Tools'},
-        '绿色低碳转型产业指导目录(2024)': {zh:'绿色低碳转型产业指导目录(2024)', en:'Green Low-Carbon Transition Industry Catalogue (2024)'},
-        // Current project GF category
-        gf_category_value: {zh:'1.5.3 余热余压利用', en:'1.5.3 Waste Heat & Pressure Utilization'}
-    });
 
-    // ==================== 初始化绿色产业分类显示 ====================
-    document.getElementById('gfCategoryInput').value = I18N.t('gf_category_value');
-
-    // ==================== 语言切换回调 ====================
-    window.onLangChange = function(lang){
-        // Re-apply everything since many elements are dynamically generated
-        I18N.applyToDOM();
-        // Re-apply GF category input (not covered by data-i18n)
-        document.getElementById('gfCategoryInput').value = I18N.t('gf_category_value');
-        // Re-render result table if visible
-        if(document.getElementById('resultSection').style.display !== 'none'){
-            var pw = document.getElementById('annualPower').value;
-            var ht = document.getElementById('annualHeat').value;
-            var cs = document.getElementById('coalSaving').value;
-            var gs = document.getElementById('gasSaving').value;
-            var plan = document.getElementById('calcPlan').value;
-            var existing = {plan:plan, pw:pw, ht:ht, cs:cs, gs:gs};
-            renderResultTable(existing);
-        }
-    };
-
-    // ==================== 业务函数 ====================
-    function getCurrentDir(){var p=window.location.pathname;return p.substring(0,p.lastIndexOf('/')+1)}
-    function goBackToList(){
-        var dir=getCurrentDir();var targetUrl=dir+'环境效益测算.html';
-        if(window.parent!==window){
-            var pageId='env-back-'+Date.now()+'-'+Math.random().toString(36).substr(2,6);
-            window.parent.postMessage({type:'openPage',pageId:pageId,file:targetUrl,label:'环境效益测算'},'*');
-        }else{window.location.href=targetUrl}
-    }
-    function onCalcMethodChange(method){
-        document.getElementById('systemCalcArea').style.display=method==='system'?'block':'none';
-        document.getElementById('manualCalcArea').style.display=method==='manual'?'block':'none';
-        document.getElementById('resultSection').style.display='none';
-        if(method==='manual'){
-            document.getElementById('calcBtn').disabled=false;
-        }
-    }
-    function onPlanChange(){
-        var plan=document.getElementById('calcPlan').value;
-        var dp=document.getElementById('dynamicParams');
-        var ep=document.getElementById('energyOutputParams');
-        var ec=document.getElementById('energyConsumeParams');
-        if(!plan){dp.style.display='none';document.getElementById('calcBtn').disabled=true;return;}
-        dp.style.display='block';
-        if(plan==='plan1'){
-            ep.style.display='flex';ec.style.display='none';
-        }else{
-            ep.style.display='none';ec.style.display='flex';
-        }
-        document.getElementById('calcBtn').disabled=false;
-    }
-    function renderResultTable(ctx){
-        // ctx is optional - if not provided, build from current state
-        var plan, pw, ht, cs, gs;
-        if(ctx){
-            plan = ctx.plan; pw = ctx.pw; ht = ctx.ht; cs = ctx.cs; gs = ctx.gs;
-        } else {
-            plan = document.getElementById('calcPlan').value;
-            pw = document.getElementById('annualPower').value;
-            ht = document.getElementById('annualHeat').value;
-            cs = document.getElementById('coalSaving').value;
-            gs = document.getElementById('gasSaving').value;
-        }
-        var results = [
-            {cat:I18N.t('emission_reduction'), name:I18N.t('result_co2'), unit:I18N.t('unit_ton'), val:'1,248.56'},
-            {cat:I18N.t('emission_reduction'), name:I18N.t('result_so2'), unit:I18N.t('unit_ton'), val:'32.18'},
-            {cat:I18N.t('emission_reduction'), name:I18N.t('result_nox'), unit:I18N.t('unit_ton'), val:'21.45'},
-            {cat:I18N.t('emission_reduction'), name:I18N.t('result_cod'), unit:I18N.t('unit_ton'), val:'68.30'},
-            {cat:I18N.t('emission_reduction'), name:I18N.t('result_nh3n'), unit:I18N.t('unit_ton'), val:'4.12'},
-            {cat:I18N.t('emission_reduction'), name:I18N.t('result_tn'), unit:I18N.t('unit_ton'), val:'10.25'},
-            {cat:I18N.t('emission_reduction'), name:I18N.t('result_tp'), unit:I18N.t('unit_ton'), val:'1.88'},
-            {cat:I18N.t('emission_reduction'), name:I18N.t('result_pm25'), unit:I18N.t('unit_ton'), val:'8.76'},
-            {cat:I18N.t('emission_reduction'), name:I18N.t('result_voc'), unit:I18N.t('unit_ton'), val:'15.42'},
-            {cat:I18N.t('energy_saving'), name:I18N.t('result_coal'), unit:I18N.t('unit_ton'), val:'512.36'},
-            {cat:I18N.t('water_saving_cat'), name:I18N.t('result_water'), unit:I18N.t('unit_ton'), val:'9,870.50'}
+    <script>
+        // ============================================================
+        //  能源品种列表
+        // ============================================================
+        var ENERGY_TYPES = [
+            '原煤', '洗精煤', '其他洗煤', '型煤', '焦炭',
+            '焦炉煤气', '高炉煤气', '转炉煤气', '天然气', '液化天然气',
+            '电力', '热力', '石油', '柴油', '汽油',
+            '煤油', '燃料油', '液化石油气', '其他石油制品', '其他能源'
         ];
-        var tbody = document.getElementById('resultTableBody');
-        var html = '', lastCat = '';
-        for(var i=0; i<results.length; i++){
-            var r = results[i];
-            if(r.cat !== lastCat){
-                html += '<tr><td class="cat-header" colspan="4">'+r.cat+'</td></tr>';
-                lastCat = r.cat;
+
+        var energyCheckboxRendered = false;
+
+        function renderEnergyTypeCheckboxes() {
+            var container = document.getElementById('energyTypeCheckboxes');
+            if (!container) return;
+            var html = '';
+            ENERGY_TYPES.forEach(function(type) {
+                html += '<label><input type="checkbox" class="energy-checkbox" value="' + type + '" onchange="onEnergyCheckboxChange()"> ' +
+                    type + '</label>';
+            });
+            container.innerHTML = html;
+            energyCheckboxRendered = true;
+        }
+
+        function onEnergyCheckboxChange() {
+            var checkboxes = document.querySelectorAll('.energy-checkbox:checked');
+            var selected = Array.from(checkboxes).map(function(cb) { return cb.value; });
+            var container = document.getElementById('energySavingItems');
+            if (!container) return;
+            if (selected.length === 0) {
+                container.innerHTML =
+                    '<div style="color:var(--ink-500);font-size:13px;padding:8px 0;text-align:center;">请在上方选择能源品种</div>';
+                return;
             }
-            html += '<tr><td></td><td>'+r.name+'</td><td>'+r.unit+'</td><td style="font-weight:600;color:var(--ink-900);">'+r.val+'</td></tr>';
+            var html = '';
+            selected.forEach(function(type) {
+                html += '<div class="energy-saving-row">' +
+                    '<span class="type-label">' + type + '</span>' +
+                    '<div class="form-item">' +
+                    '<input type="number" class="energy-saving-input" data-type="' + type +
+                    '" placeholder="节约量（千克）" step="0.01">' +
+                    '</div>' +
+                    '</div>';
+            });
+            container.innerHTML = html;
         }
-        tbody.innerHTML = html;
-    }
-    function doCalculate(){
-        var plan=document.getElementById('calcPlan').value;
-        var resultSection=document.getElementById('resultSection');
-        if(plan==='plan1'){
-            var pw=document.getElementById('annualPower').value;
-            var ht=document.getElementById('annualHeat').value;
-            if(!pw||!ht){alert(I18N.t('fill_all_params'));return;}
-            document.getElementById('resPowerRow').style.display='flex';
-            document.getElementById('resHeatRow').style.display='flex';
-            document.getElementById('resPower').textContent=pw+' '+I18N.t('unit_10k_kwh');
-            document.getElementById('resHeat').textContent=ht+' '+I18N.t('unit_mil_gj');
-            document.getElementById('resCoalRow').style.display='none';
-            document.getElementById('resGasRow').style.display='none';
-        }else if(plan==='plan2'){
-            var cs=document.getElementById('coalSaving').value;
-            var gs=document.getElementById('gasSaving').value;
-            if(!cs||!gs){alert(I18N.t('fill_all_params'));return;}
-            document.getElementById('resCoalRow').style.display='flex';
-            document.getElementById('resGasRow').style.display='flex';
-            document.getElementById('resCoal').textContent=cs+' '+I18N.t('unit_kg');
-            document.getElementById('resGas').textContent=gs+' '+I18N.t('unit_kg');
-            document.getElementById('resPowerRow').style.display='none';
-            document.getElementById('resHeatRow').style.display='none';
+
+        function collectEnergySavings() {
+            var inputs = document.querySelectorAll('.energy-saving-input');
+            var result = {};
+            inputs.forEach(function(inp) {
+                var val = parseFloat(inp.value);
+                if (!isNaN(val) && val > 0) {
+                    result[inp.dataset.type] = val;
+                }
+            });
+            return result;
         }
-        document.getElementById('resGreenType').textContent = I18N.t('gf_category_value');
-        document.getElementById('resPlan').textContent = plan==='plan1' ? I18N.t('plan1') : I18N.t('plan2');
-        renderResultTable();
-        resultSection.style.display='block';
-        resultSection.scrollIntoView({behavior:'smooth',block:'start'});
-    }
-    function reCalculate(){
-        document.getElementById('resultSection').style.display='none';
-        document.getElementById('calcSection').scrollIntoView({behavior:'smooth',block:'start'});
-    }
-    function handleSave(){
-        alert(I18N.t('save_ok'));
-    }
-    function handleSubmit(){
-        if(confirm(I18N.t('confirm_submit'))){
-            alert(I18N.t('submit_ok'));
-            goBackToList();
+
+        // ============================================================
+        //  安全获取元素值（避免 null 错误）
+        // ============================================================
+        function getVal(id) {
+            var el = document.getElementById(id);
+            return el ? el.value : '';
         }
-    }
-</script>
+
+        function getNum(id) {
+            var el = document.getElementById(id);
+            return el ? parseFloat(el.value) || 0 : 0;
+        }
+
+        // ============================================================
+        //  核心业务逻辑
+        // ============================================================
+
+        function onCalcMethodChange(method) {
+            document.getElementById('systemCalcArea').style.display = (method === 'system') ? 'block' : 'none';
+            document.getElementById('manualCalcArea').style.display = (method === 'manual') ? 'block' : 'none';
+            document.getElementById('resultSection').style.display = 'none';
+            if (method === 'system') {
+                onPlanChange();
+            }
+        }
+
+        function onPlanChange() {
+            var plan = document.getElementById('calcPlan').value;
+            var dp = document.getElementById('dynamicParams');
+            var ep = document.getElementById('energyOutputParams');
+            var ec = document.getElementById('energyConsumeParams');
+            var calcBtn = document.getElementById('calcBtn');
+
+            if (!plan) {
+                dp.style.display = 'none';
+                calcBtn.disabled = true;
+                return;
+            }
+            dp.style.display = 'block';
+            if (plan === 'plan1') {
+                ep.style.display = 'flex';
+                ec.style.display = 'none';
+            } else {
+                ep.style.display = 'none';
+                ec.style.display = 'block';
+                if (!energyCheckboxRendered) {
+                    renderEnergyTypeCheckboxes();
+                }
+                document.getElementById('energySavingItems').innerHTML =
+                    '<div style="color:var(--ink-500);font-size:13px;padding:8px 0;text-align:center;">请在上方选择能源品种</div>';
+            }
+            calcBtn.disabled = false;
+        }
+
+        function doCalculate() {
+            var plan = document.getElementById('calcPlan').value;
+            if (!plan) {
+                alert('请先选择测算方案');
+                return;
+            }
+
+            // 安全获取参数
+            var pw = getNum('annualPower');
+            var ht = getNum('annualHeat');
+            var cs = getNum('coalSaving');
+            var gs = getNum('gasSaving');
+            var energySavings = collectEnergySavings();
+
+            // 更新回显
+            var resMethod = document.getElementById('resMethod');
+            if (resMethod) resMethod.textContent = '系统测算工具';
+            var resGreenType = document.getElementById('resGreenType');
+            if (resGreenType) resGreenType.textContent = getVal('gfCategoryInput') || '—';
+            var resPlan = document.getElementById('resPlan');
+            if (resPlan) {
+                resPlan.textContent = (plan === 'plan1') ? '方案一：二氧化碳减排计算的基本公式' :
+                    '方案二：按能源消费品种分别计算';
+            }
+
+            var rPR = document.getElementById('resPowerRow');
+            var rHR = document.getElementById('resHeatRow');
+            var rCR = document.getElementById('resCoalRow');
+            var rGR = document.getElementById('resGasRow');
+            var rP = document.getElementById('resPower');
+            var rH = document.getElementById('resHeat');
+            var rC = document.getElementById('resCoal');
+            var rG = document.getElementById('resGas');
+
+            if (rPR) rPR.style.display = 'none';
+            if (rHR) rHR.style.display = 'none';
+            if (rCR) rCR.style.display = 'none';
+            if (rGR) rGR.style.display = 'none';
+            var resEnergyContainer = document.getElementById('resEnergyTypesContainer');
+            if (resEnergyContainer) resEnergyContainer.style.display = 'none';
+
+            if (plan === 'plan1') {
+                if (rPR) rPR.style.display = 'flex';
+                if (rHR) rHR.style.display = 'flex';
+                if (rP) rP.textContent = pw + ' 万千瓦时';
+                if (rH) rH.textContent = ht + ' 百万吉焦';
+            } else {
+                var keys = Object.keys(energySavings);
+                var listEl = document.getElementById('resEnergyTypesList');
+                if (keys.length > 0) {
+                    var listHtml = '';
+                    keys.forEach(function(k) {
+                        listHtml += '<div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px dashed var(--line-200);">' +
+                            '<span>' + k + '</span>' +
+                            '<span style="font-weight:500;">' + energySavings[k] + ' 千克</span>' +
+                            '</div>';
+                    });
+                    if (listEl) listEl.innerHTML = listHtml;
+                    if (resEnergyContainer) resEnergyContainer.style.display = 'block';
+                } else {
+                    if (listEl) listEl.innerHTML =
+                        '<div style="color:var(--ink-500);padding:4px 0;">未填写任何品种节约量</div>';
+                    if (resEnergyContainer) resEnergyContainer.style.display = 'block';
+                }
+                if (rCR) rCR.style.display = 'flex';
+                if (rGR) rGR.style.display = 'flex';
+                if (rC) rC.textContent = cs + ' 千克';
+                if (rG) rG.textContent = gs + ' 千克';
+            }
+
+            // 渲染结果表格
+            renderResultTable();
+
+            // 强制显示结果区域
+            var resultSection = document.getElementById('resultSection');
+            if (resultSection) {
+                resultSection.style.display = 'block';
+                setTimeout(function() {
+                    resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 200);
+            }
+        }
+
+        function renderResultTable() {
+            var data = [
+                { cat: '减排量', name: '二氧化碳当量', unit: '吨', val: '1,248.56' },
+                { cat: '减排量', name: '二氧化硫', unit: '吨', val: '32.18' },
+                { cat: '减排量', name: '氮氧化物', unit: '吨', val: '21.45' },
+                { cat: '减排量', name: '化学需氧量', unit: '吨', val: '68.30' },
+                { cat: '减排量', name: '氨氮', unit: '吨', val: '4.12' },
+                { cat: '减排量', name: '总氮', unit: '吨', val: '10.25' },
+                { cat: '减排量', name: '总磷', unit: '吨', val: '1.88' },
+                { cat: '减排量', name: '细颗粒物PM2.5', unit: '吨', val: '8.76' },
+                { cat: '减排量', name: '挥发性有机物VOCs', unit: '吨', val: '15.42' },
+                { cat: '节能量', name: '标准煤', unit: '吨', val: '512.36' },
+                { cat: '节水量', name: '节水量', unit: '吨', val: '9,870.50' }
+            ];
+            var tbody = document.getElementById('resultTableBody');
+            if (!tbody) return;
+            var html = '',
+                lastCat = '';
+            for (var i = 0; i < data.length; i++) {
+                var r = data[i];
+                if (r.cat !== lastCat) {
+                    html += '<tr><td class="cat-header" colspan="4">' + r.cat + '</td></tr>';
+                    lastCat = r.cat;
+                }
+                html += '<tr><td></td><td>' + r.name + '</td><td>' + r.unit + '</td><td style="font-weight:600;color:var(--ink-900);">' +
+                    r.val + '</td></tr>';
+            }
+            tbody.innerHTML = html;
+        }
+
+        function saveDraft() {
+            alert('测算结果已暂存！\n\n测算状态：已测算\n审批状态：未提交');
+        }
+
+        function handleSubmit() {
+            if (confirm('确认提交审批？\n\n提交后进入审批流程：绿金专岗审批→总行初审→总行复核')) {
+                alert('已提交审批！\n\n测算状态：已测算\n审批状态：审批中');
+                goBackToList();
+            }
+        }
+
+        // ============================================================
+        //  手工填报
+        // ============================================================
+
+        function saveManualDraft() {
+            var data = collectManualData();
+            var hasData = Object.values(data).some(function(v) { return v !== '' && v !== null && v !== undefined; });
+            if (!hasData) {
+                alert('当前没有填写任何数据，无需暂存。');
+                return;
+            }
+            alert('手工填报数据已暂存！');
+        }
+
+        function submitManual() {
+            var data = collectManualData();
+            var hasData = Object.values(data).some(function(v) { return v !== '' && v !== null && v !== undefined; });
+            if (!hasData) {
+                alert('请至少填写一项指标数据后再提交。');
+                return;
+            }
+            if (confirm('确认提交手工填报数据？\n\n提交后将进入审批流程。')) {
+                alert('手工填报数据已提交审批！\n\n审批状态：审批中');
+                goBackToList();
+            }
+        }
+
+        function collectManualData() {
+            var ids = ['manualCoal', 'manualWater', 'manualCo2', 'manualSo2', 'manualNox',
+                'manualCod', 'manualNh3n', 'manualTn', 'manualTp', 'manualPm25', 'manualVoc'
+            ];
+            var data = {};
+            ids.forEach(function(id) {
+                var el = document.getElementById(id);
+                data[id] = el ? el.value : '';
+            });
+            return data;
+        }
+
+        function goBackToList() {
+            if (confirm('返回将放弃当前编辑，确认返回？')) {
+                window.location.href = window.location.href;
+            }
+        }
+
+        // ============================================================
+        //  初始化
+        // ============================================================
+        document.querySelector('input[name="calcMethod"][value="system"]').checked = true;
+        onCalcMethodChange('system');
+        document.getElementById('calcPlan').value = '';
+        onPlanChange();
+    </script>
+
 </body>
 </html>

@@ -496,6 +496,40 @@
         </div>
     </div>
 
+    <!-- ============ 开始营销弹窗 ============ -->
+    <div class="modal-mask" id="marketingModal">
+        <div class="modal" style="max-width:480px;">
+            <div class="modal-head">
+                <div class="modal-title" data-i18n="mkt_modal_title">客户基本信息</div>
+                <button class="modal-close" onclick="closeMarketingModal()">
+                    <svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align:left;padding:20px 24px;">
+                <div style="display:grid;grid-template-columns:120px 1fr;gap:10px 16px;font-size:13px;">
+                    <span style="color:var(--ink-500);font-weight:500;" data-i18n="mkt_enterprise_name">企业名称：</span>
+                    <span id="mktEnterpriseName" style="font-weight:500;color:var(--ink-900);">—</span>
+                    <span style="color:var(--ink-500);font-weight:500;" data-i18n="mkt_credit_code">统一社会信用代码：</span>
+                    <span id="mktCreditCode" style="font-family:monospace;font-size:12px;color:var(--ink-800);">—</span>
+                    <span style="color:var(--ink-500);font-weight:500;" data-i18n="mkt_region">所属地区：</span>
+                    <span id="mktRegion" style="color:var(--ink-800);">—</span>
+                    <span style="color:var(--ink-500);font-weight:500;" data-i18n="mkt_sector">所属产业：</span>
+                    <span id="mktSector" style="color:var(--ink-800);">—</span>
+                    <span style="color:var(--ink-500);font-weight:500;" data-i18n="mkt_green_level">绿色等级：</span>
+                    <span id="mktGreenLevel">—</span>
+                    <span style="color:var(--ink-500);font-weight:500;" data-i18n="mkt_main_biz">主营业务：</span>
+                    <span id="mktMainBiz" style="color:var(--ink-800);">—</span>
+                    <span style="color:var(--ink-500);font-weight:500;" data-i18n="mkt_industry_cat">国民经济行业大类：</span>
+                    <span id="mktIndustryCat" style="color:var(--ink-800);">—</span>
+                </div>
+            </div>
+            <div class="modal-foot" style="justify-content:center;">
+                <button class="btn btn-success btn-md" onclick="confirmStartMarketing()" data-i18n="mkt_confirm_start">确认开始营销</button>
+                <button class="btn btn-secondary btn-md" onclick="closeMarketingModal()" data-i18n="mkt_cancel">取消</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ============ 导出成功弹窗 ============ -->
     <div class="modal-mask" id="exportModal">
         <div class="modal modal-sm modal-form">
@@ -560,6 +594,16 @@
             action_eval_report:      { zh: '企业评价报告',                     en: 'Enterprise Report' },
             action_mkt_report:       { zh: '绿色业务营销报告',                 en: 'Green Marketing Report' },
             action_start_mkt:        { zh: '开始营销',                         en: 'Start Marketing' },
+            mkt_modal_title:         { zh: '客户基本信息',                     en: 'Customer Basic Info' },
+            mkt_enterprise_name:     { zh: '企业名称：',                       en: 'Enterprise Name:' },
+            mkt_credit_code:         { zh: '统一社会信用代码：',               en: 'Credit Code:' },
+            mkt_region:              { zh: '所属地区：',                       en: 'Region:' },
+            mkt_sector:              { zh: '所属产业：',                       en: 'Industry Sector:' },
+            mkt_green_level:         { zh: '绿色等级：',                       en: 'Green Level:' },
+            mkt_main_biz:            { zh: '主营业务：',                       en: 'Main Business:' },
+            mkt_industry_cat:        { zh: '国民经济行业大类：',               en: 'Industry Category:' },
+            mkt_confirm_start:       { zh: '确认开始营销',                     en: 'Confirm Start Marketing' },
+            mkt_cancel:              { zh: '取消',                             en: 'Cancel' },
             clean_energy:            { zh: '清洁能源',                         en: 'Clean Energy' },
             green_mfg:               { zh: '绿色制造',                         en: 'Green Manufacturing' },
             env_protection:          { zh: '环保产业',                         en: 'Environmental Protection' },
@@ -826,7 +870,7 @@
                         '<div class="action-btns">' +
                             '<button class="btn btn-deep-blue btn-sm" onclick="openReport(\'企业评价报告.html\')">' + I18N.t('action_eval_report') + '</button>' +
                             '<button class="btn btn-light-blue btn-sm" onclick="openReport(\'绿色业务营销报告.html\')">' + I18N.t('action_mkt_report') + '</button>' +
-                            '<button class="btn btn-success btn-sm" onclick="startMarketing(\'' + r.id + '\')">' + I18N.t('action_start_mkt') + '</button>' +
+                            '<button class="btn btn-success btn-sm" onclick="startMarketing(' + i + ')">' + I18N.t('action_start_mkt') + '</button>' +
                         '</div>' +
                     '</td>' +
                     '</tr>';
@@ -888,14 +932,37 @@
         }
 
         // ==================== 开始营销 ====================
-        function startMarketing(companyId) {
+        var currentMarketingIndex = -1;
+
+        function startMarketing(index) {
+            currentMarketingIndex = index;
+            var r = tableData[index];
+            if (!r) return;
+            document.getElementById('mktEnterpriseName').textContent = I18N.t(r.name);
+            document.getElementById('mktCreditCode').textContent = r.creditCode;
+            document.getElementById('mktRegion').textContent = I18N.t(r.region);
+            document.getElementById('mktSector').textContent = I18N.t(r.sectorKey);
+            document.getElementById('mktGreenLevel').innerHTML = '<span class="green-level ' + r.greenLevelClass + '">' + I18N.t(r.greenLevelKey) + '</span>';
+            document.getElementById('mktMainBiz').textContent = I18N.t(r.mainBiz);
+            document.getElementById('mktIndustryCat').textContent = I18N.t(r.industryCat);
+            document.getElementById('marketingModal').classList.add('open');
+        }
+
+        function closeMarketingModal() {
+            document.getElementById('marketingModal').classList.remove('open');
+            currentMarketingIndex = -1;
+        }
+
+        function confirmStartMarketing() {
+            if (currentMarketingIndex < 0) return;
+            var r = tableData[currentMarketingIndex];
             var currentPath = window.location.pathname;
             var currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
             if (currentDir === '') { currentDir = './'; }
             var targetUrl = currentDir + '潜在客户营销过程管理.html';
-            var pageId = 'mkt-process-' + companyId;
+            var pageId = 'mkt-process-' + currentMarketingIndex + '-' + Date.now();
             var label = I18N.t('action_start_mkt');
-
+            closeMarketingModal();
             if (window.parent !== window) {
                 window.parent.postMessage({
                     type: 'openPage',
@@ -918,6 +985,11 @@
         }
 
         // 点击遮罩关闭弹窗
+        document.getElementById('marketingModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeMarketingModal();
+            }
+        });
         document.getElementById('exportModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeModal('exportModal');
@@ -927,6 +999,7 @@
         // ESC关闭弹窗
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
+                closeMarketingModal();
                 closeModal('exportModal');
             }
         });

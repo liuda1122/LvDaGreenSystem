@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>项目绿色认定操作 · 可持续金融管理系统</title>
+    <title>项目绿色认定审批 · 可持续金融管理系统</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
@@ -243,14 +243,6 @@
             font-weight: 500;
             margin-top: 2px;
         }
-        .green-class-card .check-mark {
-            display: none;
-            color: var(--brand-500);
-            font-weight: 600;
-        }
-        .green-class-card.active .check-mark {
-            display: inline;
-        }
         .green-class-card .info-hint {
             position: absolute;
             top: 8px;
@@ -332,20 +324,6 @@
         .proof-section.active {
             border-color: var(--brand-500);
             box-shadow: 0 0 0 2px rgba(42, 102, 194, 0.1);
-        }
-
-        .upload-zone {
-            border: 2px dashed var(--line-200);
-            border-radius: var(--radius-lg);
-            padding: 28px 20px;
-            text-align: center;
-            color: var(--ink-400);
-            transition: all .2s;
-            cursor: pointer;
-        }
-        .upload-zone:hover {
-            border-color: var(--brand-500);
-            background: var(--brand-50);
         }
 
         .example-thumb {
@@ -482,7 +460,7 @@
 
     <!-- Main Content -->
     <main class="flex-1 flex flex-col overflow-hidden" style="height:100vh;background:var(--bg-subtle);">
-        <!-- 返回栏 -->
+        <!-- Header - back button only, no title -->
         <div class="flex items-center justify-between px-8 py-3 flex-shrink-0" style="background:var(--white);border-bottom:1px solid var(--line-200)">
             <button onclick="goBackToList()" style="display:inline-flex;align-items:center;gap:6px;color:#2A66C2;font-weight:500;cursor:pointer;border:none;background:none;font-size:14px;font-family:inherit;padding:0 8px;height:32px;border-radius:6px;">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -523,15 +501,12 @@
                         <span class="tag tag-info" data-i18n="llm">大模型</span>
                     </div>
                     <div style="padding:20px 24px;">
+                        <!-- 项目建设内容 - read only -->
                         <div style="margin-bottom:16px;padding:12px 16px;background:var(--info-bg);border-radius:var(--radius-lg);border:1px solid var(--info-border);">
                             <div style="font-size:13px;color:var(--info);font-weight:500;margin-bottom:6px;" data-i18n="project_content">
                                 项目建设内容
                             </div>
-                            <textarea rows="3" id="projectContent" style="width:100%;padding:8px 12px;border:1px solid var(--line-200);border-radius:var(--radius-md);font-size:14px;font-family:inherit;resize:vertical;outline:none;transition:border .2s;background:var(--white);" onfocus="this.style.borderColor='var(--brand-500)'" onblur="this.style.borderColor='var(--line-200)'"></textarea>
-                            <div style="margin-top:10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-                                <span style="font-size:13px;color:var(--ink-500);" data-i18n="project_content_retry">如需重新识别，可修改上述内容后点击：</span>
-                                <button class="btn btn-primary btn-sm" onclick="handleRecognize()" data-i18n="model_identify">模型识别</button>
-                            </div>
+                            <div id="projectContentDisplay" style="font-size:14px;color:var(--ink-800);line-height:1.6;padding:8px 12px;background:var(--white);border-radius:var(--radius-md);border:1px solid var(--line-200);"></div>
                         </div>
 
                         <div id="resultSection">
@@ -541,7 +516,7 @@
                                     <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-linecap="round"/>
                                 </svg>
                                 <div class="title" data-i18n="pending_title">暂未识别</div>
-                                <div class="desc" data-i18n="pending_desc">点击上方「模型识别」按钮，AI 将自动分析项目绿色属性</div>
+                                <div class="desc" data-i18n="approval_no_result">该项目暂无智能识别结果</div>
                             </div>
 
                             <div id="resultContent" style="display:none;">
@@ -579,11 +554,41 @@
                     </div>
                     <div style="padding:20px 24px;" id="proofContainer">
                         <div class="empty-result" id="proofEmpty" style="padding:24px 20px;">
-                            <div class="desc" data-i18n="proof_hint_idle">请先进行模型识别，识别完成后将展示对应的佐证材料清单</div>
+                            <div class="desc" data-i18n="approval_no_evidence">暂无佐证材料</div>
                         </div>
                     </div>
                 </div>
 
+                <!-- 审批意见 -->
+                <div class="section-card" style="border-color:var(--warning-border);border-width:2px;">
+                    <div style="padding:16px 24px;border-bottom:1px solid var(--warning-border);background:var(--warning-bg);">
+                        <span style="font-weight:600;color:var(--ink-900);font-size:15px;" data-i18n="approval_opinion">审批意见</span>
+                        <span style="color:var(--danger);margin-left:4px;">*</span>
+                    </div>
+                    <div style="padding:20px 24px;">
+                        <!-- Radio: 通过 / 驳回 -->
+                        <div style="margin-bottom:16px;">
+                            <div style="font-size:13px;color:var(--ink-500);font-weight:500;margin-bottom:10px;" data-i18n="approval_result">审批结果</div>
+                            <div style="display:flex;gap:32px;">
+                                <label style="display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;color:var(--ink-800);">
+                                    <input type="radio" name="approvalResult" value="approved" style="accent-color:var(--brand-500);width:16px;height:16px;">
+                                    <span data-i18n="approve">通过</span>
+                                </label>
+                                <label style="display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;color:var(--ink-800);">
+                                    <input type="radio" name="approvalResult" value="rejected" style="accent-color:var(--danger);width:16px;height:16px;">
+                                    <span data-i18n="reject">驳回</span>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Textarea: 审批备注 -->
+                        <div>
+                            <div style="font-size:13px;color:var(--ink-500);font-weight:500;margin-bottom:8px;" data-i18n="approval_remark">审批备注</div>
+                            <textarea id="approvalRemark" rows="4" style="width:100%;padding:10px 14px;border:1px solid var(--line-200);border-radius:var(--radius-md);font-size:14px;font-family:inherit;resize:vertical;outline:none;transition:border .2s;background:var(--white);" onfocus="this.style.borderColor='var(--brand-500)'" onblur="this.style.borderColor='var(--line-200)'" data-i18n-placeholder="approval_remark_placeholder"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Buttons -->
                 <div style="display:flex;justify-content:flex-end;gap:12px;padding:4px 0 8px;">
                     <button class="btn btn-secondary btn-md" onclick="goBackToList()"><span data-i18n="back">返回</span></button>
                     <button class="btn btn-secondary btn-md" onclick="saveDraft()"><span data-i18n="btn_draft">暂存</span></button>
@@ -935,7 +940,7 @@
                 proofEmpty.style.display = 'block';
                 var existingProofs = proofContainer.querySelectorAll('.proof-section');
                 for (var i = 0; i < existingProofs.length; i++) existingProofs[i].remove();
-                document.getElementById('proofHint').textContent = I18N.t('proof_hint_idle');
+                document.getElementById('proofHint').textContent = I18N.t('approval_no_evidence_hint');
                 return;
             }
 
@@ -961,14 +966,13 @@
                 var tL3 = I18N.t(cls.level3);
 
                 cardsHtml +=
-                    '<div class="green-class-card' + (index === 0 ? ' active' : '') + '" onclick="selectClass(this, \'' + proofId + '\')">' +
+                    '<div class="green-class-card' + (index === 0 ? ' active' : '') + '" onclick="viewClass(this, \'' + proofId + '\')">' +
                         '<span class="info-hint" title="' + I18N.t('view_standard') + '">ⓘ' +
                             '<span class="hint-tooltip">' + (hintText || I18N.t('no_standard')) + '</span>' +
                         '</span>' +
                         '<div class="level-1">' + tL1 + '</div>' +
                         '<div class="level-2">' + tL2 + '</div>' +
                         '<div class="level-3">' + tL3 + '</div>' +
-                        '<div class="check-mark" style="' + (index === 0 ? 'display:inline;' : 'display:none;') + '">' + I18N.t('selected') + '</div>' +
                     '</div>';
 
                 var proofItems = getProofItems(cls.level3);
@@ -976,7 +980,7 @@
                     '<div class="proof-section' + (index === 0 ? ' active' : '') + '" id="' + proofId + '" style="' + (index === 0 ? '' : 'display:none;') + '">' +
                         '<div class="proof-header">' +
                             '<span>📎 ' + tL3 + I18N.t('proof_list_title') + '</span>' +
-                            '<span class="tag ' + (index === 0 ? 'tag-success' : 'tag-default') + '">' + (index === 0 ? I18N.t('current_cat') : I18N.t('click_select')) + '</span>' +
+                            '<span class="tag ' + (index === 0 ? 'tag-info' : 'tag-default') + '">' + (index === 0 ? I18N.t('viewing') : I18N.t('click_select')) + '</span>' +
                         '</div>' +
                         '<div class="proof-body">' +
                             '<div style="font-size:13px;color:var(--ink-600);margin-bottom:12px;">' + I18N.t('suggested_evidence') + '</div>' +
@@ -984,21 +988,10 @@
                                 proofItems.map(function(item) { return '<li>' + I18N.t(item) + '</li>'; }).join('') +
                             '</ul>' +
                             '<div style="font-size:13px;color:var(--ink-500);margin-bottom:8px;">' + I18N.t('evidence_examples') + '</div>' +
-                            '<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">' +
+                            '<div style="display:flex;gap:12px;flex-wrap:wrap;">' +
                                 getExampleFiles(cls.level3).map(function(f) {
                                     return '<span class="example-thumb" onclick="openModal(\'' + f.url + '\', \'' + f.name + '\')"><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><path d="M4 2h5l4 4v8a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" fill="none" stroke-width="1.3"/><polyline points="9 2 9 6 13 6" stroke="currentColor" fill="none" stroke-width="1.3"/></svg> ' + I18N.t(f.name) + '</span>';
                                 }).join('') +
-                            '</div>' +
-                            '<div class="upload-zone" onclick="alert(I18N.t(\'trigger_file\'))">' +
-                                '<svg class="w-10 h-10 mx-auto text-slate-300 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
-                                '<div><span data-i18n="upload_hint_part1">' + I18N.t('upload_hint_part1') + '</span><span style="color:var(--brand-500);font-weight:500;" data-i18n="upload_hint_part2">' + I18N.t('upload_hint_part2') + '</span></div>' +
-                                '<div style="font-size:12px;color:var(--ink-400);margin-top:4px;">' + I18N.t('upload_formats') + '</div>' +
-                            '</div>' +
-                            '<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">' +
-                                '<span style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--success-bg);border-radius:var(--radius-sm);font-size:13px;border:1px solid var(--success-border);">' +
-                                    '<svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:middle"><path d="M4 2h5l4 4v8a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" fill="none" stroke-width="1.3"/><polyline points="9 2 9 6 13 6" stroke="currentColor" fill="none" stroke-width="1.3"/></svg> ' + I18N.t('example_material') + '_' + (index + 1) + '.pdf' +
-                                    '<button style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:14px;" onclick="this.closest(\'span\').remove()">&times;</button>' +
-                                '</span>' +
                             '</div>' +
                         '</div>' +
                     '</div>';
@@ -1073,16 +1066,12 @@
             ];
         }
 
-        function selectClass(el, proofId) {
+        function viewClass(el, proofId) {
             var allCards = document.querySelectorAll('.green-class-card');
             for (var i = 0; i < allCards.length; i++) {
                 allCards[i].classList.remove('active');
-                var mk = allCards[i].querySelector('.check-mark');
-                if (mk) mk.style.display = 'none';
             }
             el.classList.add('active');
-            var mark = el.querySelector('.check-mark');
-            if (mark) mark.style.display = 'inline';
 
             var allProofs = document.querySelectorAll('.proof-section');
             for (var j = 0; j < allProofs.length; j++) {
@@ -1101,35 +1090,14 @@
                 target.classList.add('active');
                 var hTag = target.querySelector('.proof-header .tag');
                 if (hTag) {
-                    hTag.className = 'tag tag-success';
-                    hTag.textContent = I18N.t('current_cat');
+                    hTag.className = 'tag tag-info';
+                    hTag.textContent = I18N.t('viewing');
                 }
             }
         }
 
-        function handleRecognize() {
-            var projectId = getProjectId();
-            var data = PROJECT_DATA[projectId];
-            if (!data || !data.result) {
-                alert(I18N.t('no_identify_data'));
-                return;
-            }
-            renderResult(data.result, true);
-            var section = document.getElementById('resultContent');
-            if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
         function saveDraft() { alert('已暂存'); }
         function handleSubmit() { alert('已提交'); goBackToList(); }
-        function handleSave() {
-            var projectId = getProjectId();
-            var data = PROJECT_DATA[projectId];
-            if (data) {
-                alert(I18N.t('project_label') + '「' + data.project.name + '」' + I18N.t('save_success'));
-            } else {
-                alert(I18N.t('save_ok'));
-            }
-        }
 
         function openModal(imageUrl, imageName) {
             var modal = document.getElementById('imageModal');
@@ -1196,16 +1164,16 @@
             renderCompany(data.company);
             renderProject(data.project);
 
-            // 设置项目内容文本框默认值
-            var pcTextarea = document.getElementById('projectContent');
-            if (pcTextarea && data.project.content) {
-                pcTextarea.value = I18N.t(data.project.content);
+            // Set project content as read-only display
+            var pcDisplay = document.getElementById('projectContentDisplay');
+            if (pcDisplay && data.project.content) {
+                pcDisplay.textContent = I18N.t(data.project.content);
             }
-            var isIdentified = data.status === 'identified';
-            if (isIdentified && data.result) {
+            // Always show results for approval review (if available)
+            if (data.result && data.result.classes && data.result.classes.length > 0) {
                 renderResult(data.result, true);
             } else {
-                renderResult(null, false);
+                renderResult(data.result, true); // Still show result content (reason/suggestion even without classes)
             }
         }
 
@@ -1216,16 +1184,14 @@
             renderCompany(data.company);
             renderProject(data.project);
 
-            // 更新项目内容文本框为当前语言
-            var pcTextarea = document.getElementById('projectContent');
-            if (pcTextarea && data.project.content) {
-                pcTextarea.value = I18N.t(data.project.content);
+            var pcDisplay = document.getElementById('projectContentDisplay');
+            if (pcDisplay && data.project.content) {
+                pcDisplay.textContent = I18N.t(data.project.content);
             }
-            var isIdentified = data.status === 'identified';
-            if (isIdentified && data.result) {
+            if (data.result && data.result.classes && data.result.classes.length > 0) {
                 renderResult(data.result, true);
             } else {
-                renderResult(null, false);
+                renderResult(data.result, true);
             }
 
         }
@@ -1244,7 +1210,7 @@
         I18N.setDict({
 
             back: {zh:'返回', en:'Back'},
-            sec_enterprise: {zh:'企业信息', en:'Enterprise Info'},
+            sec_enterprise: {zh:'客户信息', en:'Client Info'},
             sec_project: {zh:'项目信息', en:'Project Info'},
             sec_ai: {zh:'绿色智能识别', en:'AI Green Identification'},
             green_evidence: {zh:'绿色佐证材料', en:'Green Evidence'},
@@ -1260,31 +1226,23 @@
             scope: {zh:'项目建设内容与规模', en:'Scope & Scale'},
             llm: {zh:'大模型', en:'LLM'},
             project_content: {zh:'项目建设内容', en:'Project Content'},
-            project_content_retry: {zh:'如需重新识别，可修改上述内容后点击：', en:'To re-identify, modify the content above and click:'},
-            model_identify: {zh:'模型识别', en:'AI Identify'},
             unidentified: {zh:'未识别', en:'Unidentified'},
             identified: {zh:'已识别', en:'Identified'},
             pending_title: {zh:'暂未识别', en:'Not Yet Identified'},
-            pending_desc: {zh:'点击上方「模型识别」按钮，AI 将自动分析项目绿色属性', en:'Click AI Identification button to auto-analyze green attributes'},
+            approval_no_result: {zh:'该项目暂无智能识别结果', en:'No AI identification results available for this project'},
             ai_result: {zh:'智能识别结果', en:'AI ID Results'},
             gf_standard: {zh:'绿色金融标准：', en:'Green Finance Standard:'},
             gf_standard_name: {zh:'《绿色金融支持项目目录（2025年版）》', en:'Green Finance Supporting Project Catalog (2025 Ed.)'},
             id_reason: {zh:'识别理由', en:'Identification Reason'},
             suggestion: {zh:'业务填报建议', en:'Suggestions'},
-            proof_hint_idle: {zh:'请先进行模型识别，识别完成后将展示对应的佐证材料清单', en:'Complete AI identification first; evidence checklist will appear after'},
             proof_hint_select: {zh:'请点击上方绿色分类卡片查看对应佐证材料', en:'Click a green category card above to view evidence materials'},
-            current_cat: {zh:'当前分类', en:'Current Category'},
-            click_select: {zh:'点击选择', en:'Click to Select'},
+            approval_no_evidence: {zh:'暂无佐证材料', en:'No evidence materials available'},
+            approval_no_evidence_hint: {zh:'暂无佐证材料可供查看', en:'No evidence materials to review'},
+            viewing: {zh:'查看中', en:'Viewing'},
+            click_select: {zh:'点击查看', en:'Click to View'},
             suggested_evidence: {zh:'建议提供下列佐证材料：', en:'Suggested Evidence Materials:'},
             evidence_examples: {zh:'佐证材料示例：', en:'Evidence Examples:'},
             proof_list_title: {zh:' — 佐证材料清单', en:' — Evidence Checklist'},
-            upload_formats: {zh:'支持 docx、pdf、png、jpg、jpeg 格式，单个文件不超过 50M', en:'Supports docx, pdf, png, jpg, jpeg, max 50MB per file'},
-            upload_hint_part1: {zh:'将文件拖拽到此处，或 ', en:'Drag files here or '},
-            upload_hint_part2: {zh:'点击上传', en:'click to upload'},
-            save: {zh:'保存', en:'Save'},
-            save_success: {zh:'绿色认定已保存成功！', en:' green ID saved!'},
-            save_ok: {zh:'保存成功！', en:'Saved successfully!'},
-            project_label: {zh:'项目', en:'Project'},
             preview: {zh:'图片预览', en:'Image Preview'},
             close: {zh:'关闭', en:'Close'},
             no_image: {zh:'暂无图片预览', en:'No image preview'},
@@ -1292,13 +1250,20 @@
             no_example: {zh:'暂无示例', en:'No Example'},
             no_data_project: {zh:'未找到项目数据', en:'No project data found'},
             no_data_check: {zh:'未找到项目数据，请检查 projectId 参数', en:'No project data found, please check projectId param'},
-            no_identify_data: {zh:'未找到该项目的预设识别数据', en:'No preset identification data for this project'},
             no_standard: {zh:'暂无详细标准信息', en:'No detailed standard info'},
-            selected: {zh:'已选', en:'Selected'},
-            example_material: {zh:'示例材料', en:'Demo Material'},
             remark_label: {zh:'备注：', en:'Remark: '},
-            trigger_file: {zh:'触发文件选择器', en:'Open file picker'},
             view_standard: {zh:'查看条件/标准', en:'View criteria/standard'},
+            btn_draft: {zh:'暂存', en:'Save Draft'},
+            btn_submit: {zh:'提交', en:'Submit'},
+            project_label: {zh:'项目', en:'Project'},
+
+            // ========== 审批意见模块 ==========
+            approval_opinion: {zh:'审批意见', en:'Approval Opinion'},
+            approval_result: {zh:'审批结果', en:'Approval Result'},
+            approve: {zh:'通过', en:'Approve'},
+            reject: {zh:'驳回', en:'Reject'},
+            approval_remark: {zh:'审批备注', en:'Approval Remarks'},
+            approval_remark_placeholder: {zh:'请输入审批备注信息...', en:'Please enter approval remarks...'},
 
             // 绿色分类路径
             '4.能源绿色低碳转型': {zh:'4.能源绿色低碳转型', en:'4. Green & Low-Carbon Energy Transition'},
@@ -1380,7 +1345,6 @@
                 zh:'资产经营与管理；组织资产重组、优化配置；项目投资、经营及管理；资产受托管理；教育培训；房屋租赁服务等',
                 en:'Asset operation and management; asset restructuring and optimization; project investment and management; entrusted asset management; education and training; property leasing.'
             },
-            // 用户额外指定的企业主营业务描述（备用）
             '水电开发与运营，涵盖水电项目投资建设、发电、输电及配电业务': {
                 zh:'水电开发与运营，涵盖水电项目投资建设、发电、输电及配电业务',
                 en:'Hydropower development and operations, covering investment, construction, power generation, transmission and distribution.'
@@ -1419,7 +1383,6 @@
                 zh:'城市污水处理厂新建和改造，生产过程水污染治理。',
                 en:'Construction and renovation of urban sewage treatment plants; industrial process water pollution control.'
             },
-            // 用户额外指定的项目建设内容描述
             '城市轨道交通建设工程项目（地铁线路延长段）': {
                 zh:'城市轨道交通建设工程项目（地铁线路延长段）',
                 en:'Urban rail transit construction project (metro line extension).'
@@ -1513,12 +1476,11 @@
             '电气机械及器材制造业': {zh:'电气机械及器材制造业', en:'Electrical Machinery & Equipment Mfg'},
             '电气机械及器材制造业 / 制造业': {zh:'电气机械及器材制造业 / 制造业', en:'Electrical Machinery & Equipment Mfg / Manufacturing'},
             '水利、环境和公共设施管理业 / 商务服务业': {zh:'水利、环境和公共设施管理业 / 商务服务业', en:'Water, Environment & Public Facilities Mgmt / Business Services'},
-            // 用户额外指定的行业标签
             '城市轨道交通': {zh:'城市轨道交通', en:'Urban Rail Transit'},
             '铝冶炼': {zh:'铝冶炼', en:'Aluminum Smelting'},
             '乳制品制造': {zh:'乳制品制造', en:'Dairy Manufacturing'},
 
-            // ========== 业务内容翻译：绿色标准描述（用于分类卡片提示） ==========
+            // ========== 业务内容翻译：绿色标准描述 ==========
             '4.2.4列入《"十四五"现代能源体系规划》、《"十四五"可再生能源发展规划》内的大型水电基地的建设活动。': {
                 zh:'4.2.4列入《"十四五"现代能源体系规划》、《"十四五"可再生能源发展规划》内的大型水电基地的建设活动。',
                 en:'4.2.4 Construction of large hydropower bases listed in the 14th Five-Year Plans for Modern Energy System and Renewable Energy Development.'

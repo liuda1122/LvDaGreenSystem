@@ -35,18 +35,8 @@
         .btn-primary:hover{background:var(--brand-700)}
         .btn-secondary{background:var(--white);color:var(--ink-800);border-color:var(--ink-300)}
         .btn-secondary:hover{border-color:var(--brand-500);color:var(--brand-500)}
-        .btn-deep-blue{background:var(--brand-700);color:#fff}
-        .btn-deep-blue:hover{background:var(--brand-900)}
-        .btn-light-blue{background:var(--brand-100);color:var(--brand-700);border-color:var(--brand-300)}
-        .btn-light-blue:hover{background:var(--brand-50);border-color:var(--brand-500)}
-        .btn-outline-brand{background:var(--white);color:var(--brand-500);border-color:var(--brand-300)}
+        .btn-outline-brand{background:var(--white);color:var(--brand-500);border-color:#A3C2E8}
         .btn-outline-brand:hover{background:var(--brand-50);border-color:var(--brand-500)}
-        .tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:var(--radius-sm);font-size:12px;font-weight:500;line-height:1.5;border:1px solid transparent;white-space:nowrap}
-        .tag-success{background:var(--success-bg);color:var(--green-700);border-color:var(--success-border)}
-        .tag-info{background:var(--info-bg);color:var(--brand-700);border-color:var(--info-border)}
-        .tag-warning{background:var(--warning-bg);color:var(--warning);border-color:var(--warning-border)}
-        .tag-danger{background:var(--danger-bg);color:var(--danger);border-color:var(--danger-border)}
-        .tag-default{background:var(--bg-muted);color:var(--ink-500);border-color:var(--line-200)}
         .stat-card{background:var(--white);border-radius:var(--radius-md);border:1px solid var(--line-200);padding:6px 12px;display:flex;flex-direction:column;gap:1px;min-width:110px}
         .stat-card .stat-value{font-size:18px;font-weight:700;font-family:var(--font-num)}
         .stat-card .stat-label{font-size:11px;color:var(--ink-500)}
@@ -56,7 +46,7 @@
         .table-wrap{overflow:auto;position:relative}
         .table-wrap table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;min-width:2200px}
         .table-wrap thead{position:sticky;top:0;z-index:10}
-        .table-wrap th{background:var(--bg-muted);padding:10px 14px;text-align:left;font-weight:600;color:var(--ink-600);border-bottom:1px solid var(--line-200);white-space:nowrap;font-size:12px}
+        .table-wrap th{background:var(--bg-muted);padding:10px 14px;text-align:left;font-weight:600;color:var(--ink-600);border-bottom:1px solid var(--line-200);white-space:nowrap;font-size:12px;text-transform:uppercase;letter-spacing:.3px}
         .table-wrap td{padding:10px 14px;border-bottom:1px solid var(--line-200);vertical-align:middle;white-space:nowrap}
         .table-wrap tbody tr:hover{background:var(--bg-subtle)}
         .table-wrap .col-seq{width:50px;text-align:center;color:var(--ink-400)}
@@ -68,8 +58,8 @@
         .table-wrap tbody tr:hover .col-approval{background:var(--bg-subtle)}
         .filter-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px}
         .filter-group-inline{display:flex;align-items:center;gap:6px;white-space:nowrap}
-        .filter-group-inline label{font-size:13px;color:var(--ink-600);font-weight:500;white-space:nowrap}
-        .filter-group-inline input,.filter-group-inline select{padding:5px 10px;border:1px solid var(--line-200);border-radius:var(--radius-md);font-size:13px;background:var(--white);outline:none;width:160px}
+        .filter-group-inline label{font-size:12px;color:var(--ink-500);font-weight:500;white-space:nowrap}
+        .filter-group-inline input,.filter-group-inline select{padding:6px 10px;border:1px solid var(--line-200);border-radius:var(--radius-md);font-size:13px;background:var(--white);outline:none;height:32px;width:160px}
         .filter-group-inline input:focus,.filter-group-inline select:focus{border-color:var(--brand-500)}
         .filter-group-inline input.wide{width:220px}
         .filter-group-inline select.wide{width:200px}
@@ -95,38 +85,35 @@
         <div class="section-card">
             <!-- 筛选栏 -->
             <div style="padding:16px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);flex-shrink:0;">
-                <!-- 第一行：始终显示 -->
-                <div class="filter-row" id="filterRow1">
+                <!-- 筛选条件：flex-wrap 自动换行 -->
+                <div style="display:flex;flex-wrap:wrap;gap:12px 16px;align-items:flex-end;">
                     <div class="filter-group-inline"><label data-i18n="filter_client">客户信息：</label><input type="text" class="wide" data-i18n-placeholder="placeholder_client"></div>
                     <div class="filter-group-inline"><label data-i18n="filter_approval">审批状态：</label><select id="selApproval"><option data-i18n="all_status">全部状态</option></select></div>
                     <div class="filter-group-inline"><label data-i18n="filter_industry">国民经济行业分类：</label><select class="wide" id="selIndustry"><option data-i18n="all_industries">全部行业</option></select></div>
                     <div class="filter-group-inline"><label data-i18n="filter_branch">所属支行机构：</label><select id="selBranch"><option data-i18n="all_branches">全部机构</option></select></div>
-                    <div class="filter-group-inline" style="margin-left:auto;gap:4px;">
-                        <span id="filterToggleBtn" style="cursor:pointer;color:var(--brand-500);font-size:12px;white-space:nowrap;" onclick="toggleFilter()"></span>
-                        <button class="btn btn-primary btn-sm" data-i18n="search">查询</button>
-                        <button class="btn btn-secondary btn-sm" data-i18n="reset">重置</button>
-                    </div>
-                </div>
-                <!-- 展开行（默认隐藏） -->
-                <div id="filterExpandRows" style="display:none;">
-                    <div class="filter-row" id="filterRow2" style="margin-top:12px;">
+                    <span id="filterExpandRows" style="display:none;">
                         <div class="filter-group-inline"><label data-i18n="filter_gf_cat">绿色金融分类(2025)：</label><select class="wide" id="selGfCat"><option data-i18n="all_categories">全部分类</option></select></div>
                         <div class="filter-group-inline"><label data-i18n="filter_manager">主办经理：</label><input type="text" data-i18n-placeholder="placeholder_manager"></div>
                         <div class="filter-group-inline"><label data-i18n="filter_project">项目信息：</label><input type="text" class="wide" data-i18n-placeholder="placeholder_project"></div>
-                    </div>
-                    <div class="filter-row" id="filterRow3" style="margin-top:12px;">
                         <div class="filter-group-inline"><label data-i18n="filter_date">数据日期：</label><div class="date-range"><input type="date" value="2015-10-02"><span>~</span><input type="date" value="2015-10-10"></div></div>
-                    </div>
+                    </span>
+                </div>
+                <!-- 按钮区：右下角 -->
+                <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px;">
+                    <button id="filterToggleBtn" class="btn btn-secondary btn-sm" onclick="toggleFilter()" style="padding:6px 8px;">▼</button>
+                    <button class="btn btn-primary btn-sm" data-i18n="search">查询</button>
+                    <button class="btn btn-secondary btn-sm" data-i18n="reset">重置</button>
                 </div>
             </div>
             <!-- 操作栏：导出数据在左 -->
-            <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100 flex-shrink-0">
-                <div class="flex gap-2 flex-wrap">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid var(--line-200);flex-shrink:0;">
+                <div style="display:flex;gap:8px;">
                     <button class="btn btn-secondary btn-sm" onclick="alert(I18N.t('download_ok'))">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                         <span data-i18n="export">导出数据</span>
                     </button>
                 </div>
+                <span style="font-size:14px;color:var(--ink-400);">共 1,126 条</span>
             </div>
         </div>
 
@@ -325,20 +312,6 @@
         {key:'stat_water', color:'#10B981'}
     ];
 
-    function getTagClass(taskNode, calcStatus, approval){
-        var taskClass = 'tag-info'; // 当前任务节点统一用 info 样式
-        var calcClass = ''; var approvalClass = '';
-
-        if(calcStatus==='calculated') calcClass='tag-success';
-        else if(calcStatus==='not_calculated') calcClass='tag-danger';
-
-        if(approval==='pending_approval') approvalClass='tag-warning';
-        else if(approval==='not_submitted') approvalClass='tag-default';
-        else if(approval==='approved') approvalClass='tag-success';
-        else if(approval==='rejected') approvalClass='tag-danger';
-
-        return {taskClass:taskClass, calcClass:calcClass, approvalClass:approvalClass};
-    }
 
     function formatT(key, replacements){
         var result = I18N.t(key);
@@ -366,9 +339,6 @@
         var html = '';
         for(var i=0; i<projectData.length; i++){
             var r = projectData[i];
-            var cls = getTagClass(r.taskNode, r.calcStatus, r.approval);
-            var actionBtn = '<div class="action-btns"></div>';
-            // 映射 approval 值到中文显示
             var apprMap = {'pending_approval':'审批中','not_submitted':'未提交','approved':'已完成','rejected':'已驳回'};
             var apprText = apprMap[r.approval] || r.approval;
             var calcMap = {'calculated':'已测算','not_calculated':'未测算'};
@@ -388,12 +358,12 @@
                 '<td>'+r.hostBranch+'</td>'+
                 '<td>'+r.region+'</td>'+
                 '<td>'+r.manager+'</td>'+
-                '<td><span class="tag '+cls.taskClass+'">'+r.taskNode+'</span></td>'+
-                '<td><span class="tag '+cls.calcClass+'">'+calcText+'</span></td>'+
-                '<td class="col-approval"><span class="tag '+cls.approvalClass+'">'+apprText+'</span></td>'+
+                '<td>'+r.taskNode+'</td>'+
+                '<td>'+calcText+'</td>'+
+                '<td class="col-approval">'+apprText+'</td>'+
                 '<td>'+r.update+'</td>'+
                 '<td>'+r.created+'</td>'+
-                '<td class="col-actions">'+actionBtn+'</td>'+
+                '<td class="col-actions"><div class="action-btns"></div></td>'+
             '</tr>';
         }
         tbody.innerHTML = html;
@@ -462,14 +432,16 @@
     var filterExpanded=false;
     function toggleFilter(){
         var rows=document.getElementById('filterExpandRows');
+        var btn=document.getElementById('filterToggleBtn');
         if(filterExpanded){
             rows.style.display='none';
+            btn.innerHTML='▼';
             filterExpanded=false;
         }else{
-            rows.style.display='block';
+            rows.style.display='contents';
+            btn.innerHTML='▲';
             filterExpanded=true;
         }
-        updateToggleBtn();
     }
     function updateToggleBtn(){
         var btn=document.getElementById('filterToggleBtn');
@@ -491,7 +463,17 @@
     function getCurrentDir(){var p=window.location.pathname;return p.substring(0,p.lastIndexOf('/')+1)}
     function goToDetail(mode){
         var dir=getCurrentDir();
-        var targetUrl=dir+'环境效益测算填报.html';
+        var targetUrl;
+        if (mode === 'approve') {
+            // 审核员 → 审批页
+            targetUrl = dir + '环境效益测算审批.html';
+        } else if (mode === 'view') {
+            // 查看详情 → 查看页
+            targetUrl = dir + '环境效益测算查看.html';
+        } else {
+            // 'edit'/'calc' — 客户经理测算填报/重新测算
+            targetUrl = dir + '环境效益测算填报.html';
+        }
         if(window.parent!==window){
             var pageId='env-detail-'+Date.now()+'-'+Math.random().toString(36).substr(2,6);
             var label=mode==='view' ? I18N.t('view_detail') : I18N.t('go_process');
@@ -520,61 +502,46 @@
         // ---- 公司客户经理（主办经理） ----
         if (currentRole === '客户经理') {
             if (appr === '未提交') {
-                btns.push({label:'去测算', cls:'btn btn-primary btn-sm'});
+                btns.push({label:'去测算', cls:'btn btn-primary btn-sm', action:'edit'});
             } else if (appr === '审批中') {
-                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+                btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
             } else if (appr === '已驳回') {
-                btns.push({label:'重新测算', cls:'btn btn-primary btn-sm'});
+                btns.push({label:'重新测算', cls:'btn btn-primary btn-sm', action:'edit'});
             } else if (appr === '已完成') {
-                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+                btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
             }
         }
         // ---- 公司绿金联系人 ----
         else if (currentRole === '公司绿金联系人') {
-            if (appr === '未提交') {
-                // — 无按钮
-            } else if (appr === '审批中' && nodeMatches(node, '绿金联系人')) {
-                btns.push({label:'去处理', cls:'btn btn-primary btn-sm'});
-            } else if (appr === '审批中' && !nodeMatches(node, '绿金联系人')) {
-                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
-            } else if (appr === '已驳回') {
-                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+            if (appr === '审批中' && nodeMatches(node, '绿金联系人')) {
+                btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'approve'});
             } else if (appr === '已完成') {
-                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+                btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
             }
+            // 未提交/已驳回/审批中非当前节点 → —
         }
         // ---- 总行公司初审 ----
         else if (currentRole === '总行公司初审') {
-            if (appr === '未提交') {
-                // — 无按钮
-            } else if (appr === '审批中' && nodeMatches(node, '总行初审')) {
-                btns.push({label:'去处理', cls:'btn btn-primary btn-sm'});
-            } else if (appr === '审批中' && !nodeMatches(node, '总行初审')) {
-                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
-            } else if (appr === '已驳回') {
-                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+            if (appr === '审批中' && nodeMatches(node, '总行初审')) {
+                btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'approve'});
             } else if (appr === '已完成') {
-                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+                btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
             }
+            // 未提交/已驳回/审批中非当前节点 → —
         }
         // ---- 总行公司复核 ----
         else if (currentRole === '总行公司复核') {
-            if (appr === '未提交') {
-                // — 无按钮
-            } else if (appr === '审批中' && nodeMatches(node, '总行复核')) {
-                btns.push({label:'去处理', cls:'btn btn-primary btn-sm'});
-            } else if (appr === '审批中' && !nodeMatches(node, '总行复核')) {
-                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
-            } else if (appr === '已驳回') {
-                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+            if (appr === '审批中' && nodeMatches(node, '总行复核')) {
+                btns.push({label:'去处理', cls:'btn btn-primary btn-sm', action:'approve'});
             } else if (appr === '已完成') {
-                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+                btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
             }
+            // 未提交/已驳回/审批中非当前节点 → —
         }
         // ---- 总行管理员（仅查看） ----
         else if (currentRole === '总行管理员') {
             if (appr !== '未提交') {
-                btns.push({label:'查看详情', cls:'btn btn-deep-blue btn-sm'});
+                btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
             }
         }
 
@@ -583,7 +550,7 @@
             var btn = document.createElement('button');
             btn.className = b.cls;
             btn.textContent = b.label;
-            btn.onclick = function() { goToDetail(b.label === '查看详情' ? 'view' : 'edit'); };
+            btn.onclick = function() { goToDetail(b.action); };
             container.appendChild(btn);
         });
     }

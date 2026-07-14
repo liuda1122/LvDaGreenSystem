@@ -5,250 +5,207 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>绿色金融业务画像</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+  <script src="../i18n.js"></script>
   <style>
     :root {
-      --brand-50:#E8F0FB; --brand-100:#D1DFF4; --brand-300:#6E97D6;
-      --brand-500:#2A66C2; --brand-700:#143F8F; --brand-900:#01256A;
+      --brand-50:#E8F0FB; --brand-500:#2A66C2; --brand-700:#143F8F;
       --green-50:#ECFDF5; --green-500:#10B981; --green-700:#047857;
-      --red-500:#EF4444; --red-50:#FEF2F2;
-      --ink-900:#0F172A; --ink-800:#1E293B; --ink-600:#475569;
+      --red-500:#EF4444; --ink-900:#0F172A; --ink-800:#1E293B; --ink-600:#475569;
       --ink-500:#64748B; --ink-400:#94A3B8; --ink-300:#CBD5E1;
-      --line-200:#E2E8F0; --bg-muted:#F1F5F9; --bg-subtle:#F8FAFC;
-      --white:#FFFFFF;
-      --radius-sm:4px; --radius-md:6px; --radius-lg:8px;
-      --radius-xl:12px; --radius-2xl:16px;
-      --s-3:12px; --s-4:16px; --s-6:24px;
+      --line-200:#E2E8F0; --bg-muted:#F1F5F9; --bg-subtle:#F8FAFC; --white:#FFFFFF;
+      --radius-sm:4px; --radius-md:6px; --radius-lg:8px; --radius-xl:12px;
       --font-sans:'PingFang SC','Microsoft YaHei','Inter',system-ui,sans-serif;
       --font-num:'Inter','SF Pro Display',system-ui,sans-serif;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{font-family:var(--font-sans);color:var(--ink-800);background:var(--bg-subtle);font-size:14px;line-height:1.57;height:100vh;overflow:hidden}
-    .custom-scroll::-webkit-scrollbar{width:5px}
+    .custom-scroll::-webkit-scrollbar{width:6px;height:6px}
     .custom-scroll::-webkit-scrollbar-track{background:transparent}
     .custom-scroll::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}
+    .btn{display:inline-flex;align-items:center;gap:6px;border-radius:var(--radius-md);font-family:inherit;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid transparent;line-height:1;white-space:nowrap}
+    .btn-sm{padding:6px 12px;font-size:12px;line-height:20px;height:28px}
+    .btn-primary{background:var(--brand-500);color:#fff}.btn-primary:hover{background:var(--brand-700)}
+    .btn-secondary{background:var(--white);color:var(--ink-800);border-color:var(--ink-300)}.btn-secondary:hover{border-color:var(--brand-500);color:var(--brand-500)}
+    .btn-outline-brand{background:var(--white);color:var(--brand-500);border-color:#A3C2E8}.btn-outline-brand:hover{background:var(--brand-50);border-color:var(--brand-500)}
     .section-card{background:var(--white);border-radius:var(--radius-xl);border:1px solid var(--line-200);overflow:hidden;display:flex;flex-direction:column}
-    .section-card-head{display:flex;align-items:center;padding:var(--s-3) var(--s-4);border-bottom:1px solid var(--line-200);background:linear-gradient(135deg,var(--brand-50) 0%,var(--bg-subtle) 100%);flex-shrink:0}
-    .section-card-title{font-size:15px;font-weight:600;color:var(--ink-900)}
-    .stat-card{background:var(--white);border-radius:var(--radius-xl);border:1px solid var(--line-200);padding:var(--s-4) var(--s-6);display:flex;flex-direction:column;gap:2px}
-    .stat-value{font-size:26px;font-weight:700;color:var(--brand-700);font-family:var(--font-num);line-height:1.2}
-    .stat-label{font-size:12px;color:var(--ink-500)}
-    .stat-change{font-size:11px;font-weight:600}
+    .stat-card{background:var(--white);border-radius:var(--radius-xl);border:1px solid var(--line-200);padding:20px 24px;display:flex;flex-direction:column;gap:4px}
+    .stat-label{font-size:13px;color:var(--ink-500);font-weight:500}
+    .stat-value{font-size:28px;font-weight:700;color:var(--brand-700);font-family:var(--font-num);line-height:1.2}
+    .stat-change{font-size:12px;font-weight:600}
     .stat-change.up{color:var(--green-700)}
-    .stat-change.down{color:var(--red-500)}
-    .chart-box{flex:1;min-height:0;width:100%}
+    .filter-row{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 16px}
+    .filter-group{display:flex;flex-direction:column;gap:4px;min-width:140px}
+    .filter-group label{font-size:12px;color:var(--ink-500);font-weight:500}
+    .filter-group input,.filter-group select{padding:6px 10px;border:1px solid var(--line-200);border-radius:var(--radius-md);font-size:13px;background:var(--white);outline:none;height:32px;min-width:0}
+    .filter-group input:focus,.filter-group select:focus{border-color:var(--brand-500)}
+    .table-wrap{overflow:auto;flex:1;position:relative}
+    .table-wrap table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;min-width:2200px}
+    .table-wrap thead{position:sticky;top:0;z-index:10}
+    .table-wrap th{background:var(--bg-muted);padding:10px 14px;text-align:left;font-weight:600;color:var(--ink-600);border-bottom:1px solid var(--line-200);white-space:nowrap;font-size:12px;text-transform:uppercase;letter-spacing:.3px}
+    .table-wrap td{padding:10px 14px;border-bottom:1px solid var(--line-200);vertical-align:middle;white-space:nowrap}
+    .table-wrap tbody tr:hover{background:var(--bg-subtle)}
   </style>
 </head>
-<body class="flex flex-col p-5 gap-4 overflow-y-auto custom-scroll">
+<body>
+<div class="flex flex-col" style="height:100vh;background:var(--bg-subtle);">
+  <div class="flex-1 overflow-hidden" style="padding:20px 24px 24px;">
+    <!-- 统计卡片 -->
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:16px;flex-shrink:0;">
+      <div class="stat-card">
+        <div class="stat-label" data-i18n="card_balance">绿色贷款余额</div>
+        <div class="stat-value">856,320<span style="font-size:14px;font-weight:400;color:var(--ink-500);"> 万元</span></div>
+        <div class="stat-change up">▲ 18.7% <span style="font-weight:400;color:var(--ink-400);">较上年</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label" data-i18n="card_clients">绿色贷款企业客户数量</div>
+        <div class="stat-value">128<span style="font-size:14px;font-weight:400;color:var(--ink-500);"> 家</span></div>
+        <div class="stat-change up">▲ 12.3% <span style="font-weight:400;color:var(--ink-400);">较上年</span></div>
+      </div>
+    </div>
 
-  <!-- ====== 概览卡片 ====== -->
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;flex-shrink:0">
-    <div class="stat-card">
-      <div class="stat-label">绿色金融客户总数</div>
-      <div class="stat-value">128<span style="font-size:14px;font-weight:400"> 户</span></div>
-      <div class="stat-change up">▲ 12.3% <span style="font-weight:400;color:var(--ink-400)">较上年</span></div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">绿色贷款余额</div>
-      <div class="stat-value">856<span style="font-size:14px;font-weight:400"> 亿元</span></div>
-      <div class="stat-change up">▲ 18.7% <span style="font-weight:400;color:var(--ink-400)">较上年</span></div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">绿色产业覆盖行业</div>
-      <div class="stat-value">47<span style="font-size:14px;font-weight:400"> 个</span></div>
-      <div class="stat-change up">▲ 6.8% <span style="font-weight:400;color:var(--ink-400)">较上年</span></div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">绿色客户活跃率</div>
-      <div class="stat-value">93.2<span style="font-size:14px;font-weight:400">%</span></div>
-      <div class="stat-change up">▲ 2.1pp <span style="font-weight:400;color:var(--ink-400)">较上年</span></div>
+    <!-- 已认定绿色贷款明细 -->
+    <div class="section-card" style="flex:1;min-height:0;">
+      <!-- 筛选栏 -->
+      <div style="padding:14px 24px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);flex-shrink:0;">
+        <div class="filter-row">
+          <div class="filter-group" style="min-width:200px;flex:1.5;"><label data-i18n="f_contract">合同信息</label><input type="text" data-i18n-placeholder="ph_contract" placeholder="请输入合同名称/编号"></div>
+          <div class="filter-group" style="min-width:200px;flex:1.5;"><label data-i18n="f_client">企业信息</label><input type="text" data-i18n-placeholder="ph_client" placeholder="企业名称/编号/统一社会信用代码"></div>
+          <div class="filter-group" style="min-width:160px;flex:1;"><label data-i18n="f_gf_cat">绿色金融分类（2025）</label><select><option data-i18n="opt_all">全部</option></select></div>
+          <div class="filter-group" style="min-width:150px;flex:1;"><label data-i18n="f_branch">辖区分行</label><select><option data-i18n="opt_all">全部</option></select></div>
+          <div style="display:flex;align-items:flex-end;gap:8px;padding-bottom:1px;">
+            <button class="btn btn-primary btn-sm" data-i18n="btn_search">查询</button>
+            <button class="btn btn-secondary btn-sm" data-i18n="btn_reset">重置</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 操作栏 -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid var(--line-200);flex-shrink:0;">
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-secondary btn-sm" data-i18n="btn_export">导出数据</button>
+        </div>
+        <span style="font-size:14px;color:var(--ink-400);" id="totalCount">共 8 条</span>
+      </div>
+
+      <!-- 表格 -->
+      <div class="table-wrap custom-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:46px;text-align:center;" data-i18n="th_seq">序号</th>
+              <th data-i18n="th_client_type">客户类型</th>
+              <th data-i18n="th_client_code">客户编号</th>
+              <th data-i18n="th_client_name">客户名称</th>
+              <th data-i18n="th_contract_code">合同编号</th>
+              <th data-i18n="th_biz_cat">业务品种大类</th>
+              <th data-i18n="th_biz_type">业务品种</th>
+              <th data-i18n="th_amount">合同金额（万元）</th>
+              <th data-i18n="th_balance">合同余额（万元）</th>
+              <th data-i18n="th_ratio">绿色贷款比例</th>
+              <th data-i18n="th_industry">贷款投向行业</th>
+              <th data-i18n="th_client_ind">客户国民经济行业分类</th>
+              <th data-i18n="th_gf_cat">绿色金融分类（2025）</th>
+              <th data-i18n="th_purpose">绿色融资用途</th>
+              <th data-i18n="th_line">业务条线</th>
+              <th data-i18n="th_status">合同状态</th>
+              <th data-i18n="th_proj_code">项目代码</th>
+              <th data-i18n="th_proj_name">项目名称</th>
+              <th data-i18n="th_date">认定日期</th>
+              <th data-i18n="th_host">主办机构</th>
+              <th data-i18n="th_branch">辖区分行</th>
+              <th data-i18n="th_mgr">主办经理/工号</th>
+              <th data-i18n="th_update">最近更新时间</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- 分页 -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-top:1px solid var(--line-200);flex-shrink:0;">
+        <span style="font-size:14px;color:var(--ink-400);">共 8 条</span>
+        <div style="display:flex;align-items:center;gap:4px;">
+          <button class="btn btn-secondary btn-sm">‹</button>
+          <span style="padding:4px 8px;background:var(--brand-500);color:#fff;border-radius:4px;font-size:14px;">1</span>
+          <button class="btn btn-secondary btn-sm">›</button>
+        </div>
+      </div>
     </div>
   </div>
+</div>
 
-  <!-- ====== 上排：业务画像饼图 + 客户画像条形图 ====== -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;flex:1;min-height:0">
-    <!-- 绿色金融业务画像 - 饼图 -->
-    <div class="section-card">
-      <div class="section-card-head"><span class="section-card-title">行内绿色金融业务画像</span></div>
-      <div class="chart-box" id="chart-business"></div>
-    </div>
+<script>
+I18N.setDict({
+  card_balance:{zh:'绿色贷款余额',en:'Green Loan Balance'},
+  card_clients:{zh:'绿色贷款企业客户数量',en:'Green Loan Clients'},
+  f_contract:{zh:'合同信息',en:'Contract Info'},
+  f_client:{zh:'企业信息',en:'Client Info'},
+  f_gf_cat:{zh:'绿色金融分类（2025）',en:'GF Category (2025)'},
+  f_branch:{zh:'辖区分行',en:'Branch'},
+  ph_contract:{zh:'请输入合同名称/编号',en:'Enter contract name/code'},
+  ph_client:{zh:'企业名称/编号/统一社会信用代码',en:'Client name/code/credit code'},
+  opt_all:{zh:'全部',en:'All'},
+  btn_search:{zh:'查询',en:'Search'},
+  btn_reset:{zh:'重置',en:'Reset'},
+  btn_export:{zh:'导出数据',en:'Export'},
+  th_seq:{zh:'序号',en:'#'},
+  th_client_type:{zh:'客户类型',en:'Client Type'},
+  th_client_code:{zh:'客户编号',en:'Client Code'},
+  th_client_name:{zh:'客户名称',en:'Client Name'},
+  th_contract_code:{zh:'合同编号',en:'Contract Code'},
+  th_biz_cat:{zh:'业务品种大类',en:'Biz Category'},
+  th_biz_type:{zh:'业务品种',en:'Biz Type'},
+  th_amount:{zh:'合同金额（万元）',en:'Amount (10k CNY)'},
+  th_balance:{zh:'合同余额（万元）',en:'Balance (10k CNY)'},
+  th_ratio:{zh:'绿色贷款比例',en:'Green Ratio'},
+  th_industry:{zh:'贷款投向行业',en:'Loan Industry'},
+  th_client_ind:{zh:'客户国民经济行业分类',en:'Client Industry'},
+  th_gf_cat:{zh:'绿色金融分类（2025）',en:'GF Category (2025)'},
+  th_purpose:{zh:'绿色融资用途',en:'Green Financing Purpose'},
+  th_line:{zh:'业务条线',en:'Business Line'},
+  th_status:{zh:'合同状态',en:'Status'},
+  th_proj_code:{zh:'项目代码',en:'Project Code'},
+  th_proj_name:{zh:'项目名称',en:'Project Name'},
+  th_date:{zh:'认定日期',en:'ID Date'},
+  th_host:{zh:'主办机构',en:'Host Org'},
+  th_branch:{zh:'辖区分行',en:'Branch'},
+  th_mgr:{zh:'主办经理/工号',en:'Manager/ID'},
+  th_update:{zh:'最近更新时间',en:'Last Updated'},
+});
 
-    <!-- 绿色客户画像 - 条形图 -->
-    <div class="section-card">
-      <div class="section-card-head"><span class="section-card-title">绿色客户画像分析</span></div>
-      <div class="chart-box" id="chart-customer"></div>
-    </div>
-  </div>
+var data=[
+  {tp:'大型企业',cc:'CUST-001',cn:'宁德时代新能源科技股份有限公司',ctc:'2021012900000050',bc:'固定项目贷',bt:'固定项目贷',am:'100,030.00',bl:'90,000,000.00',gr:'100%',ind:'炼钢',ci:'C31 黑色金属冶炼',gf:'1.1.1 节能锅炉制造',gp:'动力及储能锂离子电池研发生产基地建设',ln:'对公',st:'生效',pc:'PRJNO202004261603',pn:'动力及储能锂离子电池研发生产',dt:'2025-06-15',ho:'北京分行公司部',br:'北京分行',mg:'张三/000001',up:'2025/06/30 10:59:59'},
+  {tp:'大型企业',cc:'CUST-002',cn:'隆基绿能科技股份有限公司',ctc:'2021012900055550',bc:'固定项目贷',bt:'技改项目贷款',am:'300,000.00',bl:'230,000,000.00',gr:'80%',ind:'太阳能发电',ci:'D44 电力热力生产',gf:'4.2.4 大型水利发电设施',gp:'5GW单晶硅片及电池组件项目',ln:'对公',st:'生效',pc:'PRJNO202103091119',pn:'银川隆基5GW单晶硅片项目',dt:'2025-05-20',ho:'北京分行公司部',br:'北京分行',mg:'张三/000001',up:'2025/06/28 14:30:00'},
+  {tp:'大型企业',cc:'CUST-003',cn:'中国广核电力股份有限公司',ctc:'2021012900000052',bc:'流动资金贷款',bt:'一般流动资金贷款',am:'200,000.00',bl:'9,000,000.00',gr:'100%',ind:'太阳能发电',ci:'D44 电力热力生产',gf:'1.1.1 节能锅炉制造',gp:'核电站运维及清洁能源项目建设',ln:'对公',st:'生效',pc:'—',pn:'—',dt:'2025-06-01',ho:'北京分行公司部',br:'北京分行',mg:'王五/001',up:'2025/06/30 10:59:59'},
+  {tp:'中型企业',cc:'CUST-005',cn:'浙江嘉化能源化工股份有限公司',ctc:'2021012900000054',bc:'流动资金贷款',bt:'一般流动资金贷款',am:'70,000.00',bl:'20,000,000.00',gr:'65%',ind:'大气污染治理',ci:'E48 土木工程建筑',gf:'2.5.2 危险废物处理处置',gp:'化工园区废气治理及资源化利用',ln:'小微',st:'生效',pc:'—',pn:'—',dt:'2025-04-18',ho:'重庆渝北支行',br:'重庆银行渝北支行',mg:'李四/002',up:'2025/06/25 16:20:00'},
+  {tp:'大型企业',cc:'CUST-006',cn:'中国铝业股份有限公司',ctc:'2021012900000056',bc:'固定项目贷',bt:'节能改造贷款',am:'95,000.00',bl:'65,000,000.00',gr:'70%',ind:'铝冶炼',ci:'C32 有色金属冶炼',gf:'1.1 能效提升',gp:'电解槽节能技改及环保升级',ln:'对公',st:'生效',pc:'PRJ-2026-006',pn:'电解槽节能技改及环保升级',dt:'2025-07-01',ho:'重庆渝北支行',br:'重庆银行渝北支行',mg:'周经理/006',up:'2025/07/02 12:00:00'},
+  {tp:'中型企业',cc:'CUST-007',cn:'现代牧业集团有限公司',ctc:'2021012900000057',bc:'固定项目贷',bt:'绿色项目贷款',am:'150,000.00',bl:'120,000,000.00',gr:'100%',ind:'畜牧业',ci:'A03 畜牧业',gf:'5.1.14 绿色畜牧业',gp:'标准化示范牧场建设及畜禽粪污资源化利用',ln:'对公',st:'生效',pc:'PRJ-2026-007',pn:'标准化示范牧场建设项目',dt:'2025-06-20',ho:'上海分行公司部',br:'上海分行',mg:'吴经理/007',up:'2025/07/02 11:20:50'},
+  {tp:'大型企业',cc:'CUST-008',cn:'中创新航科技集团',ctc:'2021012900000058',bc:'固定项目贷',bt:'绿色项目贷款',am:'1,800,000.00',bl:'1,500,000,000.00',gr:'100%',ind:'锂离子电池制造',ci:'C38 电气机械制造',gf:'4.1.8 新型储能产品制造',gp:'新型储能电池生产基地建设',ln:'对公',st:'生效',pc:'PRJ-2026-008',pn:'新型储能电池生产基地',dt:'2025-07-05',ho:'上海分行公司部',br:'上海分行',mg:'王审核/013',up:'2025/07/08 09:30:00'},
+  {tp:'小型企业',cc:'CUST-010',cn:'杭州萧山环保科技有限公司',ctc:'2021012900000060',bc:'流动资金贷款',bt:'短期流动资金贷款',am:'10,000.00',bl:'5,000,000.00',gr:'50%',ind:'环境保护监测',ci:'M74 专业技术服务',gf:'2.1.3 节能锅炉制造',gp:'环保监测设备采购及技术服务',ln:'零售',st:'生效',pc:'—',pn:'—',dt:'2025-03-10',ho:'杭州分行公司部',br:'杭州分行',mg:'陈经理/005',up:'2025/07/01 08:15:00'}
+];
 
-  <!-- ====== 下排：三个维度贷款分析 ====== -->
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;flex:1;min-height:0">
-    <!-- 按分支机构维度 -->
-    <div class="section-card">
-      <div class="section-card-head"><span class="section-card-title">按分支机构维度贷款分析</span></div>
-      <div class="chart-box" id="chart-branch"></div>
-    </div>
-
-    <!-- 按地区维度 -->
-    <div class="section-card">
-      <div class="section-card-head"><span class="section-card-title">按地区维度贷款分析</span></div>
-      <div class="chart-box" id="chart-region"></div>
-    </div>
-
-    <!-- 按行业维度 -->
-    <div class="section-card">
-      <div class="section-card-head"><span class="section-card-title">按行业维度贷款分析</span></div>
-      <div class="chart-box" id="chart-industry"></div>
-    </div>
-  </div>
-
-  <script>
-    // ===== ECharts 通用配色 =====
-    var brandColors = ['#2A66C2', '#6E97D6', '#A8C4ED', '#143F8F', '#01256A'];
-    var greenColors  = ['#10B981', '#34D399', '#6EE7B7', '#047857', '#059669', '#A7F3D0', '#D1FAE5'];
-    var mixColors    = ['#2A66C2', '#10B981', '#F59E0B', '#8B5CF6', '#EF4444', '#06B6D4', '#EC4899'];
-
-    function makePieOpt(data, title) {
-      return {
-        tooltip: { trigger: 'item', formatter: '{b}: {c} 亿元 ({d}%)' },
-        legend: { orient: 'vertical', right: 10, top: 'center', textStyle: { fontSize: 11, color: '#475569' } },
-        series: [{
-          name: title, type: 'pie', radius: ['45%', '75%'], center: ['40%', '50%'],
-          avoidLabelOverlap: false,
-          itemStyle: { borderRadius: 4, borderColor: '#fff', borderWidth: 2 },
-          label: { show: false },
-          emphasis: { label: { show: true, fontSize: 14, fontWeight: 'bold' } },
-          data: data
-        }]
-      };
-    }
-
-    function makeBarOpt(categories, values, name, isHorizontal) {
-      if (isHorizontal) {
-        return {
-          tooltip: { trigger: 'axis', formatter: function(p) { return p[0].name + '<br/>' + p[0].marker + ' ' + p[0].value + ' 亿元'; } },
-          grid: { left: 80, right: 30, top: 10, bottom: 20 },
-          xAxis: { type: 'value', axisLabel: { fontSize: 10, color: '#94A3B8' }, splitLine: { lineStyle: { color: '#F1F5F9' } } },
-          yAxis: { type: 'category', data: categories, axisLabel: { fontSize: 11, color: '#475569' }, axisLine: { show: false }, axisTick: { show: false } },
-          series: [{
-            name: name, type: 'bar', data: values,
-            itemStyle: { borderRadius: [0, 4, 4, 0], color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-              { offset: 0, color: '#2A66C2' }, { offset: 1, color: '#6E97D6' }
-            ]) },
-            barWidth: 14,
-            label: { show: true, position: 'right', fontSize: 10, color: '#475569', formatter: '{c}' }
-          }]
-        };
-      }
-      return {
-        tooltip: { trigger: 'axis' },
-        grid: { left: 50, right: 20, top: 10, bottom: 50 },
-        xAxis: { type: 'category', data: categories, axisLabel: { fontSize: 9, color: '#94A3B8', rotate: 30 }, axisTick: { alignWithLabel: true } },
-        yAxis: { type: 'value', axisLabel: { fontSize: 10, color: '#94A3B8' }, splitLine: { lineStyle: { color: '#F1F5F9' } } },
-        series: [{
-          name: name, type: 'bar', data: values,
-          itemStyle: { borderRadius: [4, 4, 0, 0], color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            { offset: 0, color: '#10B981' }, { offset: 1, color: '#6EE7B7' }
-          ]) },
-          barWidth: 16
-        }]
-      };
-    }
-
-    // ===== 1. 业务画像 - 环形饼图 =====
-    (function() {
-      var dom = document.getElementById('chart-business');
-      var chart = echarts.init(dom);
-      chart.setOption(makePieOpt([
-        { value: 456.8, name: '绿色贷款' },
-        { value: 212.3, name: '绿色债券' },
-        { value:  98.5, name: 'ESG理财' },
-        { value:  56.4, name: '碳金融' },
-        { value:  32.0, name: '其他' }
-      ], '业务类别'));
-      window.addEventListener('resize', function() { chart.resize(); });
-    })();
-
-    // ===== 2. 客户画像 - 横向条形图（删除绿色评级和活跃度） =====
-    (function() {
-      var dom = document.getElementById('chart-customer');
-      var chart = echarts.init(dom);
-      chart.setOption(makeBarOpt(
-        ['清洁能源', '节能环保', '绿色交通', '绿色建筑', '生态农业'],
-        [286.4, 198.2, 172.5, 115.8, 83.1],
-        '贷款余额(亿元)', true
-      ));
-      window.addEventListener('resize', function() { chart.resize(); });
-    })();
-
-    // ===== 3. 按分支机构维度 =====
-    (function() {
-      var dom = document.getElementById('chart-branch');
-      var chart = echarts.init(dom);
-      chart.setOption({
-        tooltip: { trigger: 'axis' },
-        grid: { left: 55, right: 25, top: 10, bottom: 50 },
-        xAxis: { type: 'category', data: ['北京分行','上海分行','广州分行','深圳分行','杭州分行','其他'], axisLabel: { fontSize: 10, color: '#94A3B8', rotate: 30 } },
-        yAxis: { type: 'value', name: '亿元', axisLabel: { fontSize: 10, color: '#94A3B8' }, splitLine: { lineStyle: { color: '#F1F5F9' } } },
-        series: [{
-          type: 'bar', data: [234.6, 198.3, 152.7, 128.4, 85.9, 56.1],
-          itemStyle: { borderRadius: [4,4,0,0], color: new echarts.graphic.LinearGradient(0,0,0,1,[
-            {offset:0,color:'#2A66C2'},{offset:1,color:'#A8C4ED'}
-          ])},
-          barWidth: 18,
-          label: { show: true, position: 'top', fontSize: 9, color: '#475569' }
-        }]
-      });
-      window.addEventListener('resize', function() { chart.resize(); });
-    })();
-
-    // ===== 4. 按地区维度 =====
-    (function() {
-      var dom = document.getElementById('chart-region');
-      var chart = echarts.init(dom);
-      chart.setOption({
-        tooltip: { trigger: 'axis' },
-        grid: { left: 55, right: 25, top: 10, bottom: 50 },
-        xAxis: { type: 'category', data: ['长三角','京津冀','粤港澳大湾区','成渝经济圈','中部地区','其他地区'], axisLabel: { fontSize: 9, color: '#94A3B8', rotate: 25 } },
-        yAxis: { type: 'value', name: '亿元', axisLabel: { fontSize: 10, color: '#94A3B8' }, splitLine: { lineStyle: { color: '#F1F5F9' } } },
-        series: [{
-          type: 'bar', data: [312.5, 245.8, 168.4, 72.3, 38.6, 18.4],
-          itemStyle: { borderRadius: [4,4,0,0], color: new echarts.graphic.LinearGradient(0,0,0,1,[
-            {offset:0,color:'#10B981'},{offset:1,color:'#A7F3D0'}
-          ])},
-          barWidth: 18,
-          label: { show: true, position: 'top', fontSize: 9, color: '#475569' }
-        }]
-      });
-      window.addEventListener('resize', function() { chart.resize(); });
-    })();
-
-    // ===== 5. 按行业维度 =====
-    (function() {
-      var dom = document.getElementById('chart-industry');
-      var chart = echarts.init(dom);
-      chart.setOption({
-        tooltip: { trigger: 'axis' },
-        grid: { left: 55, right: 25, top: 10, bottom: 55 },
-        xAxis: { type: 'category', data: ['可再生能源','节能环保装备','新能源汽车','绿色建筑建材','污水处理/水环境','固废处理/资源化','生态农林'], axisLabel: { fontSize: 8, color: '#94A3B8', rotate: 30 } },
-        yAxis: { type: 'value', name: '亿元', axisLabel: { fontSize: 10, color: '#94A3B8' }, splitLine: { lineStyle: { color: '#F1F5F9' } } },
-        series: [{
-          type: 'bar', data: [234.6, 167.2, 152.8, 118.5, 89.4, 57.3, 36.2],
-          itemStyle: { borderRadius: [4,4,0,0], color: new echarts.graphic.LinearGradient(0,0,0,1,[
-            {offset:0,color:'#F59E0B'},{offset:1,color:'#FCD34D'}
-          ])},
-          barWidth: 16,
-          label: { show: true, position: 'top', fontSize: 9, color: '#475569' }
-        }]
-      });
-      window.addEventListener('resize', function() { chart.resize(); });
-    })();
-
-    // ===== 响应 iframe 容器尺寸变化 =====
-    window.addEventListener('message', function(e) {
-      if (e.data && e.data.type === 'langChange') {
-        // 语言切换事件（当前仅中文）
-      }
-    });
-  </script>
+(function render(){
+  var h='';
+  for(var i=0;i<data.length;i++){
+    var r=data[i];
+    h+='<tr><td style="text-align:center;color:var(--ink-400);">'+(i+1)+'</td>'+
+      '<td>'+r.tp+'</td>'+
+      '<td style="font-family:monospace;font-size:12px;">'+r.cc+'</td>'+
+      '<td style="font-weight:500;color:var(--ink-900);">'+r.cn+'</td>'+
+      '<td style="font-family:monospace;font-size:12px;color:var(--brand-500);">'+r.ctc+'</td>'+
+      '<td>'+r.bc+'</td><td>'+r.bt+'</td>'+
+      '<td style="font-family:var(--font-num);text-align:right;">'+r.am+'</td>'+
+      '<td style="font-family:var(--font-num);text-align:right;">'+r.bl+'</td>'+
+      '<td style="text-align:center;">'+r.gr+'</td><td>'+r.ind+'</td><td>'+r.ci+'</td>'+
+      '<td>'+r.gf+'</td>'+
+      '<td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;">'+r.gp+'</td>'+
+      '<td>'+r.ln+'</td><td>'+r.st+'</td>'+
+      '<td style="font-family:monospace;font-size:12px;">'+r.pc+'</td>'+
+      '<td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;">'+r.pn+'</td>'+
+      '<td>'+r.dt+'</td><td>'+r.ho+'</td><td>'+r.br+'</td><td>'+r.mg+'</td><td>'+r.up+'</td></tr>';
+  }
+  document.getElementById('tableBody').innerHTML=h;
+})();
+</script>
 </body>
 </html>
