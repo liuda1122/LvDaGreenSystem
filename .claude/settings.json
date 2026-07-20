@@ -12,7 +12,13 @@
       "Bash(sed -i 's/data-i18n=\"lab_balance\">合同余额/data-i18n=\"lab_balance\">业务余额/g' contract-green-identify-approval.html)",
       "Bash(sed -i 's/data-i18n=\"lab_contract_type\">合同类型/data-i18n=\"lab_contract_type\">业务类型/g' contract-green-identify-approval.html)",
       "Bash(git remote *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m 'feat: 综合修改 - A3327树状结构重构、业务字段统一、项目绿色认定新增流程 *)",
+      "Bash(git push *)",
+      "Bash(git fetch *)",
+      "Bash(git merge *)",
+      "Bash(python -c ' *)",
+      "Bash(python c:/tmp/create_project_pages.py)"
     ]
   }
 }

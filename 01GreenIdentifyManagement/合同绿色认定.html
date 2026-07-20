@@ -690,18 +690,19 @@
   }
 
   // ==================== 处理按钮跳转 ====================
-  function handleAction(action) {
+  function handleAction(action, dataType) {
     var dir = getCurrentDir();
+    var isProject = (dataType === "project");
     var targetFile;
-    if (action === 'approve') {
-      // 审核员 → 审批页
-      targetFile = dir + 'contract-green-identify-approval.html';
-    } else if (action === 'view') {
-      // 查看详情 → 查看页（只读）
-      targetFile = dir + 'contract-green-identify-view.html';
+    if (action === "approve") {
+      // 审核员 → 审批页（按业务类型分流）
+      targetFile = isProject ? dir + "contract-green-identify-project-approval.html" : dir + "contract-green-identify-approval.html";
+    } else if (action === "view") {
+      // 查看详情 → 查看页（只读，按业务类型分流）
+      targetFile = isProject ? dir + "contract-green-identify-project-view.html" : dir + "contract-green-identify-view.html";
     } else {
-      // 'edit' — 客户经理编辑页
-      targetFile = dir + 'contract-green-identify-detail-nonproject.html';
+      // "edit" — 客户经理编辑页（按业务类型分流）
+      targetFile = isProject ? dir + "contract-green-identify-detail-project.html" : dir + "contract-green-identify-detail-nonproject.html";
     }
     if (window.parent !== window) {
         var pageId = 'contract-detail-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
@@ -841,7 +842,7 @@
       var btn = document.createElement('button');
       btn.className = b.cls;
       btn.textContent = b.label;
-      btn.onclick = function() { handleAction(b.action); };
+      btn.onclick = function() { handleAction(b.action, row.getAttribute("data-type")); };
       container.appendChild(btn);
     });
   }
