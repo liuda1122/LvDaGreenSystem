@@ -195,7 +195,6 @@
             color: var(--ink-400);
         }
 
-        .table-wrap .col-status,
         .table-wrap .col-approval,
         .table-wrap .col-actions {
             position: sticky;
@@ -203,25 +202,19 @@
             z-index: 5;
             box-shadow: -4px 0 12px rgba(0, 0, 0, 0.06);
         }
-        .table-wrap .col-status {
-            right: 280px;
-            min-width: 110px;
-        }
         .table-wrap .col-approval {
-            right: 180px;
+            right: 90px;
             min-width: 100px;
         }
         .table-wrap .col-actions {
             right: 0;
-            min-width: 180px;
+            min-width: 90px;
         }
-        .table-wrap thead .col-status,
         .table-wrap thead .col-approval,
         .table-wrap thead .col-actions {
             background: var(--bg-muted);
             z-index: 11;
         }
-        .table-wrap tbody tr:hover .col-status,
         .table-wrap tbody tr:hover .col-approval,
         .table-wrap tbody tr:hover .col-actions {
             background: var(--bg-subtle);
@@ -281,6 +274,11 @@
             align-items: center;
             padding-bottom: 1px;
         }
+        .modal-mask{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:999;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+        .modal-mask.open{display:flex}
+        .modal-box{background:var(--white);border-radius:var(--radius-xl);box-shadow:0 20px 40px rgba(15,23,42,.16);animation:modalIn .2s ease-out}
+        @keyframes modalIn{from{opacity:0;transform:scale(0.96) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+        .modal-box .modal-box-inner{max-height:80vh;overflow-y:auto}
     </style>
 </head>
 <body>
@@ -348,6 +346,7 @@
                 <!-- 操作栏 -->
                 <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100 flex-shrink-0">
                     <div class="flex gap-2 flex-wrap">
+                        <button class="btn btn-primary btn-sm" onclick="handleNewIdentify()" data-i18n="btn_new_id">+ 新增认定</button>
                         <button class="btn btn-secondary btn-sm" data-i18n="btn_export">导出数据</button>
                     </div>
                     <span class="text-sm text-slate-400"><span data-i18n="lbl_total_prefix">共</span> 8 <span data-i18n="lbl_records">条</span></span>
@@ -380,7 +379,6 @@
                                 <th data-i18n="th_last_updated">最近更新时间</th>
                                 <th data-i18n="th_id_date">认定日期</th>
                                 <th data-i18n="th_created">创建时间</th>
-                                <th class="col-status" data-i18n="th_status">识别状态</th>
                                 <th class="col-approval" data-i18n="th_approval_status">审批状态</th>
                                 <th class="col-actions" data-i18n="th_actions">操作</th>
                             </tr>
@@ -409,7 +407,6 @@
                                 <td>2026/07/01 14:23:10</td>
                                 <td>2026/07/01</td>
                                 <td>2026/07/01 10:00:00</td>
-                                <td class="col-status">未识别</td>
                                 <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
                             <!-- 2. 中交一公局 → 未提交-客户经理本人 -->
@@ -435,7 +432,6 @@
                                 <td>2026/07/01 15:10:22</td>
                                 <td>2026/07/01</td>
                                 <td>2026/07/01 11:20:00</td>
-                                <td class="col-status">未识别</td>
                                 <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
                             <!-- 3. 宁德时代 → 已完成 -->
@@ -461,7 +457,6 @@
                                 <td>2026/07/02 09:30:15</td>
                                 <td>2026/07/02</td>
                                 <td>2026/07/02 08:00:00</td>
-                                <td class="col-status">已识别</td>
                                 <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
                             <!-- 4. 广东省环保集团 → 审批中-总行初审 -->
@@ -487,7 +482,6 @@
                                 <td>2026/07/01 16:45:30</td>
                                 <td>2026/07/01</td>
                                 <td>2026/07/01 14:00:00</td>
-                                <td class="col-status">已识别</td>
                                 <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
                             <!-- 5. 广州地铁 → 已驳回-客户经理本人 -->
@@ -513,7 +507,6 @@
                                 <td>2026/07/02 10:15:40</td>
                                 <td>2026/07/02</td>
                                 <td>2026/07/02 09:00:00</td>
-                                <td class="col-status">已识别</td>
                                 <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
                             <!-- 6. 中国铝业 → 审批中-总行复核 -->
@@ -539,7 +532,6 @@
                                 <td>2026/07/01 12:00:00</td>
                                 <td>2026/07/01</td>
                                 <td>2026/07/01 11:30:00</td>
-                                <td class="col-status">已识别</td>
                                 <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
                             <!-- 7. 现代牧业 → 审批中-绿金联系人 -->
@@ -565,7 +557,6 @@
                                 <td>2026/07/02 11:20:50</td>
                                 <td>2026/07/02</td>
                                 <td>2026/07/02 10:00:00</td>
-                                <td class="col-status">已识别</td>
                                 <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
                             <!-- 8. 中创新航 → 已完成 -->
@@ -591,7 +582,6 @@
                                 <td>2026/07/02 13:45:10</td>
                                 <td>2026/07/02</td>
                                 <td>2026/07/02 12:00:00</td>
-                                <td class="col-status">已识别</td>
                                 <td class="col-actions"><div class="action-btns"></div></td>
                             </tr>
                         </tbody>
@@ -645,6 +635,7 @@
             // Buttons
             btn_search: {zh:'查询', en:'Search'},
             btn_reset: {zh:'重置', en:'Reset'},
+            btn_new_id: {zh:'+ 新增认定', en:'+ New ID'},
             btn_export: {zh:'导出数据', en:'Export'},
             btn_view: {zh:'查看', en:'View'},
             btn_start_id: {zh:'开始识别', en:'Start ID'},
@@ -842,16 +833,16 @@
                 nodeCell.className = 'col-current-node';
                 nodeCell.textContent = nodeText;
                 nodeCell.style.whiteSpace = 'nowrap';
-                var operatorCell = cells[cells.length - 6]; // 操作人在倒数第6 (status, actions, 5 extra cols...)
+                var operatorCell = cells[cells.length - 4]; // 操作人: 倒数第4 (node, approval, actions)
                 operatorCell.parentNode.insertBefore(nodeCell, operatorCell.nextSibling);
 
-                // 插入"审批状态"列（识别状态之后）
+                // 插入"审批状态"列（操作列之前）
                 var apprText = row.getAttribute('data-approval') || '待提交';
-                var statusCell = row.querySelector('.col-status');
+                var actionsCell = row.querySelector('.col-actions');
                 var approvalCell = document.createElement('td');
                 approvalCell.className = 'col-approval';
                 approvalCell.textContent = apprText;
-                statusCell.parentNode.insertBefore(approvalCell, statusCell.nextSibling);
+                actionsCell.parentNode.insertBefore(approvalCell, actionsCell);
             });
         })();
 
@@ -915,9 +906,7 @@
             }
             // ---- 总行管理员 ----
             else if (currentRole === '总行管理员') {
-                if (appr === '已完成') {
-                    btns.push({label:'编辑', cls:'btn btn-primary btn-sm', action:'edit'});
-                } else if (appr === '审批中' || appr === '已驳回') {
+                if (appr === '已完成' || appr === '审批中' || appr === '已驳回') {
                     btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
                 }
                 // 未提交 → —
@@ -950,6 +939,111 @@
 
         // 筛选展开/收起
         var filterExpanded=true;
+        function handleNewIdentify(){
+            // 打开项目选择弹窗
+            var modal = document.getElementById('projectSelectModal');
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            renderModalProjectList();
+        }
+
+        function closeProjectModal(){
+            var modal = document.getElementById('projectSelectModal');
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // 弹窗内模拟项目数据
+        var availableProjects = [
+            {code:'PRJ-2026-008',name:'台州海上风电项目',industry:'电力生产和供应业',investment:'850,000.00',location:'浙江省 台州市',custCode:'CUST-008',custName:'中广核风电有限公司',creditCode:'91440300708519566K',custIndustry:'电力生产和供应业',opStatus:'建设中',branch:'浙江分行',manager:'赵六/006'},
+            {code:'PRJ-2026-009',name:'宁波光伏产业园',industry:'电力、热力生产和供应业',investment:'320,000.00',location:'浙江省 宁波市',custCode:'CUST-009',custName:'宁波新能源开发有限公司',creditCode:'91330200MA2ABCDE12',custIndustry:'电力生产和供应业',opStatus:'前期准备',branch:'宁波分行',manager:'钱七/007'},
+            {code:'PRJ-2026-010',name:'丽水抽水蓄能电站',industry:'电力生产和供应业',investment:'1,500,000.00',location:'浙江省 丽水市',custCode:'CUST-010',custName:'浙江能源集团有限公司',creditCode:'91330000142905678F',custIndustry:'水力发电',opStatus:'前期准备',branch:'丽水分行',manager:'孙八/008'},
+            {code:'PRJ-2026-011',name:'嘉兴氢能产业基地',industry:'化学原料和化学制品制造业',investment:'680,000.00',location:'浙江省 嘉兴市',custCode:'CUST-011',custName:'嘉兴氢能科技有限公司',creditCode:'91330400MA2CDEF345',custIndustry:'化工',opStatus:'建设中',branch:'嘉兴分行',manager:'周九/009'},
+            {code:'PRJ-2026-012',name:'绍兴绿色建材产业园',industry:'非金属矿物制品业',investment:'210,000.00',location:'浙江省 绍兴市',custCode:'CUST-012',custName:'绍兴建材科技股份有限公司',creditCode:'91330600MA2EFGH567',custIndustry:'建材制造',opStatus:'建设中',branch:'绍兴分行',manager:'吴十/010'}
+        ];
+
+        function renderModalProjectList(){
+            var tbody = document.getElementById('modalProjectTbody');
+            var html = '';
+            availableProjects.forEach(function(p){
+                html += '<tr onclick="selectProject(\''+p.code+'\')" style="cursor:pointer;">'+
+                    '<td style="font-family:monospace;font-size:12px;color:var(--brand-600);">'+p.code+'</td>'+
+                    '<td style="font-weight:500;">'+p.name+'</td>'+
+                    '<td>'+p.industry+'</td>'+
+                    '<td style="font-family:var(--font-num);text-align:right;">'+p.investment+'</td>'+
+                    '<td>'+p.location+'</td>'+
+                    '<td style="font-family:monospace;font-size:12px;">'+p.custCode+'</td>'+
+                    '<td>'+p.custName+'</td>'+
+                    '<td style="font-family:monospace;font-size:11px;">'+p.creditCode+'</td>'+
+                    '<td>'+p.custIndustry+'</td>'+
+                    '<td>'+p.opStatus+'</td>'+
+                    '<td>'+p.branch+'</td>'+
+                    '<td>'+p.manager+'</td>'+
+                    '<td><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();selectProject(\''+p.code+'\')" data-i18n="btn_start_id">发起认定</button></td>'+
+                '</tr>';
+            });
+            tbody.innerHTML = html;
+        }
+
+        function selectProject(projectCode){
+            if(!confirm('确认发起该项目的绿色认定任务？')) return;
+            closeProjectModal();
+            // 查找项目数据
+            var proj = null;
+            for(var i=0;i<availableProjects.length;i++){
+                if(availableProjects[i].code===projectCode){proj=availableProjects[i];break;}
+            }
+            if(!proj) return;
+            // 动态增加列表行
+            var now = new Date();
+            var dateStr = now.getFullYear()+'/'+String(now.getMonth()+1).padStart(2,'0')+'/'+String(now.getDate()).padStart(2,'0');
+            var timeStr = dateStr+' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0')+':'+String(now.getSeconds()).padStart(2,'0');
+            var tbody = document.querySelector('.table-wrap tbody');
+            var tr = document.createElement('tr');
+            tr.setAttribute('data-approval','未提交');
+            tr.setAttribute('data-node','客户经理/陈经理/005');
+            tr.setAttribute('data-project-id',projectCode);
+            tr.innerHTML =
+                '<td class="col-seq">'+(tbody.querySelectorAll('tr').length+1)+'</td>'+
+                '<td style="font-family:monospace;font-size:12px;color:var(--brand-600);">'+projectCode+'</td>'+
+                '<td style="font-weight:500;color:var(--ink-900);">'+proj.name+'</td>'+
+                '<td>'+proj.industry+'</td>'+
+                '<td style="font-family:var(--font-num);">'+proj.investment+'</td>'+
+                '<td>'+proj.location+'</td>'+
+                '<td style="font-family:monospace;font-size:12px;">'+proj.custCode+'</td>'+
+                '<td>'+proj.custName+'</td>'+
+                '<td style="font-family:monospace;font-size:12px;">'+proj.creditCode+'</td>'+
+                '<td>'+proj.custIndustry+'</td>'+
+                '<td>'+proj.opStatus+'</td>'+
+                '<td>—</td><td>—</td><td>—</td><td>—</td>'+
+                '<td>'+proj.branch+'</td>'+
+                '<td>'+proj.manager+'</td>'+
+                '<td>'+proj.manager+'</td>'+
+                '<td class="col-current-node">'+timeStr+'</td>'+
+                '<td>'+dateStr+'</td>'+
+                '<td>'+dateStr+'</td>'+
+                '<td class="col-actions"><div class="action-btns"></div></td>';
+            tbody.appendChild(tr);
+            // 更新计数
+            var countSpan = document.querySelector('.text-sm.text-slate-400');
+            if(countSpan){
+                var match = countSpan.textContent.match(/\d+/);
+                if(match) countSpan.innerHTML = countSpan.innerHTML.replace(match[0], String(parseInt(match[0])+1));
+            }
+            // 重新注入审批状态列和操作按钮
+            injectColumns();
+            applyRolePermissions();
+            // 导航到详情页
+            var dir = getCurrentDir();
+            var targetUrl = dir + '项目绿色认定开始认定页1.html?projectCode=' + projectCode;
+            var label = I18N.t('btn_new_id').replace(/^\+ /,'') + ' - ' + projectCode;
+            if(window.parent !== window){
+                window.parent.postMessage({type:'openPage', pageId:'project-new-id-'+projectCode, file:targetUrl, label:label}, '*');
+            } else {
+                window.location.href = targetUrl;
+            }
+        }
+
         function toggleFilter(){
           var row2=document.getElementById('filterRow2');
           var btn=document.getElementById('filterToggleBtn');
@@ -957,6 +1051,30 @@
           else{row2.style.display='contents';btn.innerHTML='▲';filterExpanded=true;}
         }
     </script>
+
+<!-- ===== 新增认定弹窗 ===== -->
+<div class="modal-mask" id="projectSelectModal" onclick="if(event.target===this)closeProjectModal()">
+    <div class="modal-box" style="max-width:1100px;width:95%;max-height:85vh;overflow-y:auto;text-align:left;padding:20px 24px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+            <h3 style="font-size:16px;font-weight:700;color:var(--ink-900);" data-i18n="modal_title">选择项目发起绿色认定</h3>
+            <button onclick="closeProjectModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink-400);line-height:1;">✕</button>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px 16px;margin-bottom:14px;padding:12px;background:var(--bg-subtle);border-radius:var(--radius-md);">
+            <div class="filter-item"><label data-i18n="f_project">项目信息</label><input type="text" placeholder="项目名称/代码" style="padding:4px 8px;border:1px solid var(--line-200);border-radius:4px;font-size:12px;width:150px;"></div>
+            <div class="filter-item"><label data-i18n="f_industry">所属行业</label><select style="padding:4px 8px;border:1px solid var(--line-200);border-radius:4px;font-size:12px;"><option data-i18n="opt_all">全部</option><option>制造业</option><option>电力生产和供应业</option></select></div>
+            <div class="filter-item"><label data-i18n="f_status">运营状态</label><select style="padding:4px 8px;border:1px solid var(--line-200);border-radius:4px;font-size:12px;"><option data-i18n="opt_all">全部</option><option>前期准备</option><option>建设中</option></select></div>
+            <div class="filter-item"><label data-i18n="f_branch">所属机构</label><select style="padding:4px 8px;border:1px solid var(--line-200);border-radius:4px;font-size:12px;"><option data-i18n="opt_all">全部</option><option>浙江分行</option><option>宁波分行</option></select></div>
+            <button class="btn btn-primary btn-sm" onclick="renderModalProjectList()">查询</button>
+        </div>
+        <div class="table-wrap custom-scroll" style="max-height:400px;">
+            <table><thead><tr>
+                <th data-i18n="th_code">项目代码</th><th data-i18n="th_name">项目名称</th><th data-i18n="th_industry">项目所属行业</th><th data-i18n="th_investment">总投资额（万元）</th><th data-i18n="th_location">项目所在地</th><th data-i18n="th_client_code">客户编号</th><th data-i18n="th_client_name">客户名称</th><th data-i18n="th_credit_code">统一社会信用代码</th><th data-i18n="th_client_industry">客户国民经济行业</th><th data-i18n="th_op_status">项目运营状态</th><th data-i18n="th_branch">所属分支机构</th><th data-i18n="th_manager">管户人</th><th style="width:90px;" data-i18n="th_actions">操作</th>
+            </tr></thead>
+            <tbody id="modalProjectTbody"></tbody></table>
+        </div>
+        <div style="text-align:center;padding-top:12px;color:var(--ink-400);font-size:12px;">共 5 条未发起识别任务的项目</div>
+    </div>
+</div>
 
 </body>
 </html>

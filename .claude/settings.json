@@ -1,17 +1,18 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git add *)",
-      "Bash(git commit -m 'feat: 项目绿色认定第7条示例数据完整更新 *)",
-      "Bash(git push *)",
-      "Bash(git commit -m 'fix: PRJ-2026-007详情页Location/Region/Industry英文翻译补充 *)",
-      "Bash(git commit -m 'feat: 绿色潜在客户清单和营销过程管理页面增加「开始营销」按钮，删除对接机构字段 *)",
-      "Bash(git commit -m 'refactor: 菜单结构调整 — 绿色产业地图移到潜在客户模块第一位，客户画像分析移到绿色识别模块第一位 *)",
-      "Bash(rm -rf /c/temp-litingting/LvDaGreenSystem/.git 2>&1)",
-      "Bash(curl -I https://github.com --connect-timeout 10)"
-    ],
-    "additionalDirectories": [
-      "C:\\temp-litingting\\LvDaGreenSystem\\.git"
+      "Bash(sed -i 's/data-i18n=\"f_contract\">合同信息/data-i18n=\"f_contract\">业务信息/g' \"06GreenIndustryMap/行内绿色金融业务画像及客户画像分析.html\")",
+      "Bash(sed -i 's/placeholder=\"请输入合同名称\\\\/编号\"/placeholder=\"请输入业务名称\\\\/编号\"/g' \"06GreenIndustryMap/行内绿色金融业务画像及客户画像分析.html\")",
+      "Bash(sed -i 's/data-i18n=\"th_contract_code\">合同编号/data-i18n=\"th_contract_code\">业务编号/g' \"06GreenIndustryMap/行内绿色金融业务画像及客户画像分析.html\")",
+      "Bash(sed -i 's/data-i18n=\"th_amount\">合同金额/data-i18n=\"th_amount\">业务金额/g' \"06GreenIndustryMap/行内绿色金融业务画像及客户画像分析.html\")",
+      "Bash(sed -i 's/data-i18n=\"th_balance\">合同余额/data-i18n=\"th_balance\">业务余额/g' \"06GreenIndustryMap/行内绿色金融业务画像及客户画像分析.html\")",
+      "Bash(sed -i 's/data-i18n=\"sec_contract\">合同基本信息/data-i18n=\"sec_contract\">业务基本信息/g' contract-green-identify-approval.html)",
+      "Bash(sed -i 's/data-i18n=\"lab_contract_code\">合同编号/data-i18n=\"lab_contract_code\">业务编号/g' contract-green-identify-approval.html)",
+      "Bash(sed -i 's/data-i18n=\"lab_amount\">合同金额/data-i18n=\"lab_amount\">业务金额/g' contract-green-identify-approval.html)",
+      "Bash(sed -i 's/data-i18n=\"lab_balance\">合同余额/data-i18n=\"lab_balance\">业务余额/g' contract-green-identify-approval.html)",
+      "Bash(sed -i 's/data-i18n=\"lab_contract_type\">合同类型/data-i18n=\"lab_contract_type\">业务类型/g' contract-green-identify-approval.html)",
+      "Bash(git remote *)",
+      "Bash(git add *)"
     ]
   }
 }

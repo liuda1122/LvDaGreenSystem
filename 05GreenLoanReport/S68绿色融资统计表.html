@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="title">S68绿色融资统计表 · 可持续金融管理系统</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --brand-50:#E8F0FB;--brand-100:#D1DFF4;--brand-500:#2A66C2;--brand-700:#143F8F;--brand-900:#01256A;
+            --green-50:#ECFDF5;--green-500:#10B981;--green-700:#047857;
+            --ink-900:#0F172A;--ink-800:#1E293B;--ink-600:#475569;--ink-500:#64748B;--ink-400:#94A3B8;--ink-300:#CBD5E1;
+            --line-200:#E2E8F0;--bg-muted:#F1F5F9;--bg-subtle:#F8FAFC;--white:#FFFFFF;
+            --radius-sm:4px;--radius-md:6px;--radius-lg:8px;--radius-xl:12px;--radius-2xl:16px;
+            --font-sans:'PingFang SC','Microsoft YaHei','Inter',system-ui,sans-serif;
+            --font-num:'Inter','SF Pro Display',system-ui,sans-serif;
+        }
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:var(--font-sans);color:var(--ink-800);background:var(--bg-subtle);font-size:13px;line-height:1.57;-webkit-font-smoothing:antialiased;height:100vh;overflow:hidden}
+        .custom-scroll::-webkit-scrollbar{width:6px;height:6px}
+        .custom-scroll::-webkit-scrollbar-track{background:transparent}
+        .custom-scroll::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}
+        .custom-scroll::-webkit-scrollbar-thumb:hover{background:var(--brand-500)}
+        .btn{display:inline-flex;align-items:center;gap:6px;border-radius:var(--radius-md);font-family:inherit;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid transparent;line-height:1;white-space:nowrap}
+        .btn-sm{padding:6px 12px;font-size:12px;line-height:20px;height:28px}
+        .btn-primary{background:var(--brand-500);color:#fff}.btn-primary:hover{background:var(--brand-700)}
+        .btn-secondary{background:var(--white);color:var(--ink-800);border-color:var(--ink-300)}.btn-secondary:hover{border-color:var(--brand-500);color:var(--brand-500)}
+        .btn-deep-blue{background:var(--brand-700);color:#fff}.btn-deep-blue:hover{background:var(--brand-900)}
+        .section-card{background:var(--white);border-radius:var(--radius-xl);border:1px solid var(--line-200);overflow:hidden;height:100%;display:flex;flex-direction:column}
+
+        /* 筛选栏 */
+        .filter-row{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 16px}
+        .filter-group{display:flex;flex-direction:column;gap:4px;min-width:150px;flex:1 0 auto}
+        .filter-group label{font-size:12px;color:var(--ink-500);font-weight:500}
+        .filter-group input,.filter-group select{padding:6px 10px;border:1px solid var(--line-200);border-radius:var(--radius-md);font-size:13px;background:var(--white);outline:none;width:100%}
+        .filter-group input:focus,.filter-group select:focus{border-color:var(--brand-500)}
+
+        /* 报表表格 */
+        table.rpt{width:100%;border-collapse:collapse;font-size:12px}
+        table.rpt th,table.rpt td{padding:6px 10px;border:1px solid var(--line-200);text-align:left;vertical-align:middle;white-space:nowrap}
+        table.rpt th{background:var(--bg-muted);font-weight:600;color:var(--ink-600);font-size:11px;text-align:center;position:sticky;top:0;z-index:10}
+        table.rpt td.num{font-family:var(--font-num);text-align:right}
+        table.rpt td.col-seq{text-align:center;color:var(--ink-400);width:44px}
+
+        /* 层级样式 */
+        table.rpt .total-row td{background:#F1F5F9;font-weight:700;color:var(--ink-900);border-top:2px solid var(--brand-300);font-size:13px}
+        table.rpt .total-row td.col-seq{color:var(--ink-900)}
+        table.rpt .sec-header td{background:var(--brand-50);color:var(--brand-700);font-weight:700;font-size:12px;border-top:2px solid var(--brand-100)}
+        table.rpt .sub-header td{background:#F8FAFC;color:var(--ink-600);font-weight:600;font-size:12px}
+        table.rpt .appendix-header td{background:#F0FDF4;color:var(--green-700);font-weight:700;font-size:12px;border-top:2px solid #BBF7D0}
+        table.rpt .appendix-item td{background:#F8FDF9;color:var(--ink-800);padding-left:20px}
+        table.rpt .indent-1 td:first-child{padding-left:24px}
+        table.rpt .indent-2 td:first-child{padding-left:36px}
+    </style>
+    <script src="../i18n.js"></script>
+</head>
+<body>
+<div class="flex flex-col" style="height:100vh;background:var(--bg-subtle);">
+    <!-- 顶部栏 -->
+    <div class="flex items-center px-6 py-2 flex-shrink-0" style="background:var(--white);border-bottom:1px solid var(--line-200);">
+        <button onclick="goBackToList()" style="display:inline-flex;align-items:center;gap:6px;color:#2A66C2;font-weight:500;cursor:pointer;border:none;background:none;font-size:13px;font-family:inherit;padding:0 8px;height:30px;border-radius:6px;" data-i18n-html="back_btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            返回
+        </button>
+        <span style="margin-left:10px;font-size:14px;font-weight:700;color:var(--ink-900);" data-i18n="header_title">S68 绿色融资统计表</span>
+        <span style="margin-left:12px;font-size:12px;color:var(--ink-500);" id="periodLabel" data-i18n="current_period">2025年第二季度</span>
+        <span style="margin-left:auto;font-size:12px;color:var(--ink-400);" id="headerMeta">报表编号：S68-2025Q2 ｜ 系统自动生成 ｜ 生成时间：2025-07-01 00:05</span>
+    </div>
+
+    <div class="flex-1 overflow-hidden" style="padding:12px 20px 20px;">
+        <div class="section-card" style="height:100%;">
+            <!-- 筛选栏 -->
+            <div style="padding:12px 20px;border-bottom:1px solid var(--line-200);background:var(--bg-subtle);flex-shrink:0;">
+                <div class="filter-row">
+                    <div class="filter-group" style="min-width:160px;flex:1;max-width:200px;">
+                        <label data-i18n="filter_period">报表期间（季度）</label>
+                        <span style="padding:6px 0;font-size:14px;font-weight:500;color:var(--ink-800);" id="periodDisplay">2025年第二季度</span>
+                    </div>
+                    <div class="filter-group" style="flex:0 0 auto;flex-direction:row;align-items:flex-end;gap:8px;padding-bottom:1px;">
+                        <button class="btn btn-deep-blue btn-sm" onclick="downloadReport()" data-i18n="download_excel">下载Excel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 表格容器 -->
+            <div class="custom-scroll" style="flex:1;overflow:auto;position:relative;">
+                <table class="rpt" id="mainTable">
+                    <thead>
+                        <tr>
+                            <th style="width:44px;" data-i18n="th_seq">序号</th>
+                            <th data-i18n="th_name">指标名称</th>
+                            <th style="width:110px;" data-i18n="th_balance">贷款余额</th>
+                            <th style="width:90px;" data-i18n="th_households">存量贷款户数</th>
+                            <th style="width:100px;" data-i18n="th_npl">不良贷款余额</th>
+                            <th style="width:110px;" data-i18n="th_annual_loan">当年累放贷款额</th>
+                            <th style="width:120px;" data-i18n="th_annual_interest">当年累放贷款年化利息收益</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 底部信息栏 -->
+            <div class="flex items-center justify-between px-5 py-2 border-t border-slate-100 flex-shrink-0" style="background:var(--bg-subtle);">
+                <span class="text-sm" style="color:var(--ink-400);" id="footerInfo">单位：万元</span>
+                <div style="display:flex;gap:8px;">
+                    <button class="btn btn-deep-blue btn-sm" onclick="downloadReport()" data-i18n="download_excel">📥 下载Excel</button>
+                    <button class="btn btn-secondary btn-sm" onclick="goBackToList()" data-i18n="back_to_list">< 返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ==================== S68 全量指标数据 ====================
+    // level: total(总计行) | section(一级分类) | l1(二级分类) | l2(三级分类) | l3(四级明细)
+    //        appendix-header(附录标题) | appendix-item(附录项)
+    var s68Data = [
+        {seq:1,  name:'绿色贷款合计', level:'total'},
+        {seq:2,  name:'（一）境内绿色贷款', level:'section'},
+        {seq:3,  name:'1.节能降碳产业贷款', level:'l1'},
+        {seq:4,  name:'1.1高效节能装备制造', level:'l2'},
+        {seq:5,  name:'1.1.1节能锅炉制造', level:'l3'},
+        {seq:6,  name:'1.1.2节能窑炉制造', level:'l3'},
+        {seq:7,  name:'1.1.3节能内燃机制造', level:'l3'},
+        {seq:8,  name:'1.1.4高效发电机及发电机组制造', level:'l3'},
+        {seq:9,  name:'1.1.5节能型泵及真空设备制造', level:'l3'},
+        {seq:10, name:'1.1.6节能型气体压缩设备制造', level:'l3'},
+        {seq:11, name:'1.1.7节能电动机、微特电机制造', level:'l3'},
+        {seq:12, name:'1.1.8节能风机风扇制造', level:'l3'},
+        {seq:13, name:'1.1.9节能型变压器、整流器、电感器和电焊机制造', level:'l3'},
+        {seq:14, name:'1.1.10高效节能磁悬浮动力装备制造', level:'l3'},
+        {seq:15, name:'1.1.11节能农资制造', level:'l3'},
+        {seq:16, name:'1.1.12节能采矿、建筑材料生产专用设备制造', level:'l3'},
+        {seq:17, name:'1.1.13高效节能低碳商用设备制造', level:'l3'},
+        {seq:18, name:'1.1.14高效节能低碳家用电器制造', level:'l3'},
+        {seq:19, name:'1.1.15高效照明产品及系统制造', level:'l3'},
+        {seq:20, name:'1.1.16高效节能炉具灶具设备制造', level:'l3'},
+        {seq:21, name:'1.1.17余热余压余气利用设备制造', level:'l3'},
+        {seq:22, name:'1.1.18绿色建筑材料制造', level:'l3'},
+        {seq:23, name:'1.1.19能源计量、检测、监测、控制设备制造', level:'l3'},
+        {seq:24, name:'1.2先进交通装备制造', level:'l2'},
+        {seq:25, name:'1.2.1新能源汽车及关键零部件制造', level:'l3'},
+        {seq:26, name:'1.2.2绿色船舶制造（不含造船厂建设）', level:'l3'},
+        {seq:27, name:'1.2.3先进轨道交通装备制造', level:'l3'},
+        {seq:28, name:'1.2.4先进高效航空装备制造', level:'l3'},
+        {seq:29, name:'1.2.5先进港口装卸作业设备制造', level:'l3'},
+        {seq:30, name:'1.3节能降碳改造', level:'l2'},
+        {seq:31, name:'1.3.1锅炉（窑炉）节能改造和能效提升', level:'l3'},
+        {seq:32, name:'1.3.2电机系统能效提升', level:'l3'},
+        {seq:33, name:'1.3.3电网节能改造', level:'l3'},
+        {seq:34, name:'1.3.4余热余压利用', level:'l3'},
+        {seq:35, name:'1.3.5绿色照明改造', level:'l3'},
+        {seq:36, name:'1.3.6船舶绿色低碳升级改造', level:'l3'},
+        {seq:37, name:'1.4重点工业行业绿色低碳转型', level:'l2'},
+        {seq:38, name:'1.4.1节能降碳改造和能效提升', level:'l3'},
+        {seq:39, name:'1.4.2工艺改进和流程优化', level:'l3'},
+        {seq:40, name:'1.4.3数字化、智能化升级', level:'l3'},
+        {seq:41, name:'1.5温室气体控制', level:'l2'},
+        {seq:42, name:'1.5.1二氧化碳捕集利用与封存', level:'l3'},
+        {seq:43, name:'1.5.2消耗臭氧层物质替代品开发与利用', level:'l3'},
+        {seq:44, name:'2.环境保护产业贷款', level:'l1'},
+        {seq:45, name:'2.1先进环保装备和原料材料制造', level:'l2'},
+        {seq:46, name:'2.1.1大气污染防治装备制造', level:'l3'},
+        {seq:47, name:'2.1.2水污染防治装备制造', level:'l3'},
+        {seq:48, name:'2.1.3土壤污染治理与修复装备制造', level:'l3'},
+        {seq:49, name:'2.1.4固体废弃物收集、贮存、运输及处理处置装备制造', level:'l3'},
+        {seq:50, name:'2.1.5噪声与振动控制设备制造', level:'l3'},
+        {seq:51, name:'2.1.6放射性污染防治和处理设备制造', level:'l3'},
+        {seq:52, name:'2.1.7环境污染处理药剂材料制造', level:'l3'},
+        {seq:53, name:'2.1.8无毒无害原料、产品生产与替代使用', level:'l3'},
+        {seq:54, name:'2.1.9高效低毒低残留农药生产', level:'l3'},
+        {seq:55, name:'2.1.10环境监测仪器与应急处理设备制造', level:'l3'},
+        {seq:56, name:'2.1.11公约管控化学物质污染治理装备制造', level:'l3'},
+        {seq:57, name:'2.1.12低（无）污染排放装备制造', level:'l3'},
+        {seq:58, name:'2.2大气污染治理', level:'l2'},
+        {seq:59, name:'2.2.1工业脱硫脱硝除尘改造', level:'l3'},
+        {seq:60, name:'2.2.2重点行业超低排放改造', level:'l3'},
+        {seq:61, name:'2.2.3挥发性有机物综合整治', level:'l3'},
+        {seq:62, name:'2.2.4工业厂矿大气污染物无组织排放控制', level:'l3'},
+        {seq:63, name:'2.2.5城市扬尘综合整治', level:'l3'},
+        {seq:64, name:'2.2.6餐饮油烟污染治理', level:'l3'},
+        {seq:65, name:'2.2.7大气氨排放控制', level:'l3'},
+        {seq:66, name:'2.3水污染治理', level:'l2'},
+        {seq:67, name:'2.3.1水体保护及地下水污染防治', level:'l3'},
+        {seq:68, name:'2.3.2重点流域海域水环境治理', level:'l3'},
+        {seq:69, name:'2.3.3城市（含县城）黑臭水体整治', level:'l3'},
+        {seq:70, name:'2.3.4重点行业水污染治理', level:'l3'},
+        {seq:71, name:'2.3.5工业园区水污染集中治理', level:'l3'},
+        {seq:72, name:'2.4土壤污染治理', level:'l2'},
+        {seq:73, name:'2.4.1农用地污染治理', level:'l3'},
+        {seq:74, name:'2.4.2建设用地污染治理', level:'l3'},
+        {seq:75, name:'2.4.3农林草业面源污染防治', level:'l3'},
+        {seq:76, name:'2.4.4沙漠污染治理', level:'l3'},
+        {seq:77, name:'2.5其他污染治理和环境综合整治', level:'l2'},
+        {seq:78, name:'2.5.1工业固体废弃物无害化处理处置', level:'l3'},
+        {seq:79, name:'2.5.2危险废物处理处置', level:'l3'},
+        {seq:80, name:'2.5.3噪声和振动污染治理', level:'l3'},
+        {seq:81, name:'2.5.4恶臭污染治理', level:'l3'},
+        {seq:82, name:'2.5.5新污染物治理', level:'l3'},
+        {seq:83, name:'2.5.6重点行业清洁生产改造', level:'l3'},
+        {seq:84, name:'2.5.7园区污染治理集中化改造', level:'l3'},
+        {seq:85, name:'2.5.8交通车船污染治理', level:'l3'},
+        {seq:86, name:'2.5.9船舶港口污染防治', level:'l3'},
+        {seq:87, name:'2.5.10畜禽和水产养殖废弃物污染治理', level:'l3'},
+        {seq:88, name:'2.5.11农村人居环境整治提升', level:'l3'},
+        {seq:89, name:'3.资源循环利用产业贷款', level:'l1'},
+        {seq:90, name:'3.1资源循环利用装备制造', level:'l2'},
+        {seq:91, name:'3.1.1矿产资源综合利用装备制造', level:'l3'},
+        {seq:92, name:'3.1.2水资源高效及循环利用装备制造', level:'l3'},
+        {seq:93, name:'3.1.3工业固体废弃物综合利用装备制造', level:'l3'},
+        {seq:94, name:'3.1.4农林废弃物综合利用装备制造', level:'l3'},
+        {seq:95, name:'3.1.5废旧物资循环利用装备制造', level:'l3'},
+        {seq:96, name:'3.1.6垃圾资源化利用装备制造', level:'l3'},
+        {seq:97, name:'3.1.7废气回收利用装备制造', level:'l3'},
+        {seq:98, name:'3.2资源循环利用', level:'l2'},
+        {seq:99, name:'3.2.1矿产资源综合利用', level:'l3'},
+        {seq:100,name:'3.2.2水资源高效及循环利用', level:'l3'},
+        {seq:101,name:'3.2.3工业固体废弃物综合利用', level:'l3'},
+        {seq:102,name:'3.2.4农林废弃物综合利用', level:'l3'},
+        {seq:103,name:'3.2.5废旧物资循环利用', level:'l3'},
+        {seq:104,name:'3.2.6垃圾资源化利用', level:'l3'},
+        {seq:105,name:'3.2.7废气回收利用', level:'l3'},
+        {seq:106,name:'3.2.8园区循环化改造', level:'l3'},
+        {seq:107,name:'3.2.9木材高效加工及循环利用', level:'l3'},
+        {seq:108,name:'4.能源绿色低碳转型贷款', level:'l1'},
+        {seq:109,name:'4.1新能源与清洁能源装备制造', level:'l2'},
+        {seq:110,name:'4.1.1风力发电装备制造', level:'l3'},
+        {seq:111,name:'4.1.2太阳能利用装备制造', level:'l3'},
+        {seq:112,name:'4.1.3生物质能利用装备制造', level:'l3'},
+        {seq:113,name:'4.1.4水力发电和抽水蓄能装备制造', level:'l3'},
+        {seq:114,name:'4.1.5核电装备制造', level:'l3'},
+        {seq:115,name:'4.1.6地热能开发利用装备制造', level:'l3'},
+        {seq:116,name:'4.1.7海洋能开发利用装备制造', level:'l3'},
+        {seq:117,name:'4.1.8新型储能产品制造', level:'l3'},
+        {seq:118,name:'4.1.9氢能"制储输用"全链条装备制造', level:'l3'},
+        {seq:119,name:'4.1.10智能电网产品和装备制造', level:'l3'},
+        {seq:120,name:'4.2清洁能源设施建设和运营', level:'l2'},
+        {seq:121,name:'4.2.1风力发电设施建设和运营', level:'l3'},
+        {seq:122,name:'4.2.2太阳能利用设施建设和运营', level:'l3'},
+        {seq:123,name:'4.2.3生物质能利用设施建设和运营', level:'l3'},
+        {seq:124,name:'4.2.4大型水力发电设施建设和运营', level:'l3'},
+        {seq:125,name:'4.2.5核电站及核能综合利用设施建设和运营', level:'l3'},
+        {seq:126,name:'4.2.6地热能利用设施建设和运营', level:'l3'},
+        {seq:127,name:'4.2.7海洋能利用设施建设和运营', level:'l3'},
+        {seq:128,name:'4.2.8氢能基础设施建设和运营', level:'l3'},
+        {seq:129,name:'4.2.9热泵设施建设和运营', level:'l3'},
+        {seq:130,name:'4.3能源系统安全高效运行', level:'l2'},
+        {seq:131,name:'4.3.1电力源网荷储一体化及多能互补工程建设和运营', level:'l3'},
+        {seq:132,name:'4.3.2新型储能设施建设和运营', level:'l3'},
+        {seq:133,name:'4.3.3抽水蓄能电站建设和运营', level:'l3'},
+        {seq:134,name:'4.3.4小型水电站更新改造', level:'l3'},
+        {seq:135,name:'4.3.5智能电网建设和运营', level:'l3'},
+        {seq:136,name:'4.3.6新型电力负荷管理系统建设和运营', level:'l3'},
+        {seq:137,name:'4.3.7分布式能源工程建设和运营', level:'l3'},
+        {seq:138,name:'5.生态保护修复和利用贷款', level:'l1'},
+        {seq:139,name:'5.1生态农林牧渔业', level:'l2'},
+        {seq:140,name:'5.1.1现代化育种育苗', level:'l3'},
+        {seq:141,name:'5.1.2种质资源保护', level:'l3'},
+        {seq:142,name:'5.1.3绿色农业生产', level:'l3'},
+        {seq:143,name:'5.1.4有机、绿色等认证农业', level:'l3'},
+        {seq:144,name:'5.1.5农作物种植保护地、保护区建设和运营', level:'l3'},
+        {seq:145,name:'5.1.6农作物病虫害绿色防控', level:'l3'},
+        {seq:146,name:'5.1.7休闲农业和乡村旅游', level:'l3'},
+        {seq:147,name:'5.1.8农业生态系统保护修复', level:'l3'},
+        {seq:148,name:'5.1.9森林资源培育和经营', level:'l3'},
+        {seq:149,name:'5.1.10林业基因资源保护', level:'l3'},
+        {seq:150,name:'5.1.11林下种养殖和林下采集', level:'l3'},
+        {seq:151,name:'5.1.12森林游憩和康养', level:'l3'},
+        {seq:152,name:'5.1.13竹产业', level:'l3'},
+        {seq:153,name:'5.1.14绿色畜牧业', level:'l3'},
+        {seq:154,name:'5.1.15绿色渔业', level:'l3'},
+        {seq:155,name:'5.1.16海洋牧场建设和运营', level:'l3'},
+        {seq:156,name:'5.2生态保护修复', level:'l2'},
+        {seq:157,name:'5.2.1生物多样性保护', level:'l3'},
+        {seq:158,name:'5.2.2自然保护地建设和保护性运营', level:'l3'},
+        {seq:159,name:'5.2.3天然林保护修复', level:'l3'},
+        {seq:160,name:'5.2.4草原保护修复', level:'l3'},
+        {seq:161,name:'5.2.5森林草原防灭火体系建设和运维', level:'l3'},
+        {seq:162,name:'5.2.6荒漠化和石漠化综合治理', level:'l3'},
+        {seq:163,name:'5.2.7水土流失综合治理', level:'l3'},
+        {seq:164,name:'5.2.8重点区域生态保护和修复', level:'l3'},
+        {seq:165,name:'5.2.9山水林田湖草沙一体化保护修复', level:'l3'},
+        {seq:166,name:'5.2.10有害生物灾害防治', level:'l3'},
+        {seq:167,name:'5.2.11水生态系统旱涝灾害防控及应对', level:'l3'},
+        {seq:168,name:'5.2.12湿地保护修复', level:'l3'},
+        {seq:169,name:'5.2.13海洋生态、海域海岸带和海岛生态修复', level:'l3'},
+        {seq:170,name:'5.2.14增殖放流', level:'l3'},
+        {seq:171,name:'5.3国土综合整治', level:'l2'},
+        {seq:172,name:'5.3.1采煤沉陷区综合治理', level:'l3'},
+        {seq:173,name:'5.3.2地下水超采区治理与修复', level:'l3'},
+        {seq:174,name:'5.3.3土地综合整治', level:'l3'},
+        {seq:175,name:'5.3.4矿山地质环境恢复治理和生态修复', level:'l3'},
+        {seq:176,name:'6.基础设施绿色升级贷款', level:'l1'},
+        {seq:177,name:'6.1建筑节能与绿色建筑', level:'l2'},
+        {seq:178,name:'6.1.1绿色建筑建设和运营', level:'l3'},
+        {seq:179,name:'6.1.2超低能耗和低碳建筑建设和运营', level:'l3'},
+        {seq:180,name:'6.1.3既有建筑绿色化改造和运营', level:'l3'},
+        {seq:181,name:'6.1.4绿色农房建设、改造和运维', level:'l3'},
+        {seq:182,name:'6.1.5建筑可再生能源应用', level:'l3'},
+        {seq:183,name:'6.1.6装配式建筑设计和建造', level:'l3'},
+        {seq:184,name:'6.1.7建筑工程智能建造', level:'l3'},
+        {seq:185,name:'6.2绿色交通', level:'l2'},
+        {seq:186,name:'6.2.1绿色公路建设和公路交通基础设施绿色低碳化改造', level:'l3'},
+        {seq:187,name:'6.2.2交通枢纽场站绿色化改造', level:'l3'},
+        {seq:188,name:'6.2.3充电、换电和加气等设施建设和运营', level:'l3'},
+        {seq:189,name:'6.2.4智能交通体系建设和运营', level:'l3'},
+        {seq:190,name:'6.2.5共享交通设施建设和运营', level:'l3'},
+        {seq:191,name:'6.2.6城乡客运系统建设和运营', level:'l3'},
+        {seq:192,name:'6.2.7城市慢行系统建设和运营', level:'l3'},
+        {seq:193,name:'6.2.8环境友好型铁路建设运营和铁路绿色化改造', level:'l3'},
+        {seq:194,name:'6.2.9多式联运系统与公转铁、公转水建设和运营', level:'l3'},
+        {seq:195,name:'6.2.10公路甩挂运输系统建设和运营', level:'l3'},
+        {seq:196,name:'6.2.11绿色民航', level:'l3'},
+        {seq:197,name:'6.2.12绿色港口和航道', level:'l3'},
+        {seq:198,name:'6.3绿色物流', level:'l2'},
+        {seq:199,name:'6.3.1绿色物流枢纽、绿色物流园区建设和运营', level:'l3'},
+        {seq:200,name:'6.3.2绿色仓储设施（含冷库）建设', level:'l3'},
+        {seq:201,name:'6.3.3绿色粮食仓储物流设施建设和运营', level:'l3'},
+        {seq:202,name:'6.3.4绿色物流技术设备应用', level:'l3'},
+        {seq:203,name:'6.4环境基础设施', level:'l2'},
+        {seq:204,name:'6.4.1园林绿化建设、养护管理和运营', level:'l3'},
+        {seq:205,name:'6.4.2海绵城市建设和运营', level:'l3'},
+        {seq:206,name:'6.4.3城镇供水管网分区计量漏损控制建设和运营', level:'l3'},
+        {seq:207,name:'6.4.4水利设施智能化建设', level:'l3'},
+        {seq:208,name:'6.4.5城镇污水收集系统排查改造建设修复', level:'l3'},
+        {seq:209,name:'6.4.6入河入海排污口排查整治及规范化建设', level:'l3'},
+        {seq:210,name:'6.4.7污水污泥处理处置设施建设和运营', level:'l3'},
+        {seq:211,name:'6.4.8生活垃圾收运与处理设施建设和运营', level:'l3'},
+        {seq:212,name:'6.4.9生态环境监测系统建设和运营', level:'l3'},
+        {seq:213,name:'6.4.10生态安全预警体系和生态保护修复信息平台建设和运维', level:'l3'},
+        {seq:214,name:'6.5城乡能源基础设施', level:'l2'},
+        {seq:215,name:'6.5.1城镇电力设施智能化建设运营和改造', level:'l3'},
+        {seq:216,name:'6.5.2城镇一体化集成供能设施建设和运营', level:'l3'},
+        {seq:217,name:'6.5.3城镇集中供热系统清洁化、低碳化建设运营和改造', level:'l3'},
+        {seq:218,name:'6.5.4农村清洁能源基础设施建设和运营', level:'l3'},
+        {seq:219,name:'6.6信息基础设施', level:'l2'},
+        {seq:220,name:'6.6.1通信网络设施节能改造', level:'l3'},
+        {seq:221,name:'6.6.2绿色数据中心建设', level:'l3'},
+        {seq:222,name:'6.6.3数据中心节能改造', level:'l3'},
+        {seq:223,name:'7.绿色服务贷款', level:'l1'},
+        {seq:224,name:'7.1咨询监理', level:'l2'},
+        {seq:225,name:'7.1.1绿色低碳转型产业项目勘察服务', level:'l3'},
+        {seq:226,name:'7.1.2绿色低碳转型产业项目咨询和设计服务', level:'l3'},
+        {seq:227,name:'7.1.3绿色低碳转型产业项目施工监理服务', level:'l3'},
+        {seq:228,name:'7.1.4其他绿色低碳转型产业相关咨询服务', level:'l3'},
+        {seq:229,name:'7.2运营管理', level:'l2'},
+        {seq:230,name:'7.2.1能源管理体系建设', level:'l3'},
+        {seq:231,name:'7.2.2合同能源管理', level:'l3'},
+        {seq:232,name:'7.2.3合同节水管理', level:'l3'},
+        {seq:233,name:'7.2.4电力需求侧管理', level:'l3'},
+        {seq:234,name:'7.2.5资源循环利用第三方服务', level:'l3'},
+        {seq:235,name:'7.2.6环境污染第三方治理', level:'l3'},
+        {seq:236,name:'7.2.7数字化赋能绿色低碳管理', level:'l3'},
+        {seq:237,name:'7.3监测检测', level:'l2'},
+        {seq:238,name:'7.3.1能耗在线监测系统建设', level:'l3'},
+        {seq:239,name:'7.3.2温室气体排放源监控', level:'l3'},
+        {seq:240,name:'7.3.3环境损害监测评估', level:'l3'},
+        {seq:241,name:'7.3.4污染源监测', level:'l3'},
+        {seq:242,name:'7.3.5企业环境监测', level:'l3'},
+        {seq:243,name:'7.3.6生态环境监测和生态安全预警', level:'l3'},
+        {seq:244,name:'7.3.7生态系统碳汇监测评估', level:'l3'},
+        {seq:245,name:'7.3.8碳监测评估', level:'l3'},
+        {seq:246,name:'7.4评估审查核查', level:'l2'},
+        {seq:247,name:'7.4.1节能评估和能源审计', level:'l3'},
+        {seq:248,name:'7.4.2节能和能效诊断', level:'l3'},
+        {seq:249,name:'7.4.3碳排放相关核算、核查等服务', level:'l3'},
+        {seq:250,name:'7.4.4建筑能效与碳排放测评', level:'l3'},
+        {seq:251,name:'7.4.5清洁生产审核', level:'l3'},
+        {seq:252,name:'7.4.6环境影响评价', level:'l3'},
+        {seq:253,name:'7.4.7生态环境质量监测与评估', level:'l3'},
+        {seq:254,name:'7.4.8自然资源生态保护补偿和资产损害赔偿鉴定评估', level:'l3'},
+        {seq:255,name:'7.4.9生态保护修复产品和生态系统评估', level:'l3'},
+        {seq:256,name:'7.4.10地质灾害危险性评估', level:'l3'},
+        {seq:257,name:'7.4.11水土保持评估', level:'l3'},
+        {seq:258,name:'7.4.12绿色制造评价', level:'l3'},
+        {seq:259,name:'7.5绿色技术产品研发认证推广', level:'l2'},
+        {seq:260,name:'7.5.1绿色技术产品研发', level:'l3'},
+        {seq:261,name:'7.5.2绿色技术产品认证推广', level:'l3'},
+        {seq:262,name:'7.5.3绿色技术交易', level:'l3'},
+        {seq:263,name:'7.6资源环境权益交易', level:'l2'},
+        {seq:264,name:'7.6.1碳交易', level:'l3'},
+        {seq:265,name:'7.6.2用能权交易', level:'l3'},
+        {seq:266,name:'7.6.3用水权交易', level:'l3'},
+        {seq:267,name:'7.6.4排污权交易', level:'l3'},
+        {seq:268,name:'7.6.5林权交易', level:'l3'},
+        {seq:269,name:'7.6.6可再生能源绿证和绿色电力交易', level:'l3'},
+        {seq:270,name:'8.绿色贸易贷款', level:'l1'},
+        {seq:271,name:'8.1高效节能装备贸易', level:'l2'},
+        {seq:272,name:'8.1.1节能工业设备、农机及绿色建材贸易', level:'l3'},
+        {seq:273,name:'8.1.2节能商用设备、产品贸易', level:'l3'},
+        {seq:274,name:'8.1.3节能家电产品、节能灶具贸易', level:'l3'},
+        {seq:275,name:'8.2先进交通装备贸易', level:'l2'},
+        {seq:276,name:'8.2.1新能源汽车及关键零部件贸易', level:'l3'},
+        {seq:277,name:'8.2.2绿色船舶贸易', level:'l3'},
+        {seq:278,name:'8.2.3先进轨道交通装备贸易', level:'l3'},
+        {seq:279,name:'8.2.4先进高效航空装备贸易', level:'l3'},
+        {seq:280,name:'8.2.5先进港口装卸作业设备贸易', level:'l3'},
+        {seq:281,name:'8.3先进环保装备和原材料贸易', level:'l2'},
+        {seq:282,name:'8.3.1污染防治装备贸易', level:'l3'},
+        {seq:283,name:'8.3.2公约管控化学物质污染治理装备贸易', level:'l3'},
+        {seq:284,name:'8.3.3环境监测专用仪器仪表贸易', level:'l3'},
+        {seq:285,name:'8.3.4环境污染处理药剂材料、无毒无害原料、产品贸易', level:'l3'},
+        {seq:286,name:'8.3.5高效低毒低残留农药贸易', level:'l3'},
+        {seq:287,name:'8.3.6家用空气净化产品贸易', level:'l3'},
+        {seq:288,name:'8.3.7商业、饮食服务空气污染治理设备、产品贸易', level:'l3'},
+        {seq:289,name:'8.3.8水资源专用机械贸易', level:'l3'},
+        {seq:290,name:'8.3.9建筑隔声门窗产品，隔热隔音材料贸易', level:'l3'},
+        {seq:291,name:'8.4资源循环利用装备贸易', level:'l2'},
+        {seq:292,name:'8.4.1矿产资源综合利用装备贸易', level:'l3'},
+        {seq:293,name:'8.4.2水资源高效及循环利用装备贸易', level:'l3'},
+        {seq:294,name:'8.4.3工业固体废弃物综合利用装备贸易', level:'l3'},
+        {seq:295,name:'8.4.4农林废弃物综合利用装备贸易', level:'l3'},
+        {seq:296,name:'8.4.5废旧物资循环利用装备贸易', level:'l3'},
+        {seq:297,name:'8.4.6垃圾资源化利用装备贸易', level:'l3'},
+        {seq:298,name:'8.4.7废气回收利用装备贸易', level:'l3'},
+        {seq:299,name:'8.5新能源与清洁能源装备贸易', level:'l2'},
+        {seq:300,name:'8.5.1风力发电装备贸易', level:'l3'},
+        {seq:301,name:'8.5.2太阳能利用装备贸易', level:'l3'},
+        {seq:302,name:'8.5.3生物质能利用装备贸易', level:'l3'},
+        {seq:303,name:'8.5.4水力发电和抽水蓄能装备贸易', level:'l3'},
+        {seq:304,name:'8.5.5核电装备贸易', level:'l3'},
+        {seq:305,name:'8.5.6地热能开发利用装备贸易', level:'l3'},
+        {seq:306,name:'8.5.7海洋能开发利用装备贸易', level:'l3'},
+        {seq:307,name:'8.5.8新型储能产品贸易', level:'l3'},
+        {seq:308,name:'8.5.9氢能"制储输用"全链条装备贸易', level:'l3'},
+        {seq:309,name:'8.5.10智能电网产品和装备贸易', level:'l3'},
+        {seq:310,name:'8.6绿色农产品贸易', level:'l2'},
+        {seq:311,name:'8.6.1绿色农产品批发贸易', level:'l3'},
+        {seq:312,name:'8.6.2绿色农产品零售', level:'l3'},
+        {seq:313,name:'8.7绿色认证产品贸易', level:'l2'},
+        {seq:314,name:'8.7.1绿色认证产品批发', level:'l3'},
+        {seq:315,name:'8.7.2绿色认证产品零售', level:'l3'},
+        {seq:316,name:'9.绿色消费贷款', level:'l1'},
+        {seq:317,name:'9.1.1新能源汽车消费', level:'l3'},
+        {seq:318,name:'9.1.2绿色低碳建筑消费', level:'l3'},
+        {seq:319,name:'9.1.3其他绿色消费', level:'l3'},
+        {seq:320,name:'（二）境外绿色贷款', level:'section'},
+        {seq:321,name:'其中："一带一路"绿色贷款', level:'total'},
+        {seq:322,name:'附录：环境权益贷款', level:'appendix-header'},
+        {seq:323,name:'a.采购碳排放权贷款', level:'appendix-item'},
+        {seq:324,name:'b.以碳排放权为抵押的贷款', level:'appendix-item'},
+        {seq:325,name:'c.采购其他环境权益贷款', level:'appendix-item'},
+        {seq:326,name:'d.以其他环境权益为抵押的贷款', level:'appendix-item'}
+    ];
+
+    // ==================== 模拟数据生成（供演示用） ====================
+    function genMockValue(seq, min, max) {
+        // 使用确定性伪随机，保证同一条目每次渲染一致
+        var seed = seq * 137 + 42;
+        var rand = ((seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+        var val = min + rand * (max - min);
+        return val;
+    }
+
+    function getRowClass(level) {
+        if (level === 'total') return 'total-row';
+        if (level === 'section') return 'total-row';
+        if (level === 'l1') return 'sec-header';
+        if (level === 'l2') return 'sub-header';
+        if (level === 'appendix-header') return 'appendix-header';
+        if (level === 'appendix-item') return 'appendix-item';
+        return '';
+    }
+
+    function getIndentClass(level) {
+        if (level === 'l3') return 'indent-2';
+        if (level === 'appendix-item') return 'indent-1';
+        return '';
+    }
+
+    function getEmpty() { return ''; }
+
+    function formatNum(val) {
+        if (val === 0 || val === undefined) return '';
+        return val.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    function renderTable() {
+        var tbody = document.getElementById('tableBody');
+        var html = '';
+        var period = getUrlParam('period') || '2025Q2';
+
+        for (var i = 0; i < s68Data.length; i++) {
+            var r = s68Data[i];
+            var rowClass = getRowClass(r.level);
+            var indentClass = getIndentClass(r.level);
+            var classStr = (rowClass + ' ' + indentClass).trim();
+
+            // 是否为汇总行或章节标题行（非明细，不填数值）
+            var isSummary = (r.level === 'total' || r.level === 'section' || r.level === 'l1' || r.level === 'l2' || r.level === 'appendix-header');
+
+            var balance = isSummary ? getEmpty() : formatNum(genMockValue(r.seq, 50, 5000));
+            var households = isSummary ? getEmpty() : Math.floor(genMockValue(r.seq, 1, 30)).toString();
+            var npl = isSummary ? getEmpty() : (genMockValue(r.seq, 0, 1) > 0.85 ? formatNum(genMockValue(r.seq, 10, 500)) : '0.00');
+            var annualLoan = isSummary ? getEmpty() : formatNum(genMockValue(r.seq, 20, 3000));
+            var annualInterest = isSummary ? getEmpty() : formatNum(genMockValue(r.seq, 1, 200));
+
+            html += '<tr class="' + classStr + '" data-tree-lvl="' + (r.level==='total'||r.level==='section'?'0':r.level==='l1'?'1':r.level==='l2'?'2':r.level==='l3'?'3':r.level==='appendix-header'?'0':r.level==='appendix-item'?'3':'') + '">';
+            html += '<td class="col-seq">' + r.seq + '</td>';
+            html += '<td>' + r.name + '</td>';
+            html += '<td class="num">' + balance + '</td>';
+            html += '<td class="num">' + households + '</td>';
+            html += '<td class="num">' + npl + '</td>';
+            html += '<td class="num">' + annualLoan + '</td>';
+            html += '<td class="num">' + annualInterest + '</td>';
+            html += '</tr>';
+        }
+
+        tbody.innerHTML = html;
+
+        // 更新头部的期间标签
+        var periodMap = {
+            '2025Q2': I18N.t('q2_2025'),
+            '2025Q1': I18N.t('q1_2025'),
+            '2024Q4': I18N.t('q4_2024'),
+            '2024Q3': I18N.t('q3_2024'),
+            '2024Q2': I18N.t('q2_2024'),
+            '2024Q1': I18N.t('q1_2024')
+        };
+        document.getElementById('periodLabel').textContent = periodMap[period] || period;
+        document.getElementById('periodDisplay').textContent = periodMap[period] || period;
+        document.getElementById('headerMeta').textContent = I18N.t('report_code') + '：S68-' + period + ' ｜ ' + I18N.t('auto_generated') + ' ｜ ' + I18N.t('gen_time') + '：2025-07-01 00:05';
+    }
+
+    // ==================== I18N 页级字典 ====================
+    I18N.setDict({
+        title: {zh:'S68绿色融资统计表 · 可持续金融管理系统', en:'S68 Green Financing Statistics · Sustainable Finance System'},
+        header_title: {zh:'S68 绿色融资统计表', en:'S68 Green Financing Statistical Report'},
+        current_period: {zh:'2025年第二季度', en:'2025 Q2'},
+        report_code: {zh:'报表编号', en:'Report No.'},
+        auto_generated: {zh:'系统自动生成', en:'System Generated'},
+        gen_time: {zh:'生成时间', en:'Generated'},
+        filter_period: {zh:'报表期间（季度）', en:'Report Period (Quarter)'},
+        q2_2025: {zh:'2025年第二季度', en:'2025 Q2'},
+        q1_2025: {zh:'2025年第一季度', en:'2025 Q1'},
+        q4_2024: {zh:'2024年第四季度', en:'2024 Q4'},
+        q3_2024: {zh:'2024年第三季度', en:'2024 Q3'},
+        q2_2024: {zh:'2024年第二季度', en:'2024 Q2'},
+        q1_2024: {zh:'2024年第一季度', en:'2024 Q1'},
+        download_excel: {zh:'下载Excel', en:'Download Excel'},
+        back_btn: {zh:'< 返回', en:'< Back'},
+        back_to_list: {zh:'< 返回', en:'< Back'},
+        th_seq: {zh:'序号', en:'#'},
+        th_name: {zh:'指标名称', en:'Indicator Name'},
+        th_balance: {zh:'贷款余额', en:'Loan Balance'},
+        th_households: {zh:'存量贷款户数', en:'Existing Loan Accounts'},
+        th_npl: {zh:'不良贷款余额', en:'NPL Balance'},
+        th_annual_loan: {zh:'当年累放贷款额', en:'Annual Loan Disbursement'},
+        th_annual_interest: {zh:'当年累放贷款年化利息收益', en:'Annualized Interest Income'},
+        confirm_download: {zh:'确认下载 S68绿色融资统计表 Excel文件？', en:'Confirm download S68 Green Financing Statistics Excel file?'},
+        download_ok: {zh:'下载成功！\n\n文件：S68绿色融资统计表.xlsx', en:'Download successful!\n\nFile: S68 Green Financing Statistics.xlsx'}
+    });
+
+    // ==================== 语言切换回调 ====================
+    window.onLangChange = function(lang){
+        renderTable();
+    };
+
+    // ==================== 业务函数 ====================
+    function getCurrentDir(){var p=window.location.pathname;return p.substring(0,p.lastIndexOf('/')+1)}
+    function goBackToList(){
+        var dir=getCurrentDir();var targetUrl=dir+'S68报表列表.html';
+        var label = I18N.t('back_to_list');
+        if(window.parent!==window){
+            window.parent.postMessage({type:'openPage',pageId:'s68-list-'+Date.now(),file:targetUrl,label:label},'*');
+        }else{window.location.href=targetUrl}
+    }
+    function downloadReport(){
+        if(confirm(I18N.t('confirm_download'))){
+            alert(I18N.t('download_ok'));
+        }
+    }
+
+    // ==================== 读取URL参数 ====================
+    function getUrlParam(name){
+        var m = location.search.match(new RegExp('[?&]'+name+'=([^&]*)'));
+        return m ? decodeURIComponent(m[1]) : null;
+    }
+
+    // ==================== 真树状展开/收起 ====================
+    function initTree(){
+        var rows=document.querySelectorAll('#tableBody tr[data-tree-lvl]');
+        var stack=[];
+        rows.forEach(function(row){
+            var lvl=parseInt(row.getAttribute('data-tree-lvl')||'0');
+            while(stack.length>0&&parseInt(stack[stack.length-1].getAttribute('data-tree-lvl'))>=lvl){stack.pop();}
+            if(stack.length>0&&lvl>0){
+                var pid=stack[stack.length-1].getAttribute('data-tree-row-id');
+                if(pid){row.setAttribute('data-tree-parent-id',pid);row.classList.add('tree-child');}
+            }
+            if(lvl<=2&&!row.getAttribute('data-tree-row-id')){
+                row.setAttribute('data-tree-row-id','ts-'+Math.random().toString(36).substr(2,8));
+                stack.push(row);
+            }
+        });
+        rows.forEach(function(row){
+            var hasChild=false,rid=row.getAttribute('data-tree-row-id');
+            if(!rid)return;
+            var next=row.nextElementSibling;
+            while(next){
+                if(next.getAttribute('data-tree-parent-id')===rid){hasChild=true;break;}
+                var nlvl=parseInt(next.getAttribute('data-tree-lvl')||'-1');
+                if(nlvl>=0&&nlvl<=parseInt(row.getAttribute('data-tree-lvl')||'0'))break;
+                next=next.nextElementSibling;
+            }
+            if(!hasChild)return;
+            var td=row.querySelector('td:nth-child(2)');
+            if(!td)return;
+            var span=document.createElement('span');
+            span.className='tree-toggle';
+            span.setAttribute('data-expanded','1');
+            span.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><polyline points="6 9 12 15 18 9"/></svg>';
+            span.style.cssText='display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;margin-right:2px;cursor:pointer;border-radius:3px;transition:all .15s;flex-shrink:0;color:var(--brand-500);';
+            span.onmouseenter=function(){this.style.background='rgba(42,102,194,0.12)';};
+            span.onmouseleave=function(){this.style.background='transparent';};
+            span.onclick=function(e){e.stopPropagation();toggleTree(row);};
+            td.insertBefore(span,td.firstChild);
+        });
+    }
+    function toggleTree(row){
+        var toggle=row.querySelector('.tree-toggle');
+        if(!toggle)return;
+        var expanded=toggle.getAttribute('data-expanded')==='1';
+        var rid=row.getAttribute('data-tree-row-id');
+        function setChildren(parentId,show){
+            document.querySelectorAll('#tableBody tr[data-tree-parent-id="'+parentId+'"]').forEach(function(r){
+                r.style.display=show?'':'none';
+                if(!show){var cid=r.getAttribute('data-tree-row-id');if(cid)setChildren(cid,false);}
+                if(show){var ct=r.querySelector('.tree-toggle');var cid2=r.getAttribute('data-tree-row-id');if(ct&&ct.getAttribute('data-expanded')==='1'&&cid2)setChildren(cid2,true);}
+            });
+        }
+        setChildren(rid,!expanded);
+        toggle.setAttribute('data-expanded',expanded?'0':'1');
+        toggle.innerHTML=expanded?'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><polyline points="9 6 15 12 9 18"/></svg>':'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><polyline points="6 9 12 15 18 9"/></svg>';
+    }
+
+    // ==================== 初始化渲染 ====================
+    var urlPeriod = getUrlParam('period') || '2025Q2';
+    renderTable();
+    setTimeout(initTree,200);
+</script>
+</body>
+</html>

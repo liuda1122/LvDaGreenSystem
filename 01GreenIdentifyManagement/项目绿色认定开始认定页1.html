@@ -492,7 +492,7 @@
 
         <!-- Content -->
         <div class="flex-1 overflow-y-auto custom-scroll" style="padding:24px;">
-            <div class="space-y-6" style="max-width:960px;">
+            <div class="space-y-6">
 
                 <!-- 企业信息 -->
                 <div class="section-card">
@@ -882,9 +882,36 @@
                     suggestion: '建议补充项目核准/备案文件、环评批复、产品技术规格文件等佐证材料。'
                 }
             }
-        };
+        },
+        // 新增认定弹窗项目（projectCode 参数兼容）
+        'PRJ-2026-008': {
+            company:{name:'company_cgn_wind',creditCode:'91440300708519566K',industry:'cind_power',region:'loc_taizhou',business:'biz_power_gen'},
+            project:{name:'project_taizhou_wind',code:'PRJ-2026-008',industry:'ind_power',location:'loc_taizhou',content:'content_taizhou_wind'},
+            status:'unidentified'
+        },
+        'PRJ-2026-009': {
+            company:{name:'company_nb_solar',creditCode:'91330200MA2ABCDE12',industry:'cind_power',region:'loc_ningbo',business:'biz_solar_dev'},
+            project:{name:'project_nb_solar_park',code:'PRJ-2026-009',industry:'ind_power',location:'loc_ningbo',content:'content_nb_solar'},
+            status:'unidentified'
+        },
+        'PRJ-2026-010': {
+            company:{name:'company_zj_energy',creditCode:'91330000142905678F',industry:'cind_hydropower',region:'loc_lishui',business:'biz_hydropower'},
+            project:{name:'project_lishui_pumped',code:'PRJ-2026-010',industry:'ind_power',location:'loc_lishui',content:'content_lishui_pumped'},
+            status:'unidentified'
+        },
+        'PRJ-2026-011': {
+            company:{name:'company_jx_hydrogen',creditCode:'91330400MA2CDEF345',industry:'cind_chemical',region:'loc_jiaxing',business:'biz_hydrogen'},
+            project:{name:'project_jx_hydrogen_base',code:'PRJ-2026-011',industry:'ind_chemical',location:'loc_jiaxing',content:'content_jx_hydrogen'},
+            status:'unidentified'
+        },
+        'PRJ-2026-012': {
+            company:{name:'company_sx_building',creditCode:'91330600MA2EFGH567',industry:'cind_building',region:'loc_shaoxing',business:'biz_building'},
+            project:{name:'project_sx_green_building',code:'PRJ-2026-012',industry:'ind_building',location:'loc_shaoxing',content:'content_sx_building'},
+            status:'unidentified'
+        }
+    };
 
-        var IMAGE_BASE_PATH = './';
+    var IMAGE_BASE_PATH = './';
 
         function getUrlParam(name) {
             var params = new URLSearchParams(window.location.search);
@@ -892,7 +919,7 @@
         }
 
         function getProjectId() {
-            return getUrlParam('projectId') || 'PRJ-2026-001';
+            return getUrlParam('projectId') || getUrlParam('projectCode') || 'PRJ-2026-001';
         }
 
         function renderCompany(data) {

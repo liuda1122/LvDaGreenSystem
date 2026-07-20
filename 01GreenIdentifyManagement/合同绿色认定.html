@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>合同绿色认定 · 可持续金融管理系统</title>
+  <title data-i18n="page_title">业务绿色认定 · 可持续金融管理系统</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="../i18n.js"></script>
   <style>
@@ -283,12 +283,12 @@
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;" data-i18n="th_amount">合同金额(万元)</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;" data-i18n="th_balance">合同余额(万元)</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:110px;" data-i18n="th_loan_industry">贷款投向行业</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;" data-i18n="th_contract_type">合同类型</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;" data-i18n="th_contract_type">业务类型</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:140px;" data-i18n="th_credit_gf">信贷系统2025绿色认定分类</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:120px;" data-i18n="th_has_green_loan">项目是否已有绿色贷款</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:130px;" data-i18n="th_client_green_loan">客户是否已有绿色贷款</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:90px;" data-i18n="th_biz_line">业务条线</th>
-                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:80px;" data-i18n="th_contract_status">合同状态</th>
+                <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:80px;" data-i18n="th_contract_status">业务状态</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;" data-i18n="th_project_code">项目代码</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:120px;" data-i18n="th_project_name">项目名称</th>
                 <th class="px-2 py-2 text-left font-semibold text-slate-600" style="min-width:100px;" data-i18n="th_client_code">客户编号</th>
@@ -531,20 +531,20 @@
   // ==================== i18n 字典 ====================
   I18N.setDict({
     // Title
-    page_title: {zh:'合同绿色认定 · 可持续金融管理系统', en:'Contract Green ID · Sustainable Finance System'},
+    page_title: {zh:'业务绿色认定 · 可持续金融管理系统', en:'Business Green ID · Sustainable Finance System'},
     // Filter labels
-    filter_contract_info: {zh:'合同信息', en:'Contract Info'},
+    filter_contract_info: {zh:'业务信息', en:'Business Info'},
     filter_client_info: {zh:'客户信息', en:'Client Info'},
     filter_loan_industry: {zh:'贷款投向行业', en:'Loan Industry'},
     filter_biz_type: {zh:'业务品种', en:'Business Type'},
     filter_biz_line: {zh:'业务条线', en:'Business Line'},
     filter_branch: {zh:'所属分支机构', en:'Branch'},
     filter_manager: {zh:'管户人', en:'Manager'},
-    filter_contract_type: {zh:'合同类型', en:'Contract Type'},
+    filter_contract_type: {zh:'业务类型', en:'Business Type'},
     filter_ai_match: {zh:'智能识别是否命中', en:'AI Match'},
     filter_last_updated: {zh:'最近更新时间', en:'Last Updated'},
     // Placeholders
-    ph_contract_info: {zh:'请输入合同名称/编号', en:'Contract name / number'},
+    ph_contract_info: {zh:'请输入业务名称/编号', en:'Business name / number'},
     ph_client_info: {zh:'企业名称/编号/统一社会信用', en:'Company name / code / credit code'},
     ph_manager: {zh:'请输入姓名/工号', en:'Name / employee ID'},
     // Options
@@ -561,19 +561,19 @@
     btn_export: {zh:'导出数据', en:'Export'},
     btn_view_detail: {zh:'查看详情', en:'View Details'},
     // Table headers
-    th_contract_no: {zh:'合同编号', en:'Contract No.'},
+    th_contract_no: {zh:'业务编号', en:'Business No.'},
     th_biz_category: {zh:'业务品种大类', en:'Business Category'},
     th_biz_type: {zh:'业务品种', en:'Business Type'},
-    th_amount: {zh:'合同金额(万元)', en:'Amount (10k CNY)'},
-    th_balance: {zh:'合同余额(万元)', en:'Balance (10k CNY)'},
+    th_amount: {zh:'业务金额(万元)', en:'Amount (10k CNY)'},
+    th_balance: {zh:'业务余额(万元)', en:'Balance (10k CNY)'},
     th_loan_industry: {zh:'贷款投向行业', en:'Loan Industry'},
-    th_contract_type: {zh:'合同类型', en:'Type'},
+    th_contract_type: {zh:'业务类型', en:'Business Type'},
     th_ai_match: {zh:'智能识别是否命中', en:'AI Match'},
     th_credit_gf: {zh:'信贷系统2025绿色认定分类', en:'Credit GF Category'},
     th_has_green_loan: {zh:'项目是否已有绿色贷款', en:'Has Green Loan'},
     th_client_green_loan: {zh:'客户是否已有绿色贷款', en:'Client Has Green Loan'},
     th_biz_line: {zh:'业务条线', en:'Business Line'},
-    th_contract_status: {zh:'合同状态', en:'Status'},
+    th_contract_status: {zh:'业务状态', en:'Business Status'},
     th_project_code: {zh:'项目代码', en:'Project Code'},
     th_project_name: {zh:'项目名称', en:'Project Name'},
     th_client_code: {zh:'客户编号', en:'Client Code'},
@@ -830,9 +830,7 @@
     }
     // ---- 总行管理员 ----
     else if (currentRole === '总行管理员') {
-      if (appr === '已完成') {
-        btns.push({label:'编辑', cls:'btn btn-primary btn-sm', action:'edit'});
-      } else if (appr === '审批中' || appr === '已驳回') {
+      if (appr === '已完成' || appr === '审批中' || appr === '已驳回') {
         btns.push({label:'查看详情', cls:'btn btn-outline-brand btn-sm', action:'view'});
       }
       // 未提交 → —（可通过页面"取消任务"按钮删除待办）

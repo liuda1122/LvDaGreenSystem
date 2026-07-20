@@ -648,27 +648,31 @@
             toggleTitle:    { zh:'切换语言 / Switch Language',   en:'切换语言 / Switch Language' },
 
             // ---- 一级菜单 ----
-            'menu-green-marketing':        { zh:'潜在客户业务营销',  en:'Potential Client Marketing' },
-            'menu-zero-carbon-library':    { zh:'潜在项目业务营销',  en:'Potential Project Marketing' },
-            'menu-green-business-analysis': { zh:'绿色业务分析',      en:'Green Business Analysis' },
-            'menu-green-biz-mgmt':             { zh:'绿色业务管理',               en:'Green Business Management' },
-            'menu-green-project-mgmt-sub':     { zh:'绿色项目业务管理',           en:'Green Project Mgmt' },
-            'menu-green-loan-mgmt-sub':        { zh:'绿色贷款业务管理',           en:'Green Loan Mgmt' },
+            'menu-green-marketing':        { zh:'绿色业务营销',  en:'Green Business Marketing' },
+            'menu-green-biz-mgmt':         { zh:'绿色业务管理',  en:'Green Business Management' },
 
             // ---- 二级菜单 ----
-            'menu-potential-clients':           { zh:'绿色潜在客户业务营销',         en:'Green Potential Clients' },
-            'menu-transition-clients':          { zh:'转型潜在客户业务营销',         en:'Transition Client Marketing' },
-            'menu-client-mkt-process':          { zh:'潜在客户营销过程管理',         en:'Client Marketing Process' },
-            'menu-zc-potential-project-mkt':    { zh:'潜在项目业务营销',             en:'Potential Project Marketing' },
-            'menu-zc-project-mkt-process':      { zh:'项目营销过程管理',             en:'Project Marketing Process' },
-            'menu-green-industry-map':          { zh:'绿色产业地图',                 en:'Green Industry Map' },
-            'menu-bank-green-portrait':         { zh:'绿色金融业务统计',               en:'Green Finance Statistics' },
-            'menu-project-green-identify':      { zh:'项目绿色识别',                 en:'Project Green Identification' },
-            'menu-zc-env-benefit':              { zh:'环境效益测算',                 en:'Environmental Benefit Calc' },
-            'menu-contract-identify':           { zh:'合同绿色认定',                 en:'Contract Green Identification' },
-            'menu-contract-identify-change':   { zh:'合同绿色认定变更',             en:'Contract Green ID Change' },
-            'menu-a3327-report':                { zh:'绿色贷款统计报送',             en:'Green Loan Statistics Report' },
-            'menu-loan-pre-identify':           { zh:'贷款预识别',                   en:'Loan Pre-identification' }
+            'menu-potential-clients':      { zh:'潜在客户营销',  en:'Potential Client Marketing' },
+            'menu-zc-potential-project-mkt': { zh:'潜在项目营销',  en:'Potential Project Marketing' },
+            'menu-mkt-process':            { zh:'营销过程管理',  en:'MKT Process Mgmt' },
+
+            // ---- 绿色业务认定 子分组 ----
+            'menu-green-biz-identify-sub': { zh:'绿色业务认定',  en:'Green Biz Identification' },
+            'menu-loan-pre-identify':      { zh:'绿色业务预识别',  en:'Green Biz Pre-identification' },
+            'menu-contract-identify':      { zh:'业务绿色认定',  en:'Biz Green Identification' },
+            'menu-contract-identify-change': { zh:'绿色认定结果变更',  en:'Green ID Result Change' },
+
+            // ---- 绿色业务统计分析 子分组 ----
+            'menu-green-biz-stats-sub':    { zh:'绿色业务统计分析',  en:'Green Biz Statistics' },
+            'menu-bank-green-portrait':    { zh:'绿色业务统计',  en:'Green Business Statistics' },
+            'menu-a3327-report':           { zh:'A3327绿色贷款专项统计表',  en:'A3327 Green Loan Stats Report' },
+            'menu-s68-report':             { zh:'S68绿色融资统计表',  en:'S68 Green Financing Stats Report' },
+
+            // ---- 绿色项目管理 子分组 ----
+            'menu-green-project-mgmt-sub': { zh:'绿色项目管理',  en:'Green Project Management' },
+            'menu-project-green-identify': { zh:'绿色项目识别与管理',  en:'Green Project ID & Mgmt' },
+            'menu-zc-env-benefit':         { zh:'绿色项目环境效益测算',  en:'Green Project Env Benefit Calc' },
+            'menu-project-energy-saving':  { zh:'绿色项目资产节能减排量统计',  en:'Project Energy Saving Stats' }
         };
 
         function t(key) {
@@ -805,33 +809,27 @@
             id: 'green-marketing',
             icon: 'dash',
             children: [
-                { type: 'l2', id: 'green-industry-map',   file: '06GreenIndustryMap/绿色产业地图.html' },
                 { type: 'l2', id: 'potential-clients',      file: '02PotentialClientList/绿色潜在客户清单.html' },
-                { type: 'l2', id: 'transition-clients',     file: '02PotentialClientList/转型潜在客户业务营销.html' },
-                { type: 'l2', id: 'client-mkt-process',      file: '02PotentialClientList/潜在客户营销过程管理.html' }
-            ]
-        }, {
-            type: 'l1',
-            id: 'zero-carbon-library',
-            icon: 'zero-carbon',
-            children: [
                 { type: 'l2', id: 'zc-potential-project-mkt', file: '04ZeroCarbonProjectLibrary/潜在项目业务营销.html' },
-                { type: 'l2', id: 'zc-project-mkt-process',   file: '04ZeroCarbonProjectLibrary/项目营销过程管理.html' }
+                { type: 'l2', id: 'mkt-process',            file: '02PotentialClientList/营销过程管理.html' }
             ]
         }, {
             type: 'l1',
             id: 'green-biz-mgmt',
             icon: 'project',
             children: [
-                { type: 'l2', id: 'bank-green-portrait',      file: '06GreenIndustryMap/行内绿色金融业务画像及客户画像分析.html' },
-                { type: 'subtitle', id: 'green-project-mgmt-sub' },
-                { type: 'l2', id: 'project-green-identify', file: '01GreenIdentifyManagement/项目绿色认定.html' },
-                { type: 'l2', id: 'zc-env-benefit',         file: '04ZeroCarbonProjectLibrary/环境效益测算.html' },
-                { type: 'subtitle', id: 'green-loan-mgmt-sub' },
+                { type: 'subtitle', id: 'green-biz-identify-sub' },
                 { type: 'l2', id: 'loan-pre-identify',       file: '01GreenIdentifyManagement/loan-pre-identify.html' },
                 { type: 'l2', id: 'contract-identify',       file: '01GreenIdentifyManagement/合同绿色认定.html' },
                 { type: 'l2', id: 'contract-identify-change', file: '01GreenIdentifyManagement/合同绿色认定变更.html' },
-                { type: 'l2', id: 'a3327-report',            file: '05GreenLoanReport/A3327报表列表.html' }
+                { type: 'subtitle', id: 'green-biz-stats-sub' },
+                { type: 'l2', id: 'bank-green-portrait',      file: '06GreenIndustryMap/行内绿色金融业务画像及客户画像分析.html' },
+                { type: 'l2', id: 'a3327-report',            file: '05GreenLoanReport/A3327报表列表.html' },
+                { type: 'l2', id: 's68-report',              file: '05GreenLoanReport/S68报表列表.html' },
+                { type: 'subtitle', id: 'green-project-mgmt-sub' },
+                { type: 'l2', id: 'project-green-identify',  file: '01GreenIdentifyManagement/项目绿色认定.html' },
+                { type: 'l2', id: 'zc-env-benefit',          file: '04ZeroCarbonProjectLibrary/环境效益测算.html' },
+                { type: 'l2', id: 'project-energy-saving',    file: '04ZeroCarbonProjectLibrary/项目节能减排统计.html' }
             ]
         }];
 

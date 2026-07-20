@@ -83,6 +83,10 @@
     .dict-table th:nth-child(6),.dict-table td:nth-child(6){width:7%}
     .dict-table th:nth-child(7),.dict-table td:nth-child(7){width:9%}
     .dict-table th:nth-child(8),.dict-table td:nth-child(8){width:14%}
+    /* 操作列冻结在右侧 */
+    .dict-table td:nth-child(8){position:sticky;right:0;background:var(--white);z-index:5;box-shadow:-4px 0 12px rgba(0,0,0,0.06)}
+    .dict-table thead th:nth-child(8){position:sticky;right:0;background:var(--bg-subtle);z-index:11;box-shadow:-4px 0 12px rgba(0,0,0,0.06)}
+    .dict-table tbody tr:hover td:nth-child(8){background:var(--bg-subtle)}
 
     /* 描述单元格 - 悬浮提示 */
     .desc-cell{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;display:block}

@@ -70,6 +70,21 @@
     <!-- 内容区 -->
     <div class="flex-1 overflow-y-auto custom-scroll" style="padding:16px 24px 24px;">
 
+        <!-- 业务信息区（只读） -->
+        <div class="section-card">
+            <div class="card-head" data-i18n="contract_info">业务信息</div>
+            <div class="card-body">
+                <div class="info-row">
+                    <div class="info-item"><span class="lbl" data-i18n="contract_no_lbl">业务编号：</span><span class="val" style="font-family:monospace;">2021012900000050</span></div>
+                    <div class="info-item"><span class="lbl" data-i18n="contract_name_lbl">业务名称：</span><span class="val" style="font-weight:500;">动力及储能锂离子电池研发生产基地建设贷款合同</span></div>
+                    <div class="info-item"><span class="lbl" data-i18n="contract_amount_lbl">业务金额：</span><span class="val" style="font-family:var(--font-num);">100,030.00 <span data-i18n="wan_yuan">万元</span></span></div>
+                    <div class="info-item"><span class="lbl" data-i18n="contract_balance_lbl">业务余额：</span><span class="val" style="font-family:var(--font-num);">90,000,000.00 <span data-i18n="wan_yuan">万元</span></span></div>
+                    <div class="info-item"><span class="lbl" data-i18n="contract_type_lbl">业务品种：</span><span class="val">固定项目贷</span></div>
+                    <div class="info-item"><span class="lbl" data-i18n="contract_status_lbl">业务状态：</span><span class="val">生效</span></div>
+                </div>
+            </div>
+        </div>
+
         <!-- 项目信息区（只读） -->
         <div class="section-card">
             <div class="card-head" data-i18n="project_info">项目信息</div>
@@ -208,8 +223,15 @@
     // ==================== I18N 页级字典 ====================
     I18N.setDict({
         title: {zh:'环境效益测算查看 · 潜在项目库', en:'Environmental Benefit Calc View · Project Library'},
-        back_btn: {zh:'← 返回', en:'← Back'},
+        back_btn: {zh:'< 返回', en:'< Back'},
         // Project info
+        contract_info: {zh:'业务信息', en:'Contract Info'},
+        contract_no_lbl: {zh:'合同编号：', en:'Contract No:'},
+        contract_name_lbl: {zh:'合同名称：', en:'Contract Name:'},
+        contract_amount_lbl: {zh:'合同金额：', en:'Amount:'},
+        contract_balance_lbl: {zh:'合同余额：', en:'Balance:'},
+        contract_type_lbl: {zh:'业务品种：', en:'Biz Type:'},
+        contract_status_lbl: {zh:'合同状态：', en:'Status:'},
         project_info: {zh:'项目信息', en:'Project Info'},
         project_name_lbl: {zh:'项目名称：', en:'Project Name:'},
         project_code_lbl: {zh:'项目编号：', en:'Project Code:'},
@@ -354,10 +376,18 @@
     // ==================== 业务函数 ====================
     function getCurrentDir(){var p=window.location.pathname;return p.substring(0,p.lastIndexOf('/')+1)}
     function goBackToList(){
-        var dir=getCurrentDir();var targetUrl=dir+'环境效益测算.html';
+        var dir=getCurrentDir();
+        var params=new URLSearchParams(window.location.search);
+        var ref=params.get('ref');
+        var targetUrl,label;
+        if(ref==='project-energy-saving'){
+            targetUrl=dir+'项目节能减排统计.html';label='项目节能减排统计';
+        }else{
+            targetUrl=dir+'环境效益测算.html';label='环境效益测算';
+        }
         if(window.parent!==window){
             var pageId='env-view-back-'+Date.now()+'-'+Math.random().toString(36).substr(2,6);
-            window.parent.postMessage({type:'openPage',pageId:pageId,file:targetUrl,label:'环境效益测算'},'*');
+            window.parent.postMessage({type:'openPage',pageId:pageId,file:targetUrl,label:label},'*');
         }else{window.location.href=targetUrl}
     }
 
